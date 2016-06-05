@@ -127,6 +127,7 @@ public class LoginFragment extends BaseBackFragment {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(initObserver(getActivity()));
+                hideSoftInput();
             }
         });
 

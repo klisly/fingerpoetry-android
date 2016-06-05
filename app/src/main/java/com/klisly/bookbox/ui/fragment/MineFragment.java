@@ -8,6 +8,7 @@ import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
+import com.klisly.bookbox.ui.fragment.account.LoginFragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -48,6 +49,9 @@ public class MineFragment extends BaseMainFragment{
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         initView();
+        if(!AccountLogic.getInstance().isLogin()){
+            start(LoginFragment.newInstance());
+        }
         return view;
     }
 

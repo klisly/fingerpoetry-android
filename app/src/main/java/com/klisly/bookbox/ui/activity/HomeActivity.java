@@ -1,8 +1,12 @@
 package com.klisly.bookbox.ui.activity;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
+import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.User;
 import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
 import com.klisly.bookbox.ui.fragment.BaseMainFragment;
@@ -12,8 +16,10 @@ import com.klisly.bookbox.ui.fragment.MineFragment;
 import com.klisly.bookbox.ui.fragment.SiteFragment;
 import com.klisly.bookbox.ui.fragment.TopicFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.utils.ActivityUtil;
 import com.squareup.otto.Subscribe;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,13 +28,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import timber.log.Timber;
 
 public class HomeActivity extends SupportActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -39,11 +45,12 @@ public class HomeActivity extends SupportActivity
     @Bind(R.id.vNavigation)
     NavigationView mNavigationView;
     private TextView mTvName;   // NavigationView上的名字
-    private ImageView mImgNav;  // NavigationView上的头像
+    private SimpleDraweeView mImgNav;  // NavigationView上的头像
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
@@ -74,7 +81,7 @@ public class HomeActivity extends SupportActivity
 
         FrameLayout llNavHeader = (FrameLayout) mNavigationView.getHeaderView(0);
         mTvName = (TextView) llNavHeader.findViewById(R.id.tvNick);
-        mImgNav = (ImageView) llNavHeader.findViewById(R.id.ivMenuUserAvatar);
+        mImgNav = (SimpleDraweeView) llNavHeader.findViewById(R.id.ivMenuUserAvatar);
         updateNavData();
         llNavHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +94,7 @@ public class HomeActivity extends SupportActivity
                         if (AccountLogic.getInstance().isLogin()) {
                             gotoMine();
                         } else {
-                            goLogin();
+                            gotoLogin();
                         }
                     }
                 }, 250);
@@ -201,6 +208,7 @@ public class HomeActivity extends SupportActivity
                         start(fragment, SupportFragment.SINGLETASK);
                     }
                 } else if (id == R.id.menu_mine) {
+
                     MineFragment fragment = findFragment(MineFragment.class);
                     if (fragment == null) {
                         popTo(HomeFragment.class, false, new Runnable() {
@@ -215,20 +223,13 @@ public class HomeActivity extends SupportActivity
                         start(fragment, SupportFragment.SINGLETASK);
                     }
                 }
-                //                else if (id == R.id.nav_login) {
-                //                    goLogin();
-                //                } else if (id == R.id.nav_swipe_back) {
-                //                    startActivity(new Intent(MainActivity.this, SwipeBackSampleActivity.class));
-                //                } else if (id == R.id.nav_swipe_back_f) {
-                //                    start(SwipeBackSampleFragment.newInstance());
-                //                }
             }
         }, 250);
 
         return true;
     }
 
-    private void goLogin() {
+    private void gotoLogin() {
         start(LoginFragment.newInstance());
     }
 
@@ -244,13 +245,18 @@ public class HomeActivity extends SupportActivity
     @Subscribe
     public void onLogout(LogoutEvent event) {
         updateNavData();
+        mNavigationView.setCheckedItem(R.id.menu_home);
     }
 
     private void updateNavData() {
-        if (AccountLogic.getInstance().getNowUser() != null) {
-            mTvName.setText(AccountLogic.getInstance().getNowUser().getName());
+        User user = AccountLogic.getInstance().getNowUser();
+        if ( user != null) {
+            Timber.d("cur login user:"+user);
+            mTvName.setText(user.getName());
+            mImgNav.setImageURI(Uri.parse(BookRetrofit.BASE_URL +user.getAvatar()));
         } else {
             mTvName.setText(R.string.register_login);
+            mImgNav.setImageURI(ActivityUtil.getAppResourceUri(R.drawable.menu_user, getPackageName()));
         }
     }
 

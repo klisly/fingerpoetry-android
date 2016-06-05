@@ -16,7 +16,9 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookRetrofit {
-    public final static String BASE_URL = "http://192.168.10.102:3000/api/";
+    public final static String BASE_URL = "http://192.168.10.102:3000/";
+    public final static String BASE_API_URL = BASE_URL+"api/";
+
     private final static long DEFAULT_TIMEOUT = 15; // 15超时
     private final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -36,7 +38,7 @@ public class BookRetrofit {
         httpClientBuilder.cache(cache);
         Retrofit retrofit = new Retrofit.Builder()
                 .client(httpClientBuilder.build())
-                .baseUrl(BASE_URL)
+                .baseUrl(BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

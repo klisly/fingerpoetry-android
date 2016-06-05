@@ -240,6 +240,7 @@ public class RegisterFragment extends BaseBackFragment {
                 }
                 isSubmit = true;
                 SMSSDK.submitVerificationCode(Constants.ZH_ZONE_CODE, strAccount, strCode);
+                hideSoftInput();
             }
         });
 

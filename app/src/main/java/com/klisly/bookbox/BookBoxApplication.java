@@ -3,6 +3,7 @@
  */
 package com.klisly.bookbox;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.Gson;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;

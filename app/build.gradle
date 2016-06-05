@@ -42,7 +42,8 @@ dependencies {
     compile 'me.yokeyword:fragmentation-swipeback:0.3.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:4.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    // image
+    compile 'com.facebook.fresco:fresco:0.10.0'
     compile 'com.makeramen:roundedimageview:2.2.1'
     // material 库
     compile 'net.steamcrafted:materialiconlib:1.0.3'
@@ -56,6 +57,7 @@ dependencies {
     // rx
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'io.reactivex:rxandroid:1.2.0'
+
     testCompile 'org.assertj:assertj-core:1.7.1'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'junit:junit:4.12'

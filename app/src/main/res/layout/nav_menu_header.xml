@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:fresco="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:background="@drawable/btn_context_menu"
@@ -9,7 +10,6 @@
             android:id="@+id/vGlobalMenuHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         <ImageView
                 android:id="@+id/ivMenuUserBg"
                 android:layout_width="match_parent"
@@ -25,19 +25,23 @@
                 android:gravity="center"
                 android:layout_marginLeft="12dp"
                 android:orientation="vertical">
-            <com.makeramen.roundedimageview.RoundedImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+            <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/ivMenuUserAvatar"
                     android:layout_width="@dimen/global_menu_avatar_size"
                     android:layout_height="@dimen/global_menu_avatar_size"
-                    android:src="@drawable/menu_user"
                     android:layout_margin="10dp"
-                    app:riv_corner_radius="3dp"
-                    app:riv_border_width="2dip"
-                    app:riv_border_color="@color/primary_text_default_material_dark"
-                    app:riv_mutate_background="true"
-                    app:riv_tile_mode="repeat"
-                    app:riv_oval="true"/>
+                    android:layout_centerInParent="true"
+                    fresco:actualImageScaleType="focusCrop"
+                    fresco:placeholderImage="@drawable/menu_user"
+                    fresco:placeholderImageScaleType="centerCrop"
+                    fresco:failureImage="@drawable/menu_user"
+                    fresco:failureImageScaleType="centerInside"
+                    fresco:fadeDuration="600"
+                    fresco:backgroundImage="@android:color/holo_blue_light"
+                    fresco:roundAsCircle="true"
+            >
+            </com.facebook.drawee.view.SimpleDraweeView>
             <TextView
                     android:id="@+id/tvNick"
                     android:layout_width="wrap_content"
