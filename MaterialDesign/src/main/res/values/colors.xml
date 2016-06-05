@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#00FF00</color>
+    <color name="thumbColor">#66aaaaaa</color>
+    <!-- Main-->
+    <color name="primary">#009688</color>
+    <color name="primaryDark">#00796b</color>
+    <color name="primaryLight">#7DD4B7</color>
+    <color name="accent">#00796b</color>
+    <color name="accentLight">#009688</color>
+
+    <!-- 常用 -->
+    <color name="transparent">#00000000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFffffff</color>
+    <color name="divide">#FFcccccc</color>
+    <color name="head_tips">#FF000000</color>
+    <color name="grey">#e8e8e8</color>
+    <color name="blue">#8BC3E9</color>
+    <color name="background">#F4F4F4</color>
+    <color name="background_black_alpha_20">#33000000</color>
+    <color name="background_black_alpha_40">#66000000</color>
+    <color name="background_black_alpha_70">#B2000000</color>
+</resources>
