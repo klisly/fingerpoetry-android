@@ -44,4 +44,13 @@
     <string name="confirm_exit">确定要注销吗?</string>
     <string name="cancle">取消</string>
     <string name="confirm">确定</string>
+    <string name="recom_setting">推荐设置</string>
+    <string name="reget">朝花夕拾</string>
+    <string name="find_site">发现站点</string>
+    <string name="manage_site">站点管理</string>
+    <string name="sort_method">排序方式</string>
+    <string name="notify_setting">更新提醒</string>
+    <string name="mine_center">个人中心</string>
+    <string name="find_topic">发现主题</string>
+    <string name="manage_topic">管理主题</string>
 </resources>

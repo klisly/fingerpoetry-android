@@ -24,7 +24,7 @@ public class BookRetrofit {
             .create();
     private static BookRetrofit instance;
     private AccountApi accountApi;
-
+    private ChannelApi channelApi;
     public BookRetrofit() {
         Context context = BookBoxApplication.getInstance().getApplicationContext();
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
@@ -41,6 +41,7 @@ public class BookRetrofit {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         accountApi = retrofit.create(AccountApi.class);
+        channelApi = retrofit.create(ChannelApi.class);
     }
 
     /**
@@ -61,5 +62,9 @@ public class BookRetrofit {
 
     public AccountApi getAccountApi() {
         return accountApi;
+    }
+
+    public ChannelApi getChannelApi() {
+        return channelApi;
     }
 }

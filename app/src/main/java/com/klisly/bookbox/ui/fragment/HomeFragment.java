@@ -7,21 +7,32 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
 import com.klisly.bookbox.logic.ChannelLogic;
 import com.klisly.bookbox.model.Channel;
+import com.klisly.bookbox.utils.ToastHelper;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
 
     private List<Channel> channels;
+    @Bind(R.id.tab_layout)
+    TabLayout mTabLayout;
+    @Bind(R.id.viewPager)
+    ViewPager mViewPager;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -35,10 +46,10 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_content, container, false);
+        ButterKnife.bind(this,view);
         channels = ChannelLogic.getInstance().getChannelsByType(Constants.HOME);
-        initView(view);
-
+        initView();
         return view;
     }
 
@@ -50,13 +61,10 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         return new DefaultNoAnimator();
     }
 
-    private void initView(View view) {
-        Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        TabLayout mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-
+    private void initView() {
         mToolbar.setTitle(R.string.homepage);
         initToolbarNav(mToolbar);
+        mToolbar.setOnMenuItemClickListener(this);
         if(channels != null){
             for(Channel channel:channels){
                 mTabLayout.addTab(mTabLayout.newTab().setText(channel.getTitle()));
@@ -77,36 +85,28 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.action_hierarchy:
-//                _mActivity.showFragmentStackHierarchyView();
-//                _mActivity.logFragmentStackHierarchy(TAG);
-//                break;
-//            case R.id.action_anim:
-//                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
-//                popupMenu.inflate(R.menu.home_pop);
-//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()) {
-//                            case R.id.action_anim_veritical:
-//                                _mActivity.setFragmentAnimator(new DefaultVerticalAnimator());
-//                                Toast.makeText(_mActivity, "设置全局动画成功! 竖向", Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case R.id.action_anim_horizontal:
-//                                _mActivity.setFragmentAnimator(new DefaultHorizontalAnimator());
-//                                Toast.makeText(_mActivity, "设置全局动画成功! 横向", Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case R.id.action_anim_none:
-//                                _mActivity.setFragmentAnimator(new DefaultNoAnimator());
-//                                Toast.makeText(_mActivity, "设置全局动画成功! 无", Toast.LENGTH_SHORT).show();
-//                                break;
-//                        }
-//                        popupMenu.dismiss();
-//                        return true;
-//                    }
-//                });
-//                popupMenu.show();
-//                break;
+            case R.id.action_more:
+                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
+                popupMenu.inflate(R.menu.menu_main_pop);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_recom_setting:
+                                ToastHelper.showShortTip(R.string.recom_setting);
+                                break;
+                            case R.id.action_reget:
+                                ToastHelper.showShortTip(R.string.reget);
+                                break;
+                            default:
+                                break;
+                        }
+                        popupMenu.dismiss();
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                break;
         }
         return true;
     }

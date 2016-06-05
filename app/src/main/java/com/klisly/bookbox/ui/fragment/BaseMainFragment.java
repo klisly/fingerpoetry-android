@@ -12,7 +12,7 @@ public class BaseMainFragment extends BaseFragment {
     protected OnFragmentOpenDrawerListener mOpenDraweListener;
 
     protected void initToolbarNav(Toolbar toolbar) {
-        initToolbarNav(toolbar, false);
+        initToolbarNav(toolbar, true);
     }
 
 

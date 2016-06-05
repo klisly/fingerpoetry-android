@@ -1,0 +1,18 @@
+<!--
+  ~ Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
+  -->
+
+<!--menu_main.xml-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+            android:id="@+id/action_recom_setting"
+            android:title="@string/recom_setting"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/action_reget"
+            android:title="@string/reget"
+            app:showAsAction="never"/>
+</menu>

@@ -1,38 +1,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/menu_group_1" android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_home"
-            android:checkable="true"
-            android:checked="true"
-            android:icon="@drawable/left_home"
-            android:title="@string/homepage" />
+                android:id="@+id/menu_home"
+                android:checkable="true"
+                android:checked="true"
+                android:icon="@drawable/left_home"
+                android:title="@string/homepage"/>
         <item
-            android:id="@+id/menu_site"
-            android:icon="@drawable/left_site"
-            android:checkable="true"
-            android:title="@string/site" />
+                android:id="@+id/menu_topic"
+                android:checkable="true"
+                android:icon="@drawable/left_topic"
+                android:title="@string/topic"/>
         <item
-            android:id="@+id/menu_topic"
-            android:checkable="true"
-            android:icon="@drawable/left_topic"
-            android:title="@string/topic" />
+                android:id="@+id/menu_site"
+                android:icon="@drawable/left_site"
+                android:checkable="true"
+                android:title="@string/site"/>
         <item
-            android:id="@+id/menu_magzine"
-            android:checkable="true"
-            android:icon="@drawable/left_mag"
-            android:title="@string/magzine" />
+                android:id="@+id/menu_magzine"
+                android:checkable="true"
+                android:icon="@drawable/left_mag"
+                android:title="@string/magzine"/>
         <item
-            android:id="@+id/menu_mine"
-            android:checkable="true"
-            android:icon="@drawable/left_user"
-            android:title="@string/mine" />
+                android:id="@+id/menu_mine"
+                android:checkable="true"
+                android:icon="@drawable/left_user"
+                android:title="@string/mine"/>
     </group>
     <group android:id="@+id/menu_group_2">
         <item
-            android:id="@+id/menu_settings"
-            android:title="@string/setting" />
+                android:id="@+id/menu_settings"
+                android:title="@string/setting"/>
         <item
-            android:id="@+id/menu_about"
-            android:title="@string/about" />
+                android:id="@+id/menu_about"
+                android:title="@string/about"/>
     </group>
 </menu>

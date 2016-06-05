@@ -47,7 +47,7 @@ public class MineFragment extends BaseMainFragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
-        initView(view);
+        initView();
         return view;
     }
 
@@ -59,8 +59,8 @@ public class MineFragment extends BaseMainFragment{
         return new DefaultNoAnimator();
     }
 
-    private void initView(View view) {
-        mToolbar.setTitle(R.string.mine);
+    private void initView() {
+        mToolbar.setTitle(R.string.mine_center);
         initToolbarNav(mToolbar, true);
     }
 
