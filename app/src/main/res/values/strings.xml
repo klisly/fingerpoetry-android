@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+    <string name="app_name">指尖书香</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="register_login">注册/登陆</string>
+    <string name="homepage">首页</string>
+    <string name="site">站点</string>
+    <string name="topic">主题</string>
+    <string name="magzine">日刊</string>
+    <string name="mine">我的</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="password">密码</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="net_error">网络异常</string>
+    <string name="parse_error">解析异常</string>
+    <string name="net_disconnect">网络中断，请检查您的网络状态</string>
+    <string name="login_success">登录成功</string>
+    <string name="login_forgetpass_link">忘记密码?</string>
+    <string name="loginwithothers">或使用以下帐号登录</string>
+    <string name="validcode">验证码</string>
+    <string name="getcode">获取验证码</string>
+    <string name="phone">手机号</string>
+    <string name="passwordtip">密码(最少6位字符数字组合)</string>
+    <string name="phone_null">手机号不能为空!</string>
+    <string name="phone_invalid">手机号格式不正确!</string>
+    <string name="password_null">密码不能为空!</string>
+    <string name="password_mismatch">两次密码不一致!</string>
+    <string name="password_min_length">密码不能少于6位</string>
+    <string name="getcode_fail">获取验证码失败,请重试</string>
+    <string name="validcode_null">验证码不能为空</string>
+    <string name="nicknametip">取一个容易让人记住的昵称</string>
+    <string name="nickname_null">昵称不能为空</string>
+    <string name="register_success">注册成功</string>
+    <string name="code_invalid">验证码不正确</string>
+    <string name="reset_passwd">修改密码</string>
+    <string name="restpass_success">修改密码成功</string>
+    <string name="tip">提示</string>
+    <string name="confirm_exit">确定要注销吗?</string>
+    <string name="cancle">取消</string>
+    <string name="confirm">确定</string>
+</resources>

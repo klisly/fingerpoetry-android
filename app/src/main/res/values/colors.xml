@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--colors.xml-->
+<resources>
+
+    <!-- Main-->
+    <color name="primary">#009688</color>
+    <color name="primaryDark">#00796b</color>
+    <color name="primaryLight">#7DD4B7</color>
+    <color name="accent">#00796b</color>
+    <color name="accentLight">#009688</color>
+
+    <!-- 常用 -->
+    <color name="transparent">#00000000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFffffff</color>
+    <color name="divide">#FFcccccc</color>
+    <color name="head_tips">#FF000000</color>
+    <color name="grey">#e8e8e8</color>
+    <color name="blue">#8BC3E9</color>
+    <color name="background">#F4F4F4</color>
+    <color name="background_black_alpha_20">#33000000</color>
+    <color name="background_black_alpha_40">#66000000</color>
+    <color name="background_black_alpha_70">#B2000000</color>
+
+    <!-- 字体颜色 -->
+    <color name="text_black">#353535</color>
+    <color name="text_gray">#9B9B9B</color>
+    <color name="text_red">#FF5340</color>
+    <!-- material design widget-->
+    <!-- TabIndicator Default -->
+    <dimen name="tab_text_size">15sp</dimen>
+    <color name="tab_text_color">#9FC1FB</color>
+    <color name="tab_text_selected_color">#FFFFFF</color>
+    <color name="tab_text_disabled_color">#000000</color>
+    <color name="tab_ripple_color">#000000</color>
+    <color name="tab_underline_color">#283593</color>
+    <dimen name="tab_underline_height">5dp</dimen>
+    <integer name="tab_max_column">4</integer>
+    <dimen name="tab_nav_button_width">36dp</dimen>
+
+    <!-- Switch Default -->
+    <dimen name="switch_width">86dp</dimen>
+    <dimen name="switch_height">48dp</dimen>
+    <dimen name="switch_thumb_radius">10dp</dimen>
+    <dimen name="switch_ripple_max_radius">24dp</dimen>
+    <dimen name="switch_stroke_width">2dp</dimen>
+    <dimen name="switch_track_width">2dp</dimen>
+    <color name="switch_track_color">#4f4f4f</color>
+    <color name="switch_track_checked_color">#2d523e</color>
+    <color name="switch_thumb_color">#929292</color>
+    <color name="switch_thumb_checked_color">#289d4d</color>
+
+    <!-- RadioButton Default -->
+    <dimen name="radio_width">48dp</dimen>
+    <dimen name="radio_height">48dp</dimen>
+    <dimen name="radio_border_radius">10dp</dimen>
+    <dimen name="radio_thumb_radius">6dp</dimen>
+    <dimen name="radio_ripple_radius">24dp</dimen>
+    <dimen name="radio_stroke_width">2dp</dimen>
+    <color name="radio_color">#6d6d6d</color>
+    <color name="radio_checked_color">#55b03d</color>
+
+    <!-- CheckBox Default -->
+    <dimen name="checkbox_width">48dp</dimen>
+    <dimen name="checkbox_height">48dp</dimen>
+    <dimen name="checkbox_thumb_size">20dp</dimen>
+    <dimen name="checkbox_corner_radius">2dp</dimen>
+    <dimen name="checkbox_border_width">2dp</dimen>
+    <dimen name="checkbox_mark_width">2dp</dimen>
+    <dimen name="checkbox_ripple_radius">24dp</dimen>
+    <dimen name="checkbox_mark_left_right_padding">3dp</dimen>
+    <dimen name="checkbox_mark_top_padding">4dp</dimen>
+    <dimen name="checkbox_mark_bottom_padding">5dp</dimen>
+    <color name="checkbox_color">#6d6d6d</color>
+    <color name="checkbox_checked_color">#55b03d</color>
+    <color name="checkbox_mark_color">#eeeeee</color>
+
+    <!-- CircleButton Default -->
+    <dimen name="circle_button_width">72dp</dimen>
+    <dimen name="circle_button_height">72dp</dimen>
+    <color name="circle_button_color">#ff3f51b5</color>
+    <color name="circle_button_shadow_color">#ff000000</color>
+
+    <!-- PaperButton Default -->
+    <dimen name="paper_text_size">15sp</dimen>
+    <color name="paper_text_color">#60000000</color>
+    <color name="paper_button_color">#ffffffff</color>
+    <color name="paper_button_shadow_color">#000000</color>
+    <dimen name="paper_button_corner_radius">2dp</dimen>
+    <dimen name="paper_padding">7dp</dimen>
+
+    <!-- CircularProgress Default -->
+    <color name="circular_progress_color">#ff3f51b5</color>
+    <bool name="circular_progress_indeterminate">true</bool>
+    <dimen name="circular_progress_border_width">4dp</dimen>
+    <dimen name="circular_progress_small_size">36dp</dimen>
+    <dimen name="circular_progress_normal_size">48dp</dimen>
+    <dimen name="circular_progress_large_size">60dp</dimen>
+    <integer name="circular_progress_max">100</integer>
+
+    <!-- LinearProgress Default -->
+    <color name="linear_progress_color">#ff3f51b5</color>
+    <dimen name="linear_progress_line_width">4dp</dimen>
+    <integer name="linear_progress_max">100</integer>
+
+    <!-- FloatingEditText Default -->
+    <color name="floating_edit_text_color">#ffc8c8c8</color>
+    <color name="floating_edit_text_highlighted_color">#ff3f51b5</color>
+    <color name="floating_edit_text_error_color">#DB4437</color>
+    <dimen name="floating_edit_text_underline_height">1dp</dimen>
+    <dimen name="floating_edit_text_underline_highlighted_height">2dp</dimen>
+
+    <!-- Slider Default -->
+    <color name="slider_color">#ffc8c8c8</color>
+    <color name="slider_tint_color">#ff3f51b5</color>
+    <color name="slider_ripple_color">#ffd4d4d4</color>
+    <dimen name="slider_thumb_radius">10dp</dimen>
+    <dimen name="slider_thumb_ripple_radius">30dp</dimen>
+    <dimen name="slider_bar_height">2dp</dimen>
+    <dimen name="slider_thumb_border_width">2dp</dimen>
+
+    <!-- TrackSlider Default -->
+    <color name="track_slider_color">#ffc8c8c8</color>
+    <color name="track_slider_tint_color">#ff3f51b5</color>
+    <dimen name="track_slider_thumb_radius">10dp</dimen>
+    <dimen name="track_slider_ripple_radius">20dp</dimen>
+    <dimen name="track_slider_bar_height">2dp</dimen>
+
+    <!-- 待选择 -->
+    <color name="material_blue_500">#ff5677fc</color>
+    <color name="material_blue_grey_800">#ff37474f</color>
+    <color name="material_blue_grey_900">#ff263238</color>
+    <color name="material_blue_grey_950">#ff21272b</color>
+    <color name="material_deep_teal_200">#ff80cbc4</color>
+    <color name="material_deep_teal_500">#ff009688</color>
+    <color name="material_grey_100">#fff5f5f5</color>
+    <color name="material_grey_300">#ffe0e0e0</color>
+    <color name="material_grey_50">#fffafafa</color>
+    <color name="material_grey_600">#ff757575</color>
+    <color name="material_grey_800">#ff424242</color>
+    <color name="material_grey_850">#ff303030</color>
+    <color name="primary_dark_material_dark">@android:color/black</color>
+    <color name="primary_dark_material_light">@color/material_grey_600</color>
+    <color name="primary_material_dark">@color/material_grey_900</color>
+    <color name="primary_material_light">@color/material_grey_100</color>
+    <color name="primary_text_default_material_dark">#ffffffff</color>
+    <color name="primary_text_default_material_light">#de000000</color>
+    <color name="primary_text_disabled_material_dark">#4dffffff</color>
+    <color name="primary_text_disabled_material_light">#39000000</color>
+
+    <color name="style_color_primary">#2d5d82</color>
+    <color name="style_color_primary_dark">#21425d</color>
+    <color name="style_color_accent">#01bcd5</color>
+
+    <color name="fab_color_pressed">#007787</color>
+    <color name="fab_color_shadow">#44000000</color>
+
+    <color name="btn_default_light_normal">#00000000</color>
+    <color name="btn_default_light_pressed">#40ffffff</color>
+    <color name="btn_send_normal">#02c754</color>
+    <color name="btn_send_pressed">#006633</color>
+    <color name="btn_default_shadow">#99000000</color>
+    <color name="btn_context_menu_normal">#ffffff</color>
+    <color name="btn_context_menu_pressed">#40000000</color>
+    <color name="btn_context_menu_text_red">#ffff0000</color>
+
+    <color name="text_like_counter">#2b5a83</color>
+
+    <color name="bg_comments">#ffffff</color>
+
+</resources>

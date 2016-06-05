@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--dimens.xml-->
+<resources>
+    <dimen name="btn_fab_size">56dp</dimen>
+    <dimen name="btn_fab_margins">16dp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
+    <dimen name="comment_avatar_size">56dp</dimen>
+    <dimen name="user_profile_avatar_size">72dp</dimen>
+    <dimen name="global_menu_avatar_size">72dp</dimen>
+    <dimen name="global_menu_avatar_radius">37dp</dimen>
+
+    <dimen name="global_menu_user_bg_size">196dp</dimen>
+
+    <dimen name="publish_photo_thumbnail_size">96dp</dimen>
+
+    <dimen name="text_size_32">32.0dip</dimen>
+    <dimen name="text_size_31">31.0dip</dimen>
+    <dimen name="text_size_30">30.0dip</dimen>
+    <dimen name="text_size_29">29.0dip</dimen>
+    <dimen name="text_size_28">28.0dip</dimen>
+    <dimen name="text_size_27">27.0dip</dimen>
+    <dimen name="text_size_26">26.0dip</dimen>
+    <dimen name="text_size_25">25.0dip</dimen>
+    <dimen name="text_size_24">24.0dip</dimen>
+    <dimen name="text_size_23">23.0dip</dimen>
+    <dimen name="text_size_22">22.0dip</dimen>
+    <dimen name="text_size_21">21.0dip</dimen>
+    <dimen name="text_size_20">20.0dip</dimen>
+    <dimen name="text_size_19">19.0dip</dimen>
+    <dimen name="text_size_18">18.0dip</dimen>
+    <dimen name="text_size_17">17.0dip</dimen>
+    <dimen name="text_size_16">16.0dip</dimen>
+    <dimen name="text_size_15">15.0dip</dimen>
+    <dimen name="text_size_14">14.0dip</dimen>
+    <dimen name="text_size_13">13.0dip</dimen>
+    <dimen name="text_size_12">12.0dip</dimen>
+    <dimen name="text_size_11">11.0dip</dimen>
+    <dimen name="text_size_10">10.0dip</dimen>
+    <dimen name="text_size_9">9.0dip</dimen>
+    <dimen name="text_size_8">8.0dip</dimen>
+    <dimen name="text_size_7">7.0dip</dimen>
+    <dimen name="design_btn_height">56dp</dimen>
+    <dimen name="third_icon_size">48dp</dimen>
+    <dimen name="design_btn_width">158dp</dimen>
+    <dimen name="input_item_height">56dp</dimen>
+</resources>

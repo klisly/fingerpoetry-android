@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/btn_context_menu"
+             android:clickable="true">
+
+    <RelativeLayout
+            android:id="@+id/vGlobalMenuHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/ivMenuUserBg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/global_menu_user_bg_size"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_user_info"
+        />
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_marginLeft="12dp"
+                android:orientation="vertical">
+            <com.makeramen.roundedimageview.RoundedImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/ivMenuUserAvatar"
+                    android:layout_width="@dimen/global_menu_avatar_size"
+                    android:layout_height="@dimen/global_menu_avatar_size"
+                    android:src="@drawable/menu_user"
+                    android:layout_margin="10dp"
+                    app:riv_corner_radius="3dp"
+                    app:riv_border_width="2dip"
+                    app:riv_border_color="@color/primary_text_default_material_dark"
+                    app:riv_mutate_background="true"
+                    app:riv_tile_mode="repeat"
+                    app:riv_oval="true"/>
+            <TextView
+                    android:id="@+id/tvNick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_below="@id/ivMenuUserAvatar"
+                    android:layout_weight="1"
+                    android:text="@string/register_login"
+                    android:textColor="@color/material_grey_50"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="#dddddd"/>
+</FrameLayout>

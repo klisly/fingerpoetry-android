@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:widget="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="16dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="256dp"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:id="@+id/et_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone"
+                        android:imeActionId="@+id/phone"
+                        android:imeActionLabel="@string/phone"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="256dp"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        android:imeActionId="@+id/password"
+                        android:imeActionLabel="@string/password"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <com.material.widget.PaperButton
+                    android:id="@+id/btn_login"
+                    android:layout_width="@dimen/design_btn_width"
+                    android:layout_height="@dimen/design_btn_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    widget:paper_shadow_color="@color/accent"
+                    widget:paper_color="@color/primary"
+                    widget:paper_text_color="@color/white"
+                    widget:paper_text_size="@dimen/text_size_16"
+                    widget:paper_text="@string/login"
+            />
+            <com.material.widget.PaperButton
+                    android:id="@+id/btn_forget"
+                    android:layout_width="78dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="right"
+                    android:visibility="visible"
+                    widget:paper_color="@color/background"
+                    widget:paper_shadow_color="@color/white"
+                    widget:paper_text_color="@color/accent"
+                    widget:paper_text_size="@dimen/text_size_10"
+                    widget:paper_text="@string/login_forgetpass_link"/>
+
+
+            <RelativeLayout
+                    android:id="@+id/login_layout_3party"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+            >
+                <TextView
+                        android:id="@+id/login_txt_login_with_others"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20.0dip"
+                        android:textColor="@color/primary_dark_material_light"
+                        android:text="@string/loginwithothers"
+                        android:layout_centerHorizontal="true"/>
+
+                <LinearLayout
+                        android:id="@+id/login_ll_3rdparties"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20.0dip"
+
+                        android:layout_marginLeft="55.0dip"
+                        android:layout_marginRight="55.0dip"
+                        android:layout_below="@+id/login_txt_login_with_others"
+                        android:layout_centerHorizontal="true">
+                    <ImageView
+                            android:id="@+id/login_button_sina_login"
+                            android:clickable="true"
+                            android:background="@android:color/transparent"
+                            android:layout_width="@dimen/third_icon_size"
+                            android:layout_height="@dimen/third_icon_size"
+                            android:src="@drawable/login_weibo"/>
+                    <View
+                            android:layout_width="0.0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"/>
+                    <ImageView android:id="@+id/login_button_qq_login"
+                               android:clickable="true"
+                               android:background="@android:color/transparent"
+                               android:layout_width="@dimen/third_icon_size"
+                               android:layout_height="@dimen/third_icon_size"
+                               android:src="@drawable/login_qq"/>
+                    <View android:layout_width="0.0dip" android:layout_height="fill_parent"
+                          android:layout_weight="1.0"/>
+                    <ImageView
+                            android:id="@+id/login_button_wechat_login"
+                            android:clickable="true"
+                            android:background="@android:color/transparent"
+                            android:layout_width="@dimen/third_icon_size"
+                            android:layout_height="@dimen/third_icon_size"
+                            android:src="@drawable/login_weixin"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
