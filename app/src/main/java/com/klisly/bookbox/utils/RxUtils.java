@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
  */
-package com.klisly.bookbox.ui.utils;
+package com.klisly.bookbox.utils;
 
 import rx.Observable;
 import rx.Scheduler;

@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import com.google.gson.JsonParseException;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.ui.utils.RxUtils;
+import com.klisly.bookbox.utils.RxUtils;
 import com.klisly.bookbox.widget.progress.ProgressCancelListener;
 import com.klisly.bookbox.widget.progress.ProgressDialogHandler;
 

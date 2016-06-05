@@ -50,7 +50,7 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        channels = ChannelLogic.getInstance().getChannelsByType(Constants.HOME);
+        channels = ChannelLogic.getInstance().getChannelsByType(Constants.TOPIC);
         initView();
         return view;
     }

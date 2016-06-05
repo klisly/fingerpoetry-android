@@ -47,7 +47,7 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        channels = ChannelLogic.getInstance().getChannelsByType(Constants.HOME);
+        channels = ChannelLogic.getInstance().getChannelsByType(Constants.SITE);
         initView();
         return view;
     }

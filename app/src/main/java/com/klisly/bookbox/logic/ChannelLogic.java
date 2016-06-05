@@ -63,14 +63,25 @@ public class ChannelLogic extends  BaseLogic{
             channels.add(channel);
             channel = new Channel();
             channel.setId(1);
-            channel.setTitle("求魔");
+            channel.setTitle("新解");
             channel.setOrder(1);
             channel.setUrl("/channel/hot");
             channels.add(channel);
         } else if( type == Constants.MAGEZINE){
 
-        } else if( type == Constants.HOME){
-
+        } else if( type == Constants.TOPIC){
+            Channel channel = new Channel();
+            channel.setId(2);
+            channel.setTitle("汉语");
+            channel.setOrder(0);
+            channel.setUrl("/channel/site/yanyu");
+            channels.add(channel);
+            channel = new Channel();
+            channel.setId(1);
+            channel.setTitle("新词");
+            channel.setOrder(1);
+            channel.setUrl("/channel/hot");
+            channels.add(channel);
         }
     }
 }

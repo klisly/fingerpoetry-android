@@ -5,7 +5,7 @@ public class Constants {
     public static final int HOME = 0;
     public static final int SITE = 1;
     public static final int MAGEZINE = 2;
-    public static final int MINE = 3;
+    public static final int TOPIC = 3;
 
     // MOB设置
     public static final String MOB_APP_KEY = "13818ffc591c0";
