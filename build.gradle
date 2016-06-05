@@ -1,0 +1,21 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+        flatDir{
+            dirs 'libs'
+        }
+
+    }
+}
