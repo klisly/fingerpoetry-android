@@ -12,6 +12,8 @@
     <dimen name="global_menu_user_bg_size">196dp</dimen>
 
     <dimen name="publish_photo_thumbnail_size">96dp</dimen>
+    <dimen name="item_article_img_width">86dp</dimen>
+    <dimen name="item_article_img_height">70dp</dimen>
 
     <dimen name="text_size_32">32.0dip</dimen>
     <dimen name="text_size_31">31.0dip</dimen>

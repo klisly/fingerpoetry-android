@@ -3,6 +3,7 @@ package com.klisly.bookbox.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.listener.OnItemClickListener;
 
@@ -12,7 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder> {
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PagerItemViewHolder> {
     private List<String> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
@@ -28,9 +33,9 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PagerItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_pager, parent, false);
-        final MyViewHolder holder = new MyViewHolder(view);
+        final PagerItemViewHolder holder = new PagerItemViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,9 +49,8 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        String item = mItems.get(position);
-        holder.tvTitle.setText(item);
+    public void onBindViewHolder(PagerItemViewHolder holder, int position) {
+
     }
 
     @Override
@@ -54,12 +58,18 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
         return mItems.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
-
-        public MyViewHolder(View itemView) {
+    class PagerItemViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.tv_title)
+        TextView tvTitle;
+        @Bind(R.id.tv_source)
+        TextView tvSource;
+        @Bind(R.id.tv_time)
+        TextView tvDate;
+        @Bind(R.id.iv_image)
+        SimpleDraweeView sdvImage;
+        public PagerItemViewHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            ButterKnife.bind(this, itemView);
         }
     }
 

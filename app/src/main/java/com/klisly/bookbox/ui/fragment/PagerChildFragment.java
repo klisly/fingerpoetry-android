@@ -8,6 +8,7 @@ import com.klisly.bookbox.adapter.PagerAdapter;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.model.Channel;
 import com.klisly.bookbox.ui.CycleFragment;
+import com.klisly.bookbox.utils.ToastHelper;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -75,6 +76,7 @@ public class PagerChildFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
+                ToastHelper.showLoneTip("click position:"+position);
                 if (getParentFragment() instanceof BaseBackFragment) {
                     ((BaseFragment) getParentFragment()).start(CycleFragment.newInstance(1));
                 }

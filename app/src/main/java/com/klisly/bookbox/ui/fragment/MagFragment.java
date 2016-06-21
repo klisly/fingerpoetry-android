@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.HomeAdapter;
+import com.klisly.bookbox.adapter.ListAdapter;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.model.Article;
 
@@ -41,7 +41,7 @@ public class MagFragment extends BaseMainFragment implements Toolbar.OnMenuItemC
 
     private FloatingActionButton mFab;
     private RecyclerView mRecy;
-    private HomeAdapter mAdapter;
+    private ListAdapter mAdapter;
 
     public static MagFragment newInstance() {
         return new MagFragment();
@@ -81,7 +81,7 @@ public class MagFragment extends BaseMainFragment implements Toolbar.OnMenuItemC
 //        mToolbar.inflateMenu(R.menu.menu_main);
         mToolbar.setOnMenuItemClickListener(this);
 
-        mAdapter = new HomeAdapter(_mActivity);
+        mAdapter = new ListAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);

@@ -86,7 +86,8 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_more:
-                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
+                final PopupMenu popupMenu = new PopupMenu(_mActivity,
+                        mToolbar,GravityCompat.END);
                 popupMenu.inflate(R.menu.menu_main_pop);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override

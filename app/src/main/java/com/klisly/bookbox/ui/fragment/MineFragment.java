@@ -1,32 +1,33 @@
-/*
- * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
- */
 package com.klisly.bookbox.ui.fragment;
 
-import com.gc.materialdesign.widgets.Dialog;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.common.LogUtils;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-public class MineFragment extends BaseMainFragment{
+public class MineFragment extends BaseMainFragment {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    private Dialog exitDialog;
+    private MaterialDialog exitDialog;
     private FloatingActionButton mFab;
 
     public static MineFragment newInstance() {
@@ -49,7 +50,7 @@ public class MineFragment extends BaseMainFragment{
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         initView();
-        if(!AccountLogic.getInstance().isLogin()){
+        if (!AccountLogic.getInstance().isLogin()) {
             start(LoginFragment.newInstance());
         }
         return view;
@@ -84,26 +85,29 @@ public class MineFragment extends BaseMainFragment{
     }
 
     private void showExitDialog() {
-        if(exitDialog == null) {
-            exitDialog = new Dialog(getContext(), getString(R.string.tip), getString(R.string.confirm_exit));
-            exitDialog.setButtonAcceptText(getString(R.string.confirm));
-            exitDialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+        if (exitDialog == null) {
+            exitDialog = new MaterialDialog.Builder(getActivity())
+                    .title(R.string.tip)
+                    .content(R.string.confirm_exit)
+                    .positiveText(R.string.confirm)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            LogUtils.i(TAG, "onPositive");
+                            AccountLogic.getInstance().logout();
+                            BusProvider.getInstance().post(new LogoutEvent());
+                            pop();
+                        }
+                    })
+                    .negativeText(R.string.cancle)
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            LogUtils.i(TAG, "onNegtive");
+                        }
+                    })
+                    .build();
 
-                @Override
-                public void onClick(View v) {
-                    AccountLogic.getInstance().logout();
-                    BusProvider.getInstance().post(new LogoutEvent());
-                    pop();
-                }
-            });
-
-            exitDialog.setButtonCancelText(getString(R.string.cancle));
-            exitDialog.setOnCancelButtonClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                }
-            });
         }
         exitDialog.show();
     }
@@ -112,7 +116,7 @@ public class MineFragment extends BaseMainFragment{
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        if(exitDialog != null){
+        if (exitDialog != null) {
             exitDialog.dismiss();
             exitDialog = null;
         }
