@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
- */
 package com.klisly.bookbox.subscriber;
 public class ApiException extends Exception {
 
