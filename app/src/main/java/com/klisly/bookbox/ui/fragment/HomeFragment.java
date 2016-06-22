@@ -8,8 +8,10 @@ import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
 import com.klisly.bookbox.logic.ChannelLogic;
 import com.klisly.bookbox.model.Channel;
 import com.klisly.bookbox.utils.ToastHelper;
+import com.klisly.bookbox.widget.topsnackbar.TSnackbar;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;

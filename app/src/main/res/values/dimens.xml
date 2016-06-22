@@ -45,4 +45,5 @@
     <dimen name="third_icon_size">48dp</dimen>
     <dimen name="design_btn_width">158dp</dimen>
     <dimen name="input_item_height">56dp</dimen>
+    <dimen name="tip_height">32dp</dimen>
 </resources>

@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/recy"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
 
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tvTip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tip_height"
+        android:layout_weight="1"
+        android:background="#48aba1"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:maxLines="1"
+        android:layout_gravity="top|center_horizontal|start"
+        android:gravity="center"
+        android:text="@string/confirm_exit"
+        android:ellipsize="end"/>
+</FrameLayout>

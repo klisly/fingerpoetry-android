@@ -26,8 +26,8 @@
             android:orientation="vertical"
             android:paddingBottom="6dp"
             android:paddingTop="6dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp">
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp">
 
             <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/iv_image"

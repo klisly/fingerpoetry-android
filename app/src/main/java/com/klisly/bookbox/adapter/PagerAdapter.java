@@ -50,7 +50,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PagerItemVie
 
     @Override
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
-
+        holder.tvTitle.setText(holder.tvTitle.getText()+" position:"+position);
     }
 
     @Override

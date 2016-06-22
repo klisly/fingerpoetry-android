@@ -9,6 +9,8 @@ import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;
 
 import android.app.Application;
+import android.os.Handler;
+
 import timber.log.Timber;
 
 public class BookBoxApplication extends Application {
@@ -18,6 +20,7 @@ public class BookBoxApplication extends Application {
         return appContext;
     }
     private Gson gson = new Gson();
+    private Handler handler;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,6 +28,7 @@ public class BookBoxApplication extends Application {
         Timber.plant(new Timber.DebugTree());
         ToastHelper.init(this);
         preferenceUtils = new SharedPreferenceUtils(this);
+        handler = new Handler();
     }
 
     public SharedPreferenceUtils getPreferenceUtils() {
@@ -33,5 +37,9 @@ public class BookBoxApplication extends Application {
 
     public Gson getGson() {
         return gson;
+    }
+
+    public Handler getHandler() {
+        return handler;
     }
 }
