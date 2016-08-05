@@ -45,7 +45,8 @@
             android:layout_width="96dp"
             android:layout_height="48dp"
             widget:paper_shadow_color="@color/accent"
-            widget:paper_color="@color/primary_btn_disabled_material_dark"
+            widget:paper_color="@color/primary"
+            widget:paper_disable_color="@color/primaryLight"
             widget:paper_text_color="@color/white"
             widget:paper_text_size="@dimen/text_size_14"
             widget:paper_text="@string/next"/>

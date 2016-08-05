@@ -41,6 +41,7 @@
         <attr name="paper_text_color" format="color"/>
         <attr name="paper_font" format="string"/>
         <attr name="paper_color" format="color"/>
+        <attr name="paper_disable_color" format="color"/>
         <attr name="paper_corner_radius" format="dimension"/>
         <attr name="paper_shadow_radius" format="float"/>
         <attr name="paper_shadow_offset_x" format="float"/>

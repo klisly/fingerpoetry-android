@@ -1,7 +1,5 @@
 package com.material.widget;
 
-import com.klisly.bookbox.R;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.TypedArray;
@@ -19,6 +17,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.klisly.bookbox.R;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,6 +42,7 @@ public class PaperButton extends View {
     private int mState = StateNormal;
     private long mStartTime;
     private int mColor;
+    private int mDisableColor;
     private int mShadowColor;
     private int mCornerRadius;
     private int mPadding;
@@ -56,6 +57,8 @@ public class PaperButton extends View {
     private Path rippleClipPath;
     private boolean mMoveOutside;
     private Point mTouchPoint = new Point();
+
+    private boolean mEnable = true;
 
     private Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint ripplePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -74,6 +77,8 @@ public class PaperButton extends View {
         mPadding = getResources().getDimensionPixelSize(R.dimen.paper_padding);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.PaperButton);
         mColor = attributes.getColor(R.styleable.PaperButton_paper_color,
+                getResources().getColor(R.color.paper_button_color));
+        mDisableColor = attributes.getColor(R.styleable.PaperButton_paper_disable_color,
                 getResources().getColor(R.color.paper_button_color));
         mShadowColor = attributes.getColor(R.styleable.PaperButton_paper_shadow_color,
                 getResources().getColor(R.color.paper_button_shadow_color));
@@ -156,6 +161,18 @@ public class PaperButton extends View {
         invalidate();
     }
 
+    public void enable() {
+        mEnable = true;
+        backgroundPaint.setColor(mColor);
+        invalidate();
+    }
+
+    public void disEnable() {
+        mEnable = false;
+        backgroundPaint.setColor(mDisableColor);
+        invalidate();
+    }
+
     private RectF getRectF() {
         if (backgroundRectF == null) {
             backgroundRectF = new RectF();
@@ -191,7 +208,9 @@ public class PaperButton extends View {
                     mState = StateTouchUp;
                     mStartTime = System.currentTimeMillis();
                     invalidate();
-                    performClick();
+                    if(mEnable) {
+                        performClick();
+                    }
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:

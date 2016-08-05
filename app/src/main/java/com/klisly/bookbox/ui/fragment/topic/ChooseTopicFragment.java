@@ -57,10 +57,10 @@ public class ChooseTopicFragment extends BaseBackFragment {
         String title = getString(R.string.choose_topic);
         mToolbar.setTitle(title);
         initToolbarNav(mToolbar, false, false);
-
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 start(ChooseSiteFragment.newInstance());
             }
         });
