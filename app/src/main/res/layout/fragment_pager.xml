@@ -2,12 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:AniBackColor="#ff0097cd"
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recy"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout>
     <TextView
         android:id="@+id/tvTip"
         android:layout_width="match_parent"
@@ -19,6 +25,6 @@
         android:maxLines="1"
         android:layout_gravity="top|center_horizontal|start"
         android:gravity="center"
-        android:text="@string/confirm_exit"
+        android:text=""
         android:ellipsize="end"/>
 </FrameLayout>

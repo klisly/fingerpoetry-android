@@ -12,21 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center_horizontal"
-        android:text="循环Fragment1"
+        android:text="关注你感兴趣的主题"
         android:textSize="30sp"/>
-
-    <Button
-        android:id="@+id/btn_next_with_finish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="进入循环Fragment,并关闭当前页面"/>
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="进入循环Fragment"/>
+        android:text="下一步"/>
 
 </LinearLayout>

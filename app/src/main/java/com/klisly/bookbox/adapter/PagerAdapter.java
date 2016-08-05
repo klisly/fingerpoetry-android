@@ -1,18 +1,18 @@
 package com.klisly.bookbox.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.klisly.bookbox.R;
-import com.klisly.bookbox.listener.OnItemClickListener;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.klisly.bookbox.R;
+import com.klisly.bookbox.listener.OnItemClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +50,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PagerItemVie
 
     @Override
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
-        holder.tvTitle.setText(holder.tvTitle.getText()+" position:"+position);
+        holder.tvTitle.setText(holder.tvTitle.getText());
     }
 
     @Override

@@ -3,13 +3,13 @@
  */
 package com.klisly.bookbox;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.google.gson.Gson;
-import com.klisly.bookbox.utils.ToastHelper;
-import com.klisly.common.SharedPreferenceUtils;
-
 import android.app.Application;
 import android.os.Handler;
+
+import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.klisly.bookbox.utils.ToastHelper;
+import com.klisly.common.SharedPreferenceUtils;
 
 import timber.log.Timber;
 
@@ -27,6 +27,7 @@ public class BookBoxApplication extends Application {
         appContext = this;
         Timber.plant(new Timber.DebugTree());
         ToastHelper.init(this);
+        Dexter.initialize(this);
         preferenceUtils = new SharedPreferenceUtils(this);
         handler = new Handler();
     }

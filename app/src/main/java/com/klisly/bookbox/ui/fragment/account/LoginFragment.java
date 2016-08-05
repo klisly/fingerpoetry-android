@@ -1,18 +1,5 @@
 package com.klisly.bookbox.ui.fragment.account;
 
-import com.klisly.bookbox.BusProvider;
-import com.klisly.bookbox.R;
-import com.klisly.bookbox.api.AccountApi;
-import com.klisly.bookbox.api.BookRetrofit;
-import com.klisly.bookbox.domain.ApiResult;
-import com.klisly.bookbox.domain.LoginData;
-import com.klisly.bookbox.logic.AccountLogic;
-import com.klisly.bookbox.ottoevent.LoginEvent;
-import com.klisly.bookbox.subscriber.AbsSubscriber;
-import com.klisly.bookbox.subscriber.ApiException;
-import com.klisly.bookbox.ui.fragment.BaseBackFragment;
-import com.material.widget.PaperButton;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.R;
+import com.klisly.bookbox.api.AccountApi;
+import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.domain.LoginData;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.ottoevent.LoginEvent;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
+import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.material.widget.PaperButton;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

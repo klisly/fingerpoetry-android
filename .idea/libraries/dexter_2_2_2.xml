@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="dexter-2.2.2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.karumi/dexter/2.2.2/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.karumi/dexter/2.2.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.karumi/dexter/2.2.2/74a210fe6ab7ef5d9f41b846feb6b7266c30bd16/dexter-2.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

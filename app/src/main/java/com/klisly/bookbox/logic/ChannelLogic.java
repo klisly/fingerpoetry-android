@@ -1,10 +1,10 @@
 package com.klisly.bookbox.logic;
 
+import com.klisly.bookbox.Constants;
+import com.klisly.bookbox.model.Topic;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.klisly.bookbox.Constants;
-import com.klisly.bookbox.model.Channel;
 
 public class ChannelLogic extends  BaseLogic{
 
@@ -34,54 +34,54 @@ public class ChannelLogic extends  BaseLogic{
      * @param type
      * @return
      */
-    public List<Channel> getChannelsByType(int type){
-        List<Channel> channels = new ArrayList<>();
-        getFakeChannel(channels, type);
-        return channels;
+    public List<Topic> getChannelsByType(int type){
+        List<Topic> topics = new ArrayList<>();
+        getFakeChannel(topics, type);
+        return topics;
     }
 
-    private void getFakeChannel(List<Channel> channels, int type) {
+    private void getFakeChannel(List<Topic> topics, int type) {
         if( type == Constants.HOME){
-            Channel channel = new Channel();
-            channel.setId(0);
-            channel.setTitle("推荐");
-            channel.setOrder(0);
-            channel.setUrl("/channel/recommend");
-            channels.add(channel);
-            channel = new Channel();
-            channel.setId(1);
-            channel.setTitle("热门");
-            channel.setOrder(1);
-            channel.setUrl("/channel/hot");
-            channels.add(channel);
+            Topic topic = new Topic();
+            topic.setId(0);
+            topic.setTitle("推荐");
+            topic.setOrder(0);
+            topic.setUrl("/topic/recommend");
+            topics.add(topic);
+            topic = new Topic();
+            topic.setId(1);
+            topic.setTitle("热门");
+            topic.setOrder(1);
+            topic.setUrl("/topic/hot");
+            topics.add(topic);
         } else if( type == Constants.SITE){
-            Channel channel = new Channel();
-            channel.setId(2);
-            channel.setTitle("烟雨");
-            channel.setOrder(0);
-            channel.setUrl("/channel/site/yanyu");
-            channels.add(channel);
-            channel = new Channel();
-            channel.setId(1);
-            channel.setTitle("新解");
-            channel.setOrder(1);
-            channel.setUrl("/channel/hot");
-            channels.add(channel);
+            Topic topic = new Topic();
+            topic.setId(2);
+            topic.setTitle("烟雨");
+            topic.setOrder(0);
+            topic.setUrl("/topic/site/yanyu");
+            topics.add(topic);
+            topic = new Topic();
+            topic.setId(1);
+            topic.setTitle("新解");
+            topic.setOrder(1);
+            topic.setUrl("/topic/hot");
+            topics.add(topic);
         } else if( type == Constants.MAGEZINE){
 
         } else if( type == Constants.TOPIC){
-            Channel channel = new Channel();
-            channel.setId(2);
-            channel.setTitle("汉语");
-            channel.setOrder(0);
-            channel.setUrl("/channel/site/yanyu");
-            channels.add(channel);
-            channel = new Channel();
-            channel.setId(1);
-            channel.setTitle("新词");
-            channel.setOrder(1);
-            channel.setUrl("/channel/hot");
-            channels.add(channel);
+            Topic topic = new Topic();
+            topic.setId(2);
+            topic.setTitle("汉语");
+            topic.setOrder(0);
+            topic.setUrl("/topic/site/yanyu");
+            topics.add(topic);
+            topic = new Topic();
+            topic.setId(1);
+            topic.setTitle("新词");
+            topic.setOrder(1);
+            topic.setUrl("/topic/hot");
+            topics.add(topic);
         }
     }
 }

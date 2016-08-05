@@ -23,9 +23,9 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
-            style="@style/MyTabLayout"
+            style="@style/SubTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="42dp" />
+            android:layout_height="32dp" />
 
     </android.support.design.widget.AppBarLayout>
 

@@ -1,17 +1,6 @@
 package com.klisly.bookbox.ui.fragment;
 
-import java.util.List;
-
-import com.klisly.bookbox.Constants;
-import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
-import com.klisly.bookbox.logic.ChannelLogic;
-import com.klisly.bookbox.model.Channel;
-import com.klisly.bookbox.utils.ToastHelper;
-import com.klisly.bookbox.widget.topsnackbar.TSnackbar;
-
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -21,6 +10,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.klisly.bookbox.Constants;
+import com.klisly.bookbox.R;
+import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
+import com.klisly.bookbox.logic.ChannelLogic;
+import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.ui.base.BaseMainFragment;
+import com.klisly.bookbox.utils.ToastHelper;
+
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
@@ -28,7 +28,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
 
-    private List<Channel> channels;
+    private List<Topic> topics;
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
     @Bind(R.id.viewPager)
@@ -50,7 +50,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this,view);
-        channels = ChannelLogic.getInstance().getChannelsByType(Constants.HOME);
+        topics = ChannelLogic.getInstance().getChannelsByType(Constants.HOME);
         initView();
         return view;
     }
@@ -67,12 +67,12 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mToolbar.setTitle(R.string.homepage);
         initToolbarNav(mToolbar);
         mToolbar.setOnMenuItemClickListener(this);
-        if(channels != null){
-            for(Channel channel:channels){
-                mTabLayout.addTab(mTabLayout.newTab().setText(channel.getTitle()));
+        if(topics != null){
+            for(Topic topic : topics){
+                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getTitle()));
             }
         }
-        mViewPager.setAdapter(new ChannelFragmentAdapter(getChildFragmentManager(), channels));
+        mViewPager.setAdapter(new ChannelFragmentAdapter(getChildFragmentManager(), topics));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

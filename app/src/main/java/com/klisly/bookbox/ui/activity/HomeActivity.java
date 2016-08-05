@@ -1,27 +1,10 @@
 package com.klisly.bookbox.ui.activity;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.klisly.bookbox.BusProvider;
-import com.klisly.bookbox.R;
-import com.klisly.bookbox.api.BookRetrofit;
-import com.klisly.bookbox.logic.AccountLogic;
-import com.klisly.bookbox.model.User;
-import com.klisly.bookbox.ottoevent.LoginEvent;
-import com.klisly.bookbox.ottoevent.LogoutEvent;
-import com.klisly.bookbox.ui.fragment.BaseMainFragment;
-import com.klisly.bookbox.ui.fragment.HomeFragment;
-import com.klisly.bookbox.ui.fragment.MagFragment;
-import com.klisly.bookbox.ui.fragment.MineFragment;
-import com.klisly.bookbox.ui.fragment.SiteFragment;
-import com.klisly.bookbox.ui.fragment.TopicFragment;
-import com.klisly.bookbox.ui.fragment.account.LoginFragment;
-import com.klisly.bookbox.utils.ActivityUtil;
-import com.squareup.otto.Subscribe;
-
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,28 +12,66 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.klisly.bookbox.BookBoxApplication;
+import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.R;
+import com.klisly.bookbox.api.AccountApi;
+import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.domain.LoginData;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.User;
+import com.klisly.bookbox.ottoevent.LoginEvent;
+import com.klisly.bookbox.ottoevent.LogoutEvent;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
+import com.klisly.bookbox.ui.base.BaseMainFragment;
+import com.klisly.bookbox.ui.fragment.HomeFragment;
+import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
+import com.klisly.bookbox.ui.fragment.site.SiteFragment;
+import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
+import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
+import com.klisly.bookbox.ui.fragment.user.MineFragment;
+import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.bookbox.utils.ToastHelper;
+import com.klisly.common.SharedPreferenceUtils;
+import com.squareup.otto.Subscribe;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class HomeActivity extends SupportActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BaseMainFragment.OnFragmentOpenDrawerListener {
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = HomeActivity.class.getSimpleName();
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawer;
     @Bind(R.id.vNavigation)
     NavigationView mNavigationView;
     private TextView mTvName;   // NavigationView上的名字
     private SimpleDraweeView mImgNav;  // NavigationView上的头像
-
+    private SharedPreferenceUtils preferenceUtils = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Fresco.initialize(this);
+        preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
@@ -100,6 +121,8 @@ public class HomeActivity extends SupportActivity
                 }, 250);
             }
         });
+
+
     }
 
     @Override
@@ -112,6 +135,17 @@ public class HomeActivity extends SupportActivity
     protected void onResume() {
         super.onResume();
         BusProvider.getInstance().register(this);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gotoChooseTopics();
+            }
+        }, 3000);
+    }
+
+    private void gotoChooseTopics() {
+        start(ChooseTopicFragment.newInstance());
     }
 
     @Override
@@ -240,7 +274,43 @@ public class HomeActivity extends SupportActivity
 
     @Subscribe public void onLoginSuccess(LoginEvent event) {
         updateNavData();
+        User user = AccountLogic.getInstance().getNowUser();
+        if(!user.isBasicSet()){
+            user.setBasicSet(true);
+            LoginData data = AccountLogic.getInstance().getLoginData();
+            data.setUser(user);
+            AccountLogic.getInstance().setLoginData(data);
+
+            AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
+            Map<String, Object> info = new HashMap<>();
+            info.put("isBasicSet", user.isBasicSet());
+            accountApi.update(info, user.getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(initObserver(HomeActivity.this));
+        }
     }
+
+    private Subscriber<ApiResult<LoginData>> initObserver(FragmentActivity activity) {
+        return new AbsSubscriber<ApiResult<LoginData>>(activity) {
+            @Override
+            protected void onError(ApiException ex) {
+
+            }
+
+            @Override
+            protected void onPermissionError(ApiException ex) {
+
+            }
+
+            @Override
+            public void onNext(ApiResult<LoginData> data) {
+                ToastHelper.showLoneTip("start init site and topic");
+            }
+        };
+
+    }
+
 
     @Subscribe
     public void onLogout(LogoutEvent event) {

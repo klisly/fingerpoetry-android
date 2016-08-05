@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:widget="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/paper_padding"
+        android:paddingRight="@dimen/paper_padding"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_vertical"
+        android:paddingTop="@dimen/padding_vertical"
+        android:paddingLeft="@dimen/padding_horizontal"
+        android:paddingRight="@dimen/padding_horizontal"
+        >
+        <com.material.widget.PaperButton
+            android:id="@+id/btn_enter_direct"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
+            widget:paper_color="@color/background"
+            widget:paper_shadow_color="@color/white"
+            widget:paper_text_color="@color/switch_thumb_color"
+            widget:paper_text_size="@dimen/text_size_14"
+            widget:paper_text="@string/enter_direct"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <com.material.widget.PaperButton
+            android:id="@+id/btn_next"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
+            widget:paper_shadow_color="@color/accent"
+            widget:paper_color="@color/primary_btn_disabled_material_dark"
+            widget:paper_text_color="@color/white"
+            widget:paper_text_size="@dimen/text_size_14"
+            widget:paper_text="@string/next"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

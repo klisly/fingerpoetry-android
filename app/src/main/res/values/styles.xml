@@ -21,8 +21,9 @@
         <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
     </style>
 
-    <style name="MyTabLayout" parent="Widget.Design.TabLayout">
+    <style name="SubTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">#fff5f5f5</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
     <style name="Toolbar_TextAppearance_White">

@@ -1,8 +1,5 @@
 package com.klisly.bookbox.ui;
 
-import com.klisly.bookbox.R;
-import com.klisly.bookbox.ui.fragment.BaseBackFragment;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.klisly.bookbox.R;
+import com.klisly.bookbox.ui.base.BaseBackFragment;
 
 /**
  * Created by YoKeyword on 16/2/7.
@@ -53,12 +53,11 @@ public class CycleFragment extends BaseBackFragment {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTvName = (TextView) view.findViewById(R.id.tv_name);
         mBtnNext = (Button) view.findViewById(R.id.btn_next);
-        mBtnNextWithFinish = (Button) view.findViewById(R.id.btn_next_with_finish);
 
         String title = "首页:循环Fragment" + mNumber;
 
         mToolbar.setTitle(title);
-        initToolbarNav(mToolbar);
+        initToolbarNav(mToolbar, false);
 
         mTvName.setText(title);
         mBtnNext.setOnClickListener(new View.OnClickListener() {

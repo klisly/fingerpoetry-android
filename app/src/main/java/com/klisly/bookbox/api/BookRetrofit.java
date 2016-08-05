@@ -1,14 +1,15 @@
 package com.klisly.bookbox.api;
 
-import java.io.File;
-import java.util.concurrent.TimeUnit;
+import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.logic.AccountLogic;
 
-import android.content.Context;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -17,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookRetrofit {
     public final static String BASE_URL = "http://192.168.10.102:3000/";
-    public final static String BASE_API_URL = BASE_URL+"api/";
+    public final static String BASE_API_URL = BASE_URL;
 
     private final static long DEFAULT_TIMEOUT = 15; // 15超时
     private final static Gson gson = new GsonBuilder()
@@ -42,6 +43,7 @@ public class BookRetrofit {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+
         accountApi = retrofit.create(AccountApi.class);
         channelApi = retrofit.create(ChannelApi.class);
     }

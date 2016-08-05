@@ -1,7 +1,6 @@
 package com.klisly.bookbox.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerAdapter;
 import com.klisly.bookbox.listener.OnItemClickListener;
-import com.klisly.bookbox.model.Channel;
+import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ui.CycleFragment;
+import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.utils.TopToastHelper;
+import com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +32,17 @@ public class PagerChildFragment extends BaseFragment {
     private static final String ARG_CHANNEL = "arg_channel";
 
     private int mFrom;
-    private Channel mChannel;
+    private Topic mTopic;
     private RecyclerView mRecy;
     private PagerAdapter mAdapter;
-    private Channel channel;
+    private Topic topic;
     private TextView mTvTip;
+    private CircleRefreshLayout mRefreshLayout;
 
-    public static PagerChildFragment newInstance(@NonNull int from, @NonNull Channel channel) {
+    public static PagerChildFragment newInstance(@NonNull int from, @NonNull Topic topic) {
         Bundle args = new Bundle();
         args.putInt(ARG_FROM, from);
-        args.putSerializable(ARG_CHANNEL, channel);
+        args.putSerializable(ARG_CHANNEL, topic);
         PagerChildFragment fragment = new PagerChildFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,7 +55,7 @@ public class PagerChildFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args != null) {
             mFrom = args.getInt(ARG_FROM);
-            mChannel = (Channel) args.getSerializable(ARG_CHANNEL);
+            mTopic = (Topic) args.getSerializable(ARG_CHANNEL);
         }
     }
 
@@ -60,12 +64,6 @@ public class PagerChildFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
         initView(view);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showTip("进入子页面");
-            }
-        }, 3000);
         return view;
     }
 
@@ -81,6 +79,27 @@ public class PagerChildFragment extends BaseFragment {
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
+        mRefreshLayout = (CircleRefreshLayout) view.findViewById(R.id.refresh_layout);
+        mRefreshLayout.setOnRefreshListener(
+                new CircleRefreshLayout.OnCircleRefreshListener() {
+                    @Override
+                    public void refreshing() {
+                        TopToastHelper.showTip(mTvTip, "开始加载", TopToastHelper.DURATION_SHORT);
+                        BookBoxApplication.getInstance()
+                                .getHandler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mRefreshLayout.finishRefreshing();
+                                TopToastHelper.showTip(mTvTip, "加载完成", TopToastHelper.DURATION_SHORT);
+                            }
+                        }, 3000);
+                    }
+
+                    @Override
+                    public void completeRefresh() {
+                        // do something when refresh complete
+                    }
+                });
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -109,7 +128,7 @@ public class PagerChildFragment extends BaseFragment {
         mAdapter.setDatas(items);
     }
 
-    private void showTip(String tip){
+    private void showTip(String tip) {
         TopToastHelper.showTip(mTvTip, tip, TopToastHelper.DURATION_LONG);
     }
 }

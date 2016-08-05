@@ -11,7 +11,7 @@ import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
-import com.klisly.bookbox.ui.fragment.BaseBackFragment;
+import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.ui.fragment.HomeFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
