@@ -1,5 +1,7 @@
 package com.klisly.bookbox;
 
+import com.klisly.common.SharedPreferenceUtils;
+
 public class Constants {
     // 频道类型
     public static final int HOME = 0;
@@ -14,4 +16,16 @@ public class Constants {
 
     public static final int PASSWORD_MIN_LENGTH = 6;
     public static final int INVALID = -1;
+
+    public static final String KEY_FIRST_LAUNCH = "KEY_FIRST_LAUNCH";
+
+    private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
+
+    public static void setFirstLaunch(boolean isFirst){
+        preferenceUtils.setValue(KEY_FIRST_LAUNCH, isFirst);
+    }
+
+    public static boolean isFirstLaunch(){
+        return preferenceUtils.getValue(KEY_FIRST_LAUNCH, true);
+    }
 }

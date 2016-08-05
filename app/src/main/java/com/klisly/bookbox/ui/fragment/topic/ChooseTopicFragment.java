@@ -43,7 +43,6 @@ public class ChooseTopicFragment extends BaseBackFragment {
         ButterKnife.unbind(this);
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -46,4 +46,7 @@
     <dimen name="design_btn_width">158dp</dimen>
     <dimen name="input_item_height">56dp</dimen>
     <dimen name="tip_height">32dp</dimen>
+    <dimen name="choose_item_height">56dp</dimen>
+    <dimen name="pager_item_height">78dp</dimen>
+
 </resources>

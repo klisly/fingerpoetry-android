@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.AccountApi;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -38,7 +38,6 @@ import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.ToastHelper;
-import com.klisly.common.SharedPreferenceUtils;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
@@ -64,14 +63,10 @@ public class HomeActivity extends SupportActivity
     NavigationView mNavigationView;
     private TextView mTvName;   // NavigationView上的名字
     private SimpleDraweeView mImgNav;  // NavigationView上的头像
-    private SharedPreferenceUtils preferenceUtils = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Fresco.initialize(this);
-        preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
@@ -272,10 +267,12 @@ public class HomeActivity extends SupportActivity
         mNavigationView.setCheckedItem(R.id.menu_mine);
     }
 
-    @Subscribe public void onLoginSuccess(LoginEvent event) {
+    @Subscribe
+    public void onLoginSuccess(LoginEvent event) {
         updateNavData();
         User user = AccountLogic.getInstance().getNowUser();
-        if(!user.isBasicSet()){
+        if(!user.isBasicSet() && Constants.isFirstLaunch()){
+            Constants.setFirstLaunch(false);
             user.setBasicSet(true);
             LoginData data = AccountLogic.getInstance().getLoginData();
             data.setUser(user);
