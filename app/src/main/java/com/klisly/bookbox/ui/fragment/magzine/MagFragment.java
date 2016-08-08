@@ -3,15 +3,6 @@
  */
 package com.klisly.bookbox.ui.fragment.magzine;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.ListAdapter;
-import com.klisly.bookbox.listener.OnItemClickListener;
-import com.klisly.bookbox.model.Article;
-import com.klisly.bookbox.ui.base.BaseMainFragment;
-
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +13,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.klisly.bookbox.R;
+import com.klisly.bookbox.adapter.ListAdapter;
+import com.klisly.bookbox.listener.OnItemClickListener;
+import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.ui.base.BaseMainFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
@@ -110,8 +111,8 @@ public class MagFragment extends BaseMainFragment implements Toolbar.OnMenuItemC
         List<Article> articleList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             int index = (int) (Math.random() * 3);
-            Article article = new Article(mTitles[index], mContents[index]);
-            articleList.add(article);
+//            Article article = new Article(mTitles[index], mContents[index]);
+//            articleList.add(article);
         }
         mAdapter.setDatas(articleList);
 

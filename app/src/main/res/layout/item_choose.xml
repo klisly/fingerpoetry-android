@@ -64,20 +64,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_source"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="24dp"
-                    android:text="InfoQ"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <TextView
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="06-21 08:39"
+                    android:text="History"
                     android:textColor="@android:color/black"
                     android:textSize="12sp" />
 

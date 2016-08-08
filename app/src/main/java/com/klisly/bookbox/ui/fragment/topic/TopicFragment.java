@@ -74,7 +74,7 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
         mToolbar.setOnMenuItemClickListener(this);
         if(topics != null){
             for(Topic topic : topics){
-                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getTitle()));
+                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
             }
         }
         mViewPager.setAdapter(new ChannelFragmentAdapter(getChildFragmentManager(), topics));

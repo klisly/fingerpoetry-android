@@ -1,14 +1,14 @@
 package com.klisly.bookbox.adapter;
 
-import java.util.List;
-
-import com.klisly.bookbox.model.Topic;
-import com.klisly.bookbox.ui.fragment.PagerChildFragment;
-
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.ui.fragment.PagerChildFragment;
+
+import java.util.List;
 public class ChannelFragmentAdapter extends FragmentPagerAdapter {
     private List<Topic> topics;
     public ChannelFragmentAdapter(@NonNull FragmentManager fm, @NonNull List<Topic> topics) {
@@ -28,6 +28,6 @@ public class ChannelFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return topics.get(position).getTitle();
+        return topics.get(position).getName();
     }
 }

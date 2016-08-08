@@ -1,11 +1,6 @@
 package com.klisly.bookbox.subscriber;
 
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.content.Context;
 
 import com.google.gson.JsonParseException;
 import com.klisly.bookbox.BookBoxApplication;
@@ -14,9 +9,16 @@ import com.klisly.bookbox.utils.RxUtils;
 import com.klisly.bookbox.widget.progress.ProgressCancelListener;
 import com.klisly.bookbox.widget.progress.ProgressDialogHandler;
 
-import android.content.Context;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
+import timber.log.Timber;
 
 public abstract class AbsSubscriber<T> extends Subscriber<T> implements ProgressCancelListener {
 
@@ -32,6 +34,8 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
     private static final int GATEWAY_TIMEOUT = 504;
 
     private ProgressDialogHandler mProgressDialogHandler;
+
+    private boolean showProgress = true;
     //出错提示
     // private final String networkMsg;
     // private final String parseMsg;
@@ -41,12 +45,20 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
         mProgressDialogHandler = new ProgressDialogHandler(context, this, true);
     }
 
+    public AbsSubscriber(Context context , boolean isShowProgress) {
+        showProgress = isShowProgress;
+        if(showProgress){
+            mProgressDialogHandler = new ProgressDialogHandler(context, this, true);
+        }
+    }
+
 
     @Override
     public void onError(Throwable e) {
         dismissProgressDialog();
         Throwable throwable = e;
         //获取最根源的异常
+        Timber.e("request error", e);
         while(throwable.getCause() != null){
             e = throwable;
             throwable = throwable.getCause();
@@ -128,13 +140,13 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
 
 
     private void showProgressDialog(){
-        if (mProgressDialogHandler != null) {
+        if (mProgressDialogHandler != null && showProgress) {
             mProgressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
         }
     }
 
     private void dismissProgressDialog(){
-        if (mProgressDialogHandler != null) {
+        if (mProgressDialogHandler != null && showProgress) {
             mProgressDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
         }
     }

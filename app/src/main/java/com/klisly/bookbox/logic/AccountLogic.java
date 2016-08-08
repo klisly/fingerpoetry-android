@@ -4,7 +4,7 @@ import com.klisly.bookbox.domain.LoginData;
 import com.klisly.bookbox.model.User;
 import com.klisly.common.StringUtils;
 
-public class AccountLogic extends  BaseLogic{
+public class AccountLogic extends BaseLogic {
 
     /**
      * ChannelLogic instance.
@@ -38,7 +38,7 @@ public class AccountLogic extends  BaseLogic{
 
     private void initData() {
         String account = preferenceUtils.getValue(PRE_ACCOUNT, "");
-        if(StringUtils.isNotEmpty(account)){
+        if (StringUtils.isNotEmpty(account)) {
             loginData = gson.fromJson(account, LoginData.class);
         }
     }
@@ -47,18 +47,22 @@ public class AccountLogic extends  BaseLogic{
         return loginData;
     }
 
-    public User getNowUser(){
+    public String getToken() {
+        return loginData == null ? "" : loginData.getToken();
+    }
+
+    public User getNowUser() {
         return loginData == null ? null : loginData.getUser();
     }
 
 
-    public boolean isLogin(){
-        return loginData != null ;
+    public boolean isLogin() {
+        return loginData != null;
     }
 
 
     public void setLoginData(LoginData loginData) {
-        if(loginData == null){
+        if (loginData == null) {
             return;
         }
         loginData.getUser().setToken(loginData.getToken());

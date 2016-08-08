@@ -136,7 +136,7 @@ public class HomeActivity extends SupportActivity
             public void run() {
                 gotoChooseTopics();
             }
-        }, 3000);
+        }, 250);
     }
 
     private void gotoChooseTopics() {
@@ -160,12 +160,6 @@ public class HomeActivity extends SupportActivity
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-
-            //            Fragment topFragment = getTopFragment();
-            //            // 主页的Fragment
-            //            if (topFragment instanceof DiscoverFragment || topFragment instanceof ShopFragment) {
-            //                mNavigationView.setCheckedItem(R.id.nav_home);
-            //            }
             super.onBackPressed();
         }
     }
@@ -277,7 +271,6 @@ public class HomeActivity extends SupportActivity
             LoginData data = AccountLogic.getInstance().getLoginData();
             data.setUser(user);
             AccountLogic.getInstance().setLoginData(data);
-
             AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
             Map<String, Object> info = new HashMap<>();
             info.put("isBasicSet", user.isBasicSet());
@@ -289,7 +282,7 @@ public class HomeActivity extends SupportActivity
     }
 
     private Subscriber<ApiResult<LoginData>> initObserver(FragmentActivity activity) {
-        return new AbsSubscriber<ApiResult<LoginData>>(activity) {
+        return new AbsSubscriber<ApiResult<LoginData>>(activity, false) {
             @Override
             protected void onError(ApiException ex) {
 
@@ -305,7 +298,6 @@ public class HomeActivity extends SupportActivity
                 ToastHelper.showLoneTip("start init site and topic");
             }
         };
-
     }
 
 

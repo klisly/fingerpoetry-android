@@ -69,7 +69,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mToolbar.setOnMenuItemClickListener(this);
         if(topics != null){
             for(Topic topic : topics){
-                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getTitle()));
+                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
             }
         }
         mViewPager.setAdapter(new ChannelFragmentAdapter(getChildFragmentManager(), topics));

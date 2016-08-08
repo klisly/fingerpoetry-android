@@ -8,12 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.klisly.bookbox.R;
+import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.api.TopicApi;
+import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.ui.fragment.site.ChooseSiteFragment;
 import com.material.widget.PaperButton;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class ChooseTopicFragment extends BaseBackFragment {
     private static final String ARG_NUMBER = "arg_number";
@@ -23,7 +35,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
     PaperButton mBtnNext;
     @Bind(R.id.btn_enter_direct)
     PaperButton mBtnEnter;
-
+    private TopicApi topicApi = BookRetrofit.getInstance().getTopicApi();
     public static ChooseTopicFragment newInstance() {
         ChooseTopicFragment fragment = new ChooseTopicFragment();
         Bundle args = new Bundle();
@@ -49,6 +61,48 @@ public class ChooseTopicFragment extends BaseBackFragment {
         View view = inflater.inflate(R.layout.fragment_choose, container, false);
         ButterKnife.bind(this, view);
         initView();
+        topicApi.list()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<Topic>> entities) {
+                        Timber.i("topics list:"+entities.toString());
+                    }
+                });
+        topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<Topic>> entities) {
+                        Timber.i("user subscribes list:"+entities.toString());
+                    }
+                });
         return view;
     }
 
@@ -59,8 +113,9 @@ public class ChooseTopicFragment extends BaseBackFragment {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pop();
                 start(ChooseSiteFragment.newInstance());
+
             }
         });
 
