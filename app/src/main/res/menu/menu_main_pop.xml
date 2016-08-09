@@ -8,6 +8,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
+        android:id="@+id/action_find_topic"
+        android:title="@string/find_topic"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_manage_topic"
+        android:title="@string/manage_topic"
+        app:showAsAction="never"/>
+    <item
             android:id="@+id/action_recom_setting"
             android:title="@string/recom_setting"
             app:showAsAction="never"/>

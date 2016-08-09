@@ -157,4 +157,8 @@ public class TopicLogic extends BaseLogic{
     public List<Topic> getChooseTopics() {
         return defaultTopics;
     }
+
+    public void setChooseTopics(List<Topic> data) {
+
+    }
 }

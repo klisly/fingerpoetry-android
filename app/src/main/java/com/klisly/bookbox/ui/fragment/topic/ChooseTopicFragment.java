@@ -3,11 +3,11 @@ package com.klisly.bookbox.ui.fragment.topic;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChooseTopicAdapter;
@@ -22,6 +22,7 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.ui.fragment.site.ChooseSiteFragment;
+import com.klisly.bookbox.widget.draglistview.DragListView;
 import com.material.widget.PaperButton;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
     @Bind(R.id.btn_enter_direct)
     PaperButton mBtnEnter;
     @Bind(R.id.recy)
-    RecyclerView mRecy;
+    DragListView mRecy;
     private ChooseTopicAdapter mAdapter;
     private TopicApi topicApi = BookRetrofit.getInstance().getTopicApi();
     public static ChooseTopicFragment newInstance() {
@@ -89,13 +90,13 @@ public class ChooseTopicFragment extends BaseBackFragment {
                     @Override
                     public void onNext(ApiResult<List<Topic>> entities) {
                         TopicLogic.getInstance().setDefaultTopics(entities.getData());
-                        mAdapter.setDatas(TopicLogic.getInstance().getChooseTopics());
+                        mAdapter.setItemList(TopicLogic.getInstance().getChooseTopics());
                         Timber.i("onNext datas size:"+mAdapter.getItemCount());
-                        mAdapter.notifyDataSetChanged();
                     }
                 });
         if(AccountLogic.getInstance().getNowUser() != null) {
-            topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId())
+            topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId(),
+                        AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
@@ -113,7 +114,8 @@ public class ChooseTopicFragment extends BaseBackFragment {
 
                         @Override
                         public void onNext(ApiResult<List<Topic>> data) {
-//                            TopicLogic.getInstance().
+                            Timber.i("onNext choose topics size:"+data.getData().size());
+//                            TopicLogic.getInstance().setChooseTopics(data.getData());
                         }
                     });
         }
@@ -139,10 +141,27 @@ public class ChooseTopicFragment extends BaseBackFragment {
                 pop();
             }
         });
-        mAdapter = new ChooseTopicAdapter(_mActivity);
-        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
-        mRecy.setLayoutManager(manager);
-        mRecy.setAdapter(mAdapter);
+
+        mRecy.getRecyclerView().setVerticalScrollBarEnabled(true);
+        mRecy.setDragListListener(new DragListView.DragListListenerAdapter() {
+            @Override
+            public void onItemDragStarted(int position) {
+                Toast.makeText(mRecy.getContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemDragEnded(int fromPosition, int toPosition) {
+                if (fromPosition != toPosition) {
+                    Toast.makeText(mRecy.getContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mRecy.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new ChooseTopicAdapter(true);
+        mRecy.setAdapter(mAdapter, true);
+        mRecy.setCanDragHorizontally(false);
+        mRecy.setDisableReorderWhenDragging(false);
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -150,8 +169,8 @@ public class ChooseTopicFragment extends BaseBackFragment {
 
             }
         });
-        mAdapter.setDatas(TopicLogic.getInstance().getChooseTopics());
-        mAdapter.notifyDataSetChanged();
+
+        mAdapter.setItemList(TopicLogic.getInstance().getChooseTopics());
         Timber.i("datas size:"+mAdapter.getItemCount());
 
     }

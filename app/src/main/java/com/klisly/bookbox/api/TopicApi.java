@@ -19,8 +19,9 @@ public interface TopicApi {
     Observable<ApiResult<List<Topic>>> list();
 
     @Headers("Content-Type: application/json")
-    @GET("topics/subscirbes/{uid}")
-    Observable<ApiResult<List<Topic>>> subscribes(@Path("uid") String uid);
+    @GET("users/{uid}/topics")
+    Observable<ApiResult<List<Topic>>> subscribes(@Path("uid") String uid,
+                                                  @Header("x-access-token") String token);
 
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded

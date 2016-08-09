@@ -58,7 +58,7 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
         dismissProgressDialog();
         Throwable throwable = e;
         //获取最根源的异常
-        Timber.e("request error", e);
+        Timber.e(e, "get data from server error");
         while(throwable.getCause() != null){
             e = throwable;
             throwable = throwable.getCause();
@@ -66,6 +66,7 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
         ApiException ex;
         if (e instanceof HttpException){             //HTTP错误
             HttpException httpException = (HttpException) e;
+            Timber.i("url:"+httpException);
             ex = new ApiException(e, httpException.code());
             try {
                 String str = httpException.response().errorBody().string();
@@ -80,11 +81,11 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
                 e1.printStackTrace();
             }
             switch(httpException.code()){
-                case FORBIDDEN:
+                case UNAUTHORIZED:
                     onPermissionError(ex);          //权限错误，需要实现
                     break;
+                case FORBIDDEN:
                 case INVALIDPARAM:
-                case UNAUTHORIZED:
                 case NOT_FOUND:
                 case REQUEST_TIMEOUT:
                     onError(ex);

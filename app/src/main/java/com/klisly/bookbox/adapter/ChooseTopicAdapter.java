@@ -1,8 +1,6 @@
 package com.klisly.bookbox.adapter;
 
-import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,32 +13,23 @@ import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.widget.draglistview.DragItemAdapter;
 import com.material.widget.PaperButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ChooseTopicAdapter extends RecyclerView.Adapter<ChooseTopicAdapter.Holder> {
-    private List<Topic> mItems = new ArrayList<>();
-    private LayoutInflater mInflater;
-
+public class ChooseTopicAdapter extends DragItemAdapter<Topic, ChooseTopicAdapter.Holder> {
     private OnItemClickListener mClickListener;
 
-    public ChooseTopicAdapter(Context context) {
-        this.mInflater = LayoutInflater.from(context);
-    }
-
-    public void setDatas(List<Topic> items) {
-        mItems.clear();
-        mItems.addAll(items);
+    public ChooseTopicAdapter(boolean dragOnLongPress) {
+        super(dragOnLongPress);
+        setHasStableIds(true);
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_choose, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_choose, parent, false);
         final Holder holder = new Holder(view);
         holder.btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,21 +40,22 @@ public class ChooseTopicAdapter extends RecyclerView.Adapter<ChooseTopicAdapter.
                 }
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (mClickListener != null) {
-                    mClickListener.onItemClick(position, v);
-                }
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int position = holder.getAdapterPosition();
+//                if (mClickListener != null) {
+//                    mClickListener.onItemClick(position, v);
+//                }
+//            }
+//        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Topic item = mItems.get(position);
+        super.onBindViewHolder(holder, position);
+        Topic item = mItemList.get(position);
         holder.tvTitle.setText(item.getName());
         StringBuffer buffer = new StringBuffer();
         holder.tvContent.setText(buffer.toString());
@@ -98,10 +88,15 @@ public class ChooseTopicAdapter extends RecyclerView.Adapter<ChooseTopicAdapter.
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mItemList.size();
     }
 
-    class Holder extends RecyclerView.ViewHolder {
+    @Override
+    public long getItemId(int position) {
+        return mItemList.get(position).getId().hashCode();
+    }
+
+    class Holder extends DragItemAdapter<Topic, ChooseTopicAdapter.Holder>.ViewHolder {
         @Bind(R.id.tv_title)
         TextView tvTitle;
         @Bind(R.id.tv_brief)
@@ -112,7 +107,7 @@ public class ChooseTopicAdapter extends RecyclerView.Adapter<ChooseTopicAdapter.
         PaperButton btnAction;
 
         public Holder(View itemView) {
-            super(itemView);
+            super(itemView, R.id.item_layout);
             ButterKnife.bind(this, itemView);
         }
     }

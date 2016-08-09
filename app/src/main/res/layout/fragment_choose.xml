@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
-    <android.support.v7.widget.RecyclerView
+    <com.klisly.bookbox.widget.draglistview.DragListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recy"
         android:layout_width="match_parent"
