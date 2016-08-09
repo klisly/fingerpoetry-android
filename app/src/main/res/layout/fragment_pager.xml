@@ -11,6 +11,8 @@
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recy"
+        android:paddingLeft="@dimen/recy_padding_horizontal"
+        android:paddingRight="@dimen/recy_padding_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     </com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout>

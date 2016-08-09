@@ -146,6 +146,11 @@ public class TopicLogic extends BaseLogic{
     }
 
     public boolean isFocus(String id) {
+        for(int i = 0; i < topics.size(); i++){
+            if(topics.get(i).getId().equals(id)){
+                return true;
+            }
+        }
         return false;
     }
 

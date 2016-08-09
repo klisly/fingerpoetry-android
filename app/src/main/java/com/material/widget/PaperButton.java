@@ -155,8 +155,8 @@ public class PaperButton extends View {
         textPaint.setColor(mTextColor);
         invalidate();
     }
-    
-    public void setText(String text){
+
+    public void setText(String text) {
         mText = text;
         invalidate();
     }
@@ -188,34 +188,41 @@ public class PaperButton extends View {
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+
                 mMoveOutside = false;
                 mFingerRect = new Rect(getLeft(), getTop(), getRight(), getBottom());
                 mTouchPoint.set(Math.round(event.getX()), Math.round(event.getY()));
                 mState = StateTouchDown;
                 mStartTime = System.currentTimeMillis();
-                invalidate();
+                if (mEnable) {
+                    invalidate();
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!mFingerRect.contains(getLeft() + (int) event.getX(),
                         getTop() + (int) event.getY())) {
                     mMoveOutside = true;
                     mState = StateNormal;
-                    invalidate();
+                    if (mEnable) {
+                        invalidate();
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (!mMoveOutside) {
                     mState = StateTouchUp;
                     mStartTime = System.currentTimeMillis();
-                    invalidate();
-                    if(mEnable) {
+                    if (mEnable) {
+                        invalidate();
                         performClick();
                     }
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
                 mState = StateNormal;
-                invalidate();
+                if (mEnable) {
+                    invalidate();
+                }
                 break;
         }
         return true;

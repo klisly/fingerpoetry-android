@@ -58,9 +58,11 @@
     <string name="enter_direct">跳过</string>
     <string name="next">下一步</string>
     <string name="finish">完成</string>
-    <string name="focus">关注</string>
-    <string name="unfocus">不关注</string>
+    <string name="focused">已关注</string>
+    <string name="unfocus">未关注</string>
     <string name="articlenum">篇文章</string>
     <string name="focurnum">人关注</string>
+    <string name="hot">热门</string>
+    <string name="recommend">推荐</string>
 
 </resources>

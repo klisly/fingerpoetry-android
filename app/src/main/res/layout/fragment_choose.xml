@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="@dimen/paper_padding"
-        android:paddingRight="@dimen/paper_padding"
+        android:paddingLeft="@dimen/recy_padding_horizontal"
+        android:paddingRight="@dimen/recy_padding_horizontal"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
         android:paddingTop="@dimen/padding_vertical"
         android:paddingLeft="@dimen/padding_horizontal"
         android:paddingRight="@dimen/padding_horizontal"
+        android:background="@drawable/item_choose"
         >
         <com.material.widget.PaperButton
             android:id="@+id/btn_enter_direct"
