@@ -116,6 +116,14 @@ public class Topic extends BaseModel{
         this.articleCount = articleCount;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Topic{");

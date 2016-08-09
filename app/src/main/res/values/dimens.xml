@@ -48,5 +48,6 @@
     <dimen name="tip_height">32dp</dimen>
     <dimen name="choose_item_height">56dp</dimen>
     <dimen name="pager_item_height">78dp</dimen>
+    <dimen name="item_choose_img_size">46dp</dimen>
 
 </resources>

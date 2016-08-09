@@ -7,13 +7,13 @@ import com.klisly.common.StringUtils;
 public class AccountLogic extends BaseLogic {
 
     /**
-     * ChannelLogic instance.
+     * TopicLogic instance.
      */
     private static AccountLogic instance;
 
     private LoginData loginData;
 
-    private static final String PRE_ACCOUNT = "";
+    private static final String PRE_ACCOUNT = "PRE_ACCOUNT";
 
     /**
      * 获取ConversationLogic单例对象

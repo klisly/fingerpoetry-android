@@ -128,7 +128,4 @@ public class PagerChildFragment extends BaseFragment {
         mAdapter.setDatas(items);
     }
 
-    private void showTip(String tip) {
-        TopToastHelper.showTip(mTvTip, tip, TopToastHelper.DURATION_LONG);
-    }
 }

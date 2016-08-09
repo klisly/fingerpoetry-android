@@ -2,16 +2,21 @@ package com.klisly.bookbox.ui.fragment.topic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.klisly.bookbox.R;
+import com.klisly.bookbox.adapter.ChooseAdapter;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.TopicApi;
 import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
@@ -19,6 +24,7 @@ import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.ui.fragment.site.ChooseSiteFragment;
 import com.material.widget.PaperButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,6 +41,9 @@ public class ChooseTopicFragment extends BaseBackFragment {
     PaperButton mBtnNext;
     @Bind(R.id.btn_enter_direct)
     PaperButton mBtnEnter;
+    @Bind(R.id.recy)
+    RecyclerView mRecy;
+    private ChooseAdapter mAdapter;
     private TopicApi topicApi = BookRetrofit.getInstance().getTopicApi();
     public static ChooseTopicFragment newInstance() {
         ChooseTopicFragment fragment = new ChooseTopicFragment();
@@ -61,6 +70,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
         View view = inflater.inflate(R.layout.fragment_choose, container, false);
         ButterKnife.bind(this, view);
         initView();
+        // todo 合并
         topicApi.list()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,30 +89,35 @@ public class ChooseTopicFragment extends BaseBackFragment {
 
                     @Override
                     public void onNext(ApiResult<List<Topic>> entities) {
-                        Timber.i("topics list:"+entities.toString());
+                        TopicLogic.getInstance().setDefaultTopics(entities.getData());
+//                        mAdapter.setDatas(TopicLogic.getInstance().getChooseTopics());
+                        Timber.i("onNext datas size:"+mAdapter.getItemCount());
+                        mAdapter.notifyDataSetChanged();
                     }
                 });
-        topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
-                    @Override
-                    protected void onError(ApiException ex) {
-                        Timber.i("onError");
+        if(AccountLogic.getInstance().getNowUser() != null) {
+            topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+                            Timber.i("onError");
 
-                    }
+                        }
 
-                    @Override
-                    protected void onPermissionError(ApiException ex) {
-                        Timber.i("onPermissionError");
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            Timber.i("onPermissionError");
 
-                    }
+                        }
 
-                    @Override
-                    public void onNext(ApiResult<List<Topic>> entities) {
-                        Timber.i("user subscribes list:"+entities.toString());
-                    }
-                });
+                        @Override
+                        public void onNext(ApiResult<List<Topic>> data) {
+//                            TopicLogic.getInstance().
+                        }
+                    });
+        }
         return view;
     }
 
@@ -125,6 +140,37 @@ public class ChooseTopicFragment extends BaseBackFragment {
                 pop();
             }
         });
+        mAdapter = new ChooseAdapter(_mActivity);
+        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
+        mRecy.setLayoutManager(manager);
+        mRecy.setAdapter(mAdapter);
+
+//        mAdapter = new ChooseTopicAdapter(_mActivity);
+//        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
+//        mRecy.setLayoutManager(manager);
+//        mRecy.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view) {
+
+            }
+        });
+        int mFrom = 0;
+        List<String> items = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            String item;
+            if (mFrom == 0) {
+                item = "推荐 " + i;
+            } else if (mFrom == 1) {
+                item = "热门 " + i;
+            } else {
+                item = "收藏 " + i;
+            }
+            items.add(item);
+        }
+        mAdapter.setDatas(items);
+//        mAdapter.setDatas(TopicLogic.getInstance().getChooseTopics());
+        Timber.i("datas size:"+mAdapter.getItemCount());
 
     }
 }

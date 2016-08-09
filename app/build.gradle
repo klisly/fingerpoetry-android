@@ -44,6 +44,8 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
     compile 'com.karumi:dexter:2.2.2'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+
     // image
     compile 'com.facebook.fresco:fresco:0.10.0'
     compile 'com.makeramen:roundedimageview:2.2.1'

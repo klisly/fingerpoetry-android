@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
-import com.klisly.bookbox.logic.ChannelLogic;
+import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.utils.ToastHelper;
@@ -49,7 +49,7 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        topics = ChannelLogic.getInstance().getChannelsByType(Constants.TOPIC);
+        topics = TopicLogic.getInstance().getChannelsByType(Constants.TOPIC);
         initView();
         return view;
     }

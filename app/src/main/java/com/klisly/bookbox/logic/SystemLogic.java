@@ -7,7 +7,7 @@ import com.klisly.common.StringUtils;
 public class SystemLogic extends  BaseLogic{
 
     /**
-     * ChannelLogic instance.
+     * TopicLogic instance.
      */
     private static SystemLogic instance;
 

@@ -111,8 +111,10 @@ public class MagFragment extends BaseMainFragment implements Toolbar.OnMenuItemC
         List<Article> articleList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             int index = (int) (Math.random() * 3);
-//            Article article = new Article(mTitles[index], mContents[index]);
-//            articleList.add(article);
+            Article article = new Article();
+            article.setTitle(mTitles[index]);
+            article.setContent( mContents[index]);
+            articleList.add(article);
         }
         mAdapter.setDatas(articleList);
 
