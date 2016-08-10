@@ -26,6 +26,10 @@ import com.klisly.bookbox.ui.fragment.site.ChooseSiteFragment;
 import com.klisly.bookbox.widget.draglistview.DragListView;
 import com.material.widget.PaperButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -208,28 +212,38 @@ public class ChooseTopicFragment extends BaseBackFragment {
 
     private void updateFocusedOrder() {
 
-//        Map<String, Integer> datas = new HashMap<>();
-//
-//        topicApi.reorder(datas,
-//                AccountLogic.getInstance().getToken())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.newThread())
-//                .subscribe(new AbsSubscriber<ApiResult<Void>>(getActivity(), false) {
-//                    @Override
-//                    protected void onError(ApiException ex) {
-//                        Timber.i("onError");
-//                    }
-//
-//                    @Override
-//                    protected void onPermissionError(ApiException ex) {
-//                        Timber.i("onPermissionError");
-//                    }
-//
-//                    @Override
-//                    public void onNext(ApiResult<Void> data) {
-//                        Timber.i("reorder success");
-//                    }
-//                });
+        JSONArray jsonArray = new JSONArray();
+        for(User2Topic entity: TopicLogic.getInstance().getSubscribes().values()){
+            try {
+                JSONObject object = new JSONObject();
+                object.put("id", entity.getId());
+                object.put("seq", entity.getSeq());
+                jsonArray.put(object);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        topicApi.reorder(AccountLogic.getInstance().getNowUser().getId(),
+                jsonArray.toString(),
+                AccountLogic.getInstance().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new AbsSubscriber<ApiResult<Void>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<Void> data) {
+                        Timber.i("reorder success");
+                    }
+                });
     }
 
     private void unSubscribe(Topic topic, int position) {

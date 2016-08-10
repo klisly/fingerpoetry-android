@@ -296,4 +296,8 @@ public class TopicLogic extends BaseLogic {
         }
         updateOpenData();
     }
+
+    public Map<String, User2Topic> getSubscribes() {
+        return subscribes;
+    }
 }
