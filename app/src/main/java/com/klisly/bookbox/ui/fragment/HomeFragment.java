@@ -23,8 +23,6 @@ import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
@@ -32,7 +30,6 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
 
-    private List<Topic> topics;
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
     @Bind(R.id.viewPager)
@@ -54,7 +51,6 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this,view);
-        topics = TopicLogic.getInstance().getOpenFocusedTopics();
         initView();
         return view;
     }
@@ -71,20 +67,26 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mToolbar.setTitle(R.string.homepage);
         initToolbarNav(mToolbar);
         mToolbar.setOnMenuItemClickListener(this);
-        if(topics != null){
-            for(Topic topic : topics){
-                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
-            }
-        }
-        ChannelFragmentAdapter adapter = new ChannelFragmentAdapter(getChildFragmentManager(), topics);
+        updateTopics();
+        ChannelFragmentAdapter adapter = new ChannelFragmentAdapter(getChildFragmentManager(),
+                TopicLogic.getInstance().getOpenFocusedTopics());
         mViewPager.setAdapter(adapter);
         TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
+                updateTopics();
                 adapter.notifyDataSetChanged();
             }
         });
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void updateTopics() {
+        if(TopicLogic.getInstance().getOpenFocusedTopics() != null){
+            for(Topic topic : TopicLogic.getInstance().getOpenFocusedTopics()){
+                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
+            }
+        }
     }
 
     /**

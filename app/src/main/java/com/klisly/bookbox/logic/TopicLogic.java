@@ -129,6 +129,10 @@ public class TopicLogic extends BaseLogic {
                 this.defaultTopics = defaults;
             }
         }
+        updateDefaultTopicStatus();
+    }
+
+    private void updateDefaultTopicStatus() {
         for (int i = 0; i < defaultTopics.size(); i++) {
             User2Topic user2Topic = subscribes.get(defaultTopics.get(i).getId());
             if (user2Topic != null) {
@@ -153,6 +157,8 @@ public class TopicLogic extends BaseLogic {
                 defaultTopics.add(topic);
             }
         }
+        updateDefaultTopicStatus();
+        reorderDefaultTopics();
         updateOpenData();
     }
 
@@ -230,6 +236,8 @@ public class TopicLogic extends BaseLogic {
         }
         String data = gson.toJson(subscribes);
         preferenceUtils.setValue(PRE_FOCUS_TOPICS, data);
+        updateDefaultTopicStatus();
+        reorderDefaultTopics();
         updateOpenData();
 
     }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.AccountApi;
@@ -260,7 +261,10 @@ public class HomeActivity extends SupportActivity
 
     @Subscribe
     public void onLoginSuccess(LoginEvent event) {
+        Timber.i("receive onLoginSuccess");
         updateNavData();
+        CommonHelper.getTopics(this);
+        CommonHelper.getUserFocused(this);
         User user = AccountLogic.getInstance().getNowUser();
         if(!user.isBasicSet() && Constants.isFirstLaunch()){
             Constants.setFirstLaunch(false);

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChooseTopicAdapter;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -29,8 +30,6 @@ import com.material.widget.PaperButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -94,53 +93,8 @@ public class ChooseTopicFragment extends BaseBackFragment {
     }
 
     private void updateData() {
-        topicApi.list()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
-                    @Override
-                    protected void onError(ApiException ex) {
-                        Timber.i("onError");
-
-                    }
-
-                    @Override
-                    protected void onPermissionError(ApiException ex) {
-                        Timber.i("onPermissionError");
-
-                    }
-
-                    @Override
-                    public void onNext(ApiResult<List<Topic>> entities) {
-                        Timber.i("onNext list topics size:" + entities.getData().size());
-                        TopicLogic.getInstance().updateDefaultTopics(entities.getData());
-                    }
-                });
-        if (AccountLogic.getInstance().getNowUser() != null) {
-            topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId(),
-                    AccountLogic.getInstance().getToken())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new AbsSubscriber<ApiResult<List<User2Topic>>>(getActivity(), false) {
-                        @Override
-                        protected void onError(ApiException ex) {
-                            Timber.i("onError");
-
-                        }
-
-                        @Override
-                        protected void onPermissionError(ApiException ex) {
-                            Timber.i("onPermissionError");
-
-                        }
-
-                        @Override
-                        public void onNext(ApiResult<List<User2Topic>> data) {
-                            Timber.i("onNext choose topics size:" + data.getData().size());
-                            TopicLogic.getInstance().updateSubscribes(data.getData());
-                        }
-                    });
-        }
+        CommonHelper.getTopics(getActivity());
+        CommonHelper.getUserFocused(getActivity());
     }
 
     private void initView() {

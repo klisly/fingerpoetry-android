@@ -8,7 +8,7 @@ public class Constants {
     public static final int SITE = 1;
     public static final int MAGEZINE = 2;
     public static final int TOPIC = 3;
-    public static final int DEFAULT_TOPIC_SIZE = 3;
+    public static final int DEFAULT_TOPIC_SIZE = 6;
 
     // MOB设置
     public static final String MOB_APP_KEY = "13818ffc591c0";
