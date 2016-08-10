@@ -2,7 +2,6 @@ package com.klisly.bookbox.ui.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +25,7 @@ import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.User;
 import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
+import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
@@ -37,7 +37,6 @@ import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
 import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
-import com.klisly.bookbox.utils.ToastHelper;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
@@ -72,7 +71,6 @@ public class HomeActivity extends SupportActivity
         if (savedInstanceState == null) {
             start(HomeFragment.newInstance());
         }
-
         initView();
     }
 
@@ -110,7 +108,7 @@ public class HomeActivity extends SupportActivity
                         if (AccountLogic.getInstance().isLogin()) {
                             gotoMine();
                         } else {
-                            gotoLogin();
+                            goToLogin();
                         }
                     }
                 }, 250);
@@ -130,18 +128,8 @@ public class HomeActivity extends SupportActivity
     protected void onResume() {
         super.onResume();
         BusProvider.getInstance().register(this);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gotoChooseTopics();
-            }
-        }, 250);
     }
 
-    private void gotoChooseTopics() {
-        start(ChooseTopicFragment.newInstance());
-    }
 
     @Override
     public void onPause() {
@@ -231,20 +219,12 @@ public class HomeActivity extends SupportActivity
                         start(fragment, SupportFragment.SINGLETASK);
                     }
                 } else if (id == R.id.menu_mine) {
-
-                    MineFragment fragment = findFragment(MineFragment.class);
-                    if (fragment == null) {
-                        popTo(HomeFragment.class, false, new Runnable() {
-                            @Override
-                            public void run() {
-                                start(MineFragment.newInstance());
-                            }
-                        });
+                    if (AccountLogic.getInstance().isLogin()) {
+                        gotoMine();
                     } else {
-                        // 如果已经在栈内,则以SingleTask模式start
-                        //                        start(fragment, SupportFragment.SINGLETASK);
-                        start(fragment, SupportFragment.SINGLETASK);
+                        goToLogin();
                     }
+
                 }
             }
         }, 250);
@@ -252,13 +232,30 @@ public class HomeActivity extends SupportActivity
         return true;
     }
 
-    private void gotoLogin() {
+    private void goToLogin() {
         start(LoginFragment.newInstance());
     }
 
     private void gotoMine() {
-        start(MineFragment.newInstance());
+        MineFragment fragment = findFragment(MineFragment.class);
+        if (fragment == null) {
+            popTo(HomeFragment.class, false, new Runnable() {
+                @Override
+                public void run() {
+                    start(MineFragment.newInstance());
+                }
+            });
+        } else {
+            // 如果已经在栈内,则以SingleTask模式start
+            //                        start(fragment, SupportFragment.SINGLETASK);
+            start(fragment, SupportFragment.SINGLETASK);
+        }
         mNavigationView.setCheckedItem(R.id.menu_mine);
+    }
+
+    @Subscribe
+    public void onToLogin(ToLoginEvent event){
+        goToLogin();
     }
 
     @Subscribe
@@ -278,6 +275,7 @@ public class HomeActivity extends SupportActivity
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(initObserver(HomeActivity.this));
+            start(ChooseTopicFragment.newInstance(ChooseTopicFragment.ACTION_SET));
         }
     }
 
@@ -295,7 +293,7 @@ public class HomeActivity extends SupportActivity
 
             @Override
             public void onNext(ApiResult<LoginData> data) {
-                ToastHelper.showLoneTip("start init site and topic");
+                Timber.i("start init site and topic");
             }
         };
     }

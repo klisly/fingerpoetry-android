@@ -2,8 +2,9 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.bookbox.Constants;
 
-public class Topic extends BaseModel{
+public class Topic extends BaseModel implements Comparable<Topic>{
     @SerializedName("_id")
     @Expose
     private String id;
@@ -31,6 +32,13 @@ public class Topic extends BaseModel{
     @SerializedName("image")
     @Expose
     private String image;
+
+    private boolean isFocused; // 外来数据, 由User2Topic 获得
+
+    private int seq;
+
+    private static int RESERVE_RECOMMEND = 1;
+    private static int RESERVE_HOT = 2;
 
     /**
      *
@@ -124,6 +132,22 @@ public class Topic extends BaseModel{
         this.image = image;
     }
 
+    public boolean isFocused() {
+        return isFocused;
+    }
+
+    public void setFocused(boolean focused) {
+        isFocused = focused;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Topic{");
@@ -134,9 +158,93 @@ public class Topic extends BaseModel{
         sb.append(", createAt=").append(createAt);
         sb.append(", articleCount=").append(articleCount);
         sb.append(", isBlock=").append(isBlock);
+        sb.append(", isFocused=").append(isFocused);
+        sb.append(", seq=").append(seq);
         sb.append(", image=").append(image);
         sb.append(", followerCount=").append(followerCount);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static int getNamePriority(Topic topic){
+        if(topic != null) {
+            if (Constants.RESERVE_TOPIC_HOT.equals(topic.getName())) {
+                return RESERVE_HOT;
+            }
+            if (Constants.RESERVE_TOPIC_RECOMMEND.equals(topic.getName())) {
+                return RESERVE_RECOMMEND;
+            }
+        }
+        return 0;
+    }
+
+    public static int getFocusPriority(Topic topic){
+        if(topic != null) {
+            if(topic.isFocused()){
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public static int getSeqPriority(Topic topic){
+        if(topic != null) {
+            return topic.getSeq();
+        }
+        return 0;
+    }
+
+    @Override
+    public int compareTo(Topic topic) {
+        int degree = Topic.getNamePriority(this) - Topic.getNamePriority(topic);
+        if(degree != 0){
+            return -degree;
+        }
+
+        degree = Topic.getFocusPriority(this) - Topic.getFocusPriority(topic);
+        if(degree != 0){
+            return -degree;
+        }
+
+        degree = Topic.getSeqPriority(this) - Topic.getSeqPriority(topic);
+        if(degree != 0){
+            return -degree;
+        }
+
+        return 0;
+    }
+
+    public void updateData(Topic topic) {
+        this.name = topic.getName();
+        this.updateAt = topic.getUpdateAt();
+        this.isBlock = topic.getBlock();
+        this.articleCount = topic.getArticleCount();
+        this.followerCount = topic.getFollowerCount();
+        this.image = topic.getImage();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Topic)) return false;
+        Topic topic = (Topic) o;
+        return getId().equals(topic.getId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + (int) (getV() ^ (getV() >>> 32));
+        result = 31 * result + (int) (getUpdateAt() ^ (getUpdateAt() >>> 32));
+        result = 31 * result + (int) (getCreateAt() ^ (getCreateAt() >>> 32));
+        result = 31 * result + isBlock.hashCode();
+        result = 31 * result + (int) (getFollowerCount() ^ (getFollowerCount() >>> 32));
+        result = 31 * result + (int) (getArticleCount() ^ (getArticleCount() >>> 32));
+        result = 31 * result + getImage().hashCode();
+        result = 31 * result + (isFocused() ? 1 : 0);
+        result = 31 * result + getSeq();
+        return result;
     }
 }

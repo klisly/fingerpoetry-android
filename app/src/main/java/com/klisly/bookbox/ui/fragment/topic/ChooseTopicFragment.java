@@ -7,17 +7,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChooseTopicAdapter;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.TopicApi;
 import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2Topic;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
@@ -43,13 +44,26 @@ public class ChooseTopicFragment extends BaseBackFragment {
     PaperButton mBtnEnter;
     @Bind(R.id.recy)
     DragListView mRecy;
+    public static int ACTION_MANAGE = 1;
+    public static int ACTION_SET = 2;
+    private int action;
     private ChooseTopicAdapter mAdapter;
     private TopicApi topicApi = BookRetrofit.getInstance().getTopicApi();
-    public static ChooseTopicFragment newInstance() {
+
+    public static ChooseTopicFragment newInstance(int action) {
         ChooseTopicFragment fragment = new ChooseTopicFragment();
+        fragment.setAction(action);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
     }
 
     @Override
@@ -61,6 +75,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        TopicLogic.getInstance().unRegisterListener(this);
         ButterKnife.unbind(this);
     }
 
@@ -70,7 +85,11 @@ public class ChooseTopicFragment extends BaseBackFragment {
         View view = inflater.inflate(R.layout.fragment_choose, container, false);
         ButterKnife.bind(this, view);
         initView();
-        // todo 合并
+        updateData();
+        return view;
+    }
+
+    private void updateData() {
         topicApi.list()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,17 +108,16 @@ public class ChooseTopicFragment extends BaseBackFragment {
 
                     @Override
                     public void onNext(ApiResult<List<Topic>> entities) {
-                        TopicLogic.getInstance().setDefaultTopics(entities.getData());
-                        mAdapter.setItemList(TopicLogic.getInstance().getChooseTopics());
-                        Timber.i("onNext datas size:"+mAdapter.getItemCount());
+                        Timber.i("onNext list topics size:" + entities.getData().size());
+                        TopicLogic.getInstance().updateDefaultTopics(entities.getData());
                     }
                 });
-        if(AccountLogic.getInstance().getNowUser() != null) {
+        if (AccountLogic.getInstance().getNowUser() != null) {
             topicApi.subscribes(AccountLogic.getInstance().getNowUser().getId(),
-                        AccountLogic.getInstance().getToken())
+                    AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getActivity(), false) {
+                    .subscribe(new AbsSubscriber<ApiResult<List<User2Topic>>>(getActivity(), false) {
                         @Override
                         protected void onError(ApiException ex) {
                             Timber.i("onError");
@@ -113,13 +131,12 @@ public class ChooseTopicFragment extends BaseBackFragment {
                         }
 
                         @Override
-                        public void onNext(ApiResult<List<Topic>> data) {
-                            Timber.i("onNext choose topics size:"+data.getData().size());
-//                            TopicLogic.getInstance().setChooseTopics(data.getData());
+                        public void onNext(ApiResult<List<User2Topic>> data) {
+                            Timber.i("onNext choose topics size:" + data.getData().size());
+                            TopicLogic.getInstance().updateSubscribes(data.getData());
                         }
                     });
         }
-        return view;
     }
 
     private void initView() {
@@ -129,9 +146,14 @@ public class ChooseTopicFragment extends BaseBackFragment {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mRecy.isChangePosition()) {
+                    TopicLogic.getInstance().updateFocusedOrder();
+                    updateFocusedOrder();
+                }
+                if(action == ACTION_SET) {
+                    start(ChooseSiteFragment.newInstance());
+                }
                 pop();
-                start(ChooseSiteFragment.newInstance());
-
             }
         });
 
@@ -143,35 +165,117 @@ public class ChooseTopicFragment extends BaseBackFragment {
         });
 
         mRecy.getRecyclerView().setVerticalScrollBarEnabled(true);
-        mRecy.setDragListListener(new DragListView.DragListListenerAdapter() {
-            @Override
-            public void onItemDragStarted(int position) {
-                Toast.makeText(mRecy.getContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemDragEnded(int fromPosition, int toPosition) {
-                if (fromPosition != toPosition) {
-                    Toast.makeText(mRecy.getContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         mRecy.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ChooseTopicAdapter(true);
         mRecy.setAdapter(mAdapter, true);
         mRecy.setCanDragHorizontally(false);
         mRecy.setDisableReorderWhenDragging(false);
+        mRecy.setHoldPosition(1);
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
+                Topic topic = TopicLogic.getInstance().getOpenChooseTopics().get(position);
+                Timber.i("click position:" + position
+                        + " data:" + topic);
+                if(TopicLogic.getInstance().isFocused(topic.getId())){
+                    unSubscribe(topic, position);
+                } else {
+                    subscribe(topic, position);
+                }
 
             }
         });
+        TopicLogic.getInstance().reorderDefaultTopics();
+        mAdapter.setItemList(TopicLogic.getInstance().getOpenChooseTopics());
 
-        mAdapter.setItemList(TopicLogic.getInstance().getChooseTopics());
-        Timber.i("datas size:"+mAdapter.getItemCount());
+        if (action == ACTION_MANAGE) {
+            mBtnEnter.setVisibility(View.INVISIBLE);
+            mBtnNext.setText(getString(R.string.finish));
+        } else if (action == ACTION_SET) {
 
+        }
+
+        TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
+            @Override
+            public void onDataChange() {
+                if(mAdapter != null){
+                    mAdapter.setItemList(TopicLogic.getInstance().getOpenChooseTopics());
+                }
+            }
+        });
+    }
+
+    private void updateFocusedOrder() {
+
+//        Map<String, Integer> datas = new HashMap<>();
+//
+//        topicApi.reorder(datas,
+//                AccountLogic.getInstance().getToken())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(Schedulers.newThread())
+//                .subscribe(new AbsSubscriber<ApiResult<Void>>(getActivity(), false) {
+//                    @Override
+//                    protected void onError(ApiException ex) {
+//                        Timber.i("onError");
+//                    }
+//
+//                    @Override
+//                    protected void onPermissionError(ApiException ex) {
+//                        Timber.i("onPermissionError");
+//                    }
+//
+//                    @Override
+//                    public void onNext(ApiResult<Void> data) {
+//                        Timber.i("reorder success");
+//                    }
+//                });
+    }
+
+    private void unSubscribe(Topic topic, int position) {
+        topicApi.unsubscribe(topic.getId(),
+                AccountLogic.getInstance().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<User2Topic>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<User2Topic> data) {
+                        Timber.i("unSubscribe result:" + data.getData());
+                        TopicLogic.getInstance().unSubscribe(data.getData());
+                    }
+                });
+    }
+
+    private void subscribe(Topic topic, int position) {
+        topicApi.subscribe(topic.getId(),
+                AccountLogic.getInstance().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<User2Topic>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<User2Topic> data) {
+                        Timber.i("subscribe:" + data.getData());
+                        TopicLogic.getInstance().subscribe(data.getData());                    }
+                });
     }
 }

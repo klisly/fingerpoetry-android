@@ -11,11 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
+import com.klisly.bookbox.listener.OnDataChangeListener;
+import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
+import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 
 import java.util.List;
@@ -49,7 +54,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this,view);
-        topics = TopicLogic.getInstance().getChooseTopics();
+        topics = TopicLogic.getInstance().getOpenFocusedTopics();
         initView();
         return view;
     }
@@ -71,7 +76,14 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                 mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
             }
         }
-        mViewPager.setAdapter(new ChannelFragmentAdapter(getChildFragmentManager(), topics));
+        ChannelFragmentAdapter adapter = new ChannelFragmentAdapter(getChildFragmentManager(), topics);
+        mViewPager.setAdapter(adapter);
+        TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
+            @Override
+            public void onDataChange() {
+                adapter.notifyDataSetChanged();
+            }
+        });
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -96,6 +108,14 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                         switch (item.getItemId()) {
                             case R.id.action_recom_setting:
                                 ToastHelper.showShortTip(R.string.recom_setting);
+                                break;
+                            case R.id.action_manage_topic:
+                                if(!AccountLogic.getInstance().isLogin()){
+                                    BusProvider.getInstance().post(new ToLoginEvent());
+                                } else {
+                                    start(ChooseTopicFragment.newInstance(ChooseTopicFragment.ACTION_MANAGE));
+                                }
+
                                 break;
                             case R.id.action_reget:
                                 ToastHelper.showShortTip(R.string.reget);

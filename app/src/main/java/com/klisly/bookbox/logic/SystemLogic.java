@@ -1,8 +1,12 @@
 package com.klisly.bookbox.logic;
 
 import com.klisly.bookbox.domain.LoginData;
+import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.model.User;
 import com.klisly.common.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SystemLogic extends  BaseLogic{
 
@@ -71,5 +75,9 @@ public class SystemLogic extends  BaseLogic{
     public void logout() {
         this.loginData = null;
         preferenceUtils.setValue(PRE_ACCOUNT, "");
+    }
+
+    public List<Topic> getDefaultTopics() {
+        return new ArrayList<>();
     }
 }

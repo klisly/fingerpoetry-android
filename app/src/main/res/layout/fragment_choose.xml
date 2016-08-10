@@ -7,6 +7,15 @@
     android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="6dp"
+        android:text="@string/choose_tip"
+        android:textColor="@color/background_black_alpha_50"
+        android:textSize="14sp" />
     <com.klisly.bookbox.widget.draglistview.DragListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recy"

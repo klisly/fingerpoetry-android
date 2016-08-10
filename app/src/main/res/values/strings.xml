@@ -64,5 +64,6 @@
     <string name="focurnum">人关注</string>
     <string name="hot">热门</string>
     <string name="recommend">推荐</string>
+    <string name="choose_tip">单击增删频道,长按拖拽排序</string>
 
 </resources>

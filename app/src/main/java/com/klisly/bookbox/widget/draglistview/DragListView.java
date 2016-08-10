@@ -76,6 +76,7 @@ public class DragListView extends FrameLayout {
     private DragItem mDragItem;
     private float mTouchX;
     private float mTouchY;
+    private int holdPosition = -1;
 
     public DragListView(Context context) {
         super(context);
@@ -179,6 +180,7 @@ public class DragListView extends FrameLayout {
                 return true;
             }
         });
+        recyclerView.setHoldPosition(holdPosition);
         return recyclerView;
     }
 
@@ -292,5 +294,20 @@ public class DragListView extends FrameLayout {
      */
     public void setDropTargetDrawables(Drawable backgroundDrawable, Drawable foregroundDrawable) {
         mRecyclerView.setDropTargetDrawables(backgroundDrawable, foregroundDrawable);
+    }
+
+    public int getHoldPosition() {
+        return holdPosition;
+    }
+
+    public void setHoldPosition(int holdPosition) {
+        this.holdPosition = holdPosition;
+        if(mRecyclerView != null){
+            mRecyclerView.setHoldPosition(holdPosition);
+        }
+    }
+
+    public boolean isChangePosition(){
+        return mRecyclerView != null && mRecyclerView.isChangePosition();
     }
 }

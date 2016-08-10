@@ -58,8 +58,10 @@ class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScro
     private Drawable mDropTargetForegroundDrawable;
     private long mDragItemId = NO_ID;
     private boolean mHoldChangePosition;
+    private boolean changePosition = false;
     private int mDragItemPosition;
     private int mTouchSlop;
+    private int holdPosition = -1;
     private float mStartY;
     private boolean mClipToPadding;
     private boolean mCanNotDragAboveTop;
@@ -187,6 +189,14 @@ class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScro
         return mDragItemId;
     }
 
+    public boolean isChangePosition() {
+        return changePosition;
+    }
+
+    public void setChangePosition(boolean changePosition) {
+        this.changePosition = changePosition;
+    }
+
     @Override
     public void setClipToPadding(boolean clipToPadding) {
         super.setClipToPadding(clipToPadding);
@@ -228,6 +238,10 @@ class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScro
     public void onAutoScrollColumnBy(int columns) {
     }
 
+    public void setHoldPosition(int holdPosition) {
+        this.holdPosition = holdPosition;
+    }
+
     private View findChildView(float x, float y) {
         final int count = getChildCount();
         if (y <= 0 && count > 0) {
@@ -248,7 +262,8 @@ class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScro
 
     private boolean shouldChangeItemPosition(int newPos) {
         // Check if drag position is changed and valid and that we are not in a hold position state
-        if (mHoldChangePosition || mDragItemPosition == NO_POSITION || mDragItemPosition == newPos ) {
+        if (mHoldChangePosition || mDragItemPosition == NO_POSITION
+                || mDragItemPosition == newPos  || mDragItemPosition <= holdPosition) {
             return false;
         }
         // If we are not allowed to drag above top or bottom and new pos is 0 or item count then return false
@@ -275,6 +290,7 @@ class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScro
                 mAdapter.setDropTargetId(mAdapter.getItemId(newPos));
                 mAdapter.notifyDataSetChanged();
             } else {
+                changePosition = true;
                 int pos = layoutManager.findFirstVisibleItemPosition();
                 View posView = layoutManager.findViewByPosition(pos);
                 mAdapter.changeItemPosition(mDragItemPosition, newPos);

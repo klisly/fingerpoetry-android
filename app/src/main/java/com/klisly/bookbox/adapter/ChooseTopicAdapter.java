@@ -40,15 +40,15 @@ public class ChooseTopicAdapter extends DragItemAdapter<Topic, ChooseTopicAdapte
                 }
             }
         });
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int position = holder.getAdapterPosition();
-//                if (mClickListener != null) {
-//                    mClickListener.onItemClick(position, v);
-//                }
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                if (mClickListener != null) {
+                    mClickListener.onItemClick(position, v);
+                }
+            }
+        });
         return holder;
     }
 
@@ -67,7 +67,7 @@ public class ChooseTopicAdapter extends DragItemAdapter<Topic, ChooseTopicAdapte
             buffer.append("・")
                     .append(item.getFollowerCount())
                     .append(BookBoxApplication.getInstance().getString(R.string.focurnum));
-            initAction(holder.btnAction, TopicLogic.getInstance().isFocus(item.getId()));
+            initAction(holder.btnAction, TopicLogic.getInstance().isFocused(item.getId()));
         } else {
             holder.btnAction.disEnable();
             holder.btnAction.setText(BookBoxApplication.getInstance().getString(R.string.focused));

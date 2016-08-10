@@ -8,6 +8,7 @@ public class Constants {
     public static final int SITE = 1;
     public static final int MAGEZINE = 2;
     public static final int TOPIC = 3;
+    public static final int DEFAULT_TOPIC_SIZE = 3;
 
     // MOB设置
     public static final String MOB_APP_KEY = "13818ffc591c0";
@@ -19,13 +20,16 @@ public class Constants {
 
     public static final String KEY_FIRST_LAUNCH = "KEY_FIRST_LAUNCH";
 
+    public static final String RESERVE_TOPIC_HOT = "热门";
+    public static final String RESERVE_TOPIC_RECOMMEND = "推荐";
+
     private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
 
-    public static void setFirstLaunch(boolean isFirst){
+    public static void setFirstLaunch(boolean isFirst) {
         preferenceUtils.setValue(KEY_FIRST_LAUNCH, isFirst);
     }
 
-    public static boolean isFirstLaunch(){
+    public static boolean isFirstLaunch() {
         return preferenceUtils.getValue(KEY_FIRST_LAUNCH, true);
     }
 }
