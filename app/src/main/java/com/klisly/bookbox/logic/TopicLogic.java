@@ -81,10 +81,10 @@ public class TopicLogic extends BaseLogic {
         }
     }
 
-    private void updateOpenData(){
+    public void updateOpenData(){
         focusedTopics.clear();
         if (subscribes.size() > 0) {
-            for (int i = 0; i < defaultTopics.size(); i++) {
+            for (int i = 0; i < defaultTopics.size() || i < Constants.DEFAULT_TOPIC_SIZE; i++) {
                 if (defaultTopics.get(i).isFocused()
                         || Topic.getNamePriority(defaultTopics.get(i)) > 0) {
                     focusedTopics.add(defaultTopics.get(i));
@@ -251,7 +251,7 @@ public class TopicLogic extends BaseLogic {
         return defaultTopics;
     }
 
-    public List<Topic> getOpenFocusedTopics() {
+    public List<Topic> getOpenFocuses() {
         return focusedTopics;
     }
 
@@ -279,6 +279,11 @@ public class TopicLogic extends BaseLogic {
         subscribes.put(data.getTopicId(), data);
         updateDefaultTopicStatus(data);
         updateOpenData();
+        persistentSubscribe();
+    }
+
+    private void persistentSubscribe(){
+
     }
 
     public void unSubscribe(User2Topic data) {

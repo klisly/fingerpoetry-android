@@ -3,6 +3,18 @@
  */
 package com.klisly.bookbox.ui.fragment.account;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
@@ -15,22 +27,11 @@ import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
-import com.klisly.bookbox.ui.fragment.HomeFragment;
+import com.klisly.bookbox.ui.fragment.home.HomeFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
 import com.material.widget.PaperButton;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.smssdk.EventHandler;

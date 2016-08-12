@@ -37,10 +37,6 @@ public interface TopicApi {
     Observable<ApiResult<User2Topic>> subscribe(@Path("id") String id,
                                                 @Header("x-access-token") String token);
 
-    @PUT("topics/{id}/subscribe")
-    Observable<ApiResult<Topic>> order(@Path("id") String id,
-                                             @Header("x-access-token") String token);
-
     @POST("topics/{id}/unsubscribe")
     Observable<ApiResult<User2Topic>> unsubscribe(@Path("id") String id,
                                                  @Header("x-access-token") String token);

@@ -17,7 +17,8 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookRetrofit {
-    public final static String BASE_URL = "http://192.168.10.103:3000/";
+//    public final static String BASE_URL = "http://192.168.10.103:3000/";
+    public final static String BASE_URL = "http://192.168.1.3:3000/";
     public final static String BASE_API_URL = BASE_URL;
 
     private final static long DEFAULT_TIMEOUT = 15; // 15超时

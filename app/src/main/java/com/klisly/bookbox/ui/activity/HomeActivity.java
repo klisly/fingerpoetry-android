@@ -30,12 +30,12 @@ import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
-import com.klisly.bookbox.ui.fragment.HomeFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
+import com.klisly.bookbox.ui.fragment.home.HomeFragment;
 import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
-import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
-import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
+import com.klisly.bookbox.ui.fragment.topic.ActivityFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
 import com.squareup.otto.Subscribe;
@@ -171,21 +171,21 @@ public class HomeActivity extends SupportActivity
             @Override
             public void run() {
                 int id = item.getItemId();
-                if (id == R.id.menu_home) {
 
+                if (id == R.id.menu_home) {
                     HomeFragment fragment = findFragment(HomeFragment.class);
                     //                    Bundle newBundle = new Bundle();
                     //                    newBundle.putString("from", "主页-->来自:" + topFragment.getClass()
                     // .getSimpleName());
                     //                    fragment.putNewBundle(newBundle);
                     start(fragment, SupportFragment.SINGLETASK);
-                } else if (id == R.id.menu_topic) {
-                    TopicFragment fragment = findFragment(TopicFragment.class);
+                } else if (id == R.id.menu_activity) {
+                    ActivityFragment fragment = findFragment(ActivityFragment.class);
                     if (fragment == null) {
                         popTo(HomeFragment.class, false, new Runnable() {
                             @Override
                             public void run() {
-                                start(TopicFragment.newInstance());
+                                start(ActivityFragment.newInstance());
                             }
                         });
                     } else {
@@ -264,7 +264,9 @@ public class HomeActivity extends SupportActivity
         Timber.i("receive onLoginSuccess");
         updateNavData();
         CommonHelper.getTopics(this);
-        CommonHelper.getUserFocused(this);
+        CommonHelper.getUserTopics(this);
+        CommonHelper.getSites(this);
+        CommonHelper.getUserSites(this);
         User user = AccountLogic.getInstance().getNowUser();
         if(!user.isBasicSet() && Constants.isFirstLaunch()){
             Constants.setFirstLaunch(false);

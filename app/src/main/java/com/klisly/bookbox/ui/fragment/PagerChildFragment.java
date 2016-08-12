@@ -1,7 +1,6 @@
 package com.klisly.bookbox.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerAdapter;
 import com.klisly.bookbox.listener.OnItemClickListener;
+import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ui.CycleFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
@@ -27,26 +27,17 @@ import java.util.List;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-public class PagerChildFragment extends BaseFragment {
-    private static final String ARG_FROM = "arg_from";
-    private static final String ARG_CHANNEL = "arg_channel";
+public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
+    public static final String ARG_FROM = "arg_from";
+    public static final String ARG_CHANNEL = "arg_channel";
 
     private int mFrom;
-    private Topic mTopic;
+    private T mTopic;
     private RecyclerView mRecy;
     private PagerAdapter mAdapter;
     private Topic topic;
     private TextView mTvTip;
     private CircleRefreshLayout mRefreshLayout;
-
-    public static PagerChildFragment newInstance(@NonNull int from, @NonNull Topic topic) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_FROM, from);
-        args.putSerializable(ARG_CHANNEL, topic);
-        PagerChildFragment fragment = new PagerChildFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +46,7 @@ public class PagerChildFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args != null) {
             mFrom = args.getInt(ARG_FROM);
-            mTopic = (Topic) args.getSerializable(ARG_CHANNEL);
+            mTopic = (T) args.getSerializable(ARG_CHANNEL);
         }
     }
 

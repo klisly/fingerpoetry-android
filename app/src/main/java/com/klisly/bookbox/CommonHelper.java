@@ -5,8 +5,11 @@ import android.content.Context;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.SiteLogic;
 import com.klisly.bookbox.logic.TopicLogic;
+import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2Site;
 import com.klisly.bookbox.model.User2Topic;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
@@ -45,7 +48,7 @@ public class CommonHelper {
                 });
     }
 
-    public static void getUserFocused(Context context){
+    public static void getUserTopics(Context context){
         if (AccountLogic.getInstance().getNowUser() != null) {
             BookRetrofit.getInstance().getTopicApi()
                     .subscribes(AccountLogic.getInstance().getNowUser().getId(),
@@ -69,6 +72,61 @@ public class CommonHelper {
                         public void onNext(ApiResult<List<User2Topic>> data) {
                             Timber.i("onNext choose topics size:" + data.getData().size());
                             TopicLogic.getInstance().updateSubscribes(data.getData());
+                        }
+                    });
+        }
+    }
+
+    public static void getSites(Context context) {
+        BookRetrofit.getInstance().getSiteApi()
+                .list()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<Site>>>(context, false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<Site>> entities) {
+                        Timber.i("onNext list topics size:" + entities.getData().size());
+                        SiteLogic.getInstance().updateDefaultTopics(entities.getData());
+                    }
+                });
+    }
+
+    public static void getUserSites(Context context){
+        if (AccountLogic.getInstance().getNowUser() != null) {
+            BookRetrofit.getInstance().getSiteApi()
+                    .subscribes(AccountLogic.getInstance().getNowUser().getId(),
+                            AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<List<User2Site>>>(context, false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+                            Timber.i("onError");
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            Timber.i("onPermissionError");
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<List<User2Site>> data) {
+                            Timber.i("onNext choose topics size:" + data.getData().size());
+                            SiteLogic.getInstance().updateSubscribes(data.getData());
                         }
                     });
         }

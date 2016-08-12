@@ -85,7 +85,7 @@
     "image": "/images/channelbrand.jpg",
     "isBlock": false,
     "articleNum": 0,
-    "followerCount": -1
+    "followerCount": 0
   },
   {
     "_id": "57a8b51ea955bc6d20d28e5d",
@@ -96,6 +96,6 @@
     "image": "/images/channelbrand.jpg",
     "isBlock": false,
     "articleNum": 0,
-    "followerCount": -2
+    "followerCount": 0
   }
 ]

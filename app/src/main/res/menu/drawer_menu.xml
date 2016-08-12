@@ -7,15 +7,15 @@
                 android:icon="@drawable/left_home"
                 android:title="@string/homepage"/>
         <item
-                android:id="@+id/menu_topic"
-                android:checkable="true"
-                android:icon="@drawable/left_topic"
-                android:title="@string/topic"/>
-        <item
                 android:id="@+id/menu_site"
                 android:icon="@drawable/left_site"
                 android:checkable="true"
                 android:title="@string/site"/>
+        <item
+            android:id="@+id/menu_activity"
+            android:checkable="true"
+            android:icon="@drawable/left_topic"
+            android:title="@string/topic"/>
         <item
                 android:id="@+id/menu_magzine"
                 android:checkable="true"

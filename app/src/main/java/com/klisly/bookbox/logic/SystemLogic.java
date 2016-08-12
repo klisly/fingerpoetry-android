@@ -1,6 +1,7 @@
 package com.klisly.bookbox.logic;
 
 import com.klisly.bookbox.domain.LoginData;
+import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.model.User;
 import com.klisly.common.StringUtils;
@@ -78,6 +79,10 @@ public class SystemLogic extends  BaseLogic{
     }
 
     public List<Topic> getDefaultTopics() {
+        return new ArrayList<>();
+    }
+
+    public List<Site> getDefaultSites() {
         return new ArrayList<>();
     }
 }

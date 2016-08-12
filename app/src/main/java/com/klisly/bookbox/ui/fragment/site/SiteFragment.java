@@ -11,15 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.klisly.bookbox.Constants;
+import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.ChannelFragmentAdapter;
-import com.klisly.bookbox.logic.TopicLogic;
-import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.adapter.PagerFragmentAdapter;
+import com.klisly.bookbox.listener.OnDataChangeListener;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.SiteLogic;
+import com.klisly.bookbox.model.Site;
+import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.utils.ToastHelper;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +34,6 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     ViewPager mViewPager;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    private List<Topic> topics;
 
     public static SiteFragment newInstance() {
         return new SiteFragment();
@@ -49,7 +49,6 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        topics = TopicLogic.getInstance().getChannelsByType(Constants.SITE);
         initView();
         return view;
     }
@@ -57,6 +56,7 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        SiteLogic.getInstance().unRegisterListener(this);
         ButterKnife.unbind(this);
     }
 
@@ -72,13 +72,29 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mToolbar.setTitle(R.string.site);
         initToolbarNav(mToolbar);
         mToolbar.setOnMenuItemClickListener(this);
-        if(topics != null){
-            for(Topic topic : topics){
-                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
+        updateItems();
+        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager(),
+                SiteLogic.getInstance().getOpenFocuses());
+        mViewPager.setAdapter(adapter);
+        SiteLogic.getInstance().registerListener(this, new OnDataChangeListener() {
+            @Override
+            public void onDataChange() {
+                adapter.notifyDataSetChanged();
+                updateItems();
+            }
+        });
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void updateItems() {
+        if(SiteLogic.getInstance().getOpenFocuses() != null){
+            mTabLayout.removeAllTabs();
+            for(Site site : SiteLogic.getInstance().getOpenFocuses()){
+                if(mTabLayout != null) {
+                    mTabLayout.addTab(mTabLayout.newTab().setText(site.getName()));
+                }
             }
         }
-        mViewPager.setAdapter(new ChannelFragmentAdapter(getChildFragmentManager(), topics));
-        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     /**
@@ -99,11 +115,15 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.action_find_site:
-                                ToastHelper.showShortTip(R.string.find_site);
-                                break;
+//                            case R.id.action_find_site:
+//                                ToastHelper.showShortTip(R.string.find_site);
+//                                break;
                             case R.id.action_manage_site:
-                                ToastHelper.showShortTip(R.string.manage_site);
+                                if(!AccountLogic.getInstance().isLogin()){
+                                    BusProvider.getInstance().post(new ToLoginEvent());
+                                } else {
+                                    start(ChooseSiteFragment.newInstance(ChooseSiteFragment.ACTION_MANAGE));
+                                }
                                 break;
                             case R.id.action_sort_method:
                                 ToastHelper.showShortTip(R.string.sort_method);

@@ -23,7 +23,9 @@
             android:id="@+id/tab_layout"
             style="@style/SubTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:layout_height="32dp"
+            app:tabMode="scrollable"
+            />
 
     </android.support.design.widget.AppBarLayout>
 

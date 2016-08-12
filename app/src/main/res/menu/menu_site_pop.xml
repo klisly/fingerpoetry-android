@@ -8,10 +8,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-            android:id="@+id/action_find_site"
-            android:title="@string/find_site"
-            app:showAsAction="never"/>
-    <item
             android:id="@+id/action_manage_site"
             android:title="@string/manage_site"
             app:showAsAction="never"/>
