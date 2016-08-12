@@ -1,4 +1,4 @@
-package com.klisly.bookbox.ui.fragment.topic;
+package com.klisly.bookbox.ui.fragment.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;

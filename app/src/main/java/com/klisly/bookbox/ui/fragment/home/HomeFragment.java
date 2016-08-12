@@ -24,7 +24,6 @@ import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
@@ -64,9 +63,9 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Override
     protected FragmentAnimator onCreateFragmentAnimation() {
         // 默认不改变
-        // return super.onCreateFragmentAnimation();
+         return super.onCreateFragmentAnimation();
         // 在进入和离开时 设定无动画
-        return new DefaultNoAnimator();
+//        return new DefaultNoAnimator();
     }
 
     private void initView() {

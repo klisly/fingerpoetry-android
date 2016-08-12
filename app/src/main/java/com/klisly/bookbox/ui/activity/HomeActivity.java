@@ -31,13 +31,14 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.ui.fragment.activity.ActivityFragment;
 import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
 import com.klisly.bookbox.ui.fragment.home.HomeFragment;
 import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
-import com.klisly.bookbox.ui.fragment.topic.ActivityFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.common.LogUtils;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
@@ -144,14 +145,20 @@ public class HomeActivity extends SupportActivity
         ButterKnife.unbind(this);
     }
 
+    long firstTime = 0;
     @Override
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (firstTime + 2000 > System.currentTimeMillis()) {
+                LogUtils.i(TAG, "exit app");
+                super.onBackPressed();
+            }
+            firstTime = System.currentTimeMillis();
         }
     }
+
 
     /**
      * 打开抽屉

@@ -13,7 +13,6 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerAdapter;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.model.BaseModel;
-import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ui.CycleFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
@@ -24,7 +23,6 @@ import com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
@@ -32,10 +30,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     public static final String ARG_CHANNEL = "arg_channel";
 
     private int mFrom;
-    private T mTopic;
+    private T mData;
     private RecyclerView mRecy;
     private PagerAdapter mAdapter;
-    private Topic topic;
     private TextView mTvTip;
     private CircleRefreshLayout mRefreshLayout;
 
@@ -46,8 +43,16 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         Bundle args = getArguments();
         if (args != null) {
             mFrom = args.getInt(ARG_FROM);
-            mTopic = (T) args.getSerializable(ARG_CHANNEL);
+            mData = (T) args.getSerializable(ARG_CHANNEL);
         }
+    }
+
+    @Override
+    protected FragmentAnimator onCreateFragmentAnimation() {
+        // 默认不改变
+        return super.onCreateFragmentAnimation();
+        // 在进入和离开时 设定无动画
+//        return new DefaultNoAnimator();
     }
 
     @Override
@@ -56,11 +61,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
         initView(view);
         return view;
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultNoAnimator();
     }
 
     private void initView(View view) {
