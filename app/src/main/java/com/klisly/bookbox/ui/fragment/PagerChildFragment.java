@@ -23,18 +23,23 @@ import com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     public static final String ARG_FROM = "arg_from";
     public static final String ARG_CHANNEL = "arg_channel";
+    @Bind(R.id.recy)
+    RecyclerView mRecy;
+    @Bind(R.id.refresh_layout)
+    CircleRefreshLayout mRefreshLayout;
+    @Bind(R.id.tvTip)
+    TextView mTvTip;
 
     private int mFrom;
     private T mData;
-    private RecyclerView mRecy;
     private PagerAdapter mAdapter;
-    private TextView mTvTip;
-    private CircleRefreshLayout mRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +64,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
+        ButterKnife.bind(this, view);
         initView(view);
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private void initView(View view) {
