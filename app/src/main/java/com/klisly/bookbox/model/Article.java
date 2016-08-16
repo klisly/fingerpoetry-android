@@ -42,10 +42,10 @@ public class Article extends BaseModel{
     private Boolean checked;
     @SerializedName("updateAt")
     @Expose
-    private Integer updateAt;
+    private long updateAt;
     @SerializedName("createAt")
     @Expose
-    private Integer createAt;
+    private long createAt;
     @SerializedName("readNum")
     @Expose
     private Integer readNum;
@@ -60,7 +60,7 @@ public class Article extends BaseModel{
     private List<String> topics = new ArrayList<String>();
     @SerializedName("publishAt")
     @Expose
-    private Integer publishAt;
+    private long publishAt;
 
     /**
      *
@@ -104,7 +104,7 @@ public class Article extends BaseModel{
      * The content
      */
     public String getContent() {
-        return content;
+        return content == null ? "" : content;
     }
 
     /**
@@ -263,42 +263,6 @@ public class Article extends BaseModel{
     /**
      *
      * @return
-     * The updateAt
-     */
-    public Integer getUpdateAt() {
-        return updateAt;
-    }
-
-    /**
-     *
-     * @param updateAt
-     * The updateAt
-     */
-    public void setUpdateAt(Integer updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    /**
-     *
-     * @return
-     * The createAt
-     */
-    public Integer getCreateAt() {
-        return createAt;
-    }
-
-    /**
-     *
-     * @param createAt
-     * The createAt
-     */
-    public void setCreateAt(Integer createAt) {
-        this.createAt = createAt;
-    }
-
-    /**
-     *
-     * @return
      * The readNum
      */
     public Integer getReadNum() {
@@ -368,21 +332,27 @@ public class Article extends BaseModel{
         this.topics = topics;
     }
 
-    /**
-     *
-     * @return
-     * The publishAt
-     */
-    public Integer getPublishAt() {
+    public long getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(long updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public long getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(long createAt) {
+        this.createAt = createAt;
+    }
+
+    public long getPublishAt() {
         return publishAt;
     }
 
-    /**
-     *
-     * @param publishAt
-     * The publishAt
-     */
-    public void setPublishAt(Integer publishAt) {
+    public void setPublishAt(long publishAt) {
         this.publishAt = publishAt;
     }
 

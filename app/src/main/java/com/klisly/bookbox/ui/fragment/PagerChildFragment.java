@@ -8,47 +8,64 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.klisly.bookbox.BookBoxApplication;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.PagerAdapter;
+import com.klisly.bookbox.adapter.PagerContentAdapter;
+import com.klisly.bookbox.api.ArticleApi;
+import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.listener.OnItemClickListener;
+import com.klisly.bookbox.logic.ArticleLogic;
+import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
-import com.klisly.bookbox.ui.CycleFragment;
-import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.model.Site;
+import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
+import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
-import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     public static final String ARG_FROM = "arg_from";
     public static final String ARG_CHANNEL = "arg_channel";
+    public static final String ARG_NAME = "arg_name";
+
     @Bind(R.id.recy)
     RecyclerView mRecy;
     @Bind(R.id.refresh_layout)
     CircleRefreshLayout mRefreshLayout;
     @Bind(R.id.tvTip)
     TextView mTvTip;
-
+    private int page = 0;
+    private int pageSize = 20;
     private int mFrom;
     private T mData;
-    private PagerAdapter mAdapter;
-
+    private PagerContentAdapter mAdapter;
+    private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
+    private String name;
+    private boolean showToast = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle args = getArguments();
         if (args != null) {
             mFrom = args.getInt(ARG_FROM);
             mData = (T) args.getSerializable(ARG_CHANNEL);
+            name = args.getString(ARG_NAME, this.getClass().getName());
         }
     }
 
@@ -78,7 +95,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     private void initView(View view) {
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
         mTvTip = (TextView) view.findViewById(R.id.tvTip);
-        mAdapter = new PagerAdapter(_mActivity);
+        mAdapter = new PagerContentAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
@@ -87,48 +104,156 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                 new CircleRefreshLayout.OnCircleRefreshListener() {
                     @Override
                     public void refreshing() {
-                        TopToastHelper.showTip(mTvTip, "开始加载", TopToastHelper.DURATION_SHORT);
-                        BookBoxApplication.getInstance()
-                                .getHandler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mRefreshLayout.finishRefreshing();
-                                TopToastHelper.showTip(mTvTip, "加载完成", TopToastHelper.DURATION_SHORT);
-                            }
-                        }, 3000);
+                        showToast = true;
+                        loadNew();
+                    }
+
+                    @Override
+                    public void startRefresh() {
+                        TopToastHelper.showTip(mTvTip, getString(R.string.start_load), TopToastHelper.DURATION_SHORT);
                     }
 
                     @Override
                     public void completeRefresh() {
-                        // do something when refresh complete
                     }
                 });
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                ToastHelper.showLoneTip("click position:" + position);
-                if (getParentFragment() instanceof BaseBackFragment) {
-                    ((BaseFragment) getParentFragment()).start(CycleFragment.newInstance(1));
+                Timber.i("click position:" + position);
+                Article article = ArticleLogic.getInstance().getArticles(name).get(position);
+                if(article != null) {
+                    queryData(article);
                 }
 
             }
         });
 
-        // Init Datas
-        List<String> items = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            String item;
-            if (mFrom == 0) {
-                item = "推荐 " + i;
-            } else if (mFrom == 1) {
-                item = "热门 " + i;
-            } else {
-                item = "收藏 " + i;
+        mAdapter.setDatas(ArticleLogic.getInstance().getArticles(name));
+        ArticleLogic.getInstance().registerListener(name, new OnDataChangeListener() {
+            @Override
+            public void onDataChange() {
+                mAdapter.setDatas(ArticleLogic.getInstance().getArticles(name));
+                mAdapter.notifyDataSetChanged();
             }
-            items.add(item);
+        });
+        loadNew();
+    }
+
+    private void queryData(Article article) {
+        if(mData != null) {
+            articleApi.fetch(article.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<Article>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+                            getContentError();
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            getContentError();
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<Article> res) {
+                            Timber.i("reache article:"+res);
+                            if(res.getData() != null){
+                                ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(res.getData()));
+                            } else {
+                                getContentError();
+                            }
+                        }
+                    });
         }
-        mAdapter.setDatas(items);
+    }
+
+    private void getContentError() {
+        TopToastHelper.showTip(mTvTip,
+                getString(R.string.get_detial_fail),
+                TopToastHelper.DURATION_SHORT);
+    }
+
+    private void loadNew() {
+        int type = getAction();
+        Map<String, String> params = new HashMap<>();
+        if (type == ACTION_HOT) {
+            params.put("type", "hot");
+        } else if (type == ACTION_RECOMMEND) {
+            params.put("type", "recommend");
+        }
+        if (mData instanceof Site) {
+            params.put("siteId", ((Site) mData).getId());
+        } else if (mData instanceof Topic) {
+            params.put("siteId", ((Topic) mData).getId());
+        }
+        page++;
+        params.put("page", String.valueOf(page));
+        params.put("pageSize", String.valueOf(pageSize));
+        Timber.i("start load page,params:" + params.toString());
+        articleApi.list(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<Article>>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        onFinish();
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        onFinish();
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<Article>> res) {
+                        onFinish();
+                        if(showToast) {
+                            if (res.getData().size() > 0) {
+                                TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
+                            } else {
+                                TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
+                            }
+                            showToast = false;
+                        }
+                        Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
+                        ArticleLogic.getInstance().updateArticles(name, res.getData());
+                    }
+                });
+    }
+
+    private void onFinish() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mRefreshLayout != null) {
+                    mRefreshLayout.finishRefreshing();
+                }
+            }
+        }, 1000);
+    }
+
+    private static int ACTION_HOT = 1;
+    private static int ACTION_RECOMMEND = 2;
+    private static int ACTION_TOPIC = 3;
+    private static int ACTION_SITE = 2;
+
+    private int getAction() {
+        if (mData instanceof Topic) {
+            Topic topic = (Topic) mData;
+            if (Constants.RESERVE_TOPIC_HOT.equalsIgnoreCase(topic.getName())) {
+                return ACTION_HOT;
+            } else if (Constants.RESERVE_TOPIC_RECOMMEND.equalsIgnoreCase(topic.getName())) {
+                return ACTION_RECOMMEND;
+            } else {
+                return ACTION_TOPIC;
+            }
+        } else if (mData instanceof Site) {
+            return ACTION_SITE;
+        }
+        return ACTION_HOT;
     }
 
 }

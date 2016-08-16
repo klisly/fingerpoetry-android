@@ -24,6 +24,13 @@ public class PagerFragmentAdapter<T extends BaseModel> extends FragmentPagerAdap
         Bundle args = new Bundle();
         args.putInt(PagerChildFragment.ARG_FROM, 0);
         args.putSerializable(PagerChildFragment.ARG_CHANNEL, list.get(position));
+        String name = "";
+        if(list.get(position) instanceof Topic){
+            name = ((Topic)list.get(position)).getName();
+        } else if(list.get(position) instanceof Site){
+            name = ((Site)list.get(position)).getName();
+        }
+        args.putString(PagerChildFragment.ARG_NAME, name);
         PagerChildFragment fragment = new PagerChildFragment();
         fragment.setArguments(args);
         return fragment;

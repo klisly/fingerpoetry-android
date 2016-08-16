@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.model.User2Topic;
 import com.klisly.common.FileUtils;
@@ -35,7 +34,6 @@ public class TopicLogic extends BaseLogic {
 
     private Map<String, User2Topic> subscribes = new HashMap<>();
     private static final String PRE_FOCUS_TOPICS = "PRE_FOCUS_TOPICS";
-    private Map<Object, OnDataChangeListener> listeners = new HashMap<>();
     public static int DATA_FOCUSED = 1;
     public static int DATA_DEFAULT = 2;
 
@@ -253,26 +251,6 @@ public class TopicLogic extends BaseLogic {
 
     public List<Topic> getOpenFocuses() {
         return focusedTopics;
-    }
-
-    public void registerListener(Object object, OnDataChangeListener listener) {
-        listeners.put(object, listener);
-    }
-
-    public void unRegisterListener(Object object) {
-        listeners.remove(object);
-    }
-
-    /**
-     * 通知外部绑定器,数据已经发生改变
-     */
-    private void notifyDataChange() {
-        if (listeners.size() <= 0) {
-            return;
-        }
-        for (OnDataChangeListener listener : listeners.values()) {
-            listener.onDataChange();
-        }
     }
 
     public void subscribe(User2Topic data) {

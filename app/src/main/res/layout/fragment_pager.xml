@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:AniBackColor="#ff0097cd"
+        app:AniBackColor="@color/primary"
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

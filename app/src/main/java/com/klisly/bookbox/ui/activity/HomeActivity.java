@@ -64,6 +64,7 @@ public class HomeActivity extends SupportActivity
     NavigationView mNavigationView;
     private TextView mTvName;   // NavigationView上的名字
     private SimpleDraweeView mImgNav;  // NavigationView上的头像
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,16 +147,21 @@ public class HomeActivity extends SupportActivity
     }
 
     long firstTime = 0;
+
     @Override
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            if (firstTime + 2000 > System.currentTimeMillis()) {
-                LogUtils.i(TAG, "exit app");
+            if (getTopFragment() instanceof BaseMainFragment) {
+                if (firstTime + 2000 > System.currentTimeMillis()) {
+                    LogUtils.i(TAG, "exit app");
+                    super.onBackPressed();
+                }
+                firstTime = System.currentTimeMillis();
+            } else {
                 super.onBackPressed();
             }
-            firstTime = System.currentTimeMillis();
         }
     }
 
@@ -262,7 +268,7 @@ public class HomeActivity extends SupportActivity
     }
 
     @Subscribe
-    public void onToLogin(ToLoginEvent event){
+    public void onToLogin(ToLoginEvent event) {
         goToLogin();
     }
 
@@ -275,7 +281,7 @@ public class HomeActivity extends SupportActivity
         CommonHelper.getSites(this);
         CommonHelper.getUserSites(this);
         User user = AccountLogic.getInstance().getNowUser();
-        if(!user.isBasicSet() && Constants.isFirstLaunch()){
+        if (!user.isBasicSet() && Constants.isFirstLaunch()) {
             Constants.setFirstLaunch(false);
             user.setBasicSet(true);
             LoginData data = AccountLogic.getInstance().getLoginData();
@@ -320,10 +326,10 @@ public class HomeActivity extends SupportActivity
 
     private void updateNavData() {
         User user = AccountLogic.getInstance().getNowUser();
-        if ( user != null) {
-            Timber.d("cur login user:"+user);
+        if (user != null) {
+            Timber.d("cur login user:" + user);
             mTvName.setText(user.getName());
-            mImgNav.setImageURI(Uri.parse(BookRetrofit.BASE_URL +user.getAvatar()));
+            mImgNav.setImageURI(Uri.parse(BookRetrofit.BASE_URL + user.getAvatar()));
         } else {
             mTvName.setText(R.string.register_login);
             mImgNav.setImageURI(ActivityUtil.getAppResourceUri(R.drawable.menu_user, getPackageName()));

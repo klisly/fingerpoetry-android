@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -147,7 +146,6 @@ public class CircleRefreshLayout extends FrameLayout {
         mHeader.setOnViewAniDone(new AnimationView.OnViewAniDone() {
             @Override
             public void viewAniDone() {
-                Log.i(TAG, "should invoke");
                 mUpTopAnimator.start();
             }
         });
@@ -232,7 +230,13 @@ public class CircleRefreshLayout extends FrameLayout {
                         mHeader.releaseDrag();
                         mIsRefreshing = true;
                         if (onCircleRefreshListener!=null) {
-                            onCircleRefreshListener.refreshing();
+                            onCircleRefreshListener.startRefresh();
+                            getHandler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    onCircleRefreshListener.refreshing();
+                                }
+                            }, 600);
                         }
 
                     } else {
@@ -278,5 +282,7 @@ public class CircleRefreshLayout extends FrameLayout {
         void completeRefresh();
 
         void refreshing();
+
+        void startRefresh();
     }
 }

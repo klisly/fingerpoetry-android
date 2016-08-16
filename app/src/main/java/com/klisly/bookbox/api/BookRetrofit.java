@@ -17,7 +17,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookRetrofit {
-//    public final static String BASE_URL = "http://192.168.10.103:3000/";
+//    public final static String BASE_URL = "http://192.168.10.102:3000/";
     public final static String BASE_URL = "http://192.168.1.3:3000/";
     public final static String BASE_API_URL = BASE_URL;
 
@@ -30,7 +30,7 @@ public class BookRetrofit {
     private AccountApi accountApi;
     private SiteApi siteApi;
     private TopicApi topicApi;
-
+    private ArticleApi articleApi;
     public BookRetrofit() {
         Context context = BookBoxApplication.getInstance().getApplicationContext();
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
@@ -50,6 +50,7 @@ public class BookRetrofit {
         accountApi = retrofit.create(AccountApi.class);
         siteApi = retrofit.create(SiteApi.class);
         topicApi = retrofit.create(TopicApi.class);
+        articleApi = retrofit.create(ArticleApi.class);
     }
 
     /**
@@ -82,5 +83,13 @@ public class BookRetrofit {
 
     public void setTopicApi(TopicApi topicApi) {
         this.topicApi = topicApi;
+    }
+
+    public ArticleApi getArticleApi() {
+        return articleApi;
+    }
+
+    public void setArticleApi(ArticleApi articleApi) {
+        this.articleApi = articleApi;
     }
 }

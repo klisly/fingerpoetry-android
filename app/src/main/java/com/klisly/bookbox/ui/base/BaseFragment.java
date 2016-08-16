@@ -5,10 +5,12 @@ package com.klisly.bookbox.ui.base;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.animation.Animation;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 
@@ -18,7 +20,7 @@ import timber.log.Timber;
 
 public class BaseFragment extends SupportFragment {
     public static String TAG = null;
-
+    protected Handler handler = BookBoxApplication.getInstance().getHandler();
     protected void initToolbarMenu(Toolbar toolbar) {
         if(toolbar != null) {
             toolbar.inflateMenu(R.menu.menu_main);

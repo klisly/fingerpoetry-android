@@ -22,6 +22,7 @@ public class Constants {
 
     public static final String RESERVE_TOPIC_HOT = "热门";
     public static final String RESERVE_TOPIC_RECOMMEND = "推荐";
+    public static final long MAX_REQUEST_TIME = 30000;
 
     private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
 
@@ -32,4 +33,11 @@ public class Constants {
     public static boolean isFirstLaunch() {
         return preferenceUtils.getValue(KEY_FIRST_LAUNCH, true);
     }
+    // key
+    public static String PAGE = "page";
+    public static String PAGE_SIZE = "pageSize";
+    public static String BEFORE_AT = "beforeAt";
+    public static String AFTER_AT = "afterAt";
+    public static String TYPE = "type";
+
 }
