@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--&gt;-->
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/webView"
+            />
+        <!--<com.material.widget.CircularProgress-->
+            <!--android:id="@+id/cprogress"-->
+            <!--app:circular_progress_size="Normal"-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_width="@dimen/progree_size"-->
+            <!--android:layout_height="@dimen/progree_size"/>-->
+    <!--</FrameLayout>-->
+
+</LinearLayout>
+

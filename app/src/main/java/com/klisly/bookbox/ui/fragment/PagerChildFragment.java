@@ -27,6 +27,7 @@ import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout;
+import com.material.widget.CircularProgress;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     CircleRefreshLayout mRefreshLayout;
     @Bind(R.id.tvTip)
     TextView mTvTip;
+    @Bind(R.id.cprogress)
+    CircularProgress mProgress;
     private int page = 0;
     private int pageSize = 20;
     private int mFrom;
@@ -138,6 +141,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         });
+        if(mAdapter.getItemCount() == 0){
+            mProgress.setVisibility(View.VISIBLE);
+        }
         loadNew();
     }
 
@@ -225,6 +231,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     }
 
     private void onFinish() {
+        mProgress.setVisibility(View.INVISIBLE);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -233,6 +240,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                 }
             }
         }, 1000);
+
     }
 
     private static int ACTION_HOT = 1;

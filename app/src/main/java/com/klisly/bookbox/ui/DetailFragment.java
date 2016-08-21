@@ -6,9 +6,12 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -20,15 +23,18 @@ import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.utils.ToastHelper;
+import com.klisly.common.StringUtils;
 import com.klisly.common.dateutil.DateStyle;
 import com.klisly.common.dateutil.DateUtil;
+import com.material.widget.CircularProgress;
 
 import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DetailFragment extends BaseBackFragment {
+public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener{
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -48,7 +54,8 @@ public class DetailFragment extends BaseBackFragment {
     FloatingActionButton fab;
     @Bind(R.id.coord)
     CoordinatorLayout coord;
-
+    @Bind(R.id.cprogress)
+    CircularProgress mProgress;
     private Toolbar mToolbar;
     private Article mData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
@@ -75,11 +82,22 @@ public class DetailFragment extends BaseBackFragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
         initView(view);
+        mProgress.setVisibility(View.VISIBLE);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mProgress.setVisibility(View.INVISIBLE);
+            }
+        }, 600);
         return view;
     }
 
     private void updateData() {
-        tvSource.setText(mData.getSite());
+        String info = mData.getSite();
+        if(StringUtils.isNotEmpty(mData.getAuthor())){
+            info = info +"  "+mData.getAuthor();
+        }
+        tvSource.setText(info);
         Date date = new Date();
         date.setTime(mData.getCreateAt());
         tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
@@ -88,13 +106,14 @@ public class DetailFragment extends BaseBackFragment {
                 + " <style type=\"text/css\">"
                 + " body {"
                 + "margin: 0;"
-                + "padding: 0; "
+                + "padding-left: 10px;padding-right:10px; "
                 + " font: 16px"
                 + "background: #F5FCFF;"
                 + "} "
                 + " p { "
                 + "marginTop: 5; "
-                + "} "
+                + "}  img{display: block;\n" +
+                "    width: 100%;} "
                 + "</style> "
                 + "</head> "
                 + "<body> "
@@ -113,19 +132,18 @@ public class DetailFragment extends BaseBackFragment {
 
     private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
         initToolbarNav(mToolbar);
-
+        toolbar.setOnMenuItemClickListener(this);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                start(OuterFragment.newInstance(mData));
             }
         });
         tvContent.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return super.shouldOverrideUrlLoading(view, url);
+                return true;
             }
         });
     }
@@ -152,5 +170,61 @@ public class DetailFragment extends BaseBackFragment {
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 类似于 Activity的 onNewIntent()
+     */
+    @Override
+    protected void onNewBundle(Bundle args) {
+        super.onNewBundle(args);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_more:
+                openPopMenu();
+                break;
+            default:
+                openPopMenu();
+                break;
+        }
+        return true;
+    }
+
+    private void openPopMenu() {
+        final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
+        popupMenu.inflate(R.menu.menu_article_pop);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_to_read:
+                        ToastHelper.showShortTip(R.string.toread);
+                        break;
+                    case R.id.action_collect:
+                        ToastHelper.showShortTip(R.string.collect);
+                        break;
+
+                    case R.id.action_share:
+                        ToastHelper.showShortTip(R.string.share);
+                        break;
+
+                    case R.id.action_original:
+                        start(OuterFragment.newInstance(mData));
+                        break;
+
+                    case R.id.action_notify_setting:
+                        ToastHelper.showShortTip(R.string.report);
+                        break;
+                    default:
+                        break;
+                }
+                popupMenu.dismiss();
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 }

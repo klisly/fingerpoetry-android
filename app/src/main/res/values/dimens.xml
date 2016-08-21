@@ -60,5 +60,6 @@
     <dimen name="app_bar_height">130dp</dimen>
     <dimen name="fab_margin">18dp</dimen>
     <dimen name="detail_head">20dp</dimen>
+    <dimen name="progree_size">64dp</dimen>
 
 </resources>

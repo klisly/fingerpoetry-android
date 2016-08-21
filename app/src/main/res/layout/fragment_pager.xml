@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:widget="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:AniBackColor="@color/primary"
+
+    <com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recy"
-        android:paddingLeft="@dimen/recy_padding_horizontal"
-        android:paddingRight="@dimen/recy_padding_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:AniBackColor="@color/primary">
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/recy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/recy_padding_horizontal"
+            android:paddingRight="@dimen/recy_padding_horizontal" />
     </com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout>
+
     <TextView
         android:id="@+id/tvTip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tip_height"
+        android:layout_gravity="top|center_horizontal|start"
         android:layout_weight="1"
         android:background="#48aba1"
-        android:textColor="@color/white"
-        android:visibility="invisible"
-        android:maxLines="1"
-        android:layout_gravity="top|center_horizontal|start"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="1"
         android:text=""
-        android:ellipsize="end"/>
+        android:textColor="@color/white"
+        android:visibility="invisible" />
+    <com.material.widget.CircularProgress
+        android:id="@+id/cprogress"
+        widget:circular_progress_size="Normal"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/progree_size"
+        android:layout_height="@dimen/progree_size"/>
 </FrameLayout>
