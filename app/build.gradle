@@ -21,9 +21,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -31,6 +32,7 @@ dependencies {
     // add share sdk  aar
     compile(name: 'SMSSDK-2.0.2', ext: 'aar')
     compile(name: 'commontool-release', ext: 'aar')
+    compile(name: 'stickviewpager-release', ext: 'aar')
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:support-v13:24.0.0'
     compile 'com.android.support:support-v4:24.0.0'
@@ -44,8 +46,7 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
     compile 'com.karumi:dexter:2.2.2'
-    compile group: 'commons-io', name: 'commons-io', version: '2.5'
-
+    compile 'commons-io:commons-io:2.5'
     // image
     compile 'com.facebook.fresco:fresco:0.10.0'
     compile 'com.makeramen:roundedimageview:2.2.1'
@@ -69,4 +70,5 @@ dependencies {
         exclude module: "support-annotations"
     }
     testCompile 'org.robolectric:robolectric:3.0'
+    compile project(':TuSDK')
 }

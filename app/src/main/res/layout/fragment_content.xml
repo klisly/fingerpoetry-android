@@ -23,7 +23,7 @@
             android:id="@+id/tab_layout"
             style="@style/SubTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_height="@dimen/tab_height"
             app:tabMode="scrollable"
             />
 

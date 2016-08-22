@@ -71,10 +71,15 @@ public class AccountLogic extends BaseLogic {
         String data = gson.toJson(loginData);
         this.loginData = loginData;
         preferenceUtils.setValue(PRE_ACCOUNT, data);
+
     }
 
     public void logout() {
         this.loginData = null;
         preferenceUtils.setValue(PRE_ACCOUNT, "");
+    }
+
+    public void updateProfile(LoginData data) {
+        setLoginData(loginData);
     }
 }

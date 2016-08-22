@@ -205,11 +205,13 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                 .subscribe(new AbsSubscriber<ApiResult<List<Article>>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
+                        page--;
                         onFinish();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
+                        page--;
                         onFinish();
                     }
 
@@ -231,7 +233,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     }
 
     private void onFinish() {
-        mProgress.setVisibility(View.INVISIBLE);
+        if(mProgress != null) {
+            mProgress.setVisibility(View.INVISIBLE);
+        }
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

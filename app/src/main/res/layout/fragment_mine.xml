@@ -1,37 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
-  -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:fitsSystemWindows="true">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.CoordinatorLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
 
-        <android.support.design.widget.AppBarLayout
+        <com.library.StickHeaderViewPager
+            android:id="@+id/shvp_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@android:color/white"
+                >
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/global_menu_avatar_size"
+                    android:layout_height="@dimen/global_menu_avatar_size"
+                    android:layout_margin="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    app:actualImageScaleType="focusCrop"
+                    app:placeholderImage="@drawable/menu_user"
+                    app:placeholderImageScaleType="centerCrop"
+                    app:failureImage="@drawable/menu_user"
+                    app:failureImageScaleType="centerInside"
+                    app:fadeDuration="600"
+                    app:backgroundImage="@android:color/holo_blue_light"
+                    app:roundAsCircle="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_desc"
+                    android:layout_above="@+id/tv_desc"
+                    android:text="昵称"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"
+                    style="@style/Base.TextAppearance.AppCompat.Body2"/>
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_avatar"
+                    android:layout_alignBottom="@+id/iv_avatar"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:text="描述"/>
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next_grey"
+                    android:padding="15dp"
+                    />
+                <!--<com.facebook.drawee.view.SimpleDraweeView-->
+                    <!--android:id="@+id/iv_next"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/ic_next_grey"-->
+                    <!--app:actualImageScaleType="focusCrop"-->
+                    <!--app:placeholderImage="@drawable/ic_next_grey"-->
+                    <!--app:placeholderImageScaleType="centerCrop"-->
+                    <!--app:failureImage="@drawable/ic_next_grey"-->
+                    <!--app:failureImageScaleType="centerInside"-->
+                    <!--app:fadeDuration="600"-->
+                    <!--app:backgroundImage="@android:color/white"-->
+                    <!--app:roundAsCircle="false"-->
+                    <!--/>-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#cccccc"/>
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
+                <com.library.tab.SlidingTabLayout
+                    android:id="@+id/stl_stick"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-                    app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
+                    android:layout_height="@dimen/tab_height"
+                    android:background="@android:color/white"
+                    app:indicatorColor="@color/accentLight"
+                    app:shouldExpand="true"
+                    app:slidingTabTextViewId="@+id/tv_tab"
+                    app:slidingTabView="@layout/view_stick" />
 
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-    </android.support.design.widget.CoordinatorLayout>
-</FrameLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="#cccccc"/>
+            </LinearLayout>
+        </com.library.StickHeaderViewPager>
+</RelativeLayout>

@@ -51,7 +51,7 @@
                             android:imeActionId="@+id/validcode"
                             android:imeActionLabel="@string/validcode"
                             android:imeOptions="actionUnspecified"
-                            android:inputType="textPassword"
+                            android:inputType="number"
                             android:maxLines="1"
                             android:singleLine="true"/>
 

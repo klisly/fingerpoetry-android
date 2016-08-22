@@ -26,7 +26,7 @@ public interface AccountApi {
     @POST("users/register")
     Observable<ApiResult<LoginData>> register(@Field("loginname") String name,
                                         @Field("passwd") String passwd,
-                                        @Field("nickname") String nickname);
+                                        @Field("name") String nickname);
 
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+        app:titleTextAppearance="@style/Toolbar_TextAppearance_White" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/modify_item_margin_horizontal"
+        android:layout_marginRight="@dimen/modify_item_margin_horizontal"
+        android:layout_marginTop="6dp"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/rl_change_avatar"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/modify_item_margin_horizontal"
+            android:layout_marginRight="@dimen/modify_item_margin_horizontal"
+            android:layout_height="@dimen/modify_item_height"
+            android:background="@android:color/white">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_avatar"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                app:actualImageScaleType="focusCrop"
+                app:backgroundImage="@android:color/holo_blue_light"
+                app:fadeDuration="600"
+                app:failureImage="@drawable/menu_user"
+                app:failureImageScaleType="centerInside"
+                app:placeholderImage="@drawable/menu_user"
+                app:placeholderImageScaleType="centerCrop"
+                app:roundAsCircle="true" />
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/change_avatar"
+                android:textColor="@color/background_black_alpha_70"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/modify_item_margin_horizontal"
+        android:layout_marginRight="@dimen/modify_item_margin_horizontal"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/rl_change_nick"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/modify_item_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="指尖小筑"
+                android:textColor="@color/text_gray"
+                android:textSize="18sp" />
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/background_black_alpha_70"
+                android:text="@string/change_name"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/modify_item_margin_horizontal"
+        android:layout_marginRight="@dimen/modify_item_margin_horizontal"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/rl_change_passwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/modify_item_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/white">
+
+            <ImageView
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next_grey"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                />
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/background_black_alpha_70"
+                android:text="@string/reset_passwd"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="6dp"-->
+        <!--android:foreground="?attr/selectableItemBackground"-->
+        <!--app:cardBackgroundColor="@android:color/white"-->
+        <!--app:cardPreventCornerOverlap="false"-->
+        <!--app:cardUseCompatPadding="true">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/modify_item_height"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:background="@android:color/white">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_gender"-->
+                <!--style="@style/Base.TextAppearance.AppCompat.Body2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:text=""-->
+                <!--android:textSize="18sp" />-->
+
+            <!--<TextView-->
+                <!--style="@style/Base.TextAppearance.AppCompat.Body2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_toLeftOf="@+id/iv_change_name"-->
+                <!--android:text="@string/change_name"-->
+                <!--android:textSize="18sp" />-->
+
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_change_name"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:padding="15dp"-->
+                <!--android:src="@drawable/ic_next_grey" />-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.6dp"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:background="#cccccc" />-->
+        <!--</RelativeLayout>-->
+    <!--</android.support.v7.widget.CardView>-->
+</LinearLayout>

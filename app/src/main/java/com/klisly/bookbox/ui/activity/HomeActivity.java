@@ -281,7 +281,7 @@ public class HomeActivity extends SupportActivity
         CommonHelper.getSites(this);
         CommonHelper.getUserSites(this);
         User user = AccountLogic.getInstance().getNowUser();
-        if (!user.isBasicSet() && Constants.isFirstLaunch()) {
+        if (!user.getIsBasicSet() && Constants.isFirstLaunch()) {
             Constants.setFirstLaunch(false);
             user.setBasicSet(true);
             LoginData data = AccountLogic.getInstance().getLoginData();
@@ -289,7 +289,7 @@ public class HomeActivity extends SupportActivity
             AccountLogic.getInstance().setLoginData(data);
             AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
             Map<String, Object> info = new HashMap<>();
-            info.put("isBasicSet", user.isBasicSet());
+            info.put("isBasicSet", user.getIsBasicSet());
             accountApi.update(info, user.getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

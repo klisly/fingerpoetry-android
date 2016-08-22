@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="TuSDKGee-1.9.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TuSDK/libs/TuSDKGee-1.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

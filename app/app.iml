@@ -112,6 +112,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.yokeyword/fragmentation/0.6.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/net.steamcrafted/materialiconlib/1.0.3/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/stickviewpager-release/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-runtime-classes" />
@@ -153,8 +154,8 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="fragmentation-0.6.2" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="icu4j-53.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="commons-codec-1.3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="icu4j-53.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="MobCommons-2016.0303.1229" level="project" />
@@ -186,6 +187,7 @@
     <orderEntry type="library" exported="" scope="TEST" name="httpcore-4.0.1" level="project" />
     <orderEntry type="library" exported="" name="imagepipeline-base-0.10.0" level="project" />
     <orderEntry type="library" exported="" name="core-0.8.5.9" level="project" />
+    <orderEntry type="library" exported="" name="stickviewpager-release-" level="project" />
     <orderEntry type="library" exported="" name="support-v13-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="roundedimageview-2.2.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.5" level="project" />
@@ -196,8 +198,8 @@
     <orderEntry type="library" exported="" name="support-vector-drawable-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="aspectjrt-1.8.5" level="project" />
     <orderEntry type="library" exported="" name="SMSSDK-2.0.2-" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="robolectric-utils-3.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="asm-analysis-5.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="robolectric-utils-3.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="vtd-xml-2.11" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.2.0" level="project" />
@@ -205,5 +207,6 @@
     <orderEntry type="library" exported="" scope="TEST" name="shadows-httpclient-3.0" level="project" />
     <orderEntry type="library" exported="" name="timber-4.1.0" level="project" />
     <orderEntry type="library" exported="" name="MobTools-2016.0303.1229" level="project" />
+    <orderEntry type="module" module-name="TuSDK" exported="" />
   </component>
 </module>

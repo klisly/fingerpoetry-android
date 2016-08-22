@@ -61,5 +61,8 @@
     <dimen name="fab_margin">18dp</dimen>
     <dimen name="detail_head">20dp</dimen>
     <dimen name="progree_size">64dp</dimen>
+    <dimen name="tab_height">36dp</dimen>
+    <dimen name="modify_item_height">72dp</dimen>
+    <dimen name="modify_item_margin_horizontal">8dp</dimen>
 
 </resources>

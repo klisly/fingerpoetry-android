@@ -76,5 +76,14 @@
     <string name="see_orginal">查看原文</string>
     <string name="toread">添加待读</string>
     <string name="notoread">取消待读</string>
+    <string name="readed">已读</string>
+    <string name="toreaded">待读</string>
+    <string name="collected">收藏</string>
+    <string name="recentread">最近浏览</string>
+    <string name="change_avatar">更换头像</string>
+    <string name="change_name">修改昵称</string>
+    <string name="modify_profile">编辑个人资料</string>
+    <string name="modify_avatar_tip">以名明志,2-15个字符</string>
+    <string name="change_name_tip">修改昵称</string>
 
 </resources>

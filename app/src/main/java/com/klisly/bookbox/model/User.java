@@ -4,15 +4,16 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User extends BaseModel{
+
+    @SerializedName("_id")
+    @Expose
+    private String id;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("brief")
     @Expose
     private String brief;
-    @SerializedName("_id")
-    @Expose
-    private String id;
     @SerializedName("platform")
     @Expose
     private String platform;
@@ -40,12 +41,27 @@ public class User extends BaseModel{
     @SerializedName("likeCount")
     @Expose
     private long likeCount;
+    @SerializedName("toReadCount")
+    @Expose
+    private long toReadCount;
+    @SerializedName("shareCount")
+    @Expose
+    private long shareCount;
+    @SerializedName("collectCount")
+    @Expose
+    private long collectCount;
+    @SerializedName("readCount")
+    @Expose
+    private long readCount;
+    @SerializedName("heartCount")
+    @Expose
+    private long heartCount;
     @SerializedName("isBasicSet")
     @Expose
-    private boolean isBasicSet;
+    private Boolean isBasicSet;
     @SerializedName("isBlock")
     @Expose
-    private boolean isBlock;
+    private Boolean isBlock;
     @SerializedName("role")
     @Expose
     private long role;
@@ -54,6 +70,25 @@ public class User extends BaseModel{
     private String avatar;
 
     private String token;
+
+    /**
+     *
+     * @return
+     * The id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     *
+     * @param id
+     * The _id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /**
      *
      * @return
@@ -88,24 +123,6 @@ public class User extends BaseModel{
      */
     public void setBrief(String brief) {
         this.brief = brief;
-    }
-
-    /**
-     *
-     * @return
-     * The id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     *
-     * @param id
-     * The _id
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -273,9 +290,117 @@ public class User extends BaseModel{
     /**
      *
      * @return
+     * The toReadCount
+     */
+    public long getToReadCount() {
+        return toReadCount;
+    }
+
+    /**
+     *
+     * @param toReadCount
+     * The toReadCount
+     */
+    public void setToReadCount(long toReadCount) {
+        this.toReadCount = toReadCount;
+    }
+
+    /**
+     *
+     * @return
+     * The shareCount
+     */
+    public long getShareCount() {
+        return shareCount;
+    }
+
+    /**
+     *
+     * @param shareCount
+     * The shareCount
+     */
+    public void setShareCount(long shareCount) {
+        this.shareCount = shareCount;
+    }
+
+    /**
+     *
+     * @return
+     * The collectCount
+     */
+    public long getCollectCount() {
+        return collectCount;
+    }
+
+    /**
+     *
+     * @param collectCount
+     * The collectCount
+     */
+    public void setCollectCount(long collectCount) {
+        this.collectCount = collectCount;
+    }
+
+    /**
+     *
+     * @return
+     * The readCount
+     */
+    public long getReadCount() {
+        return readCount;
+    }
+
+    /**
+     *
+     * @param readCount
+     * The readCount
+     */
+    public void setReadCount(long readCount) {
+        this.readCount = readCount;
+    }
+
+    /**
+     *
+     * @return
+     * The heartCount
+     */
+    public long getHeartCount() {
+        return heartCount;
+    }
+
+    /**
+     *
+     * @param heartCount
+     * The heartCount
+     */
+    public void setHeartCount(long heartCount) {
+        this.heartCount = heartCount;
+    }
+
+    /**
+     *
+     * @return
+     * The isBasicSet
+     */
+    public Boolean getIsBasicSet() {
+        return isBasicSet;
+    }
+
+    /**
+     *
+     * @param isBasicSet
+     * The isBasicSet
+     */
+    public void setIsBasicSet(Boolean isBasicSet) {
+        this.isBasicSet = isBasicSet;
+    }
+
+    /**
+     *
+     * @return
      * The isBlock
      */
-    public boolean isIsBlock() {
+    public Boolean getIsBlock() {
         return isBlock;
     }
 
@@ -284,7 +409,7 @@ public class User extends BaseModel{
      * @param isBlock
      * The isBlock
      */
-    public void setIsBlock(boolean isBlock) {
+    public void setIsBlock(Boolean isBlock) {
         this.isBlock = isBlock;
     }
 
@@ -315,28 +440,19 @@ public class User extends BaseModel{
         return avatar;
     }
 
-    /**
-     *
-     * @param avatar
-     * The avatar
-     */
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public boolean isBasicSet() {
+    public Boolean getBasicSet() {
         return isBasicSet;
     }
 
-    public void setBasicSet(boolean basicSet) {
+    public void setBasicSet(Boolean basicSet) {
         isBasicSet = basicSet;
     }
 
-    public boolean isBlock() {
+    public Boolean getBlock() {
         return isBlock;
     }
 
-    public void setBlock(boolean block) {
+    public void setBlock(Boolean block) {
         isBlock = block;
     }
 
@@ -348,12 +464,21 @@ public class User extends BaseModel{
         this.token = token;
     }
 
+    /**
+     *
+     * @param avatar
+     * The avatar
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("name='").append(name).append('\'');
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", name='").append(name).append('\'');
         sb.append(", brief='").append(brief).append('\'');
-        sb.append(", id='").append(id).append('\'');
         sb.append(", platform='").append(platform).append('\'');
         sb.append(", updateAt=").append(updateAt);
         sb.append(", createAt=").append(createAt);
@@ -363,10 +488,14 @@ public class User extends BaseModel{
         sb.append(", followerCount=").append(followerCount);
         sb.append(", replyCount=").append(replyCount);
         sb.append(", likeCount=").append(likeCount);
+        sb.append(", toReadCount=").append(toReadCount);
+        sb.append(", shareCount=").append(shareCount);
+        sb.append(", collectCount=").append(collectCount);
+        sb.append(", readCount=").append(readCount);
+        sb.append(", heartCount=").append(heartCount);
         sb.append(", isBasicSet=").append(isBasicSet);
         sb.append(", isBlock=").append(isBlock);
         sb.append(", role=").append(role);
-        sb.append(", token=").append(token);
         sb.append(", avatar='").append(avatar).append('\'');
         sb.append('}');
         return sb.toString();
