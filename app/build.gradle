@@ -32,7 +32,6 @@ dependencies {
     // add share sdk  aar
     compile(name: 'SMSSDK-2.0.2', ext: 'aar')
     compile(name: 'commontool-release', ext: 'aar')
-    compile(name: 'stickviewpager-release', ext: 'aar')
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:support-v13:24.0.0'
     compile 'com.android.support:support-v4:24.0.0'
