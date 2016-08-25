@@ -1,8 +1,17 @@
 package com.klisly.bookbox.logic;
 
+import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.domain.LoginData;
 import com.klisly.bookbox.model.User;
+import com.klisly.bookbox.model.User2Article;
+import com.klisly.bookbox.ottoevent.CollectsUpdateEvent;
+import com.klisly.bookbox.ottoevent.ProfileUpdateEvent;
+import com.klisly.bookbox.ottoevent.ReadsUpdateEvent;
+import com.klisly.bookbox.ottoevent.ToReadsUpdateEvent;
 import com.klisly.common.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountLogic extends BaseLogic {
 
@@ -14,6 +23,12 @@ public class AccountLogic extends BaseLogic {
     private LoginData loginData;
 
     private static final String PRE_ACCOUNT = "PRE_ACCOUNT";
+
+    private List<User2Article> reads = new ArrayList<>();
+
+    private List<User2Article> toreads = new ArrayList<>();
+
+    private List<User2Article> collects = new ArrayList<>();
 
     /**
      * 获取ConversationLogic单例对象
@@ -65,7 +80,6 @@ public class AccountLogic extends BaseLogic {
         if (loginData == null) {
             return;
         }
-        loginData.getUser().setToken(loginData.getToken());
         this.loginData = loginData;
 
         String data = gson.toJson(loginData);
@@ -79,7 +93,89 @@ public class AccountLogic extends BaseLogic {
         preferenceUtils.setValue(PRE_ACCOUNT, "");
     }
 
-    public void updateProfile(LoginData data) {
+    public void updateProfile(User data) {
+        loginData.setUser(data);
         setLoginData(loginData);
+        BusProvider.getInstance().post(new ProfileUpdateEvent());
+    }
+
+    public String getUserId() {
+        String userId = "";
+        if (getNowUser() != null) {
+            userId = getNowUser().getId();
+        }
+        return userId;
+    }
+
+    public void updateReads(List<User2Article> datas) {
+        this.reads.clear();
+        this.reads.addAll(datas);
+        notifyReadsUpdate();
+    }
+
+    public void updateCollects(List<User2Article> datas) {
+        this.collects.clear();
+        this.collects.addAll(datas);
+        notifyCollectsUpdate();
+    }
+
+    public void updateToReads(List<User2Article> datas) {
+        this.toreads.clear();
+        this.toreads.addAll(datas);
+        notifyToReadsUpdate();
+    }
+
+    public void updateRead(User2Article data) {
+        this.reads.remove(data);
+        this.reads.add(0, data);
+        notifyReadsUpdate();
+    }
+
+    public void updateCollect(User2Article data) {
+        this.collects.remove(data);
+        this.collects.add(0, data);
+        notifyCollectsUpdate();
+    }
+
+    public void updateToRead(User2Article data) {
+        this.toreads.remove(data);
+        this.toreads.add(0, data);
+        notifyToReadsUpdate();
+    }
+
+    public List<User2Article> getReads() {
+        return reads;
+    }
+
+    public void setReads(List<User2Article> reads) {
+        this.reads = reads;
+    }
+
+    public List<User2Article> getToreads() {
+        return toreads;
+    }
+
+    public void setToreads(List<User2Article> toreads) {
+        this.toreads = toreads;
+    }
+
+    public List<User2Article> getCollects() {
+        return collects;
+    }
+
+    public void setCollects(List<User2Article> collects) {
+        this.collects = collects;
+    }
+
+    private void notifyReadsUpdate() {
+        BusProvider.getInstance().post(new ReadsUpdateEvent());
+    }
+
+    private void notifyToReadsUpdate() {
+        BusProvider.getInstance().post(new ToReadsUpdateEvent());
+    }
+
+    private void notifyCollectsUpdate() {
+        BusProvider.getInstance().post(new CollectsUpdateEvent());
     }
 }

@@ -14,8 +14,10 @@ import com.klisly.bookbox.adapter.PagerContentAdapter;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.domain.ArticleData;
 import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.listener.OnItemClickListener;
+import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.ArticleLogic;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
@@ -149,10 +151,10 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
 
     private void queryData(Article article) {
         if(mData != null) {
-            articleApi.fetch(article.getId())
+            articleApi.fetch(article.getId(), AccountLogic.getInstance().getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new AbsSubscriber<ApiResult<Article>>(getActivity(), false) {
+                    .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
                         @Override
                         protected void onError(ApiException ex) {
                             getContentError();
@@ -164,7 +166,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                         }
 
                         @Override
-                        public void onNext(ApiResult<Article> res) {
+                        public void onNext(ApiResult<ArticleData> res) {
                             Timber.i("reache article:"+res);
                             if(res.getData() != null){
                                 ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(res.getData()));

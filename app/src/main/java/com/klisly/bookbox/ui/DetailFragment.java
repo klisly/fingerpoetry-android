@@ -21,7 +21,12 @@ import android.widget.TextView;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
-import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.domain.ArticleData;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.User2Article;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
@@ -33,8 +38,11 @@ import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
-public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener{
+public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener {
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -57,9 +65,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
     private Toolbar mToolbar;
-    private Article mData;
+    private ArticleData mData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
-    public static DetailFragment newInstance(Article article) {
+
+    public static DetailFragment newInstance(ArticleData article) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_CONTENT, article);
@@ -72,7 +81,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            mData = (Article) args.getSerializable(ARG_CONTENT);
+            mData = (ArticleData) args.getSerializable(ARG_CONTENT);
         }
     }
 
@@ -93,16 +102,16 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void updateData() {
-        String info = mData.getSite();
-        if(StringUtils.isNotEmpty(mData.getAuthor())){
-            info = info +"  "+mData.getAuthor();
+        String info = mData.getArticle().getSite();
+        if (StringUtils.isNotEmpty(mData.getArticle().getAuthor())) {
+            info = info + "  " + mData.getArticle().getAuthor();
         }
         tvSource.setText(info);
         Date date = new Date();
-        date.setTime(mData.getCreateAt());
+        date.setTime(mData.getArticle().getCreateAt());
         tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
         String html = "<!DOCTYPE html><html><head><title>指尖书香</title><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
-        + "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1.0,  maximum-scale=1.0, user-scalable=no\">"
+                + "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1.0,  maximum-scale=1.0, user-scalable=no\">"
                 + " <style type=\"text/css\">"
                 + " body {"
                 + "margin: 0;"
@@ -117,7 +126,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 + "</style> "
                 + "</head> "
                 + "<body> "
-                + mData.getContent()
+                + mData.getArticle().getContent()
                 + "</body> "
                 + " </html>";
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
@@ -137,10 +146,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(OuterFragment.newInstance(mData));
+                start(OuterFragment.newInstance(mData.getArticle()));
             }
         });
-        tvContent.setWebViewClient(new WebViewClient(){
+        tvContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return true;
@@ -163,7 +172,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     private void initLazyView() {
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.Toolbar_TextAppearance_White);
         mToolbarLayout.setExpandedTitleTextAppearance(R.style.Toolbar_TextAppearance_Expanded);
-        mToolbarLayout.setTitle(mData.getTitle());
+        mToolbarLayout.setTitle(mData.getArticle().getTitle());
         updateData();
     }
 
@@ -196,15 +205,27 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     private void openPopMenu() {
         final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
         popupMenu.inflate(R.menu.menu_article_pop);
+        if (mData.getUser2article() != null) {
+            if (mData.getUser2article().getToread()) {
+                popupMenu.getMenu().getItem(0).setTitle(getString(R.string.notoread));
+            } else {
+                popupMenu.getMenu().getItem(0).setTitle(getString(R.string.toread));
+            }
+            if (mData.getUser2article().getCollect()) {
+                popupMenu.getMenu().getItem(1).setTitle(getString(R.string.nocollect));
+            } else {
+                popupMenu.getMenu().getItem(1).setTitle(getString(R.string.collect));
+            }
+        }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_to_read:
-                        ToastHelper.showShortTip(R.string.toread);
+                        toggleToRead();
                         break;
                     case R.id.action_collect:
-                        ToastHelper.showShortTip(R.string.collect);
+                        toggleCollect();
                         break;
 
                     case R.id.action_share:
@@ -212,7 +233,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         break;
 
                     case R.id.action_original:
-                        start(OuterFragment.newInstance(mData));
+                        start(OuterFragment.newInstance(mData.getArticle()));
                         break;
 
                     case R.id.action_notify_setting:
@@ -226,5 +247,97 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
             }
         });
         popupMenu.show();
+    }
+
+    private void toggleCollect() {
+        if (mData.getUser2article() == null || !mData.getUser2article().getCollect()) {
+            articleApi.collect(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<User2Article> res) {
+                            Timber.i("reache article:" + res);
+                            mData.setUser2article(res.getData());
+                        }
+                    });
+        } else {
+            articleApi.uncollect(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<User2Article> res) {
+                            Timber.i("reache article:" + res);
+                            mData.setUser2article(res.getData());
+                        }
+                    });
+        }
+    }
+
+    private void toggleToRead() {
+        if (mData.getUser2article() == null || !mData.getUser2article().getToread()) {
+            articleApi.toread(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<User2Article> res) {
+                            Timber.i("reache article:" + res);
+                            mData.setUser2article(res.getData());
+                        }
+                    });
+        } else {
+            articleApi.untoread(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<User2Article> res) {
+                            Timber.i("reache article:" + res);
+                            mData.setUser2article(res.getData());
+                        }
+                    });
+        }
     }
 }

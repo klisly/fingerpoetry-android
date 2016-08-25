@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.listener.OnItemClickListener;
-import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.model.User2Article;
 import com.klisly.common.dateutil.DateStyle;
 import com.klisly.common.dateutil.DateUtil;
 
@@ -22,26 +21,26 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapter.PagerItemViewHolder> {
-    private List<Article> mItems = new ArrayList<>();
+public class UserRelateAdapter extends RecyclerView.Adapter<UserRelateAdapter.PagerItemViewHolder> {
+    private List<User2Article> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
 
-    public PagerContentAdapter(Context context) {
+    public UserRelateAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<Article> items) {
+    public void setDatas(List<User2Article> items) {
         mItems.clear();
         mItems.addAll(items);
     }
 
     @Override
     public PagerItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_pager, parent, false);
+        View view = mInflater.inflate(R.layout.item_me, parent, false);
         final PagerItemViewHolder holder = new PagerItemViewHolder(view);
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
@@ -55,17 +54,25 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
 
     @Override
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
-        Article article = mItems.get(position);
-        holder.tvTitle.setText(article.getTitle());
-        holder.tvSource.setText(article.getSite());
+        User2Article user2Article = mItems.get(position);
+        holder.tvTitle.setText(user2Article.getArticleName());
+//        holder.tvSource.setText(article.getSite());
         Date date = new Date();
-        date.setTime(article.getCreateAt());
+        date.setTime(user2Article.getCreateAt());
         holder.tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
     }
 
     @Override
     public int getItemCount() {
         return mItems.size();
+    }
+
+    public List<User2Article> getmItems() {
+        return mItems;
+    }
+
+    public void setmItems(List<User2Article> mItems) {
+        this.mItems = mItems;
     }
 
     class PagerItemViewHolder extends RecyclerView.ViewHolder {
@@ -75,10 +82,8 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
         TextView tvSource;
         @Bind(R.id.tv_time)
         TextView tvDate;
-        @Bind(R.id.iv_image)
-        SimpleDraweeView sdvImage;
         @Bind(R.id.rl_item)
-        RelativeLayout relativeLayout;
+        RelativeLayout rlItem;
         public PagerItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

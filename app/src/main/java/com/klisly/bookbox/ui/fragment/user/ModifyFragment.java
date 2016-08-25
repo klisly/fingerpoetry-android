@@ -13,17 +13,18 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.AccountApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
-import com.klisly.bookbox.domain.LoginData;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.User;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.ui.fragment.account.ResetPassFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.LogUtils;
 
@@ -95,6 +96,11 @@ public class ModifyFragment extends BaseBackFragment {
     @OnClick(R.id.rl_change_passwd)
     void onModifyPass() {
         Timber.i("modify pass");
+        if(Constants.PLATFORM_LOCAL.equals(user.getPlatform())){
+            start(ResetPassFragment.newInstance());
+        } else {
+            ToastHelper.showShortTip(getString(R.string.third_unset_pass));
+        }
     }
     String newAvatar = "";
     @OnClick(R.id.rl_change_avatar)
@@ -165,6 +171,7 @@ public class ModifyFragment extends BaseBackFragment {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             LogUtils.i(TAG, "onPositive");
+                            updateCount = 0;
                             updateProfile(TYPE_NICK);
                         }
                     })
@@ -184,35 +191,41 @@ public class ModifyFragment extends BaseBackFragment {
     }
     private static final int TYPE_AVATAR = 1;
     private static final int TYPE_NICK = 2;
+    int updateCount = 0;
 
     private void updateProfile(int type) {
+        updateCount = (updateCount + 1 )% 2;
         Map<String, Object> infos = new HashMap<>();
-        if(type == TYPE_NICK){
+        if(type - TYPE_NICK == 0){
             infos.put("name", newNick);
         }
+        System.out.println("type:"+type+" info:"+infos);
         accountApi.update(infos,
                 AccountLogic.getInstance().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<LoginData>>(getActivity(), false) {
+                .subscribe(new AbsSubscriber<ApiResult<User>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
                         Timber.i("onError");
-                        ToastHelper.showLoneTip(ex.getMessage());
+                        ToastHelper.showLongTip(ex.getMessage());
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         Timber.i("onPermissionError");
-                        ToastHelper.showLoneTip(ex.getMessage());
+                        ToastHelper.showLongTip(ex.getMessage());
                     }
 
                     @Override
-                    public void onNext(ApiResult<LoginData> data) {
+                    public void onNext(ApiResult<User> data) {
                         Timber.i("update result:" + data.getData());
                         user.setName(newNick);
                         tvName.setText(newNick);
                         AccountLogic.getInstance().updateProfile(data.getData());
+                        if(updateCount == 1){
+                            updateProfile(type);
+                        }
                     }
                 });
     }

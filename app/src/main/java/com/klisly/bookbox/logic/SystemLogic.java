@@ -66,7 +66,6 @@ public class SystemLogic extends  BaseLogic{
         if(loginData == null){
             return;
         }
-        loginData.getUser().setToken(loginData.getToken());
         this.loginData = loginData;
 
         String data = gson.toJson(loginData);

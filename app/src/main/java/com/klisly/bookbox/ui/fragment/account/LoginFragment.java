@@ -24,6 +24,7 @@ import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.utils.ToastHelper;
 import com.material.widget.PaperButton;
 
 import rx.Subscriber;
@@ -72,11 +73,11 @@ public class LoginFragment extends BaseBackFragment {
 
             @Override
             protected void onPermissionError(ApiException ex) {
-
             }
 
             @Override
             public void onNext(ApiResult<LoginData> data) {
+                ToastHelper.showShortTip(R.string.login_success);
                 AccountLogic.getInstance().setLoginData(data.getData());
                 BusProvider.getInstance().post(new LoginEvent());
                 pop();

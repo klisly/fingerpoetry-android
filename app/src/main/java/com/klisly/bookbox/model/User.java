@@ -69,8 +69,6 @@ public class User extends BaseModel{
     @Expose
     private String avatar;
 
-    private String token;
-
     /**
      *
      * @return
@@ -454,14 +452,6 @@ public class User extends BaseModel{
 
     public void setBlock(Boolean block) {
         isBlock = block;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     /**

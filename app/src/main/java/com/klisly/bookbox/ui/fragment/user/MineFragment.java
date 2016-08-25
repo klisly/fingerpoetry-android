@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -17,21 +17,27 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
+import com.klisly.bookbox.api.AccountApi;
 import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.User;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
+import com.klisly.bookbox.ottoevent.ProfileUpdateEvent;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
 import com.klisly.common.LogUtils;
-import com.library.StickHeaderViewPager;
-import com.library.tab.SlidingTabLayout;
+import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MineFragment extends BaseMainFragment {
@@ -43,14 +49,15 @@ public class MineFragment extends BaseMainFragment {
     TextView tvName;
     @Bind(R.id.tv_desc)
     TextView tvDesc;
-    @Bind(R.id.iv_next)
-    ImageView ivNext;
-    @Bind(R.id.stl_stick)
-    SlidingTabLayout stlStick;
-    @Bind(R.id.shvp_content)
-    StickHeaderViewPager shvpContent;
+    @Bind(R.id.rl_toread)
+    RelativeLayout rlToread;
+    @Bind(R.id.rl_collect)
+    RelativeLayout rlCollect;
+    @Bind(R.id.rl_recent_read)
+    RelativeLayout rlRecentRead;
     private User user;
     private MaterialDialog exitDialog;
+    private AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -75,14 +82,43 @@ public class MineFragment extends BaseMainFragment {
         if (!AccountLogic.getInstance().isLogin()) {
             start(LoginFragment.newInstance());
         } else {
-            user = AccountLogic.getInstance().getNowUser();
             updateData();
         }
-
+        updateUserData();
         return view;
     }
 
+    private void updateUserData() {
+        accountApi.profile(AccountLogic.getInstance().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<User>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        Timber.i("onError");
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        Timber.i("onPermissionError");
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<User> data) {
+                        Timber.i("update result:" + data.getData());
+                        AccountLogic.getInstance().updateProfile(data.getData());
+                        updateData();
+                    }
+                });
+    }
+
+    @Subscribe
+    public void onUpdate(ProfileUpdateEvent event) {
+        updateData();
+    }
+
     private void updateData() {
+        user = AccountLogic.getInstance().getNowUser();
         tvName.setText(user.getName());
         ivAvatar.setImageURI(Uri.parse(BookRetrofit.BASE_URL + user.getAvatar()));
         StringBuffer desc = new StringBuffer();
@@ -93,11 +129,26 @@ public class MineFragment extends BaseMainFragment {
     }
 
     @OnClick(R.id.iv_next)
-    void onNext(){
+    void onNext() {
         Timber.i("modify user data");
         start(ModifyFragment.newInstance());
     }
 
+    @OnClick(R.id.rl_collect)
+    void onNextCollect() {
+        Timber.i("see user collect");
+        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_COLLECT));
+    }
+    @OnClick(R.id.rl_recent_read)
+    void onNextRead() {
+        Timber.i("see user recent_read");
+        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_READED));
+    }
+    @OnClick(R.id.rl_toread)
+    void onNextToRead() {
+        Timber.i("see user toread");
+        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_TOREAD));
+    }
     @Override
     protected FragmentAnimator onCreateFragmentAnimation() {
         // 默认不改变
@@ -107,17 +158,8 @@ public class MineFragment extends BaseMainFragment {
     }
 
     private void initView() {
-        mToolbar.setTitle(R.string.mine_center);
+        mToolbar.setTitle(getString(R.string.mine_center));
         initToolbarNav(mToolbar, true);
-        StickHeaderViewPager.StickHeaderViewPagerBuilder.stickTo(shvpContent)
-                .setFragmentManager(getChildFragmentManager())
-                .addScrollFragments(
-                        ItemFragment.newInstance(getString(R.string.recentread)),
-                        ItemFragment.newInstance(getString(R.string.toreaded)),
-                        ItemFragment.newInstance(getString(R.string.collected)))
-                .notifyData();
-
-        stlStick.setViewPager(shvpContent.getViewPager());
     }
 
     @Override

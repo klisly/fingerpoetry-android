@@ -23,7 +23,7 @@ public class ToastHelper {
         Toast.makeText(context, tip, Toast.LENGTH_LONG).show();
     }
 
-    public static void showLoneTip(String tip) {
+    public static void showLongTip(String tip) {
         Toast.makeText(context, tip, Toast.LENGTH_LONG).show();
     }
 }

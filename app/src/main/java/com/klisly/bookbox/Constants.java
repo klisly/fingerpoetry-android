@@ -40,4 +40,5 @@ public class Constants {
     public static String AFTER_AT = "afterAt";
     public static String TYPE = "type";
 
+    public static String PLATFORM_LOCAL = "LOCAL";
 }

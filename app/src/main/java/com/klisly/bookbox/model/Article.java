@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Article extends BaseModel{
+
     @SerializedName("_id")
     @Expose
     private String id;
@@ -28,9 +29,18 @@ public class Article extends BaseModel{
     @SerializedName("srcUrl")
     @Expose
     private String srcUrl;
-    @SerializedName("__v")
+    @SerializedName("readNum")
     @Expose
-    private Integer v;
+    private long readNum;
+    @SerializedName("commentNum")
+    @Expose
+    private long commentNum;
+    @SerializedName("likeNum")
+    @Expose
+    private long likeNum;
+    @SerializedName("heartNum")
+    @Expose
+    private long heartNum;
     @SerializedName("isBlock")
     @Expose
     private Boolean isBlock;
@@ -46,15 +56,21 @@ public class Article extends BaseModel{
     @SerializedName("createAt")
     @Expose
     private long createAt;
-    @SerializedName("readNum")
+    @SerializedName("commentCount")
     @Expose
-    private Integer readNum;
-    @SerializedName("commentNum")
+    private long commentCount;
+    @SerializedName("shareCount")
     @Expose
-    private Integer commentNum;
-    @SerializedName("likeNum")
+    private long shareCount;
+    @SerializedName("collectCount")
     @Expose
-    private Integer likeNum;
+    private long collectCount;
+    @SerializedName("readCount")
+    @Expose
+    private long readCount;
+    @SerializedName("heartCount")
+    @Expose
+    private long heartCount;
     @SerializedName("topics")
     @Expose
     private List<String> topics = new ArrayList<String>();
@@ -104,7 +120,7 @@ public class Article extends BaseModel{
      * The content
      */
     public String getContent() {
-        return content == null ? "" : content;
+        return content;
     }
 
     /**
@@ -191,19 +207,73 @@ public class Article extends BaseModel{
     /**
      *
      * @return
-     * The v
+     * The readNum
      */
-    public Integer getV() {
-        return v;
+    public long getReadNum() {
+        return readNum;
     }
 
     /**
      *
-     * @param v
-     * The __v
+     * @param readNum
+     * The readNum
      */
-    public void setV(Integer v) {
-        this.v = v;
+    public void setReadNum(long readNum) {
+        this.readNum = readNum;
+    }
+
+    /**
+     *
+     * @return
+     * The commentNum
+     */
+    public long getCommentNum() {
+        return commentNum;
+    }
+
+    /**
+     *
+     * @param commentNum
+     * The commentNum
+     */
+    public void setCommentNum(long commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    /**
+     *
+     * @return
+     * The likeNum
+     */
+    public long getLikeNum() {
+        return likeNum;
+    }
+
+    /**
+     *
+     * @param likeNum
+     * The likeNum
+     */
+    public void setLikeNum(long likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    /**
+     *
+     * @return
+     * The heartNum
+     */
+    public long getHeartNum() {
+        return heartNum;
+    }
+
+    /**
+     *
+     * @param heartNum
+     * The heartNum
+     */
+    public void setHeartNum(long heartNum) {
+        this.heartNum = heartNum;
     }
 
     /**
@@ -263,55 +333,127 @@ public class Article extends BaseModel{
     /**
      *
      * @return
-     * The readNum
+     * The updateAt
      */
-    public Integer getReadNum() {
-        return readNum;
+    public long getUpdateAt() {
+        return updateAt;
     }
 
     /**
      *
-     * @param readNum
-     * The readNum
+     * @param updateAt
+     * The updateAt
      */
-    public void setReadNum(Integer readNum) {
-        this.readNum = readNum;
-    }
-
-    /**
-     *
-     * @return
-     * The commentNum
-     */
-    public Integer getCommentNum() {
-        return commentNum;
-    }
-
-    /**
-     *
-     * @param commentNum
-     * The commentNum
-     */
-    public void setCommentNum(Integer commentNum) {
-        this.commentNum = commentNum;
+    public void setUpdateAt(long updateAt) {
+        this.updateAt = updateAt;
     }
 
     /**
      *
      * @return
-     * The likeNum
+     * The createAt
      */
-    public Integer getLikeNum() {
-        return likeNum;
+    public long getCreateAt() {
+        return createAt;
     }
 
     /**
      *
-     * @param likeNum
-     * The likeNum
+     * @param createAt
+     * The createAt
      */
-    public void setLikeNum(Integer likeNum) {
-        this.likeNum = likeNum;
+    public void setCreateAt(long createAt) {
+        this.createAt = createAt;
+    }
+
+    /**
+     *
+     * @return
+     * The commentCount
+     */
+    public long getCommentCount() {
+        return commentCount;
+    }
+
+    /**
+     *
+     * @param commentCount
+     * The commentCount
+     */
+    public void setCommentCount(long commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    /**
+     *
+     * @return
+     * The shareCount
+     */
+    public long getShareCount() {
+        return shareCount;
+    }
+
+    /**
+     *
+     * @param shareCount
+     * The shareCount
+     */
+    public void setShareCount(long shareCount) {
+        this.shareCount = shareCount;
+    }
+
+    /**
+     *
+     * @return
+     * The collectCount
+     */
+    public long getCollectCount() {
+        return collectCount;
+    }
+
+    /**
+     *
+     * @param collectCount
+     * The collectCount
+     */
+    public void setCollectCount(long collectCount) {
+        this.collectCount = collectCount;
+    }
+
+    /**
+     *
+     * @return
+     * The readCount
+     */
+    public long getReadCount() {
+        return readCount;
+    }
+
+    /**
+     *
+     * @param readCount
+     * The readCount
+     */
+    public void setReadCount(long readCount) {
+        this.readCount = readCount;
+    }
+
+    /**
+     *
+     * @return
+     * The heartCount
+     */
+    public long getHeartCount() {
+        return heartCount;
+    }
+
+    /**
+     *
+     * @param heartCount
+     * The heartCount
+     */
+    public void setHeartCount(long heartCount) {
+        this.heartCount = heartCount;
     }
 
     /**
@@ -332,33 +474,43 @@ public class Article extends BaseModel{
         this.topics = topics;
     }
 
-    public long getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(long updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public long getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(long createAt) {
-        this.createAt = createAt;
-    }
-
+    /**
+     *
+     * @return
+     * The publishAt
+     */
     public long getPublishAt() {
         return publishAt;
     }
 
+    /**
+     *
+     * @param publishAt
+     * The publishAt
+     */
     public void setPublishAt(long publishAt) {
         this.publishAt = publishAt;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Article)) return false;
+
+        Article article = (Article) o;
+
+        return getId().equals(article.getId());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
+    @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Article{");
+        final StringBuffer sb = new StringBuffer("Article{");
         sb.append("id='").append(id).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", content='").append(content).append('\'');
@@ -366,15 +518,20 @@ public class Article extends BaseModel{
         sb.append(", site='").append(site).append('\'');
         sb.append(", siteId='").append(siteId).append('\'');
         sb.append(", srcUrl='").append(srcUrl).append('\'');
-        sb.append(", v=").append(v);
+        sb.append(", readNum=").append(readNum);
+        sb.append(", commentNum=").append(commentNum);
+        sb.append(", likeNum=").append(likeNum);
+        sb.append(", heartNum=").append(heartNum);
         sb.append(", isBlock=").append(isBlock);
         sb.append(", reason='").append(reason).append('\'');
         sb.append(", checked=").append(checked);
         sb.append(", updateAt=").append(updateAt);
         sb.append(", createAt=").append(createAt);
-        sb.append(", readNum=").append(readNum);
-        sb.append(", commentNum=").append(commentNum);
-        sb.append(", likeNum=").append(likeNum);
+        sb.append(", commentCount=").append(commentCount);
+        sb.append(", shareCount=").append(shareCount);
+        sb.append(", collectCount=").append(collectCount);
+        sb.append(", readCount=").append(readCount);
+        sb.append(", heartCount=").append(heartCount);
         sb.append(", topics=").append(topics);
         sb.append(", publishAt=").append(publishAt);
         sb.append('}');

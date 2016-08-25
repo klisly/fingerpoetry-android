@@ -22,5 +22,6 @@
     <item
         android:id="@+id/action_report"
         android:title="@string/report"
+        android:visible="false"
         app:showAsAction="never"/>
 </menu>

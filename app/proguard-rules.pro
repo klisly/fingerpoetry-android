@@ -32,3 +32,6 @@
 -dontnote retrofit2.Platform$IOS$MainThreadExecutor
 # Platform used when running on Java 8 VMs. Will not be used at runtime.
 -dontwarn retrofit2.Platform$Java8
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

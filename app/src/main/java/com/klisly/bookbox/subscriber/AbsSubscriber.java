@@ -38,6 +38,7 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
     private ProgressDialogHandler mProgressDialogHandler;
 
     private boolean showProgress = true;
+    private boolean inMainThread = true;
     //出错提示
     // private final String networkMsg;
     // private final String parseMsg;
@@ -49,6 +50,14 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
 
     public AbsSubscriber(Context context , boolean isShowProgress) {
         showProgress = isShowProgress;
+        if(showProgress){
+            mProgressDialogHandler = new ProgressDialogHandler(context, this, true);
+        }
+    }
+
+    public AbsSubscriber(Context context , boolean isShowProgress, boolean inMainThread) {
+        showProgress = isShowProgress;
+        this.inMainThread = inMainThread;
         if(showProgress){
             mProgressDialogHandler = new ProgressDialogHandler(context, this, true);
         }
@@ -84,7 +93,9 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
             }
             switch(httpException.code()){
                 case UNAUTHORIZED:
-                    BusProvider.getInstance().post(new ToLoginEvent());
+                    if(inMainThread) {
+                        BusProvider.getInstance().post(new ToLoginEvent());
+                    }
                     onPermissionError(ex);          //权限错误，需要实现
                     break;
                 case FORBIDDEN:

@@ -38,7 +38,7 @@ import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
-import com.klisly.common.LogUtils;
+import com.klisly.bookbox.utils.ToastHelper;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
@@ -155,9 +155,10 @@ public class HomeActivity extends SupportActivity
         } else {
             if (getTopFragment() instanceof BaseMainFragment) {
                 if (firstTime + 2000 > System.currentTimeMillis()) {
-                    LogUtils.i(TAG, "exit app");
                     super.onBackPressed();
+                    return;
                 }
+                ToastHelper.showShortTip(R.string.exit_tip);
                 firstTime = System.currentTimeMillis();
             } else {
                 super.onBackPressed();
@@ -290,7 +291,7 @@ public class HomeActivity extends SupportActivity
             AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
             Map<String, Object> info = new HashMap<>();
             info.put("isBasicSet", user.getIsBasicSet());
-            accountApi.update(info, user.getToken())
+            accountApi.update(info, AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(initObserver(HomeActivity.this));
@@ -298,8 +299,8 @@ public class HomeActivity extends SupportActivity
         }
     }
 
-    private Subscriber<ApiResult<LoginData>> initObserver(FragmentActivity activity) {
-        return new AbsSubscriber<ApiResult<LoginData>>(activity, false) {
+    private Subscriber<ApiResult<User>> initObserver(FragmentActivity activity) {
+        return new AbsSubscriber<ApiResult<User>>(activity, false) {
             @Override
             protected void onError(ApiException ex) {
 
@@ -311,7 +312,7 @@ public class HomeActivity extends SupportActivity
             }
 
             @Override
-            public void onNext(ApiResult<LoginData> data) {
+            public void onNext(ApiResult<User> data) {
                 Timber.i("start init site and topic");
             }
         };

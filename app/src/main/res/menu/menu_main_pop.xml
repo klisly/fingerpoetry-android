@@ -10,13 +10,15 @@
     <item
         android:id="@+id/action_manage_topic"
         android:title="@string/manage_topic"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
-            android:id="@+id/action_recom_setting"
-            android:title="@string/recom_setting"
-            app:showAsAction="never"/>
+        android:id="@+id/action_recom_setting"
+        android:title="@string/recom_setting"
+        android:visible="false"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/action_reget"
-            android:title="@string/reget"
-            app:showAsAction="never"/>
+        android:id="@+id/action_reget"
+        android:title="@string/reget"
+        android:visible="false"
+        app:showAsAction="never" />
 </menu>

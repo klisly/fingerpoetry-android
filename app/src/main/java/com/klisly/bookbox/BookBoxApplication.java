@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.lasque.tusdk.core.TuSdk;
 
@@ -33,7 +34,8 @@ public class BookBoxApplication extends Application {
         preferenceUtils = new SharedPreferenceUtils(this);
         handler = new Handler();
         TuSdk.init(this.getApplicationContext(), "492658840c3a4925-00-h5ptp1");
-        TuSdk.enableDebugLog(true);
+        TuSdk.enableDebugLog(false);
+        CrashReport.initCrashReport(getApplicationContext(), "900028744", false);
     }
 
     public SharedPreferenceUtils getPreferenceUtils() {
