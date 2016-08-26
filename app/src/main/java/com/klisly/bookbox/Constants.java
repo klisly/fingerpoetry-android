@@ -41,4 +41,6 @@ public class Constants {
     public static String TYPE = "type";
 
     public static String PLATFORM_LOCAL = "LOCAL";
+
+    public static String QQ_APP_ID = "1105643926";
 }

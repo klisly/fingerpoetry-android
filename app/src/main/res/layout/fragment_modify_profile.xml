@@ -22,6 +22,7 @@
         android:layout_marginLeft="@dimen/modify_item_margin_horizontal"
         android:layout_marginRight="@dimen/modify_item_margin_horizontal"
         android:layout_marginTop="6dp"
+        android:visibility="gone"
         android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@android:color/white"
         app:cardPreventCornerOverlap="false"

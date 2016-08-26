@@ -28,7 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScrollListener {
+public class DragItemRecyclerView extends RecyclerView implements AutoScroller.AutoScrollListener {
 
     public interface DragItemListener {
         void onDragStarted(int itemPosition, float x, float y);

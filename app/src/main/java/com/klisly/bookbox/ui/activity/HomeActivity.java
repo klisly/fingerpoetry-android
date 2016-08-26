@@ -1,5 +1,6 @@
 package com.klisly.bookbox.ui.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -46,6 +47,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.ShareSDK;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -64,10 +66,10 @@ public class HomeActivity extends SupportActivity
     NavigationView mNavigationView;
     private TextView mTvName;   // NavigationView上的名字
     private SimpleDraweeView mImgNav;  // NavigationView上的头像
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ShareSDK.initSDK(this);
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -144,6 +146,7 @@ public class HomeActivity extends SupportActivity
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        ShareSDK.stopSDK(this);
     }
 
     long firstTime = 0;
@@ -345,4 +348,9 @@ public class HomeActivity extends SupportActivity
     //            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     //        }
     //    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
 }

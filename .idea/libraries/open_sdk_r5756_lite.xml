@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="TuSDKGee-1.9.0">
+  <library name="open_sdk_r5756_lite">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/TuSDK/libs/TuSDKGee-1.9.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/libs/open_sdk_r5756_lite.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

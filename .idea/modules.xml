@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TuSDK/TuSDK.iml" filepath="$PROJECT_DIR$/TuSDK/TuSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/fingerpoetry.iml" filepath="$PROJECT_DIR$/fingerpoetry.iml" />
     </modules>

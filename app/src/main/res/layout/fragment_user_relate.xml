@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:padding="6dp"
+        android:visibility="gone"
         android:text="@string/choose_user_relate_tip"
         android:textColor="@color/background_black_alpha_50"
         android:textSize="14sp" />

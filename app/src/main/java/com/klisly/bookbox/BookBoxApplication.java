@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
- */
 package com.klisly.bookbox;
 
 import android.app.Application;
@@ -11,8 +8,6 @@ import com.karumi.dexter.Dexter;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;
 import com.tencent.bugly.crashreport.CrashReport;
-
-import org.lasque.tusdk.core.TuSdk;
 
 import timber.log.Timber;
 
@@ -33,8 +28,8 @@ public class BookBoxApplication extends Application {
         Dexter.initialize(this);
         preferenceUtils = new SharedPreferenceUtils(this);
         handler = new Handler();
-        TuSdk.init(this.getApplicationContext(), "492658840c3a4925-00-h5ptp1");
-        TuSdk.enableDebugLog(false);
+//        TuSdk.init(this.getApplicationContext(), "492658840c3a4925-00-h5ptp1");
+//        TuSdk.enableDebugLog(false);
         CrashReport.initCrashReport(getApplicationContext(), "900028744", false);
     }
 

@@ -1,1 +1,1 @@
-include ':app', ':TuSDK'
+include ':app'

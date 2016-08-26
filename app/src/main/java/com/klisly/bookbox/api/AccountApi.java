@@ -33,6 +33,11 @@ public interface AccountApi {
                                         @Field("passwd") String passwd,
                                         @Field("name") String nickname);
 
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST("users/register")
+    Observable<ApiResult<LoginData>> register(@FieldMap Map<String, String> infos);
+
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST("users/resetpasswd")

@@ -28,13 +28,6 @@ import com.klisly.bookbox.ui.fragment.account.ResetPassFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.LogUtils;
 
-import org.lasque.tusdk.TuSdkGeeV1;
-import org.lasque.tusdk.core.TuSdkResult;
-import org.lasque.tusdk.core.utils.hardware.CameraHelper;
-import org.lasque.tusdk.impl.activity.TuFragment;
-import org.lasque.tusdk.impl.components.TuAvatarComponent;
-import org.lasque.tusdk.modules.components.TuSdkComponent;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,47 +99,47 @@ public class ModifyFragment extends BaseBackFragment {
     @OnClick(R.id.rl_change_avatar)
     void onModifyAvatar() {
         Timber.i("modify avatar");
-        if (CameraHelper.showAlertIfNotSupportCamera(getActivity())) return;
-
-        // 组件选项配置
-        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/TuAvatarComponent.html
-        // 组件选项配置
-        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/TuAvatarComponentOption.html
-        // component.componentOption()
-
-        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/album/TuAlbumListOption.html
-        // component.componentOption().albumListOption()
-
-        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/album/TuPhotoListOption.html
-        // component.componentOption().photoListOption()
-
-        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/camera/TuCameraOption.html
-        // component.componentOption().cameraOption()
-
-        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/edit/TuEditTurnAndCutOption.html
-        // component.componentOption().editTurnAndCutOption()
-
-        // 需要显示的滤镜名称列表 (如果为空将显示所有自定义滤镜, 可选)
-        // String[] filters = {};
-        // component.componentOption().cameraOption().setFilterGroup(Arrays.asList(filters));
-        TuAvatarComponent component = TuSdkGeeV1.avatarCommponent(getActivity(), new TuSdkComponent.TuSdkComponentDelegate() {
-            @Override
-            public void onComponentFinished(TuSdkResult result, Error error, TuFragment lastFragment) {
-                try {
-                    ivAvatar.setImageURI(Uri.fromFile(result.imageFile));
-                    // TODO 上传, 再保存
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        // 是否保存到相册
-        component.componentOption().editTurnAndCutOption().setSaveToAlbum(false);
-        // 是否保存到临时文件
-        component.componentOption().editTurnAndCutOption().setSaveToTemp(true);
-        component.componentOption().editTurnAndCutOption().setEnableOnlineFilter(true);
-        component.setAutoDismissWhenCompleted(true)
-                .showComponent();
+//        if (CameraHelper.showAlertIfNotSupportCamera(getActivity())) return;
+//
+//        // 组件选项配置
+//        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/TuAvatarComponent.html
+//        // 组件选项配置
+//        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/TuAvatarComponentOption.html
+//        // component.componentOption()
+//
+//        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/album/TuAlbumListOption.html
+//        // component.componentOption().albumListOption()
+//
+//        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/album/TuPhotoListOption.html
+//        // component.componentOption().photoListOption()
+//
+//        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/camera/TuCameraOption.html
+//        // component.componentOption().cameraOption()
+//
+//        // @see-http://tusdk.com/docs/android/api/org/lasque/tusdk/impl/components/edit/TuEditTurnAndCutOption.html
+//        // component.componentOption().editTurnAndCutOption()
+//
+//        // 需要显示的滤镜名称列表 (如果为空将显示所有自定义滤镜, 可选)
+//        // String[] filters = {};
+//        // component.componentOption().cameraOption().setFilterGroup(Arrays.asList(filters));
+//        TuAvatarComponent component = TuSdkGeeV1.avatarCommponent(getActivity(), new TuSdkComponent.TuSdkComponentDelegate() {
+//            @Override
+//            public void onComponentFinished(TuSdkResult result, Error error, TuFragment lastFragment) {
+//                try {
+//                    ivAvatar.setImageURI(Uri.fromFile(result.imageFile));
+//                    // TODO 上传, 再保存
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        // 是否保存到相册
+//        component.componentOption().editTurnAndCutOption().setSaveToAlbum(false);
+//        // 是否保存到临时文件
+//        component.componentOption().editTurnAndCutOption().setSaveToTemp(true);
+//        component.componentOption().editTurnAndCutOption().setEnableOnlineFilter(true);
+//        component.setAutoDismissWhenCompleted(true)
+//                .showComponent();
 
     }
 

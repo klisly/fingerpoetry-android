@@ -121,6 +121,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
@@ -135,15 +136,18 @@
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />
+    <orderEntry type="library" exported="" name="MobTools-2016.0816.1507" level="project" />
     <orderEntry type="library" exported="" name="hugo-annotations-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="commons-io-2.5" level="project" />
     <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="assertj-core-1.7.1" level="project" />
     <orderEntry type="library" exported="" name="crashreport-2.2.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="asm-commons-5.0.1" level="project" />
+    <orderEntry type="library" exported="" name="MobCommons-2016.0816.1507" level="project" />
     <orderEntry type="library" exported="" name="support-v4-24.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="assertj-android-1.1.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="asm-5.0.1" level="project" />
+    <orderEntry type="library" exported="" name="open_sdk_r5756_lite" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="shadows-core-3.0" level="project" />
     <orderEntry type="library" exported="" name="palette-v7-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="design-24.0.0" level="project" />
@@ -154,12 +158,13 @@
     <orderEntry type="library" exported="" scope="TEST" name="objenesis-1.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="fragmentation-0.6.2" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-QQ-2.7.6" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="icu4j-53.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="commons-codec-1.3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="icu4j-53.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="commons-logging-1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.7.6" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.0.2" level="project" />
-    <orderEntry type="library" exported="" name="MobCommons-2016.0303.1229" level="project" />
     <orderEntry type="library" exported="" name="commontool-release-" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="robolectric-resources-3.0" level="project" />
     <orderEntry type="library" exported="" name="materialiconlib-1.0.3" level="project" />
@@ -174,21 +179,25 @@
     <orderEntry type="library" exported="" scope="TEST" name="ant-1.8.0" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.10.0" level="project" />
     <orderEntry type="library" exported="" name="drawee-0.10.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.7.6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="accessibility-test-framework-1.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="ant-launcher-1.8.0" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-24.0.0" level="project" />
     <orderEntry type="library" exported="" name="hugo-runtime-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="fragmentation-swipeback-0.3.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.7.6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="asm-util-5.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="bcprov-jdk16-1.46" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="otto-1.3.8" level="project" />
     <orderEntry type="library" exported="" name="dexter-2.2.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="httpclient-4.0.3" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.7.6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="httpcore-4.0.1" level="project" />
     <orderEntry type="library" exported="" name="imagepipeline-base-0.10.0" level="project" />
     <orderEntry type="library" exported="" name="core-0.8.5.9" level="project" />
     <orderEntry type="library" exported="" name="support-v13-24.0.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Email-2.7.6" level="project" />
     <orderEntry type="library" exported="" name="roundedimageview-2.2.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="adapter-rxjava-2.0.2" level="project" />
@@ -200,13 +209,13 @@
     <orderEntry type="library" exported="" name="SMSSDK-2.0.2-" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="asm-analysis-5.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="robolectric-utils-3.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.7.6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="vtd-xml-2.11" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.2.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="shadows-httpclient-3.0" level="project" />
+    <orderEntry type="library" exported="" name="ShareSDK-Core-2.7.6" level="project" />
     <orderEntry type="library" exported="" name="timber-4.1.0" level="project" />
-    <orderEntry type="library" exported="" name="MobTools-2016.0303.1229" level="project" />
-    <orderEntry type="module" module-name="TuSDK" exported="" />
   </component>
 </module>
