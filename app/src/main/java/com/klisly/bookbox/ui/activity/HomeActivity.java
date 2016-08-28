@@ -156,7 +156,7 @@ public class HomeActivity extends SupportActivity
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            if (getTopFragment() instanceof BaseMainFragment) {
+            if (getTopFragment() instanceof HomeFragment) {
                 if (firstTime + 2000 > System.currentTimeMillis()) {
                     super.onBackPressed();
                     return;

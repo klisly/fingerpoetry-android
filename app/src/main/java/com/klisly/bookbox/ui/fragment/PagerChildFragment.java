@@ -63,6 +63,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private String name;
     private boolean showToast = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +129,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
             public void onItemClick(int position, View view) {
                 Timber.i("click position:" + position);
                 Article article = ArticleLogic.getInstance().getArticles(name).get(position);
-                if(article != null) {
+                if (article != null) {
                     queryData(article);
                 }
 
@@ -143,14 +144,14 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         });
-        if(mAdapter.getItemCount() == 0){
+        if (mAdapter.getItemCount() == 0) {
             mProgress.setVisibility(View.VISIBLE);
         }
         loadNew();
     }
 
     private void queryData(Article article) {
-        if(mData != null) {
+        if (mData != null) {
             articleApi.fetch(article.getId(), AccountLogic.getInstance().getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -167,8 +168,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
 
                         @Override
                         public void onNext(ApiResult<ArticleData> res) {
-                            Timber.i("reache article:"+res);
-                            if(res.getData() != null){
+                            Timber.i("reache article:" + res);
+                            if (res.getData() != null) {
                                 ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(res.getData()));
                             } else {
                                 getContentError();
@@ -191,11 +192,12 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
             params.put("type", "hot");
         } else if (type == ACTION_RECOMMEND) {
             params.put("type", "recommend");
-        }
-        if (mData instanceof Site) {
-            params.put("siteId", ((Site) mData).getId());
-        } else if (mData instanceof Topic) {
-            params.put("siteId", ((Topic) mData).getId());
+        } else {
+            if (mData instanceof Site) {
+                params.put("siteId", ((Site) mData).getId());
+            } else if (mData instanceof Topic) {
+                params.put("topics", ((Topic) mData).getName());
+            }
         }
         page++;
         params.put("page", String.valueOf(page));
@@ -220,7 +222,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                     @Override
                     public void onNext(ApiResult<List<Article>> res) {
                         onFinish();
-                        if(showToast) {
+                        if (showToast) {
                             if (res.getData().size() > 0) {
                                 TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
                             } else {
@@ -235,7 +237,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     }
 
     private void onFinish() {
-        if(mProgress != null) {
+        if (mProgress != null) {
             mProgress.setVisibility(View.INVISIBLE);
         }
         handler.postDelayed(new Runnable() {
@@ -252,7 +254,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     private static int ACTION_HOT = 1;
     private static int ACTION_RECOMMEND = 2;
     private static int ACTION_TOPIC = 3;
-    private static int ACTION_SITE = 2;
+    private static int ACTION_SITE = 4;
 
     private int getAction() {
         if (mData instanceof Topic) {
