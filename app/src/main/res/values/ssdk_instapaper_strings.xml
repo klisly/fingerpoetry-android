@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="ssdk_instapager_login_html" formatted="false" translatable="false"><![CDATA[
+    <string name="ssdk_instapager_login_html" formatted="false"><![CDATA[
 <!DOCTYPE html>
 <html>
 <head>
