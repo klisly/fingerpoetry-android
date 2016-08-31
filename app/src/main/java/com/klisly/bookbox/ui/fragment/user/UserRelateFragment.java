@@ -24,7 +24,6 @@ import com.klisly.bookbox.ottoevent.ReadsUpdateEvent;
 import com.klisly.bookbox.ottoevent.ToReadsUpdateEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
-import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.squareup.otto.Subscribe;
@@ -216,7 +215,6 @@ public class UserRelateFragment extends BaseBackFragment {
                             if(action == TYPE_TOREAD){
                                 unToRead(article);
                             }
-                            start(DetailFragment.newInstance(res.getData()));
                         } else {
                             getContentError();
                         }

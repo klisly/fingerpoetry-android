@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +17,7 @@
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/recy_padding_horizontal"
             android:paddingRight="@dimen/recy_padding_horizontal" />
-    </com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/tvTip"

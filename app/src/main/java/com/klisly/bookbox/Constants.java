@@ -23,6 +23,7 @@ public class Constants {
     public static final String RESERVE_TOPIC_HOT = "热门";
     public static final String RESERVE_TOPIC_RECOMMEND = "推荐";
     public static final long MAX_REQUEST_TIME = 30000;
+    public static final String INVALID_ARTICLE_ID = "INVALID_ARTICLE_ID";
 
     private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
 

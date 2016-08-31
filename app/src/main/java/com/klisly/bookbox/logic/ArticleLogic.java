@@ -1,6 +1,7 @@
 package com.klisly.bookbox.logic;
 
 import com.google.gson.reflect.TypeToken;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.model.Article;
 import com.klisly.common.StringUtils;
@@ -15,7 +16,7 @@ public class ArticleLogic extends BaseLogic {
     private static ArticleLogic instance;
     private Map<String, List<Article>> articles = new HashMap<>();
     private static final String PRE_KEY = "PRE_ARTICLES";
-
+    private static final Article empty = new Article();
     /**
      * 获取ConversationLogic单例对象
      *
@@ -33,6 +34,7 @@ public class ArticleLogic extends BaseLogic {
     }
 
     public ArticleLogic() {
+        empty.setId(Constants.INVALID_ARTICLE_ID);
         initArticles();
     }
 
@@ -54,9 +56,11 @@ public class ArticleLogic extends BaseLogic {
 
 
     public void updateArticles(String key, List<Article> data) {
-        if(articles.get(key) != null){
+        data.add(empty);
+        if(articles.get(key) == null){
             articles.put(key, data);
         } else {
+            articles.get(key).remove(empty);
             articles.get(key).addAll(0, data);
         }
         notifyDataChange(key);

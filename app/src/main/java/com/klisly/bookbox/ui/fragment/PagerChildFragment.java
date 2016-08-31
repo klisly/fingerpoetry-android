@@ -1,6 +1,7 @@
 package com.klisly.bookbox.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,10 +15,8 @@ import com.klisly.bookbox.adapter.PagerContentAdapter;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
-import com.klisly.bookbox.domain.ArticleData;
 import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.listener.OnItemClickListener;
-import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.ArticleLogic;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
@@ -28,7 +27,6 @@ import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.TopToastHelper;
-import com.klisly.bookbox.widget.circlerefresh.CircleRefreshLayout;
 import com.material.widget.CircularProgress;
 
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     @Bind(R.id.recy)
     RecyclerView mRecy;
     @Bind(R.id.refresh_layout)
-    CircleRefreshLayout mRefreshLayout;
+    SwipeRefreshLayout mRefreshLayout;
     @Bind(R.id.tvTip)
     TextView mTvTip;
     @Bind(R.id.cprogress)
@@ -62,8 +60,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     private PagerContentAdapter mAdapter;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private String name;
-    private boolean showToast = false;
-
+    private boolean firstIn = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,38 +96,31 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     }
 
     private void initView(View view) {
-        mRecy = (RecyclerView) view.findViewById(R.id.recy);
-        mTvTip = (TextView) view.findViewById(R.id.tvTip);
+
         mAdapter = new PagerContentAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
-        mRefreshLayout = (CircleRefreshLayout) view.findViewById(R.id.refresh_layout);
-        mRefreshLayout.setOnRefreshListener(
-                new CircleRefreshLayout.OnCircleRefreshListener() {
-                    @Override
-                    public void refreshing() {
-                        showToast = true;
-                        loadNew();
-                    }
-
-                    @Override
-                    public void startRefresh() {
-                        TopToastHelper.showTip(mTvTip, getString(R.string.start_load), TopToastHelper.DURATION_SHORT);
-                    }
-
-                    @Override
-                    public void completeRefresh() {
-                    }
-                });
+        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.primary),
+                getResources().getColor(R.color.primaryDark),
+                getResources().getColor(R.color.primaryLight));
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadNew();
+            }
+        });
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
                 Timber.i("click position:" + position);
                 Article article = ArticleLogic.getInstance().getArticles(name).get(position);
-                if (article != null) {
+                if (article != null && !Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
                     queryData(article);
+                } else {
+                    mRefreshLayout.setRefreshing(true);
+                    loadNew();
                 }
 
             }
@@ -152,37 +142,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
 
     private void queryData(Article article) {
         if (mData != null) {
-            articleApi.fetch(article.getId(), AccountLogic.getInstance().getUserId())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
-                        @Override
-                        protected void onError(ApiException ex) {
-                            getContentError();
-                        }
-
-                        @Override
-                        protected void onPermissionError(ApiException ex) {
-                            getContentError();
-                        }
-
-                        @Override
-                        public void onNext(ApiResult<ArticleData> res) {
-                            Timber.i("reache article:" + res);
-                            if (res.getData() != null) {
-                                ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(res.getData()));
-                            } else {
-                                getContentError();
-                            }
-                        }
-                    });
+            ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(article));
         }
-    }
-
-    private void getContentError() {
-        TopToastHelper.showTip(mTvTip,
-                getString(R.string.get_detial_fail),
-                TopToastHelper.DURATION_SHORT);
     }
 
     private void loadNew() {
@@ -222,16 +183,18 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                     @Override
                     public void onNext(ApiResult<List<Article>> res) {
                         onFinish();
-                        if (showToast) {
+                        if(!firstIn) {
                             if (res.getData().size() > 0) {
                                 TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
                             } else {
                                 TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
                             }
-                            showToast = false;
                         }
+                        firstIn = false;
+
                         Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
                         ArticleLogic.getInstance().updateArticles(name, res.getData());
+                        mRecy.scrollToPosition(0);
                     }
                 });
     }
@@ -240,15 +203,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         if (mProgress != null) {
             mProgress.setVisibility(View.INVISIBLE);
         }
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mRefreshLayout != null) {
-                    mRefreshLayout.finishRefreshing();
-                }
-            }
-        }, 1000);
+        if (mRefreshLayout != null) {
+            mRefreshLayout.post(new Runnable() {
 
+                @Override
+                public void run() {
+                    mRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
     }
 
     private static int ACTION_HOT = 1;

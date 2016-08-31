@@ -166,49 +166,54 @@ public class LoginFragment extends BaseBackFragment {
         qqplatform.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                Timber.i("onComplete:"+hashMap);
-                String name = (String)hashMap.get("nickname");
-                String gender = (String)hashMap.get("gender");
-                if("男".equals(gender)){
-                    gender = "male";
-                } else {
-                    gender = "female";
-                }
-                String figureurl_qq_2 = (String) hashMap.get("figureurl_qq_2");
-                String figureurl_qq_1 = (String) hashMap.get("figureurl_qq_1");
-                String figureurl_2 = (String) hashMap.get("figureurl_2");
-                String figureurl_1 = (String) hashMap.get("figureurl_1");
-                String avatar = "";
-                String openId = "";
-                try {
-                    if(StringUtils.isNotEmpty(figureurl_qq_2)){
-                        avatar = figureurl_qq_2;
-                    } else if(StringUtils.isNotEmpty(figureurl_qq_1)){
-                        avatar = figureurl_qq_1;
-                    } else if(StringUtils.isNotEmpty(figureurl_2)){
-                        avatar = figureurl_2;
-                    } else if(StringUtils.isNotEmpty(figureurl_1)){
-                        avatar = figureurl_1;
-                    }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Timber.i("onComplete:"+hashMap);
+                        String name = (String)hashMap.get("nickname");
+                        String gender = (String)hashMap.get("gender");
+                        if("男".equals(gender)){
+                            gender = "male";
+                        } else {
+                            gender = "female";
+                        }
+                        String figureurl_qq_2 = (String) hashMap.get("figureurl_qq_2");
+                        String figureurl_qq_1 = (String) hashMap.get("figureurl_qq_1");
+                        String figureurl_2 = (String) hashMap.get("figureurl_2");
+                        String figureurl_1 = (String) hashMap.get("figureurl_1");
+                        String avatar = "";
+                        String openId = "";
+                        try {
+                            if(StringUtils.isNotEmpty(figureurl_qq_2)){
+                                avatar = figureurl_qq_2;
+                            } else if(StringUtils.isNotEmpty(figureurl_qq_1)){
+                                avatar = figureurl_qq_1;
+                            } else if(StringUtils.isNotEmpty(figureurl_2)){
+                                avatar = figureurl_2;
+                            } else if(StringUtils.isNotEmpty(figureurl_1)){
+                                avatar = figureurl_1;
+                            }
 
-                    int index = avatar.indexOf(Constants.QQ_APP_ID);
-                    if(index > 0){
-                        openId = avatar.substring(index+Constants.QQ_APP_ID.length()+1);
-                        openId = openId.substring(0, openId.indexOf("/"));
+                            int index = avatar.indexOf(Constants.QQ_APP_ID);
+                            if(index > 0){
+                                openId = avatar.substring(index+Constants.QQ_APP_ID.length()+1);
+                                openId = openId.substring(0, openId.indexOf("/"));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        HashMap<String, String> infos = new HashMap<String, String>();
+                        infos.put("name", name);
+                        infos.put("gender", gender);
+                        infos.put("loginname",  "QQ_"+openId);
+                        infos.put("passwd", openId);
+                        infos.put("platform","QQ");
+                        accountApi.register(infos)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(initObserver(getActivity()));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                HashMap<String, String> infos = new HashMap<String, String>();
-                infos.put("name", name);
-                infos.put("gender", gender);
-                infos.put("loginname",  "QQ_"+openId);
-                infos.put("passwd", openId);
-                infos.put("platform","QQ");
-                accountApi.register(infos)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(initObserver(getActivity()));
+                });
             }
 
             @Override

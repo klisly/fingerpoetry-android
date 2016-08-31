@@ -24,6 +24,7 @@ import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.ArticleData;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
@@ -67,10 +68,11 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
     private Toolbar mToolbar;
-    private ArticleData mData;
+    private Article mData;
+    private ArticleData mArticleData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
 
-    public static DetailFragment newInstance(ArticleData article) {
+    public static DetailFragment newInstance(Article article) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_CONTENT, article);
@@ -83,7 +85,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            mData = (ArticleData) args.getSerializable(ARG_CONTENT);
+            mData = (Article) args.getSerializable(ARG_CONTENT);
         }
     }
 
@@ -94,23 +96,47 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         ButterKnife.bind(this, view);
         initView(view);
         mProgress.setVisibility(View.VISIBLE);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mProgress.setVisibility(View.INVISIBLE);
-            }
-        }, 600);
+
+        articleApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        mProgress.setVisibility(View.INVISIBLE);
+                        ToastHelper.showShortTip(R.string.get_detial_fail);
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        mProgress.setVisibility(View.INVISIBLE);
+                        ToastHelper.showShortTip(R.string.get_detial_fail);
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<ArticleData> res) {
+                        mProgress.setVisibility(View.INVISIBLE);
+                        Timber.i("reache article:" + res);
+                        if (res.getData() != null) {
+                            mArticleData = res.getData();
+                            updateData();
+                        } else {
+                            ToastHelper.showShortTip(R.string.get_detial_fail);
+
+                        }
+                    }
+                });
         return view;
     }
 
     private void updateData() {
-        String info = mData.getArticle().getSite();
-        if (StringUtils.isNotEmpty(mData.getArticle().getAuthor())) {
-            info = info + "  " + mData.getArticle().getAuthor();
+        String info = mArticleData.getArticle().getSite();
+        if (StringUtils.isNotEmpty(mArticleData.getArticle().getAuthor())) {
+            info = info + "  " + mArticleData.getArticle().getAuthor();
         }
         tvSource.setText(info);
         Date date = new Date();
-        date.setTime(mData.getArticle().getCreateAt());
+        date.setTime(mArticleData.getArticle().getCreateAt());
         tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
         String html = "<!DOCTYPE html><html><head><title>指尖书香</title><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
                 + "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1.0,  maximum-scale=1.0, user-scalable=no\">"
@@ -128,7 +154,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 + "</style> "
                 + "</head> "
                 + "<body> "
-                + mData.getArticle().getContent()
+                + mArticleData.getArticle().getContent()
                 + "</body> "
                 + " </html>";
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
@@ -148,7 +174,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(OuterFragment.newInstance(mData.getArticle()));
+                start(OuterFragment.newInstance(mData));
             }
         });
         tvContent.setWebViewClient(new WebViewClient() {
@@ -174,8 +200,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     private void initLazyView() {
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.Toolbar_TextAppearance_White);
         mToolbarLayout.setExpandedTitleTextAppearance(R.style.Toolbar_TextAppearance_Expanded);
-        mToolbarLayout.setTitle(mData.getArticle().getTitle());
-        updateData();
+        mToolbarLayout.setTitle(mData.getTitle());
     }
 
     @Override
@@ -207,13 +232,13 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     private void openPopMenu() {
         final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
         popupMenu.inflate(R.menu.menu_article_pop);
-        if (mData.getUser2article() != null) {
-            if (mData.getUser2article().getToread()) {
+        if (mArticleData.getUser2article() != null) {
+            if (mArticleData.getUser2article().getToread()) {
                 popupMenu.getMenu().getItem(0).setTitle(getString(R.string.notoread));
             } else {
                 popupMenu.getMenu().getItem(0).setTitle(getString(R.string.toread));
             }
-            if (mData.getUser2article().getCollect()) {
+            if (mArticleData.getUser2article().getCollect()) {
                 popupMenu.getMenu().getItem(1).setTitle(getString(R.string.nocollect));
             } else {
                 popupMenu.getMenu().getItem(1).setTitle(getString(R.string.collect));
@@ -235,7 +260,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         break;
 
                     case R.id.action_original:
-                        start(OuterFragment.newInstance(mData.getArticle()));
+                        start(OuterFragment.newInstance(mArticleData.getArticle()));
                         break;
 
                     case R.id.action_notify_setting:
@@ -252,9 +277,13 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void shareArticle() {
-        String shareUrl = "luckyraider.com";
+        if(mArticleData == null){
+            return;
+        }
+        String shareUrl = "http://imdao.cn";
         ShareSDK.initSDK(getActivity());
         OnekeyShare oks = new OnekeyShare();
+        oks.setImageUrl("http://avatar.csdn.net/B/C/B/1_wizardholy.jpg");
         //关闭sso授权
 //        oks.disableSSOWhenAuthorize();
 
@@ -265,13 +294,13 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(shareUrl);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("\""+mData.getArticle().getTitle()+"\""+",在这里发现的一篇美文."+mData.getArticle().getSrcUrl());
+        oks.setText("我发现的一篇好文章,"+"\""+mArticleData.getArticle().getTitle()+"\""+"."+mArticleData.getArticle().getSrcUrl());
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(shareUrl);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我发现了这篇很走心,分享给各位!");
+        oks.setComment("我发现了这篇很走心的文章,分享给各位!");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
@@ -282,8 +311,8 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void toggleCollect() {
-        if (mData.getUser2article() == null || !mData.getUser2article().getCollect()) {
-            articleApi.collect(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+        if (mArticleData.getUser2article() == null || !mArticleData.getUser2article().getCollect()) {
+            articleApi.collect(mArticleData.getArticle().getId(), AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
@@ -300,11 +329,11 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         @Override
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
-                            mData.setUser2article(res.getData());
+                            mArticleData.setUser2article(res.getData());
                         }
                     });
         } else {
-            articleApi.uncollect(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+            articleApi.uncollect(mArticleData.getArticle().getId(), AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
@@ -321,15 +350,15 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         @Override
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
-                            mData.setUser2article(res.getData());
+                            mArticleData.setUser2article(res.getData());
                         }
                     });
         }
     }
 
     private void toggleToRead() {
-        if (mData.getUser2article() == null || !mData.getUser2article().getToread()) {
-            articleApi.toread(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+        if (mArticleData.getUser2article() == null || !mArticleData.getUser2article().getToread()) {
+            articleApi.toread(mArticleData.getArticle().getId(), AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
@@ -346,11 +375,11 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         @Override
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
-                            mData.setUser2article(res.getData());
+                            mArticleData.setUser2article(res.getData());
                         }
                     });
         } else {
-            articleApi.untoread(mData.getArticle().getId(), AccountLogic.getInstance().getToken())
+            articleApi.untoread(mArticleData.getArticle().getId(), AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
@@ -367,7 +396,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         @Override
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
-                            mData.setUser2article(res.getData());
+                            mArticleData.setUser2article(res.getData());
                         }
                     });
         }

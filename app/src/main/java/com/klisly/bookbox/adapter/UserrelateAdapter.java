@@ -56,10 +56,10 @@ public class UserRelateAdapter extends RecyclerView.Adapter<UserRelateAdapter.Pa
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
         User2Article user2Article = mItems.get(position);
         holder.tvTitle.setText(user2Article.getArticleName());
-//        holder.tvSource.setText(article.getSite());
+        holder.tvSource.setText(user2Article.getSiteName());
         Date date = new Date();
         date.setTime(user2Article.getCreateAt());
-        holder.tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
+        holder.tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD));
     }
 
     @Override

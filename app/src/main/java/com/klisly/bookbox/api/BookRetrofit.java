@@ -17,11 +17,11 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookRetrofit {
-    public final static String BASE_URL = "http://192.168.10.101:3000/";
+    public final static String BASE_URL = "http://second.imdao.cn/";
 //    public final static String BASE_URL = "http://192.168.1.3:3000/";
     public final static String BASE_API_URL = BASE_URL;
 
-    private final static long DEFAULT_TIMEOUT = 15; // 15超时
+    private final static long DEFAULT_TIMEOUT = 45; // 45s超时
     private final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .serializeNulls()

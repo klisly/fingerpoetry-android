@@ -19,6 +19,12 @@ public class User2Article extends BaseModel{
     @SerializedName("articleName")
     @Expose
     private String articleName;
+    @SerializedName("siteId")
+    @Expose
+    private String siteId;
+    @SerializedName("siteName")
+    @Expose
+    private String siteName;
     @SerializedName("updateAt")
     @Expose
     private long updateAt;
@@ -260,6 +266,30 @@ public class User2Article extends BaseModel{
         this.isBlock = isBlock;
     }
 
+    public String getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(String siteId) {
+        this.siteId = siteId;
+    }
+
+    public String getSiteName() {
+        return siteName;
+    }
+
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
+
+    public Boolean getBlock() {
+        return isBlock;
+    }
+
+    public void setBlock(Boolean block) {
+        isBlock = block;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("User2Article{");
@@ -272,6 +302,8 @@ public class User2Article extends BaseModel{
         sb.append(", toread=").append(toread);
         sb.append(", read=").append(read);
         sb.append(", heart=").append(heart);
+        sb.append(", siteId=").append(siteId);
+        sb.append(", siteName=").append(siteName);
         sb.append(", collect=").append(collect);
         sb.append(", share=").append(share);
         sb.append(", isBlock=").append(isBlock);

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.model.Article;
@@ -56,11 +56,18 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
     @Override
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
         Article article = mItems.get(position);
-        holder.tvTitle.setText(article.getTitle());
-        holder.tvSource.setText(article.getSite());
-        Date date = new Date();
-        date.setTime(article.getCreateAt());
-        holder.tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
+        if(!Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
+            holder.articlrLayout.setVisibility(View.VISIBLE);
+            holder.mTvLoad.setVisibility(View.GONE);
+            holder.tvTitle.setText(article.getTitle());
+            holder.tvSource.setText(article.getSite());
+            Date date = new Date();
+            date.setTime(article.getCreateAt());
+            holder.tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
+        } else {
+            holder.articlrLayout.setVisibility(View.GONE);
+            holder.mTvLoad.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -75,10 +82,12 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
         TextView tvSource;
         @Bind(R.id.tv_time)
         TextView tvDate;
-        @Bind(R.id.iv_image)
-        SimpleDraweeView sdvImage;
         @Bind(R.id.rl_item)
         RelativeLayout relativeLayout;
+        @Bind(R.id.article_item)
+        RelativeLayout articlrLayout;
+        @Bind(R.id.clickload)
+        TextView mTvLoad;
         public PagerItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

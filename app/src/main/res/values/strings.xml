@@ -89,5 +89,6 @@
     <string name="third_unset_pass">第三方账户不能修改密码</string>
     <string name="choose_user_relate_tip">单击查看文章,长按删除</string>
     <string name="exit_tip">快速双击退出</string>
+    <string name="clickreload">您刚才看到这里,点我刷新</string>
 
 </resources>
