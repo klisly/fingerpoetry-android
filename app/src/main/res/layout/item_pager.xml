@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@id/iv_image"
+                    android:singleLine="true"
                     android:text="title"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
@@ -63,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/iv_image"
                     android:gravity="left"
                     android:orientation="horizontal">
 
@@ -96,7 +95,7 @@
                 android:gravity="center"
                 android:text="@string/clickreload"
                 android:textColor="@color/primary"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="@dimen/text_size_16"
                 android:visibility="visible" />
         </RelativeLayout>
     </com.material.widget.RippleLayout>

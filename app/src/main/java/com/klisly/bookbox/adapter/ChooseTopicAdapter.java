@@ -1,15 +1,12 @@
 package com.klisly.bookbox.adapter;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
@@ -59,7 +56,7 @@ public class ChooseTopicAdapter extends DragItemAdapter<Topic, ChooseTopicAdapte
         holder.tvTitle.setText(item.getName());
         StringBuffer buffer = new StringBuffer();
         holder.tvContent.setText(buffer.toString());
-        holder.image.setImageURI(Uri.parse(BookRetrofit.BASE_URL + item.getImage()));
+//        holder.image.setImageURI(Uri.parse(BookRetrofit.BASE_URL + item.getImage()));
         buffer.append(item.getArticleCount())
                 .append(BookBoxApplication.getInstance().getString(R.string.articlenum));
         if (!item.getName().equals(BookBoxApplication.getInstance().getString(R.string.hot))
@@ -101,8 +98,8 @@ public class ChooseTopicAdapter extends DragItemAdapter<Topic, ChooseTopicAdapte
         TextView tvTitle;
         @Bind(R.id.tv_brief)
         TextView tvContent;
-        @Bind(R.id.iv_image)
-        SimpleDraweeView image;
+//        @Bind(R.id.iv_image)
+//        SimpleDraweeView image;
         @Bind(R.id.btn_action)
         PaperButton btnAction;
 

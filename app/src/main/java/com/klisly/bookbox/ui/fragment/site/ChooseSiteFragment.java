@@ -139,15 +139,16 @@ public class ChooseSiteFragment extends BaseBackFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                Site entity = SiteLogic.getInstance().getOpenChooses().get(position);
-                Timber.i("click position:" + position
-                        + " data:" + entity);
-                if(SiteLogic.getInstance().isFocused(entity.getId())){
-                    unSubscribe(entity, position);
-                } else {
-                    subscribe(entity, position);
+                if(position <  SiteLogic.getInstance().getOpenChooses().size()) {
+                    Site entity = SiteLogic.getInstance().getOpenChooses().get(position);
+                    Timber.i("click position:" + position
+                            + " data:" + entity);
+                    if (SiteLogic.getInstance().isFocused(entity.getId())) {
+                        unSubscribe(entity, position);
+                    } else {
+                        subscribe(entity, position);
+                    }
                 }
-
             }
         });
         SiteLogic.getInstance().reorderDefaultTopics();

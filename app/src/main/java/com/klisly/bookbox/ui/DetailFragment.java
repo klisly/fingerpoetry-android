@@ -2,12 +2,8 @@ package com.klisly.bookbox.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -49,25 +45,22 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toolbar_layout)
-    CollapsingToolbarLayout mToolbarLayout;
-    @Bind(R.id.app_bar)
-    AppBarLayout appBar;
+//    @Bind(R.id.toolbar_layout)
+//    CollapsingToolbarLayout mToolbarLayout;
+//    @Bind(R.id.app_bar)
+//    AppBarLayout appBar;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
     @Bind(R.id.tv_source)
     TextView tvSource;
     @Bind(R.id.tv_date)
     TextView tvDate;
     @Bind(R.id.webView)
     WebView tvContent;
-    @Bind(R.id.scrollView)
-    NestedScrollView scrollView;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.coord)
-    CoordinatorLayout coord;
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
-    private Toolbar mToolbar;
     private Article mData;
     private ArticleData mArticleData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
@@ -103,13 +96,22 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
-                        mProgress.setVisibility(View.INVISIBLE);
+                        try {
+                            if (getActivity() != null && mProgress != null) {
+                                mProgress.setVisibility(View.INVISIBLE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         ToastHelper.showShortTip(R.string.get_detial_fail);
+
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
-                        mProgress.setVisibility(View.INVISIBLE);
+                        if (getActivity() != null && mProgress != null) {
+                            mProgress.setVisibility(View.INVISIBLE);
+                        }
                         ToastHelper.showShortTip(R.string.get_detial_fail);
                     }
 
@@ -147,6 +149,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 + " font: 16px"
                 + "background: #F5FCFF;"
                 + "} "
+                + " a{"
+                + " text-decoration:none;"
+                + "  outline:0 none;pointer-events:none; color:inherit; cursor:default; "
+                + " }"
                 + " p { "
                 + "marginTop: 5; "
                 + "}  img{display: block;\n" +
@@ -168,8 +174,8 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void initView(View view) {
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        initToolbarNav(mToolbar);
+        toolbar.setTitleTextAppearance(getContext(), R.style.TitleTextApperance);
+        initToolbarNav(toolbar);
         toolbar.setOnMenuItemClickListener(this);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,9 +204,8 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void initLazyView() {
-        mToolbarLayout.setCollapsedTitleTextAppearance(R.style.Toolbar_TextAppearance_White);
-        mToolbarLayout.setExpandedTitleTextAppearance(R.style.Toolbar_TextAppearance_Expanded);
-        mToolbarLayout.setTitle(mData.getTitle());
+        toolbar.setTitle("文章内容");
+        tvTitle.setText(mData.getTitle());
     }
 
     @Override
@@ -230,9 +235,9 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void openPopMenu() {
-        final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
+        final PopupMenu popupMenu = new PopupMenu(_mActivity, toolbar, GravityCompat.END);
         popupMenu.inflate(R.menu.menu_article_pop);
-        if (mArticleData.getUser2article() != null) {
+        if (mArticleData != null && mArticleData.getUser2article() != null) {
             if (mArticleData.getUser2article().getToread()) {
                 popupMenu.getMenu().getItem(0).setTitle(getString(R.string.notoread));
             } else {
@@ -277,13 +282,13 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void shareArticle() {
-        if(mArticleData == null){
+        if (mArticleData == null) {
             return;
         }
-        String shareUrl = "http://imdao.cn";
+        String shareUrl = mArticleData.getArticle().getSrcUrl();
         ShareSDK.initSDK(getActivity());
         OnekeyShare oks = new OnekeyShare();
-        oks.setImageUrl("http://avatar.csdn.net/B/C/B/1_wizardholy.jpg");
+        oks.setImageUrl("http://second.imdao.cn/images/logo.png");
         //关闭sso授权
 //        oks.disableSSOWhenAuthorize();
 
@@ -294,7 +299,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(shareUrl);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("我发现的一篇好文章,"+"\""+mArticleData.getArticle().getTitle()+"\""+"."+mArticleData.getArticle().getSrcUrl());
+        oks.setText("我发现的一篇好文章," + "\"" + mArticleData.getArticle().getTitle() + "\"" + "." + mArticleData.getArticle().getSrcUrl());
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用

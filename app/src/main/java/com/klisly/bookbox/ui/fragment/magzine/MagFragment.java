@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.ListAdapter;
+import com.klisly.bookbox.adapter.MagAdapter;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
@@ -43,7 +43,7 @@ public class MagFragment extends BaseMainFragment implements Toolbar.OnMenuItemC
 
     private FloatingActionButton mFab;
     private RecyclerView mRecy;
-    private ListAdapter mAdapter;
+    private MagAdapter mAdapter;
 
     public static MagFragment newInstance() {
         return new MagFragment();
@@ -83,7 +83,7 @@ public class MagFragment extends BaseMainFragment implements Toolbar.OnMenuItemC
 //        mToolbar.inflateMenu(R.menu.menu_main);
         mToolbar.setOnMenuItemClickListener(this);
 
-        mAdapter = new ListAdapter(_mActivity);
+        mAdapter = new MagAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);

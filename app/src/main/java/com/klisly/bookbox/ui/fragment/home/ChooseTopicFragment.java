@@ -113,7 +113,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mRecy.isChangePosition()) {
+                if (mRecy.isChangePosition()) {
                     TopicLogic.getInstance().updateFocusedOrder();
                     updateFocusedOrder();
                 } else {
@@ -143,13 +143,15 @@ public class ChooseTopicFragment extends BaseBackFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                Topic topic = TopicLogic.getInstance().getOpenChooseTopics().get(position);
-                Timber.i("click position:" + position
-                        + " data:" + topic);
-                if(TopicLogic.getInstance().isFocused(topic.getId())){
-                    unSubscribe(topic, position);
-                } else {
-                    subscribe(topic, position);
+                if (position < TopicLogic.getInstance().getOpenChooseTopics().size()) {
+                    Topic topic = TopicLogic.getInstance().getOpenChooseTopics().get(position);
+                    Timber.i("click position:" + position
+                            + " data:" + topic);
+                    if (TopicLogic.getInstance().isFocused(topic.getId())) {
+                        unSubscribe(topic, position);
+                    } else {
+                        subscribe(topic, position);
+                    }
                 }
 
             }
@@ -167,7 +169,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
         TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
-                if(mAdapter != null){
+                if (mAdapter != null) {
                     mAdapter.setItemList(TopicLogic.getInstance().getOpenChooseTopics());
                 }
             }
@@ -177,7 +179,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
     private void updateFocusedOrder() {
 
         JSONArray jsonArray = new JSONArray();
-        for(User2Topic entity: TopicLogic.getInstance().getSubscribes().values()){
+        for (User2Topic entity : TopicLogic.getInstance().getSubscribes().values()) {
             try {
                 JSONObject object = new JSONObject();
                 object.put("id", entity.getId());
@@ -257,7 +259,8 @@ public class ChooseTopicFragment extends BaseBackFragment {
                     @Override
                     public void onNext(ApiResult<User2Topic> data) {
                         Timber.i("subscribe:" + data.getData());
-                        TopicLogic.getInstance().subscribe(data.getData());                    }
+                        TopicLogic.getInstance().subscribe(data.getData());
+                    }
                 });
     }
 }

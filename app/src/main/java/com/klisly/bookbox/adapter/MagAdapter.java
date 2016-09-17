@@ -12,6 +12,8 @@ import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.model.Article;
+import com.klisly.common.dateutil.DateStyle;
+import com.klisly.common.dateutil.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,13 +22,13 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapter.PagerItemViewHolder> {
+public class MagAdapter extends RecyclerView.Adapter<MagAdapter.PagerItemViewHolder> {
     private List<Article> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
 
-    public PagerContentAdapter(Context context) {
+    public MagAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -54,17 +56,14 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
     @Override
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
         Article article = mItems.get(position);
-        if (!Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
+        if(!Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
             holder.articlrLayout.setVisibility(View.VISIBLE);
             holder.mTvLoad.setVisibility(View.GONE);
             holder.tvTitle.setText(article.getTitle());
             holder.tvSource.setText(article.getSite());
             Date date = new Date();
             date.setTime(article.getCreateAt());
-
-            holder.tvDate.setText(article.getReadCount() + "阅・"
-                    + article.getCollectCount() + "收藏・"
-                    + article.getShareCount() + "分享");
+            holder.tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
         } else {
             holder.articlrLayout.setVisibility(View.GONE);
             holder.mTvLoad.setVisibility(View.VISIBLE);
@@ -89,7 +88,6 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
         RelativeLayout articlrLayout;
         @Bind(R.id.clickload)
         TextView mTvLoad;
-
         public PagerItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

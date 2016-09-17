@@ -12,7 +12,8 @@
     </style>
 
     <style name="AppTheme" parent="BaseTheme">
-
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
     <style name="AppAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
@@ -27,13 +28,17 @@
     </style>
 
     <style name="Toolbar_TextAppearance_White">
-        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:lines">2</item>
     </style>
 
     <style name="Toolbar_TextAppearance_Expanded">
-        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:lines">2</item>
     </style>
 
     <style name="AppTheme.NoActionBar.AppBarOverlay"
@@ -63,4 +68,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TitleTextApperance" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:lines">2</item>
+    </style>
 </resources>

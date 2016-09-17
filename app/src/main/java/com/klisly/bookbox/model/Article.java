@@ -29,18 +29,6 @@ public class Article extends BaseModel{
     @SerializedName("srcUrl")
     @Expose
     private String srcUrl;
-    @SerializedName("readNum")
-    @Expose
-    private long readNum;
-    @SerializedName("commentNum")
-    @Expose
-    private long commentNum;
-    @SerializedName("likeNum")
-    @Expose
-    private long likeNum;
-    @SerializedName("heartNum")
-    @Expose
-    private long heartNum;
     @SerializedName("isBlock")
     @Expose
     private Boolean isBlock;
@@ -202,78 +190,6 @@ public class Article extends BaseModel{
      */
     public void setSrcUrl(String srcUrl) {
         this.srcUrl = srcUrl;
-    }
-
-    /**
-     *
-     * @return
-     * The readNum
-     */
-    public long getReadNum() {
-        return readNum;
-    }
-
-    /**
-     *
-     * @param readNum
-     * The readNum
-     */
-    public void setReadNum(long readNum) {
-        this.readNum = readNum;
-    }
-
-    /**
-     *
-     * @return
-     * The commentNum
-     */
-    public long getCommentNum() {
-        return commentNum;
-    }
-
-    /**
-     *
-     * @param commentNum
-     * The commentNum
-     */
-    public void setCommentNum(long commentNum) {
-        this.commentNum = commentNum;
-    }
-
-    /**
-     *
-     * @return
-     * The likeNum
-     */
-    public long getLikeNum() {
-        return likeNum;
-    }
-
-    /**
-     *
-     * @param likeNum
-     * The likeNum
-     */
-    public void setLikeNum(long likeNum) {
-        this.likeNum = likeNum;
-    }
-
-    /**
-     *
-     * @return
-     * The heartNum
-     */
-    public long getHeartNum() {
-        return heartNum;
-    }
-
-    /**
-     *
-     * @param heartNum
-     * The heartNum
-     */
-    public void setHeartNum(long heartNum) {
-        this.heartNum = heartNum;
     }
 
     /**
@@ -518,10 +434,6 @@ public class Article extends BaseModel{
         sb.append(", site='").append(site).append('\'');
         sb.append(", siteId='").append(siteId).append('\'');
         sb.append(", srcUrl='").append(srcUrl).append('\'');
-        sb.append(", readNum=").append(readNum);
-        sb.append(", commentNum=").append(commentNum);
-        sb.append(", likeNum=").append(likeNum);
-        sb.append(", heartNum=").append(heartNum);
         sb.append(", isBlock=").append(isBlock);
         sb.append(", reason='").append(reason).append('\'');
         sb.append(", checked=").append(checked);

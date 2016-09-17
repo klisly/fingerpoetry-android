@@ -61,6 +61,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private String name;
     private boolean firstIn = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,10 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
         ButterKnife.bind(this, view);
         initView(view);
+        // todo 智能推荐服务打开后,显示该消息
+//        if(AccountLogic.getInstance().getNowUser() == null){
+//            TopToastHelper.showTip(mTvTip, getString(R.string.recom_log), TopToastHelper.DURATION_LONG);
+//        }
         return view;
     }
 
@@ -183,35 +188,54 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                     @Override
                     public void onNext(ApiResult<List<Article>> res) {
                         onFinish();
-                        if(!firstIn) {
-                            if (res.getData().size() > 0) {
-                                TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
-                            } else {
-                                TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
-                            }
+                        if (!firstIn) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mTvTip == null) {
+                                        return;
+                                    }
+                                    if (res.getData().size() > 0) {
+                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
+                                    } else {
+                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
+                                    }
+                                }
+                            });
                         }
                         firstIn = false;
 
                         Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
                         ArticleLogic.getInstance().updateArticles(name, res.getData());
-                        mRecy.scrollToPosition(0);
+                        if (mRecy != null) {
+                            mRecy.scrollToPosition(0);
+                        }
                     }
                 });
     }
 
     private void onFinish() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.INVISIBLE);
+        if (getActivity() == null) {
+            return;
         }
-        if (mRefreshLayout != null) {
-            mRefreshLayout.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    mRefreshLayout.setRefreshing(false);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mProgress != null) {
+                    mProgress.setVisibility(View.INVISIBLE);
                 }
-            });
-        }
+                if (mRefreshLayout != null) {
+                    mRefreshLayout.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mRefreshLayout != null) {
+                                mRefreshLayout.setRefreshing(false);
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private static int ACTION_HOT = 1;

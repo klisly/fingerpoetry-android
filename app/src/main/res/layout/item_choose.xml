@@ -38,29 +38,30 @@
                 app:paper_text_color="@color/white"
                 app:paper_text_size="@dimen/text_size_14"
                 app:paper_text="@string/focused"/>
-            <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/iv_image"
-                android:layout_width="@dimen/item_choose_img_size"
-                android:layout_height="@dimen/item_choose_img_size"
-                android:layout_marginRight="6dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                fresco:actualImageScaleType="focusCrop"
-                fresco:backgroundImage="@color/accentLight"
-                fresco:fadeDuration="600"
-                fresco:failureImage="@drawable/default_article_img"
-                fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImage="@drawable/default_article_img"
-                fresco:placeholderImageScaleType="centerCrop"
-                fresco:roundAsCircle="true">
-            </com.facebook.drawee.view.SimpleDraweeView>
+            <!--<com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"-->
+                <!--android:id="@+id/iv_image"-->
+                <!--android:layout_width="1dp"-->
+                <!--android:layout_height="@dimen/item_choose_img_size"-->
+                <!--android:layout_marginRight="6dp"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--fresco:actualImageScaleType="focusCrop"-->
+                <!--fresco:backgroundImage="@color/accentLight"-->
+                <!--fresco:fadeDuration="600"-->
+                <!--android:visibility="invisible"-->
+                <!--fresco:failureImage="@drawable/default_article_img"-->
+                <!--fresco:failureImageScaleType="centerInside"-->
+                <!--fresco:placeholderImage="@drawable/default_article_img"-->
+                <!--fresco:placeholderImageScaleType="centerCrop"-->
+                <!--fresco:roundAsCircle="true">-->
+            <!--</com.facebook.drawee.view.SimpleDraweeView>-->
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@id/btn_action"
-                android:layout_toRightOf="@id/iv_image"
+                android:layout_alignParentLeft="true"
                 android:text="标题"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@id/btn_action"
-                android:layout_toRightOf="@id/iv_image"
+                android:layout_alignParentLeft="true"
                 android:gravity="left"
                 android:orientation="horizontal">
 
