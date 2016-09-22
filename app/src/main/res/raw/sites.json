@@ -36,18 +36,6 @@
     "followerCount": 0
   },
   {
-    "_id": "57ab6126f4ec39a607e5b7b9",
-    "name": "随笔吧",
-    "srcUrl": "http://www.suibi8.com/",
-    "__v": 0,
-    "updateAt": 1470848535209,
-    "createAt": 1470848535209,
-    "image": "/images/channelbrand.jpg",
-    "isBlock": false,
-    "articleCount": 0,
-    "followerCount": 0
-  },
-  {
     "_id": "57ab6310f4ec39a607e5b7ba",
     "name": "人生屋",
     "srcUrl": "http://www.rensheng5.com/",

@@ -23,6 +23,9 @@ public interface AccountApi {
 
     @FormUrlEncoded
     @POST("users/login")
+    @Headers({
+            "Accept: application/json",
+    })
     Observable<ApiResult<LoginData>> login(@Field("loginname") String name,
                                            @Field("passwd") String passwd);
 

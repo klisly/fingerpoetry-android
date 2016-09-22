@@ -60,7 +60,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
     private PagerContentAdapter mAdapter;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private String name;
-    private boolean firstIn = true;
+    private boolean needToast = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,16 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         return super.onCreateFragmentAnimation();
         // 在进入和离开时 设定无动画
 //        return new DefaultNoAnimator();
+    }
+
+    public T getmData() {
+        return mData;
+    }
+
+    public void setmData(T mData) {
+        this.mData = mData;
+        this.page = 0;
+        loadNew();;
     }
 
     @Override
@@ -112,6 +122,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                needToast = true;
                 loadNew();
             }
         });
@@ -188,7 +199,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                     @Override
                     public void onNext(ApiResult<List<Article>> res) {
                         onFinish();
-                        if (!firstIn) {
+                        if (needToast) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -203,7 +214,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                                 }
                             });
                         }
-                        firstIn = false;
 
                         Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
                         ArticleLogic.getInstance().updateArticles(name, res.getData());

@@ -20,12 +20,14 @@ import com.klisly.bookbox.logic.SiteLogic;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
+import com.klisly.bookbox.ui.fragment.PagerChildFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import timber.log.Timber;
 
 public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
     @Bind(R.id.tab_layout)
@@ -81,6 +83,30 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
             public void onDataChange() {
                 adapter.notifyDataSetChanged();
                 updateItems();
+            }
+        });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                PagerChildFragment<Site> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
+                Site site = fragment.getmData();
+                if (!site.getId().equals(SiteLogic.getInstance().getOpenFocuses().get(position).getId())) {
+                    Timber.i("new topic in position:" + position + " new:"
+                            + SiteLogic.getInstance().getOpenFocuses().get(position).getName()
+                            + " old:" + site.getName());
+                    fragment.setmData(SiteLogic.getInstance().getOpenFocuses().get(position));
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
         mTabLayout.setupWithViewPager(mViewPager);

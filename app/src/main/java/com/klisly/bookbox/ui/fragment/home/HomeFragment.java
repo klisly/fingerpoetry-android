@@ -20,11 +20,13 @@ import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
+import com.klisly.bookbox.ui.fragment.PagerChildFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import timber.log.Timber;
 
 public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
 
@@ -48,7 +50,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         initView();
         return view;
     }
@@ -63,7 +65,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Override
     protected FragmentAnimator onCreateFragmentAnimation() {
         // 默认不改变
-         return super.onCreateFragmentAnimation();
+        return super.onCreateFragmentAnimation();
         // 在进入和离开时 设定无动画
 //        return new DefaultNoAnimator();
     }
@@ -83,13 +85,37 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                 adapter.notifyDataSetChanged();
             }
         });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                PagerChildFragment<Topic> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
+                Topic topic = fragment.getmData();
+                if (!topic.getId().equals(TopicLogic.getInstance().getOpenFocuses().get(position).getId())) {
+                    Timber.i("new topic in position:" + position + " new:"
+                            + TopicLogic.getInstance().getOpenFocuses().get(position).getName()
+                            + " old:" + topic.getName());
+                    fragment.setmData(TopicLogic.getInstance().getOpenFocuses().get(position));
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void updateItems() {
-        if(TopicLogic.getInstance().getOpenFocuses() != null){
+        if (TopicLogic.getInstance().getOpenFocuses() != null) {
             mTabLayout.removeAllTabs();
-            for(Topic topic : TopicLogic.getInstance().getOpenFocuses()){
+            for (Topic topic : TopicLogic.getInstance().getOpenFocuses()) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
             }
         }
@@ -108,7 +134,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         switch (item.getItemId()) {
             case R.id.action_more:
                 final PopupMenu popupMenu = new PopupMenu(_mActivity,
-                        mToolbar,GravityCompat.END);
+                        mToolbar, GravityCompat.END);
                 popupMenu.inflate(R.menu.menu_main_pop);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -118,7 +144,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                                 ToastHelper.showShortTip(R.string.recom_setting);
                                 break;
                             case R.id.action_manage_topic:
-                                if(!AccountLogic.getInstance().isLogin()){
+                                if (!AccountLogic.getInstance().isLogin()) {
                                     BusProvider.getInstance().post(new ToLoginEvent());
                                 } else {
                                     start(ChooseTopicFragment.newInstance(ChooseTopicFragment.ACTION_MANAGE));

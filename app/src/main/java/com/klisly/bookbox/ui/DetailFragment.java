@@ -285,7 +285,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         if (mArticleData == null) {
             return;
         }
-        String shareUrl = mArticleData.getArticle().getSrcUrl();
+        String shareUrl ="http://second.imdao.cn/articles/"+ mArticleData.getArticle().getId();
         ShareSDK.initSDK(getActivity());
         OnekeyShare oks = new OnekeyShare();
         oks.setImageUrl("http://second.imdao.cn/images/logo.png");
@@ -299,7 +299,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(shareUrl);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("我发现的一篇好文章," + "\"" + mArticleData.getArticle().getTitle() + "\"" + "." + mArticleData.getArticle().getSrcUrl());
+        oks.setText("我发现的一篇好文章," + "\"" + mArticleData.getArticle().getTitle() + "\"" + "." + shareUrl);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
