@@ -25,6 +25,7 @@ public class Constants {
     public static final long MAX_REQUEST_TIME = 30000;
     public static final String INVALID_ARTICLE_ID = "INVALID_ARTICLE_ID";
 
+
     private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
 
     public static void setFirstLaunch(boolean isFirst) {
@@ -44,4 +45,8 @@ public class Constants {
     public static String PLATFORM_LOCAL = "LOCAL";
 
     public static String QQ_APP_ID = "1105643926";
+    public static final String SplashPosID = "8000011512009668";
+
+    public static int ITEM_TYPE_NORMAL = 1;
+    public static int ITEM_TYPE_JOKE = 2;
 }

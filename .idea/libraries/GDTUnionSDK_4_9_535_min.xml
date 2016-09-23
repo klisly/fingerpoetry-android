@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GDTUnionSDK.4.9.535.min">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/GDTUnionSDK.4.9.535.min.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

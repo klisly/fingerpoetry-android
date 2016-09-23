@@ -81,4 +81,5 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-2.7.6.jar')
     compile files('libs/ShareSDK-Wechat-Core-2.7.6.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.6.jar')
+    compile files('libs/GDTUnionSDK.4.9.535.min.jar')
 }

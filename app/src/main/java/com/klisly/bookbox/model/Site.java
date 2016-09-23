@@ -35,7 +35,9 @@ public class Site extends BaseModel implements Comparable<Site>{
     @SerializedName("image")
     @Expose
     private String image;
-
+    @SerializedName("type")
+    @Expose
+    private int type;
     private boolean isFocused; // 外来数据, 由User2Topic 获得
 
     private int seq;
@@ -136,6 +138,14 @@ public class Site extends BaseModel implements Comparable<Site>{
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override

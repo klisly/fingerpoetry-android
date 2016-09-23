@@ -131,4 +131,18 @@ public class CommonHelper {
                     });
         }
     }
+
+    public static int getItemType(Object data){
+        int itemType = Constants.ITEM_TYPE_NORMAL;
+        if (data instanceof Site) {
+            if(((Site) data).getType() == Constants.ITEM_TYPE_JOKE) {
+                itemType = Constants.ITEM_TYPE_JOKE;
+            }
+        } else if (data instanceof Topic) {
+            if(((Topic) data).getName().equals("段子")) {
+                itemType =  Constants.ITEM_TYPE_JOKE;
+            }
+        }
+        return itemType;
+    }
 }

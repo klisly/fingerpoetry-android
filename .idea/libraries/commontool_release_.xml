@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="commontool-release-">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/commontool-release/res" />
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/commontool-release/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/commontool-release/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

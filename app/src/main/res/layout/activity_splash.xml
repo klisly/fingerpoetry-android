@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ui.activity.SplashActivity" >
+
+    <!-- 广点通开屏广告支持“半屏/全屏”展示，开发者可以把Logo放在屏幕底部，然后在Logo上方提供一个容器来放置半开屏广告，请注意此容器高度不得小于400dp -->
+
+    <!-- Logo区域，如果想展示全屏广告，可以不需要Logo区域 -->
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/app_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:actualImageScaleType="focusCrop"
+        app:backgroundImage="@android:color/holo_blue_light"
+        app:fadeDuration="600"
+        app:roundedCornerRadius="5dp"
+        app:failureImage="@drawable/ic_launcher"
+        app:failureImageScaleType="centerInside"
+        app:placeholderImage="@drawable/ic_launcher"
+        app:placeholderImageScaleType="centerCrop" />
+    <!--<com.facebook.drawee.view.SimpleDraweeView-->
+        <!--android:id="@+id/app_logo"-->
+        <!--android:layout_width="@dimen/global_menu_avatar_size"-->
+        <!--android:layout_height="@dimen/global_menu_avatar_size"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--app:actualImageScaleType="focusCrop"-->
+        <!--app:backgroundImage="@android:color/holo_blue_light"-->
+        <!--app:fadeDuration="600"-->
+        <!--app:failureImage="@drawable/menu_user"-->
+        <!--app:failureImageScaleType="centerInside"-->
+        <!--app:placeholderImage="@drawable/menu_user"-->
+        <!--app:placeholderImageScaleType="centerCrop"-->
+        <!--app:roundAsCircle="true" />-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_20"
+        android:textColor="@color/text_black"
+        android:text="@string/app_name"
+        android:layout_toRightOf="@id/app_logo"
+        android:layout_alignTop="@id/app_logo"
+        android:gravity="top"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_16"
+        android:textColor="@color/text_gray"
+        android:text="@string/slogn"
+        android:layout_toRightOf="@id/app_logo"
+        android:layout_alignBottom="@id/app_logo"
+        android:gravity="bottom"
+        android:layout_centerHorizontal="true"/>
+    <!-- 开屏广告容器，不得小于400dp -->
+    <FrameLayout
+        android:id="@+id/splash_container"
+        android:layout_above="@id/app_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

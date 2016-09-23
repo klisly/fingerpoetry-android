@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerContentAdapter;
@@ -96,6 +97,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
         ButterKnife.bind(this, view);
+        if(CommonHelper.getItemType(mData) == Constants.ITEM_TYPE_JOKE){
+            pageSize = 30;
+        }
         initView(view);
         // todo 智能推荐服务打开后,显示该消息
 //        if(AccountLogic.getInstance().getNowUser() == null){
@@ -112,7 +116,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
 
     private void initView(View view) {
 
-        mAdapter = new PagerContentAdapter(_mActivity);
+        mAdapter = new PagerContentAdapter(_mActivity, CommonHelper.getItemType(mData));
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
