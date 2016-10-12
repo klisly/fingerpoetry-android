@@ -49,4 +49,6 @@ public class Constants {
 
     public static int ITEM_TYPE_NORMAL = 1;
     public static int ITEM_TYPE_JOKE = 2;
+    public static String LAST_CHECK = "LAST_CHECK";
+    public static long UPDATE_CHECK_DURATION = 86400000;
 }

@@ -17,8 +17,8 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookRetrofit {
-    public final static String BASE_URL = "http://second.imdao.cn";
-//    public final static String BASE_URL = "http://192.168.10.103:3000";
+//    public final static String BASE_URL = "http://second.imdao.cn";
+    public final static String BASE_URL = "http://192.168.1.2:3000";
     public final static String BASE_API_URL = BASE_URL;
 
     private final static long DEFAULT_TIMEOUT = 90; // 60s超时
@@ -31,6 +31,7 @@ public class BookRetrofit {
     private SiteApi siteApi;
     private TopicApi topicApi;
     private ArticleApi articleApi;
+    private SysApi sysApi;
     public BookRetrofit() {
         Context context = BookBoxApplication.getInstance().getApplicationContext();
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
@@ -51,6 +52,7 @@ public class BookRetrofit {
         siteApi = retrofit.create(SiteApi.class);
         topicApi = retrofit.create(TopicApi.class);
         articleApi = retrofit.create(ArticleApi.class);
+        sysApi = retrofit.create(SysApi.class);
     }
 
     /**
@@ -81,15 +83,11 @@ public class BookRetrofit {
         return topicApi;
     }
 
-    public void setTopicApi(TopicApi topicApi) {
-        this.topicApi = topicApi;
-    }
-
     public ArticleApi getArticleApi() {
         return articleApi;
     }
 
-    public void setArticleApi(ArticleApi articleApi) {
-        this.articleApi = articleApi;
+    public SysApi getSysApi() {
+        return sysApi;
     }
 }

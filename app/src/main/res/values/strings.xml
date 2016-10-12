@@ -7,7 +7,7 @@
     <string name="navigation_drawer_close">关闭抽屉</string>
 
     <string name="register_login">注册/登陆</string>
-    <string name="homepage">首页</string>
+    <string name="homepage">频道</string>
     <string name="site">站点</string>
     <string name="topic">活动</string>
     <string name="magzine">日刊</string>
@@ -92,5 +92,19 @@
     <string name="clickreload">您刚才看到这里,点我刷新</string>
     <string name="recom_log">登录后,可享受智能推荐服务</string>
     <string name="slogn">在诗和远方中寻找宁静</string>
+
+    <string name="android_auto_update_dialog_title">发现新版本</string>
+
+    <string name="android_auto_update_notify_ticker">发现新版本,点击进行升级</string>
+    <string name="android_auto_update_notify_content">发现新版本,点击进行升级</string>
+
+    <string name="android_auto_update_dialog_btn_download">立即下载</string>
+    <string name="android_auto_update_dialog_btn_cancel">以后再说</string>
+
+    <string name="android_auto_update_toast_no_new_update">已经是最新版本</string>
+
+    <string name="android_auto_update_download_progress">正在下载:%1$d%%</string>
+
+    <string name="android_auto_update_dialog_checking">正在检查版本</string>
 
 </resources>

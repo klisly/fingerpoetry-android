@@ -10,7 +10,6 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/24.0.0/recyclerview-v7-24.0.0-sources.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/recyclerview-v7/24.0.0/7d5bcb1d9d740c56fa29a830e5430bae461c4c5b/recyclerview-v7-24.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

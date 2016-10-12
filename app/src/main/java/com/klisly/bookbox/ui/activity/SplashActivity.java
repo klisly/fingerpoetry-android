@@ -3,25 +3,19 @@ package com.klisly.bookbox.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.CommonHelper;
-import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
-import com.qq.e.ads.splash.SplashAD;
-import com.qq.e.ads.splash.SplashADListener;
 
 import butterknife.ButterKnife;
 
 
-public class SplashActivity extends Activity implements SplashADListener {
+public class SplashActivity extends Activity  {
 
-  @SuppressWarnings("unused")
-  private SplashAD splashAD;
   private ViewGroup container;
   public boolean canJump = false;
   @Override
@@ -31,39 +25,10 @@ public class SplashActivity extends Activity implements SplashADListener {
     setContentView(R.layout.activity_splash);
     ButterKnife.bind(this);
     container = (ViewGroup) this.findViewById(R.id.splash_container);
-    splashAD = new SplashAD(this, container, Constants.QQ_APP_ID, Constants.SplashPosID, this, 3000);
-    /**
-     * 开屏广告现已增加新的接口，可以由开发者在代码中设置开屏的超时时长
-     * SplashAD(Activity activity, ViewGroup container, String appId, String posId, SplashADListener adListener, int fetchDelay)
-     * fetchDelay参数表示开屏的超时时间，单位为ms，取值范围[3000, 5000]。设置为0时表示使用广点通的默认开屏超时配置
-     *
-     * splashAD = new SplashAD(this, container, Constants.APPID, Constants.SplashPosID, this, 3000);可以设置超时时长为3000ms
-     */
     CommonHelper.getTopics(this);
     CommonHelper.getUserTopics(this);
     CommonHelper.getSites(this);
     CommonHelper.getUserSites(this);
-  }
-
-  @Override
-  public void onADPresent() {
-    Log.i("SplashActivity", "SplashADPresent");
-  }
-
-  @Override
-  public void onADClicked() {
-    Log.i("SplashActivity", "SplashADClicked");
-  }
-
-  @Override
-  public void onADDismissed() {
-    Log.i("SplashActivity", "SplashADDismissed");
-    next();
-  }
-
-  @Override
-  public void onNoAD(int errorCode) {
-    Log.i("SplashActivity", "LoadSplashADFail, eCode=" + errorCode);
     BookBoxApplication.getInstance().getHandler().postDelayed(new Runnable() {
       @Override
       public void run() {
@@ -75,8 +40,7 @@ public class SplashActivity extends Activity implements SplashADListener {
           }
         });
       }
-    }, 2000);
-
+    }, 3000);
   }
 
   private void gotoMain() {

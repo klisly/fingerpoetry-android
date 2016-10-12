@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
@@ -26,6 +27,7 @@ import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.LoginData;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.User;
+import com.klisly.bookbox.model.Version;
 import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
@@ -41,6 +43,8 @@ import com.klisly.bookbox.ui.fragment.site.SiteFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.ToastHelper;
+import com.klisly.bookbox.widget.update.AppUtils;
+import com.klisly.bookbox.widget.update.UpdateDialog;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
@@ -80,6 +84,43 @@ public class HomeActivity extends SupportActivity
         initView();
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+        checkUpdate();
+    }
+
+    private void checkUpdate() {
+        long lastCheck = BookBoxApplication.getInstance()
+                .getPreferenceUtils().getValue(Constants.LAST_CHECK, 0l);
+        if(lastCheck + Constants.UPDATE_CHECK_DURATION < System.currentTimeMillis()){
+            Timber.i("start check update");
+            BookRetrofit.getInstance().getSysApi().fetch("android").subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<Version>>(HomeActivity.this, false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<Version> data) {
+                            Timber.i("get version info "+data+" cur version code:"+AppUtils.getVersionCode(BookBoxApplication.getInstance()));
+                            if(data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":","\n").replace(":","\n"), data.getData().getUrl());
+                                    }
+                                });
+                            }
+                        }
+                    });
+            BookBoxApplication.getInstance()
+                    .getPreferenceUtils().setValue(Constants.LAST_CHECK, System.currentTimeMillis());
+        }
     }
 
     @Override
