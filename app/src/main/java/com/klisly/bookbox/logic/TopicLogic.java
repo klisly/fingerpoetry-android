@@ -185,16 +185,16 @@ public class TopicLogic extends BaseLogic {
 
     private void getFakeChannel(List<Topic> topics, int type) {
         if (type == Constants.HOME) {
-            Topic topic = new Topic();
-            topic.setId(0 + "");
-            topic.setName("推荐");
-            topic.setImage("/topic/recommend");
-            topics.add(topic);
-            topic = new Topic();
-            topic.setId(1 + "");
-            topic.setName("热门");
-            topic.setImage("/topic/hot");
-            topics.add(topic);
+//            Topic topic = new Topic();
+//            topic.setId(0 + "");
+//            topic.setName("推荐");
+//            topic.setImage("/topic/recommend");
+//            topics.add(topic);
+//            topic = new Topic();
+//            topic.setId(1 + "");
+//            topic.setName("热门");
+//            topic.setImage("/topic/hot");
+//            topics.add(topic);
         } else if (type == Constants.SITE) {
             Topic topic = new Topic();
             topic.setId(0 + "");

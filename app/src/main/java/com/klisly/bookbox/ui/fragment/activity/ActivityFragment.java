@@ -23,7 +23,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
@@ -55,17 +55,14 @@ public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenu
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    protected FragmentAnimator onCreateFragmentAnimation() {
+        return new DefaultHorizontalAnimator();
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-        //         return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-        return new DefaultNoAnimator();
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private void initView() {

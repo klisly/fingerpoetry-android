@@ -25,8 +25,6 @@ import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import timber.log.Timber;
 
 public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
@@ -60,14 +58,6 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         super.onDestroyView();
         SiteLogic.getInstance().unRegisterListener(this);
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-//         return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-        return new DefaultNoAnimator();
     }
 
     private void initView() {

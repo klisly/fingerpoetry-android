@@ -77,17 +77,6 @@
     "followerCount": 0
   },
   {
-    "_id": "57a8b542b6a37f4721200c43",
-    "name": "推荐",
-    "__v": 0,
-    "updateAt": 1470674207147,
-    "createAt": 1470674207147,
-    "image": "/images/channelbrand.jpg",
-    "isBlock": false,
-    "articleNum": 0,
-    "followerCount": 0
-  },
-  {
     "_id": "57a8b51ea955bc6d20d28e5d",
     "name": "热门",
     "__v": 0,

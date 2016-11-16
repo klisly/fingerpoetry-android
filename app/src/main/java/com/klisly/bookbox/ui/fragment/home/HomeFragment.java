@@ -25,7 +25,6 @@ import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import timber.log.Timber;
 
 public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
@@ -62,14 +61,6 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         super.onDestroyView();
     }
 
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-        return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-//        return new DefaultNoAnimator();
-    }
-
     private void initView() {
         mToolbar.setTitle(R.string.homepage);
         initToolbarNav(mToolbar);
@@ -93,6 +84,9 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
 
             @Override
             public void onPageSelected(int position) {
+                if(getChildFragmentManager().getFragments().size() <= position){
+                    return;
+                }
                 PagerChildFragment<Topic> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
                 Topic topic = fragment.getmData();
                 if (!topic.getId().equals(TopicLogic.getInstance().getOpenFocuses().get(position).getId())) {

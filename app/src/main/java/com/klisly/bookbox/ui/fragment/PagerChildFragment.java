@@ -3,22 +3,22 @@ package com.klisly.bookbox.ui.fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.PagerContentAdapter;
+import com.klisly.bookbox.adapter.ArticleViewHolder;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
-import com.klisly.bookbox.listener.OnDataChangeListener;
-import com.klisly.bookbox.listener.OnItemClickListener;
-import com.klisly.bookbox.logic.ArticleLogic;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.Site;
@@ -27,6 +27,7 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
+import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
 
@@ -36,32 +37,32 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
+public class PagerChildFragment<T extends BaseModel> extends BaseFragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     public static final String ARG_FROM = "arg_from";
     public static final String ARG_CHANNEL = "arg_channel";
     public static final String ARG_NAME = "arg_name";
 
-    @Bind(R.id.recy)
-    RecyclerView mRecy;
-    @Bind(R.id.refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
+    @Bind(R.id.recyclerView)
+    EasyRecyclerView mRecy;
     @Bind(R.id.tvTip)
     TextView mTvTip;
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
     private int page = 0;
-    private int pageSize = 20;
+    private int pageSize = 15;
     private int mFrom;
     private T mData;
-    private PagerContentAdapter mAdapter;
+//    private PagerContentAdapter mAdapter;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private String name;
     private boolean needToast = false;
+    private RecyclerArrayAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
 
     @Override
     protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-        return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-//        return new DefaultNoAnimator();
+        return new DefaultHorizontalAnimator();
     }
 
     public T getmData() {
@@ -116,48 +114,55 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
 
     private void initView(View view) {
 
-        mAdapter = new PagerContentAdapter(_mActivity, CommonHelper.getItemType(mData));
-        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
-        mRecy.setLayoutManager(manager);
-        mRecy.setAdapter(mAdapter);
-        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.primary),
-                getResources().getColor(R.color.primaryDark),
-                getResources().getColor(R.color.primaryLight));
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(),0.8f),  0, 0);
+        itemDecoration.setDrawLastItem(false);
+        mRecy.addItemDecoration(itemDecoration);
+
+        mRecy.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(getActivity()) {
             @Override
-            public void onRefresh() {
-                needToast = true;
-                loadNew();
+            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                return new ArticleViewHolder(parent);
             }
         });
-
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+        adapter.setMore(R.layout.view_more, this);
+        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
             @Override
-            public void onItemClick(int position, View view) {
-                Timber.i("click position:" + position);
-                Article article = ArticleLogic.getInstance().getArticles(name).get(position);
-                if (article != null && !Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
-                    queryData(article);
-                } else {
-                    mRefreshLayout.setRefreshing(true);
-                    loadNew();
-                }
+            public void onNoMoreShow() {
+                adapter.resumeMore();
+            }
 
+            @Override
+            public void onNoMoreClick() {
+                adapter.resumeMore();
             }
         });
-
-        mAdapter.setDatas(ArticleLogic.getInstance().getArticles(name));
-        ArticleLogic.getInstance().registerListener(name, new OnDataChangeListener() {
+        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
-            public void onDataChange() {
-                mAdapter.setDatas(ArticleLogic.getInstance().getArticles(name));
-                mAdapter.notifyDataSetChanged();
+            public boolean onItemLongClick(int position) {
+                adapter.remove(position);
+                return true;
             }
         });
-        if (mAdapter.getItemCount() == 0) {
-            mProgress.setVisibility(View.VISIBLE);
-        }
-        loadNew();
+        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                queryData((Article) adapter.getItem(position));
+            }
+        });
+        adapter.setError(R.layout.view_error, new RecyclerArrayAdapter.OnErrorListener() {
+            @Override
+            public void onErrorShow() {
+                adapter.resumeMore();
+            }
+
+            @Override
+            public void onErrorClick() {
+                adapter.resumeMore();
+            }
+        });
+        mRecy.setRefreshListener(this);
+        onRefresh();
     }
 
     private void queryData(Article article) {
@@ -220,9 +225,12 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
                         }
 
                         Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
-                        ArticleLogic.getInstance().updateArticles(name, res.getData());
-                        if (mRecy != null) {
-                            mRecy.scrollToPosition(0);
+                        if(queryType == 1){
+                            adapter.clear();
+                            adapter.addAll(res.getData());
+                            page=1;
+                        } else {
+                           adapter.addAll(res.getData());
                         }
                     }
                 });
@@ -237,16 +245,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
             public void run() {
                 if (mProgress != null) {
                     mProgress.setVisibility(View.INVISIBLE);
-                }
-                if (mRefreshLayout != null) {
-                    mRefreshLayout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mRefreshLayout != null) {
-                                mRefreshLayout.setRefreshing(false);
-                            }
-                        }
-                    });
                 }
             }
         });
@@ -272,5 +270,16 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment {
         }
         return ACTION_HOT;
     }
+    int queryType = -1; // 1 refresh 2 loadmore
+    @Override
+    public void onRefresh() {
+        queryType = 1;
+        loadNew();
+    }
 
+    @Override
+    public void onLoadMore() {
+        queryType = 2;
+        loadNew();
+    }
 }

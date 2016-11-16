@@ -33,7 +33,6 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -74,14 +73,6 @@ public class ChooseTopicFragment extends BaseBackFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-        return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-//        return new DefaultNoAnimator();
     }
 
     @Override

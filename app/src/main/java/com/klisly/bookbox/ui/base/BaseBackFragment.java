@@ -5,6 +5,9 @@ import android.view.View;
 
 import com.klisly.bookbox.R;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
 public class BaseBackFragment extends BaseFragment {
 
     protected void initToolbarNav(Toolbar toolbar) {
@@ -19,13 +22,18 @@ public class BaseBackFragment extends BaseFragment {
                 _mActivity.onBackPressed();
             }
         });
-        if(initMenu) {
+        if (initMenu) {
             initToolbarMenu(toolbar);
         }
     }
 
+    @Override
+    protected FragmentAnimator onCreateFragmentAnimation() {
+        return new DefaultHorizontalAnimator();
+    }
+
     protected void initToolbarNav(Toolbar toolbar, boolean isBack, boolean initMenu) {
-        if(isBack) {
+        if (isBack) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -34,7 +42,7 @@ public class BaseBackFragment extends BaseFragment {
                 _mActivity.onBackPressed();
             }
         });
-        if(initMenu) {
+        if (initMenu) {
             initToolbarMenu(toolbar);
         }
     }

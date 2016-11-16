@@ -24,7 +24,7 @@
             android:checkable="true"
             android:icon="@drawable/left_mag"
             android:title="@string/magzine"
-            android:visible="false" />
+            android:visible="true" />
         <item
             android:id="@+id/menu_mine"
             android:checkable="true"

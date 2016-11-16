@@ -4,20 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/refresh_layout"
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:AniBackColor="@color/primary">
+        widget:scrollbarStyle="insideOverlay"
+        widget:layout_progress="@layout/view_progress"
+        widget:layout_empty="@layout/view_empty"
+        />
 
-        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/recy"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/recy_padding_horizontal"
-            android:paddingRight="@dimen/recy_padding_horizontal" />
-    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/tvTip"
@@ -39,4 +34,13 @@
         android:layout_gravity="center"
         android:layout_width="@dimen/progree_size"
         android:layout_height="@dimen/progree_size"/>
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="right|bottom"-->
+        <!--android:layout_marginRight="18dp"-->
+        <!--android:layout_marginBottom="18dp"-->
+        <!--android:clickable="false"-->
+        <!--android:src="@drawable/ic_refresh"-->
+        <!--/>-->
 </FrameLayout>

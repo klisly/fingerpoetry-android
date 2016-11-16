@@ -29,6 +29,7 @@ public class SplashActivity extends Activity  {
     CommonHelper.getUserTopics(this);
     CommonHelper.getSites(this);
     CommonHelper.getUserSites(this);
+
     BookBoxApplication.getInstance().getHandler().postDelayed(new Runnable() {
       @Override
       public void run() {

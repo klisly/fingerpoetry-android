@@ -23,13 +23,23 @@
     </style>
 
     <style name="SubTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@color/accentLight</item>
         <item name="tabIndicatorColor">#fff5f5f5</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="tabTextAppearance">@style/TabLayout_TextAppearance_White</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="TabLayout_TextAppearance_White">
+        <item name="android:textColor">#e8e8e8</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:lines">1</item>
     </style>
 
     <style name="Toolbar_TextAppearance_White">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:ellipsize">middle</item>
         <item name="android:lines">2</item>
     </style>

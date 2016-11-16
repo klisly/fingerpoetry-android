@@ -272,7 +272,7 @@ public class HomeActivity extends SupportActivity
                         popTo(HomeFragment.class, false, new Runnable() {
                             @Override
                             public void run() {
-                                start(MagFragment.newInstance());
+                                start(new MagFragment());
                             }
                         });
                     } else {

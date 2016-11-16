@@ -3,6 +3,7 @@ package com.klisly.bookbox.api;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.ArticleData;
 import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.model.Magazine;
 import com.klisly.bookbox.model.User2Article;
 
 import java.util.List;
@@ -18,6 +19,14 @@ import retrofit2.http.QueryMap;
 import rx.Observable;
 
 public interface ArticleApi {
+
+    @GET("articles/magzines")
+    @Headers({
+            "Accept: application/json",
+    })
+    Observable<ApiResult<List<Magazine>>> listMagazine(@QueryMap Map<String, String> conditions);
+
+
     @GET("articles/")
     @Headers({
             "Accept: application/json",
@@ -30,11 +39,18 @@ public interface ArticleApi {
     })
     Observable<ApiResult<ArticleData>> fetch(@Path("id") String id, @Query("uid") String uid);
 
+    @GET("articles/magzines")
+    @Headers({
+            "Accept: application/json",
+    })
+    Observable<ApiResult<List<Article>>> mags(@QueryMap Map<String, String> conditions);
+
     @GET("users/{id}/reads")
     @Headers({
             "Accept: application/json",
     })
     Observable<ApiResult<User2Article>> reads(@Path("id") String id, @Query("uid") String uid);
+
 
     @POST("articles/{id}/heart")
     @Headers({

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/toolbar" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:widget="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <com.jude.easyrecyclerview.EasyRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            widget:layout_empty="@layout/view_empty"
+            widget:layout_progress="@layout/view_progress"
+            widget:scrollbarStyle="insideOverlay" />
+
+
+        <TextView
+            android:id="@+id/tvTip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tip_height"
+            android:layout_gravity="top|center_horizontal|start"
+            android:layout_weight="1"
+            android:background="#48aba1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/white"
+            android:visibility="invisible" />
+
+        <com.material.widget.CircularProgress
+            android:id="@+id/cprogress"
+            android:layout_width="@dimen/progree_size"
+            android:layout_height="@dimen/progree_size"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            widget:circular_progress_size="Normal" />
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="right|bottom"-->
+        <!--android:layout_marginRight="18dp"-->
+        <!--android:layout_marginBottom="18dp"-->
+        <!--android:clickable="false"-->
+        <!--android:src="@drawable/ic_refresh"-->
+        <!--/>-->
+    </FrameLayout>
+
+</LinearLayout>
+
