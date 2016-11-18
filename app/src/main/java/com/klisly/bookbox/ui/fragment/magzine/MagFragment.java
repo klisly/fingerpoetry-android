@@ -57,12 +57,12 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     private int page = 0;
-    private int pageSize = 3;
+    private int pageSize = 6;
     //    private PagerContentAdapter mAdapter;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private boolean needToast = false;
     private RecyclerArrayAdapter adapter;
-
+    private StickyHeaderAdapter headerAdapter;
     public static MagFragment newInstance() {
         return new MagFragment();
     }
@@ -96,7 +96,7 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
 
     private void initView(View view) {
         mToolbar.setTitle(R.string.magzine);
-        initToolbarNav(mToolbar, true);
+        initToolbarNav(mToolbar, false);
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
         DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
@@ -146,7 +146,7 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
             }
         });
         // StickyHeader
-        StickyHeaderDecoration decoration = new StickyHeaderDecoration(new StickyHeaderAdapter(getContext()));
+        StickyHeaderDecoration decoration = new StickyHeaderDecoration(headerAdapter = new StickyHeaderAdapter(getContext()));
         decoration.setIncludeHeader(false);
         mRecy.addItemDecoration(decoration);
 
@@ -199,18 +199,19 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
                             });
                         }
 
-                        Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
                         if (queryType == 1) {
                             adapter.clear();
+                            headerAdapter.getHeaders().clear();
                             List list = new ArrayList();
                             for (Magazine magazine : res.getData()) {
+                                headerAdapter.getHeaders().add(magazine.getNo());
                                 list.addAll(magazine.getArticles());
                             }
                             adapter.addAll(list);
-                            page = 1;
                         } else {
                             List list = new ArrayList();
                             for (Magazine magazine : res.getData()) {
+                                headerAdapter.getHeaders().add(magazine.getNo());
                                 list.addAll(magazine.getArticles());
                             }
                             adapter.addAll(list);
@@ -238,6 +239,7 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
     @Override
     public void onRefresh() {
         queryType = 1;
+        page = 0;
         loadNew();
     }
 

@@ -196,18 +196,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
-                        onFinish();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
-                        onFinish();
                     }
 
                     @Override
                     public void onNext(ApiResult<List<Article>> res) {
-                        onFinish();
                         if (needToast) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
@@ -228,26 +225,11 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                         if(queryType == 1){
                             adapter.clear();
                             adapter.addAll(res.getData());
-                            page=1;
                         } else {
                            adapter.addAll(res.getData());
                         }
                     }
                 });
-    }
-
-    private void onFinish() {
-        if (getActivity() == null) {
-            return;
-        }
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mProgress != null) {
-                    mProgress.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
     }
 
     private static int ACTION_HOT = 1;

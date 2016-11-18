@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.decoration.StickyHeaderDecoration;
 import com.klisly.bookbox.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import timber.log.Timber;
+
 /**
  * 当前类注释：悬浮headerAdapter
  * PackageName：com.jude.dome.sticky
@@ -21,6 +26,15 @@ import com.klisly.bookbox.R;
 public class StickyHeaderAdapter implements StickyHeaderDecoration.IStickyHeaderAdapter<StickyHeaderAdapter.HeaderHolder> {
 
     private LayoutInflater mInflater;
+    private List<String> headers = new ArrayList<>();
+    private int groupSize = 10;
+    public List<String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(List<String> headers) {
+        this.headers = headers;
+    }
 
     public StickyHeaderAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -28,7 +42,7 @@ public class StickyHeaderAdapter implements StickyHeaderDecoration.IStickyHeader
 
     @Override
     public long getHeaderId(int position) {
-        return position / 3;
+        return position / groupSize;
     }
 
     @Override
@@ -39,7 +53,13 @@ public class StickyHeaderAdapter implements StickyHeaderDecoration.IStickyHeader
 
     @Override
     public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
-        viewholder.header.setText("第"+getHeaderId(position)+"组");
+        Timber.i("poion:"+position );
+        position = (position + 1)/ groupSize;
+        if(headers.size() > position){
+            viewholder.header.setText(headers.get(position));
+        } else {
+            viewholder.header.setText("七点一刻");
+        }
     }
 
     class HeaderHolder extends RecyclerView.ViewHolder {

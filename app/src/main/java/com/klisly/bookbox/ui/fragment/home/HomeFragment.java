@@ -115,6 +115,12 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Timber.i(HomeFragment.class.getSimpleName()+"  onResume");
+    }
+
     /**
      * 类似于 Activity的 onNewIntent()
      */

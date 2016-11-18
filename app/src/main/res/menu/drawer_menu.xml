@@ -13,17 +13,18 @@
             android:checkable="true"
             android:icon="@drawable/left_site"
             android:title="@string/site" />
-        <item
-            android:id="@+id/menu_activity"
-            android:checkable="true"
-            android:icon="@drawable/left_topic"
-            android:title="@string/topic"
-            android:visible="false" />
+
         <item
             android:id="@+id/menu_magzine"
             android:checkable="true"
             android:icon="@drawable/left_mag"
             android:title="@string/magzine"
+            android:visible="true" />
+        <item
+            android:id="@+id/menu_novel"
+            android:checkable="true"
+            android:icon="@drawable/left_topic"
+            android:title="@string/novel"
             android:visible="true" />
         <item
             android:id="@+id/menu_mine"

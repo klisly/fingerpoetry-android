@@ -66,7 +66,7 @@ public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenu
     }
 
     private void initView() {
-        mToolbar.setTitle(R.string.topic);
+        mToolbar.setTitle(R.string.novel);
         initToolbarNav(mToolbar);
         mToolbar.setOnMenuItemClickListener(this);
         if(topics != null){

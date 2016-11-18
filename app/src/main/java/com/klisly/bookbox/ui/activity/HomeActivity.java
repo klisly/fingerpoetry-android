@@ -3,7 +3,6 @@ package com.klisly.bookbox.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -35,10 +34,10 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
-import com.klisly.bookbox.ui.fragment.activity.ActivityFragment;
 import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
 import com.klisly.bookbox.ui.fragment.home.HomeFragment;
 import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
+import com.klisly.bookbox.ui.fragment.novel.site.NovelFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
@@ -82,8 +81,6 @@ public class HomeActivity extends SupportActivity
             start(HomeFragment.newInstance());
         }
         initView();
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         checkUpdate();
     }
 
@@ -240,13 +237,13 @@ public class HomeActivity extends SupportActivity
                     // .getSimpleName());
                     //                    fragment.putNewBundle(newBundle);
                     start(fragment, SupportFragment.SINGLETASK);
-                } else if (id == R.id.menu_activity) {
-                    ActivityFragment fragment = findFragment(ActivityFragment.class);
+                } else if (id == R.id.menu_novel) {
+                    NovelFragment fragment = findFragment(NovelFragment.class);
                     if (fragment == null) {
                         popTo(HomeFragment.class, false, new Runnable() {
                             @Override
                             public void run() {
-                                start(ActivityFragment.newInstance());
+                                start(NovelFragment.newInstance());
                             }
                         });
                     } else {

@@ -46,6 +46,7 @@ public class OuterFragment extends BaseBackFragment {
         View view = inflater.inflate(R.layout.fragment_outer_article, container, false);
         ButterKnife.bind(this, view);
         initView(view);
+
         return view;
     }
 
