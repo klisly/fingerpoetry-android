@@ -37,7 +37,7 @@ import com.klisly.bookbox.ui.fragment.account.LoginFragment;
 import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
 import com.klisly.bookbox.ui.fragment.home.HomeFragment;
 import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
-import com.klisly.bookbox.ui.fragment.novel.site.NovelFragment;
+import com.klisly.bookbox.ui.fragment.novel.NovelFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
 import com.klisly.bookbox.ui.fragment.user.MineFragment;
 import com.klisly.bookbox.utils.ActivityUtil;

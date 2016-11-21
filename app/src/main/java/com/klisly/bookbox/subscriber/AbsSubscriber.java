@@ -79,12 +79,13 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
             HttpException httpException = (HttpException) e;
             Timber.i("url:"+httpException);
             ex = new ApiException(e, httpException.code());
+            Timber.e(ex, "");
             try {
                 String str = httpException.response().errorBody().string();
                 JSONObject jsonObject = new JSONObject(str);
                 int status = jsonObject.getInt("status");
                 String msg = jsonObject.getString("msg");
-                ex.setMessage(msg);
+
                 ex.setCode(status);
             } catch (IOException e1) {
                 e1.printStackTrace();

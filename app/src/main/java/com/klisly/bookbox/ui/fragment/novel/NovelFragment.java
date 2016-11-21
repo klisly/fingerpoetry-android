@@ -1,7 +1,11 @@
-package com.klisly.bookbox.ui.fragment.novel.site;
+package com.klisly.bookbox.ui.fragment.novel;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
@@ -13,19 +17,17 @@ import android.view.ViewGroup;
 
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.PagerFragmentAdapter;
-import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.SiteLogic;
-import com.klisly.bookbox.model.Site;
+import com.klisly.bookbox.model.BaseModel;
+import com.klisly.bookbox.model.Chapter;
+import com.klisly.bookbox.model.Novel;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
-import com.klisly.bookbox.ui.fragment.PagerChildFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
     @Bind(R.id.tab_layout)
@@ -61,20 +63,13 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
     }
 
     private void initView() {
-        mToolbar.setTitle(R.string.site);
-        initToolbarNav(mToolbar);
+        mToolbar.setTitle(R.string.update);
+        initToolbarNav(mToolbar, true);
         mToolbar.setOnMenuItemClickListener(this);
-        updateItems();
-        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager(),
-                SiteLogic.getInstance().getOpenFocuses());
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
-        SiteLogic.getInstance().registerListener(this, new OnDataChangeListener() {
-            @Override
-            public void onDataChange() {
-                adapter.notifyDataSetChanged();
-                updateItems();
-            }
-        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -83,14 +78,6 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
 
             @Override
             public void onPageSelected(int position) {
-                PagerChildFragment<Site> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
-                Site site = fragment.getmData();
-                if (!site.getId().equals(SiteLogic.getInstance().getOpenFocuses().get(position).getId())) {
-                    Timber.i("new topic in position:" + position + " new:"
-                            + SiteLogic.getInstance().getOpenFocuses().get(position).getName()
-                            + " old:" + site.getName());
-                    fragment.setmData(SiteLogic.getInstance().getOpenFocuses().get(position));
-                }
 
             }
 
@@ -100,17 +87,6 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
             }
         });
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    private void updateItems() {
-        if(SiteLogic.getInstance().getOpenFocuses() != null){
-            mTabLayout.removeAllTabs();
-            for(Site site : SiteLogic.getInstance().getOpenFocuses()){
-                if(mTabLayout != null) {
-                    mTabLayout.addTab(mTabLayout.newTab().setText(site.getName()));
-                }
-            }
-        }
     }
 
     /**
@@ -126,14 +102,11 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
         switch (item.getItemId()) {
             case R.id.action_more:
                 final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
-                popupMenu.inflate(R.menu.menu_site_pop);
+                popupMenu.inflate(R.menu.menu_novel_pop);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-//                            case R.id.action_find_site:
-//                                ToastHelper.showShortTip(R.string.find_site);
-//                                break;
                             case R.id.action_manage_site:
                                 if(!AccountLogic.getInstance().isLogin()){
                                     BusProvider.getInstance().post(new ToLoginEvent());
@@ -161,4 +134,37 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
         }
         return true;
     }
+
+
+    public class PagerFragmentAdapter<T extends BaseModel> extends FragmentPagerAdapter {
+        public PagerFragmentAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+           if(position == 0){
+               return new UpdateFragment<Chapter>();
+           } else {
+               return new SubscribFragment<Novel>();
+           }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String name = "";
+            if(position == 0){
+                name = "我的订阅";
+            } else  if(position == 1){
+                name = "今日更新";
+            }
+            return name;
+        }
+    }
+
 }

@@ -106,5 +106,8 @@
     <string name="android_auto_update_download_progress">正在下载:%1$d%%</string>
 
     <string name="android_auto_update_dialog_checking">正在检查版本</string>
+    <string name="update">小说更新</string>
+    <string name="manage_novel">订阅管理</string>
+    <string name="set_home">设为首屏</string>
 
 </resources>

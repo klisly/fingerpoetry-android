@@ -1,4 +1,4 @@
-package com.klisly.bookbox.ui.fragment.novel.site;
+package com.klisly.bookbox.ui.fragment.novel;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
