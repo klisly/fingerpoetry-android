@@ -93,7 +93,7 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_pager, container, false);
+        final View view = inflater.inflate(R.layout.fragment_subscribe, container, false);
         ButterKnife.bind(this, view);
         if(CommonHelper.getItemType(mData) == Constants.ITEM_TYPE_JOKE){
             pageSize = 30;

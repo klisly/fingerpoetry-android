@@ -159,9 +159,9 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
         public CharSequence getPageTitle(int position) {
             String name = "";
             if(position == 0){
-                name = "我的订阅";
+                name = "最近更新";
             } else  if(position == 1){
-                name = "今日更新";
+                name = "小说订阅";
             }
             return name;
         }

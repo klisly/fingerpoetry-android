@@ -205,6 +205,9 @@ public class HomeActivity extends SupportActivity
                 ToastHelper.showShortTip(R.string.exit_tip);
                 firstTime = System.currentTimeMillis();
             } else {
+                if(getTopFragment() instanceof BaseMainFragment){
+                    mNavigationView.setCheckedItem(R.id.menu_home);
+                }
                 super.onBackPressed();
             }
         }
