@@ -11,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 3
-        versionName "1.0.2"
+        versionName "1.2"
 //        jackOptions { // 支持lambda式
 //            enabled true
 //        }
@@ -26,7 +26,14 @@ android {
         abortOnError false
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
-
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'fingerpoetry'
+            keyPassword '301415'
+            storeFile file('/Users/wizardholy/project/micandy.keystore')
+            storePassword '301415'
+        }
+    }
     buildTypes {
         release {
 //            signingConfig signingConfigs.release
