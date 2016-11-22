@@ -22,9 +22,19 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+
+    buildTypes {
+        release {
+//            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFile 'proguard-rules.pro'
+        }
+    }
+
 }
 
 dependencies {
@@ -48,9 +58,12 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
     // image
     compile 'com.facebook.fresco:fresco:0.10.0'
-//    compile 'com.makeramen:roundedimageview:2.2.1'
+    //    compile 'com.makeramen:roundedimageview:2.2.1'
+
     // material 库
-//    compile 'net.steamcrafted:materialiconlib:1.0.3'
+
+    //    compile 'net.steamcrafted:materialiconlib:1.0.3'
+
     // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.google.code.gson:gson:2.2.4'
@@ -82,5 +95,6 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.6.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.6.jar')
     compile 'com.jude:easyrecyclerview:4.2.6'
-//    compile 'org.jsoup:jsoup:1.10.1'
+    //    compile 'org.jsoup:jsoup:1.10.1'
+    compile files('libs/GDTUnionSDK.4.9.540.min.jar')
 }

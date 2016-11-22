@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Html;
+import android.widget.Toast;
 
 import com.klisly.bookbox.R;
 
@@ -19,6 +20,7 @@ public class UpdateDialog {
             builder.setMessage(Html.fromHtml(content))
                     .setPositiveButton(R.string.android_auto_update_dialog_btn_download, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            Toast.makeText(context, "正在后台为您下载新版本", Toast.LENGTH_SHORT).show();
                             goToDownload(context, downloadUrl);
                         }
                     })

@@ -28,6 +28,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!--<uses-feature android:name="android.hardware.camera" />-->
     <!--<uses-feature android:name="android.hardware.camera.autofocus" />-->
@@ -83,6 +84,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <service android:name="com.qq.e.comm.DownloadService" android:exported="false" />
+        <activity android:name="com.qq.e.ads.ADActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
         <!--微信分享回调 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -95,6 +99,12 @@
             android:name=".widget.update.DownloadService"
             android:exported="true" />
 
+        <receiver android:name=".alarm.MagzineAlarmReceiver">
+            <intent-filter>
+                <action android:name="com.klisly.bookbox.alarm.clock"/>
+            </intent-filter>
+        </receiver>
+
         <!-- 配置APP ID -->
         <meta-data
             android:name="BUGLY_APPID"
@@ -102,7 +112,7 @@
         <!-- 配置APP渠道号 -->
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
-            android:value="BUGLY" />
+            android:value="local" />
         <!-- 配置Bugly调试模式（true或者false）-->
         <meta-data
             android:name="BUGLY_ENABLE_DEBUG"

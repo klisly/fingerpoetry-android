@@ -286,7 +286,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="8070e031396f27a6890172383cf02f775df6313a">
+        sha1="b8f92c7b4755be6bed0fcaa4227d96182dc70f94">
         <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_656fc0f5052dac4e0c56b7038b62318b9b3d80af/classes.dex" />
     </item>
     <item
@@ -390,6 +390,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/android-query-full.0.26.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="4055bed8ed6f6aa573fa3e7d979c66101c48e182">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/android-query-full.0.26.7_377af48697a4e2f9a648ca202a560a73c696d881/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.2.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -453,6 +462,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/GDTUnionSDK.4.9.540.min.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="aeac2a4db832dc33e409e541d7d876d34c884199">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/GDTUnionSDK.4.9.540.min_f1f15ece7bbed4ab5a32d35ab34a246bc3f941b0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.jakewharton.hugo/hugo-annotations/1.2.1/b01150795c5cdca1eb7e501bf00f105ff0e31501/hugo-annotations-1.2.1.jar"
         jumboMode="true"
         optimize="true"
@@ -484,7 +502,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="9ec2e49495ff8704c3d24a1f26ccece287d814c2">
+        sha1="777cb1c1bcb88e22b4053d1f61f7b194dacb3d57">
         <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_da360da7179ef7385d3cb9e0c193043537e73d84/classes.dex" />
     </item>
     <item

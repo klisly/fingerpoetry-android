@@ -41,7 +41,7 @@ public class ArticleViewHolder extends BaseViewHolder<Article> {
 
     @Override
     public void setData(final Article article){
-        if (!Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
+        if (article != null && !Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
             articlrLayout.setVisibility(View.VISIBLE);
             mTvLoad.setVisibility(View.GONE);
             tvTitle.setText(article.getTitle());

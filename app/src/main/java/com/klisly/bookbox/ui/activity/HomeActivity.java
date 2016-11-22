@@ -80,6 +80,37 @@ public class HomeActivity extends SupportActivity
         if (savedInstanceState == null) {
             start(HomeFragment.newInstance());
         }
+        if(getIntent().getIntExtra("target", 0) == 1){
+            mNavigationView.setCheckedItem(R.id.menu_magzine);
+            MagFragment fragment = findFragment(MagFragment.class);
+            if (fragment == null) {
+                popTo(HomeFragment.class, false, new Runnable() {
+                    @Override
+                    public void run() {
+                        start(new MagFragment());
+                    }
+                });
+            } else {
+                // 如果已经在栈内,则以SingleTask模式start
+                //                        start(fragment, SupportFragment.SINGLETASK);
+                start(fragment, SupportFragment.SINGLETASK);
+            }
+        } else  if(getIntent().getIntExtra("target", 0) == 2){
+            mNavigationView.setCheckedItem(R.id.menu_novel);
+            NovelFragment fragment = findFragment(NovelFragment.class);
+            if (fragment == null) {
+                popTo(HomeFragment.class, false, new Runnable() {
+                    @Override
+                    public void run() {
+                        start(new NovelFragment());
+                    }
+                });
+            } else {
+                // 如果已经在栈内,则以SingleTask模式start
+                //                        start(fragment, SupportFragment.SINGLETASK);
+                start(fragment, SupportFragment.SINGLETASK);
+            }
+        }
         initView();
         checkUpdate();
     }

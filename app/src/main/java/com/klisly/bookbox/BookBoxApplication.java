@@ -30,8 +30,6 @@ public class BookBoxApplication extends Application {
         preferenceUtils = new SharedPreferenceUtils(this);
         handler = new Handler();
         CrashHandler.getInstance().init(this.getApplicationContext());
-//        TuSdk.init(this.getApplicationContext(), "492658840c3a4925-00-h5ptp1");
-//        TuSdk.enableDebugLog(false);
         CrashReport.initCrashReport(getApplicationContext(), "900028744", false);
     }
 
