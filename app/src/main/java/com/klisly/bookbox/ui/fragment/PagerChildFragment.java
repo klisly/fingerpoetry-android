@@ -140,7 +140,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(int position) {
-                adapter.remove(position);
                 return true;
             }
         });

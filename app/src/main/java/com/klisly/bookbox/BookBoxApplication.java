@@ -3,6 +3,7 @@ package com.klisly.bookbox;
 import android.app.Application;
 import android.os.Handler;
 
+import com.antfortune.freeline.FreelineCore;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.klisly.bookbox.utils.CrashHandler;
@@ -24,6 +25,7 @@ public class BookBoxApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appContext = this;
+        FreelineCore.init(this);
         Timber.plant(new Timber.DebugTree());
         ToastHelper.init(this);
         Dexter.initialize(this);

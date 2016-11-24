@@ -14,14 +14,23 @@
         android:background="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-        app:titleTextAppearance="@style/Toolbar_TextAppearance_White" />
+        app:titleTextAppearance="@style/Toolbar_TextAppearance_White">
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_search"
+            android:visibility="gone" />
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         style="@style/SubTabLayout"
         android:layout_width="match_parent"
-        android:background="@color/accentLight"
         android:layout_height="@dimen/tab_height"
+        android:background="@color/accentLight"
         app:tabMode="scrollable" />
 
     <android.support.v4.view.ViewPager

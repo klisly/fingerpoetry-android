@@ -32,8 +32,7 @@
                     android:imeActionLabel="@string/phone"
                     android:imeOptions="actionUnspecified"
                     android:inputType="phone"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    android:maxLines="1"/>
 
             </android.support.design.widget.TextInputLayout>
 

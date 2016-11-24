@@ -66,6 +66,13 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
         mToolbar.setTitle(R.string.update);
         initToolbarNav(mToolbar, true);
         mToolbar.setOnMenuItemClickListener(this);
+        mToolbar.findViewById(R.id.search).setVisibility(View.VISIBLE);
+        mToolbar.findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(SearchFragment.newInstance());
+            }
+        });
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager());

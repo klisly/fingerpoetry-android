@@ -2,24 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:widget="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:queryBackground="@color/accent"
-        android:queryHint="请输入小说的名字" />
+    android:layout_height="match_parent"
+    >
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/searchView"
         widget:scrollbarStyle="insideOverlay"
         widget:layout_progress="@layout/view_progress"
         widget:layout_empty="@layout/view_empty"
         />
-
 
     <TextView
         android:id="@+id/tvTip"

@@ -136,7 +136,6 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(int position) {
-                adapter.remove(position);
                 return true;
             }
         });

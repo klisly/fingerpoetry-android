@@ -124,7 +124,6 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(int position) {
-                adapter.remove(position);
                 return true;
             }
         });

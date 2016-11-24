@@ -25,7 +25,7 @@
             android:checkable="true"
             android:icon="@drawable/left_topic"
             android:title="@string/novel"
-            android:visible="false" />
+            android:visible="true" />
         <item
             android:id="@+id/menu_mine"
             android:checkable="true"
@@ -36,10 +36,10 @@
         <item
             android:id="@+id/menu_settings"
             android:title="@string/setting"
-            android:visible="false" />
+            android:visible="true" />
         <item
             android:id="@+id/menu_about"
             android:title="@string/about"
-            android:visible="false" />
+            android:visible="true" />
     </group>
 </menu>

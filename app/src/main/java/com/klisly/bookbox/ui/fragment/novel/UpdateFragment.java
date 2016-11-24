@@ -86,21 +86,9 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
                 return new ChapterViewHolder(parent);
             }
         });
-//        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
-//            @Override
-//            public void onNoMoreShow() {
-//                adapter.resumeMore();
-//            }
-//
-//            @Override
-//            public void onNoMoreClick() {
-//                adapter.resumeMore();
-//            }
-//        });
         adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(int position) {
-                adapter.remove(position);
                 return true;
             }
         });
