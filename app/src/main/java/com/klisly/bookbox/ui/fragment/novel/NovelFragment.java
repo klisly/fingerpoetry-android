@@ -21,7 +21,7 @@ import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.SiteLogic;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.Chapter;
-import com.klisly.bookbox.model.Novel;
+import com.klisly.bookbox.model.User2Novel;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.utils.ToastHelper;
@@ -153,7 +153,7 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
            if(position == 0){
                return new UpdateFragment<Chapter>();
            } else {
-               return new SubscribFragment<Novel>();
+               return new SubscribFragment<User2Novel>();
            }
         }
 

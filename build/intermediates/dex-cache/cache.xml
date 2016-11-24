@@ -2,526 +2,544 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.0.0_5d446f315313f23dce81bcf295582dc9c80c1822.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/library-2.4.0_66f18e0603300d6bfc841337754867aa40e7413a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/okio-1.6.0_8c859b22d6c7521f81fce4392cb8867caa947416.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.jakewharton.hugo/hugo-annotations/1.2.1/b01150795c5cdca1eb7e501bf00f105ff0e31501/hugo-annotations-1.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="b01150795c5cdca1eb7e501bf00f105ff0e31501">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/hugo-annotations-1.2.1_376f32a5d5f99c04b366c17ace46b8ea9aa3f94b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.afollestad.material-dialogs/core/0.8.5.9/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="04d4337de6ccd7e57aec621f41ee747976fca7d8">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.afollestad.material-dialogs-core-0.8.5.9_50e9bebe0bf9830ca7c211506f5c8a575c3d65b3.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/GDTUnionSDK.4.9.540.min.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="aeac2a4db832dc33e409e541d7d876d34c884199">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/GDTUnionSDK.4.9.540.min_f1f15ece7bbed4ab5a32d35ab34a246bc3f941b0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/me.yokeyword/fragmentation-swipeback/0.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="63ff1f13386ddfa108754008bee8af52f1a87625">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/me.yokeyword-fragmentation-swipeback-0.3.0_2a85dc4d7618d6e29ef984c4a138b4d3553aff2e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.10.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="d323cf4983bdfce7136a1ce5e32710e1b36b20fe">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fbcore-0.10.0_2a063d44c71553ec785d086e941ad5039cf50a37.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.tencent.bugly/crashreport/2.3.6/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="c8eebe2b083a65d16f332110a0d59159513033fb">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.tencent.bugly-crashreport-2.3.6_64764c7b43bfa93354fa3ba9ffc28dae8eb483da.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.0.0_aea004fafa7e2ab2138bea3c6fc7fc79ac4f6c71.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/commontool-release/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="24bf11e2d60fd7dae01b3892c19d0f754e7aa2e1">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/intermediates-exploded-aar-commontool-release_6c7f9d14f165494c98b20a0db9f76eddbc27fa71.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v13/24.0.0/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="61fd2644ca586288d0e733377d12b5f6da18c4ca">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0_697f13e39a53f49a7e13281bf329fbf601d167b3.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0_377b3a04f4818c87bc14c6d2ee47b65ae91c406e.jar" />
-    </item>
-    <item
-        is-multidex="false"
+        is-multidex="true"
         jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.10.0/jars/classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="5e88a2a26ac71cd7f8fd8bd9f9381fa06d1a47a3">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-0.10.0_f4b775199971810b62da75e8a9462f17c396433c.jar" />
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.fresco-imagepipeline-base-0.10.0_f4b775199971810b62da75e8a9462f17c396433c/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0_8acd3c58360aa5d8bc0e371592464153db27561d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Core-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="05daed40b027de06fa881f3ffc29e149cdd3744a">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-Core-2.7.6_be47aa46a9e70ceec644bf10627857c774ce25c7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Favorite-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="547ab3b880413d91040c43f18d5039ba04a26f8b">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Favorite-2.7.6_1999ee322d4a2ac02fc229ec00c263e12bff45a5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-24.0.0_cd02e1c8bc2e3affda5c8926224816925848a972.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.10.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="6e1ed00013584399dbe27d45ac1fd6a9828c9fca">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-0.10.0_317381894c780ce07e7a9398180ffc7625fa6043.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/MobCommons-2016.0816.1507.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="ca36dc249a46648f8c8f53ad5ee4a935e80956a8">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/MobCommons-2016.0816.1507_540d97e6e5a3be97568d69db3e2cf3690ef7dd44.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Core-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="a987859521b63435c25af5c49fb2678334d99163">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Core-2.7.6_ca98f8660e09bd980440e631457b1db14f6748a5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0/support-annotations-24.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0_cd759721b90528f0959c9d42a3334ab0d9bddf49.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/adapter-rxjava/2.0.2/a60c039ba54c73d1133b72178e1b04133c73d13d/adapter-rxjava-2.0.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="a60c039ba54c73d1133b72178e1b04133c73d13d">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/adapter-rxjava-2.0.2_123fc82a3b7fc601a46504b3f816b6eca6d57a7a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/otto-1.3.8_a441646b09e8a26a074c8cc32d451212f1954a5e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v13/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="c87270a9d828773c296fadde93e939c8190a6b1b">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-support-v13-24.0.0_bb895076b68df923e608e442a08b08976829da80.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/MobTools-2016.0816.1507.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="d9c6fd49a717326f3f750b51a51fa58b79df0734">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/MobTools-2016.0816.1507_e1097aa8242f901da638e5714d20059633ee5ecd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-SinaWeibo-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="1d5f917b1a63ae17385ca09f873da1baf8671547">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-SinaWeibo-2.7.6_965c2ac07d45a2644f3b09c787ec3e34bfed5854.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-QQ-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="11d5b9b395106ef31beebe55d74f842e549f61e4">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-QQ-2.7.6_c89ac894900d9e08aaea05d757fd038b192520f9.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.2/f8d87f15b94b8d74e7ccf61d7eedb558811cdb30/converter-gson-2.0.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/converter-gson-2.0.2_74e8cf3a671c4ecda6c148882ccf7cfb032365f5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-ShortMessage-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="ce9bec874a124a032335cc2b51763bb9c80f3375">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-ShortMessage-2.7.6_f5c30904180c1b00eeaa493e6342f5cb74da3c90.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjrt/1.8.5/39a8ff2d1f79267907f5573c090b342b040b9682/aspectjrt-1.8.5.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="39a8ff2d1f79267907f5573c090b342b040b9682">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/aspectjrt-1.8.5_53d8d06c197542609f89984ae3d2fd79590b51d3.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="4a9f97c742d058ca55948643c06f447895a9af76">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/me.zhanghai.android.materialprogressbar-library-1.1.5_7e1a549a9b4bb2dc2a6514e28c30b5ca983cfbdd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.1/b9d63507329a7178e026fc334f87587ee5070ac5/gson-2.6.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/gson-2.6.1_928e34277d2ee0d5492064439b793f5119ab4237.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.jude/easyrecyclerview/4.2.6/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="5f43f5bac891f7a71939793a4b0517f922dcc8c4">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.jude-easyrecyclerview-4.2.6_d65ccca93c2afef36fb5b76f8c6c056e7a05ff8e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.2/43eeae0b9fb087bb3194ba59ab63a38a32fbf3e/retrofit-2.0.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="043eeae0b9fb087bb3194ba59ab63a38a32fbf3e">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/retrofit-2.0.2_a1cca7da8737687d6e7c725a8b919109b48b2916.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.0.0_b7d3682e743751ab31034291e8f3993ab168310a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-palette-v7-24.0.0_990ae1ba2a27b4dd13fe688a96c6a29e45d1257f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Email-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="774b86fcac52e7f976bdb68ed0c78fa242414848">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-Email-2.7.6_6bf976db936c8453c65a37f4fa9f2e772462142d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.antfortune.freeline/runtime/0.8.2/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="611bdfa0266e6a0bb9865118c5206b0d992f91d9">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.antfortune.freeline-runtime-0.8.2_cc537681bae946c9107a8df8299ae372a1db0539.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.10.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="857099e23430445aeb65cf703d5adf646ff280f1">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-0.10.0_6d0a697aed625c39518ed7c809523d7c0f790ed1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Moments-2.7.6.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="b998f78d8923dd65e2afa7c424884cc81b826f0a">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-Moments-2.7.6_49e2b98a06cf10993b281dd43f79896f74150628.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.1.5/ece7b5d0870e66d8226dab6dcf47a2b12afff061/rxjava-1.1.5.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="ece7b5d0870e66d8226dab6dcf47a2b12afff061">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/rxjava-1.1.5_270a96378f16a83adf91e00fd9d71262c70a9ee8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.karumi/dexter/2.2.2/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="22bab473db1c258a4c7e8f0ae50c651e0de6b845">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.karumi-dexter-2.2.2_167e07c8d96471db377356774b848624340fc8ca.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/me.yokeyword/fragmentation/0.6.2/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="3b55ccccff38dec8f6d5f0e67942a57179fb7cf9">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/me.yokeyword-fragmentation-0.6.2_7e3b4fb2396c2baaed2b16829309eaeecab7b65c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/okhttp-3.2.0_1e55ed32eb40f8a4d3a4817fe98c1abb9b465327.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.jakewharton.timber/timber/4.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="f45a0143e9c43a459f3f331a6b3e7daf13981ef4">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.jakewharton.timber-timber-4.1.0_67543980c4310484f1914f376df22198bee832ef.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/design/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="fc29308a7a8f6d4407b34634eb48fb8b817f9b23">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-design-24.0.0_29e514769300a450c5445ad1f4ad68542bc057dd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.5/2852e6e05fbb95076fc091f6d1780f1f8fe35e0f/commons-io-2.5.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="2852e6e05fbb95076fc091f6d1780f1f8fe35e0f">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/commons-io-2.5_2848ecc2ec82c7c2c47575815b19de7f17060e0f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="8dd49930e4f9dde1a42d37e362b9fea8b1b69c0d">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-24.0.0_4261b023cdbd74ef8a32f853fb147cd78745cb40.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/SMSSDK-2.0.2/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="0ddb0f66ce51afc2a0187b8036584ee553f006c1">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/intermediates-exploded-aar-SMSSDK-2.0.2_4a2ba24ca12a8585d36aed2c1d5e037571cd9bdb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.0"
-        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/butterknife-7.0.1_fc402cd6591a22f8e6746ba9dca7ad17ac013f81.jar" />
-    </item>
-    <item
-        is-multidex="false"
+        is-multidex="true"
         jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.jakewharton.hugo/hugo-runtime/1.2.1/jars/classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="2bac9385ea008561a30419c09e9230a8681b3e09">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.jakewharton.hugo-hugo-runtime-1.2.1_142f15a94d62af1917a6a33dca50639aedbcab0a.jar" />
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.jakewharton.hugo-hugo-runtime-1.2.1_142f15a94d62af1917a6a33dca50639aedbcab0a/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/me.yokeyword/fragmentation/0.6.2/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4_3f61338758acc2b90c27e16a365ff5a0f5f5f6a6.jar" />
+        sha1="3b55ccccff38dec8f6d5f0e67942a57179fb7cf9">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/me.yokeyword-fragmentation-0.6.2_7e3b4fb2396c2baaed2b16829309eaeecab7b65c/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/android-query-full.0.26.7.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/wizardholy/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0/support-annotations-24.0.0.jar"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="4055bed8ed6f6aa573fa3e7d979c66101c48e182">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/android-query-full.0.26.7_377af48697a4e2f9a648ca202a560a73c696d881.jar" />
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.0.0_cd759721b90528f0959c9d42a3334ab0d9bddf49/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-2.7.6.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.0.0/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="5498694b506ce12bac05d6e9ddb04fc022a7c86a">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-Wechat-2.7.6_cc02fe628f4f6728cbb1bfff3e52f9595c02f18a.jar" />
+        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.0.0_cd02e1c8bc2e3affda5c8926224816925848a972/classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/MobCommons-2016.0816.1507.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="ca36dc249a46648f8c8f53ad5ee4a935e80956a8">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/MobCommons-2016.0816.1507_540d97e6e5a3be97568d69db3e2cf3690ef7dd44/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/adapter-rxjava/2.0.2/a60c039ba54c73d1133b72178e1b04133c73d13d/adapter-rxjava-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="a60c039ba54c73d1133b72178e1b04133c73d13d">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/adapter-rxjava-2.0.2_123fc82a3b7fc601a46504b3f816b6eca6d57a7a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.10.0/jars/classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="65f0c887ee1f57cd0ea65b228e39b7f35372b798">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-0.10.0_4fe001329fd5049637ed62a7f6e2c292ea467212.jar" />
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.fresco-drawee-0.10.0_4fe001329fd5049637ed62a7f6e2c292ea467212/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.2.0/jars/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="927e8ef5711b115b65b2f35495d77352be2b3c09">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/io.reactivex-rxandroid-1.2.0_2b3312518f0c236bab45313ad076a3b37c4891d3.jar" />
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-android-1.1.4_3f61338758acc2b90c27e16a365ff5a0f5f5f6a6/classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
         jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-QZone-2.7.6.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.0"
         sha1="5f3bf218730df6235134bb73a5acf293a70ae76e">
-        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/pre-dexed/debug/ShareSDK-QZone-2.7.6_fc5996ed13ff067949122b08e2e35f7254ebf8a1.jar" />
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-QZone-2.7.6_fc5996ed13ff067949122b08e2e35f7254ebf8a1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/MobTools-2016.0816.1507.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="d9c6fd49a717326f3f750b51a51fa58b79df0734">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/MobTools-2016.0816.1507_e1097aa8242f901da638e5714d20059633ee5ecd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-SinaWeibo-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="1d5f917b1a63ae17385ca09f873da1baf8671547">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-SinaWeibo-2.7.6_965c2ac07d45a2644f3b09c787ec3e34bfed5854/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-QQ-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="11d5b9b395106ef31beebe55d74f842e549f61e4">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-QQ-2.7.6_c89ac894900d9e08aaea05d757fd038b192520f9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.2/f8d87f15b94b8d74e7ccf61d7eedb558811cdb30/converter-gson-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.2_74e8cf3a671c4ecda6c148882ccf7cfb032365f5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="4a9f97c742d058ca55948643c06f447895a9af76">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/me.zhanghai.android.materialprogressbar-library-1.1.5_7e1a549a9b4bb2dc2a6514e28c30b5ca983cfbdd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjrt/1.8.5/39a8ff2d1f79267907f5573c090b342b040b9682/aspectjrt-1.8.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="39a8ff2d1f79267907f5573c090b342b040b9682">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/aspectjrt-1.8.5_53d8d06c197542609f89984ae3d2fd79590b51d3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.0.0_5d446f315313f23dce81bcf295582dc9c80c1822/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_8c859b22d6c7521f81fce4392cb8867caa947416/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.jude/easyrecyclerview/4.2.6/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="5f43f5bac891f7a71939793a4b0517f922dcc8c4">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.jude-easyrecyclerview-4.2.6_d65ccca93c2afef36fb5b76f8c6c056e7a05ff8e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.afollestad.material-dialogs/core/0.8.5.9/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="04d4337de6ccd7e57aec621f41ee747976fca7d8">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.afollestad.material-dialogs-core-0.8.5.9_50e9bebe0bf9830ca7c211506f5c8a575c3d65b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/me.yokeyword/fragmentation-swipeback/0.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="63ff1f13386ddfa108754008bee8af52f1a87625">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/me.yokeyword-fragmentation-swipeback-0.3.0_2a85dc4d7618d6e29ef984c4a138b4d3553aff2e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Email-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="774b86fcac52e7f976bdb68ed0c78fa242414848">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Email-2.7.6_6bf976db936c8453c65a37f4fa9f2e772462142d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.0.0_b7d3682e743751ab31034291e8f3993ab168310a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/design/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="fc29308a7a8f6d4407b34634eb48fb8b817f9b23">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.0.0_29e514769300a450c5445ad1f4ad68542bc057dd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.antfortune.freeline/runtime/0.8.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="611bdfa0266e6a0bb9865118c5206b0d992f91d9">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.antfortune.freeline-runtime-0.8.2_cc537681bae946c9107a8df8299ae372a1db0539/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.0.0_aea004fafa7e2ab2138bea3c6fc7fc79ac4f6c71/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Moments-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="b998f78d8923dd65e2afa7c424884cc81b826f0a">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-Moments-2.7.6_49e2b98a06cf10993b281dd43f79896f74150628/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/commontool-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="24bf11e2d60fd7dae01b3892c19d0f754e7aa2e1">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-commontool-release_6c7f9d14f165494c98b20a0db9f76eddbc27fa71/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.jakewharton.timber/timber/4.1.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f45a0143e9c43a459f3f331a6b3e7daf13981ef4">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.jakewharton.timber-timber-4.1.0_67543980c4310484f1914f376df22198bee832ef/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.2.0_1e55ed32eb40f8a4d3a4817fe98c1abb9b465327/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v13/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="61fd2644ca586288d0e733377d12b5f6da18c4ca">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_697f13e39a53f49a7e13281bf329fbf601d167b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="bfe64f485e7cf30d5408f190a291e1f03606d4f0">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_656fc0f5052dac4e0c56b7038b62318b9b3d80af/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.0.0_8acd3c58360aa5d8bc0e371592464153db27561d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.karumi/dexter/2.2.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="22bab473db1c258a4c7e8f0ae50c651e0de6b845">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.karumi-dexter-2.2.2_167e07c8d96471db377356774b848624340fc8ca/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Core-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="05daed40b027de06fa881f3ffc29e149cdd3744a">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Core-2.7.6_be47aa46a9e70ceec644bf10627857c774ce25c7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/butterknife-7.0.1_fc402cd6591a22f8e6746ba9dca7ad17ac013f81/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/SMSSDK-2.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="0ddb0f66ce51afc2a0187b8036584ee553f006c1">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-SMSSDK-2.0.2_4a2ba24ca12a8585d36aed2c1d5e037571cd9bdb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.10.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="6e1ed00013584399dbe27d45ac1fd6a9828c9fca">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.fresco-imagepipeline-0.10.0_317381894c780ce07e7a9398180ffc7625fa6043/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Core-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="a987859521b63435c25af5c49fb2678334d99163">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-Core-2.7.6_ca98f8660e09bd980440e631457b1db14f6748a5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.5/2852e6e05fbb95076fc091f6d1780f1f8fe35e0f/commons-io-2.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="2852e6e05fbb95076fc091f6d1780f1f8fe35e0f">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/commons-io-2.5_2848ecc2ec82c7c2c47575815b19de7f17060e0f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="8dd49930e4f9dde1a42d37e362b9fea8b1b69c0d">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-24.0.0_4261b023cdbd74ef8a32f853fb147cd78745cb40/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Favorite-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="547ab3b880413d91040c43f18d5039ba04a26f8b">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-Favorite-2.7.6_1999ee322d4a2ac02fc229ec00c263e12bff45a5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/otto-1.3.8_a441646b09e8a26a074c8cc32d451212f1954a5e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/android-query-full.0.26.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="4055bed8ed6f6aa573fa3e7d979c66101c48e182">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/android-query-full.0.26.7_377af48697a4e2f9a648ca202a560a73c696d881/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="927e8ef5711b115b65b2f35495d77352be2b3c09">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/io.reactivex-rxandroid-1.2.0_2b3312518f0c236bab45313ad076a3b37c4891d3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="5498694b506ce12bac05d6e9ddb04fc022a7c86a">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-2.7.6_cc02fe628f4f6728cbb1bfff3e52f9595c02f18a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_377b3a04f4818c87bc14c6d2ee47b65ae91c406e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/support-v13/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c87270a9d828773c296fadde93e939c8190a6b1b">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v13-24.0.0_bb895076b68df923e608e442a08b08976829da80/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.1/b9d63507329a7178e026fc334f87587ee5070ac5/gson-2.6.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.6.1_928e34277d2ee0d5492064439b793f5119ab4237/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-ShortMessage-2.7.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="ce9bec874a124a032335cc2b51763bb9c80f3375">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-ShortMessage-2.7.6_f5c30904180c1b00eeaa493e6342f5cb74da3c90/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-2.4.0_66f18e0603300d6bfc841337754867aa40e7413a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/libs/GDTUnionSDK.4.9.540.min.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="aeac2a4db832dc33e409e541d7d876d34c884199">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/2/GDTUnionSDK.4.9.540.min_f1f15ece7bbed4ab5a32d35ab34a246bc3f941b0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.jakewharton.hugo/hugo-annotations/1.2.1/b01150795c5cdca1eb7e501bf00f105ff0e31501/hugo-annotations-1.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="b01150795c5cdca1eb7e501bf00f105ff0e31501">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/hugo-annotations-1.2.1_376f32a5d5f99c04b366c17ace46b8ea9aa3f94b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.2/43eeae0b9fb087bb3194ba59ab63a38a32fbf3e/retrofit-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="043eeae0b9fb087bb3194ba59ab63a38a32fbf3e">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.2_a1cca7da8737687d6e7c725a8b919109b48b2916/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.10.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="d323cf4983bdfce7136a1ce5e32710e1b36b20fe">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.fresco-fbcore-0.10.0_2a063d44c71553ec785d086e941ad5039cf50a37/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="585049cefd8cc0dc41f873bf6f2c5dd51af1e6e1">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_da360da7179ef7385d3cb9e0c193043537e73d84/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.tencent.bugly/crashreport/2.3.6/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="c8eebe2b083a65d16f332110a0d59159513033fb">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.tencent.bugly-crashreport-2.3.6_64764c7b43bfa93354fa3ba9ffc28dae8eb483da/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.10.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="857099e23430445aeb65cf703d5adf646ff280f1">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.fresco-fresco-0.10.0_6d0a697aed625c39518ed7c809523d7c0f790ed1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_990ae1ba2a27b4dd13fe688a96c6a29e45d1257f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/wizardholy/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.1.5/ece7b5d0870e66d8226dab6dcf47a2b12afff061/rxjava-1.1.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="ece7b5d0870e66d8226dab6dcf47a2b12afff061">
+        <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/rxjava-1.1.5_270a96378f16a83adf91e00fd9d71262c70a9ee8/classes.dex" />
     </item>
 
 </items>

@@ -6,6 +6,7 @@ import com.klisly.bookbox.model.Novel;
 import com.klisly.bookbox.model.User2Novel;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -14,6 +15,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 public interface NovelApi {
@@ -53,4 +55,10 @@ public interface NovelApi {
     @POST("novels/{id}/unsubscribe")
     Observable<ApiResult<User2Novel>> unsubscribe(@Path("id") String id,
                                                   @Header("x-access-token") String token);
+    @GET("novels/{id}/chapters")
+    @Headers({
+            "Accept: application/json",
+    })
+    Observable<ApiResult<List<Chapter>>> listchapters(@Path("id") String id, @QueryMap Map<String, String> conditions);
+
 }

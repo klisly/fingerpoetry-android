@@ -90,7 +90,17 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
                 return new NovelViewHolder(parent);
             }
         });
+        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
+            @Override
+            public void onNoMoreShow() {
+                adapter.resumeMore();
+            }
 
+            @Override
+            public void onNoMoreClick() {
+                adapter.resumeMore();
+            }
+        });
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -127,9 +137,9 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     }
 
     private void queryData(User2Novel entity) {
-//        if (mData != null) {
-//            ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(article));
-//        }
+        if (entity != null) {
+            ((BaseFragment) getParentFragment()).start(ChapterListFragment.newInstance(entity));
+        }
     }
 
     private void loadNew() {
@@ -139,12 +149,12 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
                 .subscribe(new AbsSubscriber<ApiResult<List<User2Novel>>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
-
+                        adapter.clear();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
-
+                        adapter.clear();
                     }
 
                     @Override
@@ -173,4 +183,5 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     public void onLoadMore() {
 
     }
+
 }

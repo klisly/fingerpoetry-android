@@ -2,7 +2,7 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User2Novel {
+public class User2Novel extends BaseModel {
 
     /**
      * _id : 58368261dffdde8d6950f40d

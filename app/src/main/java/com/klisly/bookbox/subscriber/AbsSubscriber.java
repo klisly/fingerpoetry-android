@@ -14,7 +14,6 @@ import com.klisly.bookbox.widget.progress.ProgressDialogHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
@@ -79,18 +78,14 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
             HttpException httpException = (HttpException) e;
             Timber.i("url:"+httpException);
             ex = new ApiException(e, httpException.code());
-            Timber.e(ex, "");
             try {
                 String str = httpException.response().errorBody().string();
                 JSONObject jsonObject = new JSONObject(str);
                 int status = jsonObject.getInt("status");
-                String msg = jsonObject.getString("msg");
-
                 ex.setCode(status);
-            } catch (IOException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
-            } catch (JSONException e1) {
-                e1.printStackTrace();
+                ex.setCode(SERVICE_UNAVAILABLE);
             }
             switch(httpException.code()){
                 case UNAUTHORIZED:

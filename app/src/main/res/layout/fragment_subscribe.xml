@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         widget:scrollbarStyle="insideOverlay"
-        widget:layout_progress="@layout/view_progress"
         widget:layout_empty="@layout/view_empty"
         />
 
