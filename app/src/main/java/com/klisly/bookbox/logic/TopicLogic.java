@@ -171,58 +171,6 @@ public class TopicLogic extends BaseLogic {
         return success;
     }
 
-    /**
-     * 根据频道类型获取所有的频道
-     *
-     * @param type
-     * @return
-     */
-    public List<Topic> getChannelsByType(int type) {
-        List<Topic> topics = new ArrayList<>();
-        getFakeChannel(topics, type);
-        return topics;
-    }
-
-    private void getFakeChannel(List<Topic> topics, int type) {
-        if (type == Constants.HOME) {
-//            Topic topic = new Topic();
-//            topic.setId(0 + "");
-//            topic.setName("推荐");
-//            topic.setImage("/topic/recommend");
-//            topics.add(topic);
-//            topic = new Topic();
-//            topic.setId(1 + "");
-//            topic.setName("热门");
-//            topic.setImage("/topic/hot");
-//            topics.add(topic);
-        } else if (type == Constants.SITE) {
-            Topic topic = new Topic();
-            topic.setId(0 + "");
-            topic.setName("烟雨");
-            topic.setImage("/topic/recommend");
-            topics.add(topic);
-            topic = new Topic();
-            topic.setId(1 + "");
-            topic.setName("新解");
-            topic.setImage("/topic/hot");
-            topics.add(topic);
-            topics.add(topic);
-        } else if (type == Constants.MAGEZINE) {
-
-        } else if (type == Constants.TOPIC) {
-            Topic topic = new Topic();
-            topic.setId(0 + "");
-            topic.setName("汉语");
-            topic.setImage("/topic/recommend");
-            topics.add(topic);
-            topic = new Topic();
-            topic.setId(1 + "");
-            topic.setName("新词");
-            topic.setImage("/topic/hot");
-            topics.add(topic);
-            topics.add(topic);
-        }
-    }
 
     public void updateSubscribes(List<User2Topic> entities) {
         if (entities == null) {

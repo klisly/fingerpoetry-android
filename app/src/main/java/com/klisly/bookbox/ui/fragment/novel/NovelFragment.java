@@ -64,7 +64,7 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
 
     private void initView() {
         mToolbar.setTitle(R.string.update);
-        initToolbarNav(mToolbar, true);
+        initToolbarNav(mToolbar, false);
         mToolbar.setOnMenuItemClickListener(this);
         mToolbar.findViewById(R.id.search).setVisibility(View.VISIBLE);
         mToolbar.findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
@@ -168,7 +168,7 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
             if(position == 0){
                 name = "最近更新";
             } else  if(position == 1){
-                name = "小说订阅";
+                name = "我的小说";
             }
             return name;
         }

@@ -5,10 +5,12 @@ import android.content.Context;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.NovelLogic;
 import com.klisly.bookbox.logic.SiteLogic;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2Novel;
 import com.klisly.bookbox.model.User2Site;
 import com.klisly.bookbox.model.User2Topic;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
@@ -16,7 +18,6 @@ import com.klisly.bookbox.subscriber.ApiException;
 
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -26,7 +27,6 @@ public class CommonHelper {
         BookRetrofit.getInstance().getTopicApi()
                 .list()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(context, false) {
                     @Override
                     protected void onError(ApiException ex) {
@@ -54,7 +54,6 @@ public class CommonHelper {
                     .subscribes(AccountLogic.getInstance().getNowUser().getId(),
                     AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<List<User2Topic>>>(context, false) {
                         @Override
                         protected void onError(ApiException ex) {
@@ -81,7 +80,6 @@ public class CommonHelper {
         BookRetrofit.getInstance().getSiteApi()
                 .list()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new AbsSubscriber<ApiResult<List<Site>>>(context, false) {
                     @Override
                     protected void onError(ApiException ex) {
@@ -109,7 +107,6 @@ public class CommonHelper {
                     .subscribes(AccountLogic.getInstance().getNowUser().getId(),
                             AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new AbsSubscriber<ApiResult<List<User2Site>>>(context, false) {
                         @Override
                         protected void onError(ApiException ex) {
@@ -144,5 +141,33 @@ public class CommonHelper {
             }
         }
         return itemType;
+    }
+
+    public static void getUserNovels(Context context){
+        if (AccountLogic.getInstance().getNowUser() != null) {
+            BookRetrofit.getInstance().getNovelApi()
+                    .novels(AccountLogic.getInstance().getNowUser().getId(),
+                            AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new AbsSubscriber<ApiResult<List<User2Novel>>>(context, false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+                            Timber.i("onError");
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            Timber.i("onPermissionError");
+
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<List<User2Novel>> data) {
+                            NovelLogic.getInstance().updateSubscribes(data.getData());
+
+                        }
+                    });
+        }
     }
 }

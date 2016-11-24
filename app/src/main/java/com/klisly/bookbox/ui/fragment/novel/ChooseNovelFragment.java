@@ -112,7 +112,7 @@ public class ChooseNovelFragment extends BaseBackFragment {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mRecy.isChangePosition()) {
+                if (mRecy.isChangePosition()) {
                     SiteLogic.getInstance().updateFocusedOrder();
                     updateFocusedOrder();
                 } else {
@@ -139,7 +139,7 @@ public class ChooseNovelFragment extends BaseBackFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                if(position <  SiteLogic.getInstance().getOpenChooses().size()) {
+                if (position < SiteLogic.getInstance().getOpenChooses().size()) {
                     Site entity = SiteLogic.getInstance().getOpenChooses().get(position);
                     Timber.i("click position:" + position
                             + " data:" + entity);
@@ -159,9 +159,15 @@ public class ChooseNovelFragment extends BaseBackFragment {
         SiteLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
-                if(mAdapter != null){
-                    mAdapter.setItemList(SiteLogic.getInstance().getOpenChooses());
-                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (mAdapter != null) {
+                            mAdapter.setItemList(SiteLogic.getInstance().getOpenChooses());
+                        }
+                    }
+                });
             }
         });
     }
@@ -169,7 +175,7 @@ public class ChooseNovelFragment extends BaseBackFragment {
     private void updateFocusedOrder() {
 
         JSONArray jsonArray = new JSONArray();
-        for(User2Site entity: SiteLogic.getInstance().getSubscribes().values()){
+        for (User2Site entity : SiteLogic.getInstance().getSubscribes().values()) {
             try {
                 JSONObject object = new JSONObject();
                 object.put("id", entity.getId());
@@ -250,7 +256,8 @@ public class ChooseNovelFragment extends BaseBackFragment {
                     @Override
                     public void onNext(ApiResult<User2Site> data) {
                         Timber.i("subscribe:" + data.getData());
-                        SiteLogic.getInstance().subscribe(data.getData());                    }
+                        SiteLogic.getInstance().subscribe(data.getData());
+                    }
                 });
     }
 }

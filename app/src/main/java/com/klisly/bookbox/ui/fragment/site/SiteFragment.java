@@ -71,8 +71,13 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         SiteLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
-                adapter.notifyDataSetChanged();
-                updateItems();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateItems();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

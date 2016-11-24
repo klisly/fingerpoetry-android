@@ -12,28 +12,23 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
-import com.klisly.bookbox.CommonHelper;
-import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.adapter.ArticleViewHolder;
-import com.klisly.bookbox.api.ArticleApi;
+import com.klisly.bookbox.adapter.NovelViewHolder;
 import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.api.NovelApi;
 import com.klisly.bookbox.domain.ApiResult;
-import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.listener.OnDataChangeListener;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.NovelLogic;
 import com.klisly.bookbox.model.BaseModel;
-import com.klisly.bookbox.model.Site;
-import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2Novel;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
-import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
-import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,7 +36,6 @@ import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class SubscribFragment<T extends BaseModel> extends BaseFragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
     public static final String ARG_FROM = "arg_from";
@@ -54,25 +48,13 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     TextView mTvTip;
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
-    private int page = 0;
-    private int pageSize = 15;
-    private int mFrom;
-    private T mData;
-//    private PagerContentAdapter mAdapter;
-    private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
-    private String name;
+    private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
     private boolean needToast = false;
     private RecyclerArrayAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) {
-            mFrom = args.getInt(ARG_FROM);
-            mData = (T) args.getSerializable(ARG_CHANNEL);
-            name = args.getString(ARG_NAME, this.getClass().getName());
-        }
     }
 
     @Override
@@ -80,24 +62,11 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         return new DefaultHorizontalAnimator();
     }
 
-    public T getmData() {
-        return mData;
-    }
-
-    public void setmData(T mData) {
-        this.mData = mData;
-        this.page = 0;
-        loadNew();;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_subscribe, container, false);
         ButterKnife.bind(this, view);
-        if(CommonHelper.getItemType(mData) == Constants.ITEM_TYPE_JOKE){
-            pageSize = 30;
-        }
         initView(view);
         return view;
     }
@@ -118,31 +87,14 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         mRecy.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                return new ArticleViewHolder(parent);
+                return new NovelViewHolder(parent);
             }
         });
-        adapter.setMore(R.layout.view_more, this);
-        adapter.setNoMore(R.layout.view_nomore, new RecyclerArrayAdapter.OnNoMoreListener() {
-            @Override
-            public void onNoMoreShow() {
-                adapter.resumeMore();
-            }
 
-            @Override
-            public void onNoMoreClick() {
-                adapter.resumeMore();
-            }
-        });
-        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(int position) {
-                return true;
-            }
-        });
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                queryData((Article) adapter.getItem(position));
+                queryData((User2Novel) adapter.getItem(position));
             }
         });
         adapter.setError(R.layout.view_error, new RecyclerArrayAdapter.OnErrorListener() {
@@ -158,105 +110,67 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         });
         mRecy.setRefreshListener(this);
         onRefresh();
+
+        NovelLogic.getInstance().registerListener(this, new OnDataChangeListener() {
+            @Override
+            public void onDataChange() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.clear();
+                        adapter.addAll(NovelLogic.getInstance().getSubscribes());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 
-    private void queryData(Article article) {
-        if (mData != null) {
-            ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(article));
-        }
+    private void queryData(User2Novel entity) {
+//        if (mData != null) {
+//            ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(article));
+//        }
     }
 
     private void loadNew() {
-        int type = getAction();
-        Map<String, String> params = new HashMap<>();
-        if (type == ACTION_HOT) {
-            params.put("type", "hot");
-        } else if (type == ACTION_RECOMMEND) {
-            params.put("type", "recommend");
-        } else {
-            if (mData instanceof Site) {
-                params.put("siteId", ((Site) mData).getId());
-            } else if (mData instanceof Topic) {
-                params.put("topics", ((Topic) mData).getName());
-            }
-        }
-        page++;
-        params.put("page", String.valueOf(page));
-        params.put("pageSize", String.valueOf(pageSize));
-        Timber.i("start load page,params:" + params.toString());
-        articleApi.list(params)
+        novelApi.novels(AccountLogic.getInstance().getUserId(), AccountLogic.getInstance().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<List<Article>>>(getActivity(), false) {
+                .subscribe(new AbsSubscriber<ApiResult<List<User2Novel>>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
-                        page--;
+
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
-                        page--;
+
                     }
 
                     @Override
-                    public void onNext(ApiResult<List<Article>> res) {
-                        if (needToast) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mTvTip == null) {
-                                        return;
-                                    }
-                                    if (res.getData().size() > 0) {
-                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
-                                    } else {
-                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
-                                    }
-                                }
-                            });
-                        }
-
-                        Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
-                        if(queryType == 1){
-                            adapter.clear();
-                            adapter.addAll(res.getData());
-                        } else {
-                           adapter.addAll(res.getData());
-                        }
+                    public void onNext(ApiResult<List<User2Novel>> res) {
+                        NovelLogic.getInstance().updateSubscribes(res.getData());
+                        adapter.clear();
+                        adapter.addAll(NovelLogic.getInstance().getSubscribes());
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
 
-    private static int ACTION_HOT = 1;
-    private static int ACTION_RECOMMEND = 2;
-    private static int ACTION_TOPIC = 3;
-    private static int ACTION_SITE = 4;
-
-    private int getAction() {
-        if (mData instanceof Topic) {
-            Topic topic = (Topic) mData;
-            if (Constants.RESERVE_TOPIC_HOT.equalsIgnoreCase(topic.getName())) {
-                return ACTION_HOT;
-            } else if (Constants.RESERVE_TOPIC_RECOMMEND.equalsIgnoreCase(topic.getName())) {
-                return ACTION_RECOMMEND;
-            } else {
-                return ACTION_TOPIC;
-            }
-        } else if (mData instanceof Site) {
-            return ACTION_SITE;
-        }
-        return ACTION_HOT;
-    }
-    int queryType = -1; // 1 refresh 2 loadmore
     @Override
     public void onRefresh() {
-        queryType = 1;
         loadNew();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NovelLogic.getInstance().unRegisterListener(this);
     }
 
     @Override
     public void onLoadMore() {
-        queryType = 2;
-        loadNew();
+
     }
 }

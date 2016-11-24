@@ -160,9 +160,15 @@ public class ChooseTopicFragment extends BaseBackFragment {
         TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
-                if (mAdapter != null) {
-                    mAdapter.setItemList(TopicLogic.getInstance().getOpenChooseTopics());
-                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (mAdapter != null) {
+                            mAdapter.setItemList(TopicLogic.getInstance().getOpenChooseTopics());
+                        }
+                    }
+                });
             }
         });
     }

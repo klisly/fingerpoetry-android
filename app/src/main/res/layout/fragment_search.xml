@@ -18,13 +18,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.SearchView
+        android:id="@+id/searchview"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:background="@drawable/bg_search"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         widget:showDividers="end"
         widget:iconifiedByDefault="false"
         widget:queryHint="输入小说名字进行搜索"

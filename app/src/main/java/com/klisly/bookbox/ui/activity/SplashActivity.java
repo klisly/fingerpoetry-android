@@ -45,6 +45,7 @@ public class SplashActivity extends Activity implements SplashADListener {
         CommonHelper.getUserTopics(this);
         CommonHelper.getSites(this);
         CommonHelper.getUserSites(this);
+        CommonHelper.getUserNovels(this);
         initAlarm();
     }
 

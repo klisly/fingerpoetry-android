@@ -72,8 +72,13 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
-                updateItems();
-                adapter.notifyDataSetChanged();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateItems();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

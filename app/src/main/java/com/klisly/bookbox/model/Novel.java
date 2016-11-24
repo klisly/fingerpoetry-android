@@ -1,9 +1,11 @@
 package com.klisly.bookbox.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Novel extends BaseModel {
 
     /**
-     * _id : 582ecb34b75d16fa6eb36616
+     * id : 582ecb34b75d16fa6eb36616
      * title : 大主宰
      * desc : 大千世界，位面交汇，万族林立，群雄荟萃，一位位来自下位面的天之至尊，在这无尽世界，演绎着令人向往的传奇，追求着那主宰之路。无尽火域，炎帝执掌，万火焚苍穹。武境之内，武祖之威，震慑乾坤。西天之殿，百战
      * author : 天蚕土豆
@@ -17,8 +19,8 @@ public class Novel extends BaseModel {
      * lastCheck : 1479569485964
      * image : http://www.biquge.cc/BookFiles/BookImages/dazhuzai.jpg
      */
-
-    private String _id;
+    @SerializedName("id")
+    private String id;
     private String title;
     private String desc;
     private String author;
@@ -30,13 +32,13 @@ public class Novel extends BaseModel {
     private int followerCount;
     private long lastCheck;
     private String image;
-
-    public String get_id() {
-        return _id;
+    private boolean focused;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -125,5 +127,13 @@ public class Novel extends BaseModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isFocused() {
+        return focused;
+    }
+
+    public void setFocused(boolean focused) {
+        this.focused = focused;
     }
 }

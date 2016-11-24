@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.AccountApi;
@@ -98,6 +99,11 @@ public class LoginFragment extends BaseBackFragment {
             public void onNext(ApiResult<LoginData> data) {
                 ToastHelper.showShortTip(R.string.login_success);
                 AccountLogic.getInstance().setLoginData(data.getData());
+                CommonHelper.getTopics(getActivity());
+                CommonHelper.getUserTopics(getActivity());
+                CommonHelper.getSites(getActivity());
+                CommonHelper.getUserSites(getActivity());
+                CommonHelper.getUserNovels(getActivity());
                 BusProvider.getInstance().post(new LoginEvent());
                 pop();
             }
