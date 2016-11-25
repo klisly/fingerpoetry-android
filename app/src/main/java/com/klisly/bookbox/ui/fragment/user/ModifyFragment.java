@@ -34,8 +34,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -221,14 +219,6 @@ public class ModifyFragment extends BaseBackFragment {
                         }
                     }
                 });
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-        //         return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-        return new DefaultNoAnimator();
     }
 
     private void initView() {

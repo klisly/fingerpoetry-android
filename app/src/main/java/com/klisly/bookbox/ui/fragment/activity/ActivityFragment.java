@@ -21,8 +21,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
     @Bind(R.id.tab_layout)
@@ -49,11 +47,6 @@ public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenu
         ButterKnife.bind(this, view);
         initView();
         return view;
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultHorizontalAnimator();
     }
 
     @Override

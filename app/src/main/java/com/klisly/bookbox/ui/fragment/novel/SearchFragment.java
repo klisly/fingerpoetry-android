@@ -32,8 +32,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -64,11 +62,6 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultHorizontalAnimator();
     }
 
     @Override

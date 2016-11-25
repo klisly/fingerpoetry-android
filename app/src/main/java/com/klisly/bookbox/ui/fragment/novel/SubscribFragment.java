@@ -32,8 +32,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -55,11 +53,6 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultHorizontalAnimator();
     }
 
     @Override
@@ -135,6 +128,7 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
             }
         });
     }
+
 
     private void queryData(User2Novel entity) {
         if (entity != null) {

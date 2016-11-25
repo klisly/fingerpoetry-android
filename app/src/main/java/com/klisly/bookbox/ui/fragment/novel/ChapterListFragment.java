@@ -34,8 +34,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -77,11 +75,6 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
             title = args.getString(ARG_CONTENT_TITLE, "");
             id = args.getString(ARG_CONTENT_ID, "");
         }
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultHorizontalAnimator();
     }
 
     @Override

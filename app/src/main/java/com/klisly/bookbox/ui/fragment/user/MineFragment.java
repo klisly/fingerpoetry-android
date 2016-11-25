@@ -34,8 +34,6 @@ import com.squareup.otto.Subscribe;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -148,13 +146,6 @@ public class MineFragment extends BaseMainFragment {
     void onNextToRead() {
         Timber.i("see user toread");
         start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_TOREAD));
-    }
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        // 默认不改变
-        //         return super.onCreateFragmentAnimation();
-        // 在进入和离开时 设定无动画
-        return new DefaultNoAnimator();
     }
 
     private void initView() {

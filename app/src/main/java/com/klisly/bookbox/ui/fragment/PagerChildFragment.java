@@ -37,8 +37,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -73,11 +71,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
             mData = (T) args.getSerializable(ARG_CHANNEL);
             name = args.getString(ARG_NAME, this.getClass().getName());
         }
-    }
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultHorizontalAnimator();
     }
 
     public T getmData() {
