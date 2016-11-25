@@ -112,5 +112,6 @@
     <string name="set_home">设为首屏</string>
     <string name="search_novel">搜索小说</string>
     <string name="search_hint">搜索小说</string>
+    <string name="canclefocus">取消关注</string>
 
 </resources>

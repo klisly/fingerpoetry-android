@@ -69,7 +69,7 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
         Intent intent = getActivity().getIntent();
         if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {
             String targetId = intent.getStringExtra("novelid");
-            if (StringUtils.isNotEmpty(targetId)) {
+            if (StringUtils.isNotEmpty(targetId) && AccountLogic.getInstance().isLogin()) {
                 novelApi.fetch(targetId, AccountLogic.getInstance().getUserId())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

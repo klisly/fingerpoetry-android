@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:id="@+id/action_register"
-        android:icon="@drawable/ic_add_user"
-        android:title=""
-        app:showAsAction="always" />
+        android:id="@+id/action_cancle_focus"
+        android:title="@string/canclefocus"
+        app:showAsAction="never"/>
 </menu>

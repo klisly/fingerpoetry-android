@@ -70,7 +70,7 @@ public class NovelLogic extends BaseLogic {
         preferenceUtils.setValue(PRE_NOVEL_FOCUS, data);
     }
 
-    private boolean isFocused(String id) {
+    public boolean isFocused(String id) {
         User2Novel tmp = subscribeMap.get(id);
         return tmp != null;
     }

@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import com.klisly.bookbox.adapter.ChapterViewHolder;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.NovelApi;
 import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.NovelLogic;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.Chapter;
 import com.klisly.bookbox.model.User2Novel;
@@ -26,8 +29,10 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.bookbox.utils.ToastHelper;
 import com.material.widget.CircularProgress;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +41,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.klisly.bookbox.R.id.recyclerView;
 
@@ -94,7 +100,7 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
 
     private void initView(View view) {
         mToolbar.setTitle(title);
-        initToolbarNav(mToolbar, false);
+        initToolbarNav(mToolbar, true);
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
         DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
@@ -150,6 +156,76 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
         start(ChapterFragment.newInstance(article));
     }
 
+    @Override
+    protected void initToolbarMenu(Toolbar toolbar) {
+        toolbar.inflateMenu(R.menu.menu_chapter_list);
+        if (NovelLogic.getInstance().isFocused(id)) {
+            toolbar.getMenu().getItem(0).setTitle(getString(R.string.canclefocus));
+        } else {
+            toolbar.getMenu().getItem(0).setTitle(getString(R.string.focus));
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_cancle_focus:
+                        if (NovelLogic.getInstance().isFocused(id)) {
+                            novelApi.unsubscribe(id,
+                                    AccountLogic.getInstance().getToken())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new AbsSubscriber<ApiResult<User2Novel>>(getActivity(), false) {
+                                        @Override
+                                        protected void onError(ApiException ex) {
+                                            Timber.i("onError");
+                                        }
+
+                                        @Override
+                                        protected void onPermissionError(ApiException ex) {
+                                            Timber.i("onPermissionError");
+                                        }
+
+                                        @Override
+                                        public void onNext(ApiResult<User2Novel> data) {
+                                            Timber.i("unSubscribe result:" + data.getData());
+                                            NovelLogic.getInstance().unSubscribe(id);
+                                            ToastHelper.showShortTip("成功取消");
+                                            toolbar.getMenu().getItem(0).setTitle(getString(R.string.focus));
+                                        }
+                                    });
+                        } else {
+                            novelApi.subscribeById(id,
+                                    AccountLogic.getInstance().getToken())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new AbsSubscriber<ApiResult<User2Novel>>(getActivity(), false) {
+                                        @Override
+                                        protected void onError(ApiException ex) {
+                                            Timber.i("onError");
+                                        }
+
+                                        @Override
+                                        protected void onPermissionError(ApiException ex) {
+                                            Timber.i("onPermissionError");
+                                        }
+
+                                        @Override
+                                        public void onNext(ApiResult<User2Novel> data) {
+                                            NovelLogic.getInstance().subscribe(data.getData());
+                                            ToastHelper.showShortTip("关注成功");
+                                            toolbar.getMenu().getItem(0).setTitle(getString(R.string.canclefocus));
+                                        }
+                                    });
+                        }
+
+
+
+                        break;
+                }
+                return true;
+            }
+        });
+    }
     private void loadNew() {
         Map<String, String> params = new HashMap<>();
         page++;
@@ -162,12 +238,14 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
+                        adapter.addAll(Collections.EMPTY_LIST);
                         onFinish();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
+                        adapter.addAll(Collections.EMPTY_LIST);
                         onFinish();
                     }
 
