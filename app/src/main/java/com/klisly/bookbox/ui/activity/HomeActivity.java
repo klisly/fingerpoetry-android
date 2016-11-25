@@ -1,7 +1,9 @@
 package com.klisly.bookbox.ui.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -45,6 +47,7 @@ import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.widget.update.AppUtils;
 import com.klisly.bookbox.widget.update.UpdateDialog;
 import com.squareup.otto.Subscribe;
+import com.umeng.message.PushAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,9 +73,11 @@ public class HomeActivity extends SupportActivity
     NavigationView mNavigationView;
     private TextView mTvName;   // NavigationView上的名字
     private SimpleDraweeView mImgNav;  // NavigationView上的头像
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(getApplicationContext()).onAppStart();
         ShareSDK.initSDK(this);
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
@@ -80,7 +85,7 @@ public class HomeActivity extends SupportActivity
         if (savedInstanceState == null) {
             start(HomeFragment.newInstance());
         }
-        if(getIntent().getIntExtra("target", 0) == 1){
+        if (getIntent().getIntExtra("target", 0) == Constants.NOTIFI_ACTION_MOMENT) {
             mNavigationView.setCheckedItem(R.id.menu_magzine);
             MagFragment fragment = findFragment(MagFragment.class);
             if (fragment == null) {
@@ -91,11 +96,9 @@ public class HomeActivity extends SupportActivity
                     }
                 });
             } else {
-                // 如果已经在栈内,则以SingleTask模式start
-                //                        start(fragment, SupportFragment.SINGLETASK);
                 start(fragment, SupportFragment.SINGLETASK);
             }
-        } else  if(getIntent().getIntExtra("target", 0) == 2){
+        } else if (getIntent().getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {
             mNavigationView.setCheckedItem(R.id.menu_novel);
             NovelFragment fragment = findFragment(NovelFragment.class);
             if (fragment == null) {
@@ -106,19 +109,32 @@ public class HomeActivity extends SupportActivity
                     }
                 });
             } else {
-                // 如果已经在栈内,则以SingleTask模式start
-                //                        start(fragment, SupportFragment.SINGLETASK);
                 start(fragment, SupportFragment.SINGLETASK);
             }
         }
         initView();
         checkUpdate();
+        checkPermission();
+    }
+
+    private void checkPermission() {
+        String READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE";
+        String WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
+        if (checkCallingOrSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && checkCallingOrSelfPermission(WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                requestPermissions(new String[]{
+                        READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
+                }, 1);
+                return;
+            }
+        }
     }
 
     private void checkUpdate() {
         long lastCheck = BookBoxApplication.getInstance()
                 .getPreferenceUtils().getValue(Constants.LAST_CHECK, 0l);
-        if(lastCheck + Constants.UPDATE_CHECK_DURATION < System.currentTimeMillis()){
+        if (lastCheck + Constants.UPDATE_CHECK_DURATION < System.currentTimeMillis()) {
             Timber.i("start check update");
             BookRetrofit.getInstance().getSysApi().fetch("android").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -135,12 +151,12 @@ public class HomeActivity extends SupportActivity
 
                         @Override
                         public void onNext(ApiResult<Version> data) {
-                            Timber.i("get version info "+data+" cur version code:"+AppUtils.getVersionCode(BookBoxApplication.getInstance()));
-                            if(data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())){
+                            Timber.i("get version info " + data + " cur version code:" + AppUtils.getVersionCode(BookBoxApplication.getInstance()));
+                            if (data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":","\n").replace(":","\n"), data.getData().getUrl());
+                                        UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":", "\n").replace(":", "\n"), data.getData().getUrl());
                                     }
                                 });
                             }
@@ -236,7 +252,7 @@ public class HomeActivity extends SupportActivity
                 ToastHelper.showShortTip(R.string.exit_tip);
                 firstTime = System.currentTimeMillis();
             } else {
-                if(getTopFragment() instanceof BaseMainFragment){
+                if (getTopFragment() instanceof BaseMainFragment) {
                     mNavigationView.setCheckedItem(R.id.menu_home);
                 }
                 super.onBackPressed();

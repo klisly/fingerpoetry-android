@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
-import android.util.Log;
 
 import com.klisly.bookbox.R;
 
@@ -88,7 +87,6 @@ public class DownloadService extends IntentService {
             mNotifyManager.cancel(NOTIFICATION_ID);
 
         } catch (Exception e) {
-            Log.e(TAG, "download apk file error");
         } finally {
             if (out != null) {
                 try {

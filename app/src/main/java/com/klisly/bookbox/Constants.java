@@ -4,10 +4,6 @@ import com.klisly.common.SharedPreferenceUtils;
 
 public class Constants {
     // 频道类型
-    public static final int HOME = 0;
-    public static final int SITE = 1;
-    public static final int MAGEZINE = 2;
-    public static final int TOPIC = 3;
     public static final int DEFAULT_TOPIC_SIZE = 6;
 
     // MOB设置
@@ -25,6 +21,12 @@ public class Constants {
     public static final long MAX_REQUEST_TIME = 30000;
     public static final String INVALID_ARTICLE_ID = "INVALID_ARTICLE_ID";
 
+    public static final String NOTIFI_TYPE_MOMENT = "moment"; // 七点一刻
+    public static final String NOTIFI_TYPE_NOVEL_UPDATE = "novelupate"; // 小说更新
+    public static final int NOTIFI_ACTION_MOMENT = 1;
+    public static final int NOTIFI_ACTION_NOVEL_UPDATE = 2;
+    public static final int NOTIFI_ID_MOMENT = 1;
+    public static final int NOTIFI_ID_NOVEL_UPDATE = 2;
 
     private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
 
@@ -36,11 +38,6 @@ public class Constants {
         return preferenceUtils.getValue(KEY_FIRST_LAUNCH, true);
     }
     // key
-    public static String PAGE = "page";
-    public static String PAGE_SIZE = "pageSize";
-    public static String BEFORE_AT = "beforeAt";
-    public static String AFTER_AT = "afterAt";
-    public static String TYPE = "type";
 
     public static String PLATFORM_LOCAL = "LOCAL";
 

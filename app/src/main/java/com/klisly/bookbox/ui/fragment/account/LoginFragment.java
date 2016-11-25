@@ -99,11 +99,12 @@ public class LoginFragment extends BaseBackFragment {
             public void onNext(ApiResult<LoginData> data) {
                 ToastHelper.showShortTip(R.string.login_success);
                 AccountLogic.getInstance().setLoginData(data.getData());
-                CommonHelper.getTopics(getActivity());
-                CommonHelper.getUserTopics(getActivity());
-                CommonHelper.getSites(getActivity());
-                CommonHelper.getUserSites(getActivity());
-                CommonHelper.getUserNovels(getActivity());
+                CommonHelper.getTopics(getActivity().getApplicationContext());
+                CommonHelper.getUserTopics(getActivity().getApplicationContext());
+                CommonHelper.getSites(getActivity().getApplicationContext());
+                CommonHelper.getUserSites(getActivity().getApplicationContext());
+                CommonHelper.getUserNovels(getActivity().getApplicationContext());
+                CommonHelper.updateDeviceToken(getActivity().getApplicationContext());
                 BusProvider.getInstance().post(new LoginEvent());
                 pop();
             }

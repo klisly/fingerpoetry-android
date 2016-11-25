@@ -26,6 +26,7 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
 
 import java.util.List;
@@ -47,7 +48,6 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
     private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
-    private boolean needToast = false;
     private RecyclerArrayAdapter adapter;
 
     @Override
@@ -137,6 +137,10 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
     }
 
     private void loadNew() {
+        if(!AccountLogic.getInstance().isLogin()){
+            TopToastHelper.showTip(mTvTip, "登录后为你获取订阅的小说", TopToastHelper.DURATION_SHORT);
+            return;
+        }
         novelApi.novels(AccountLogic.getInstance().getUserId(), AccountLogic.getInstance().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

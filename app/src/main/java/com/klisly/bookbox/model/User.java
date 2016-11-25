@@ -68,7 +68,9 @@ public class User extends BaseModel{
     @SerializedName("avatar")
     @Expose
     private String avatar;
-
+    @SerializedName("deviceToken")
+    @Expose
+    private String deviceToken;
     /**
      *
      * @return
@@ -454,6 +456,14 @@ public class User extends BaseModel{
         isBlock = block;
     }
 
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
     /**
      *
      * @param avatar
@@ -486,6 +496,7 @@ public class User extends BaseModel{
         sb.append(", isBasicSet=").append(isBasicSet);
         sb.append(", isBlock=").append(isBlock);
         sb.append(", role=").append(role);
+        sb.append(", deviceToken=").append(deviceToken);
         sb.append(", avatar='").append(avatar).append('\'');
         sb.append('}');
         return sb.toString();

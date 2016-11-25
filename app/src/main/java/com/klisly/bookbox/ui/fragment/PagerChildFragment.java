@@ -212,8 +212,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                                 }
                             });
                         }
-
-                        Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
                         if(queryType == 1){
                             adapter.clear();
                             adapter.addAll(res.getData());

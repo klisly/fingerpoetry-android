@@ -15,6 +15,7 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.alarm.AlarmManagerUtil;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
+import com.umeng.message.PushAgent;
 
 import butterknife.ButterKnife;
 
@@ -30,6 +31,7 @@ public class SplashActivity extends Activity implements SplashADListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
+        PushAgent.getInstance(getApplicationContext()).onAppStart();
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         container = (ViewGroup) this.findViewById(R.id.splash_container);
@@ -41,11 +43,12 @@ public class SplashActivity extends Activity implements SplashADListener {
          *
          * splashAD = new SplashAD(this, container, Constants.APPID, Constants.SplashPosID, this, 3000);可以设置超时时长为3000ms
          */
-        CommonHelper.getTopics(this);
-        CommonHelper.getUserTopics(this);
-        CommonHelper.getSites(this);
-        CommonHelper.getUserSites(this);
-        CommonHelper.getUserNovels(this);
+        CommonHelper.getTopics(getApplicationContext());
+        CommonHelper.getUserTopics(getApplicationContext());
+        CommonHelper.getSites(getApplicationContext());
+        CommonHelper.getUserSites(getApplicationContext());
+        CommonHelper.getUserNovels(getApplicationContext());
+        CommonHelper.updateDeviceToken(getApplicationContext());
         initAlarm();
     }
 
@@ -96,6 +99,7 @@ public class SplashActivity extends Activity implements SplashADListener {
     private void gotoMain() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("target", getIntent().getIntExtra("target", 0));
+        intent.putExtra("novelid", getIntent().getStringExtra("novelid"));
         this.startActivity(intent);
         this.finish();
     }

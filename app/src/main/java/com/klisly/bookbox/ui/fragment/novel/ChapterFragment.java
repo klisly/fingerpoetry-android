@@ -26,6 +26,7 @@ import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.OuterFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ToastHelper;
+import com.klisly.common.StringUtils;
 import com.klisly.common.dateutil.DateStyle;
 import com.klisly.common.dateutil.DateUtil;
 import com.material.widget.CircularProgress;
@@ -38,16 +39,11 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener {
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-//    @Bind(R.id.toolbar_layout)
-//    CollapsingToolbarLayout mToolbarLayout;
-//    @Bind(R.id.app_bar)
-//    AppBarLayout appBar;
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.tv_source)
@@ -86,47 +82,53 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
         initView(view);
-        mProgress.setVisibility(View.VISIBLE);
+        loadContent();
+        return view;
+    }
 
-        novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
-                    @Override
-                    protected void onError(ApiException ex) {
-                        try {
-                            if (getActivity() != null && mProgress != null) {
-                                mProgress.setVisibility(View.INVISIBLE);
+    private void loadContent() {
+        if(StringUtils.isEmpty(mData.getContent())){
+            mProgress.setVisibility(View.VISIBLE);
+            novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+                            try {
+                                if (getActivity() != null && mProgress != null) {
+                                    mProgress.setVisibility(View.INVISIBLE);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        ToastHelper.showShortTip(R.string.get_detial_fail);
-
-                    }
-
-                    @Override
-                    protected void onPermissionError(ApiException ex) {
-                        if (getActivity() != null && mProgress != null) {
-                            mProgress.setVisibility(View.INVISIBLE);
-                        }
-                        ToastHelper.showShortTip(R.string.get_detial_fail);
-                    }
-
-                    @Override
-                    public void onNext(ApiResult<Chapter> res) {
-                        mProgress.setVisibility(View.INVISIBLE);
-                        Timber.i("reache article:" + res);
-                        if (res.getData() != null) {
-                            mData = res.getData();
-                            updateData();
-                        } else {
                             ToastHelper.showShortTip(R.string.get_detial_fail);
 
                         }
-                    }
-                });
-        return view;
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            if (getActivity() != null && mProgress != null) {
+                                mProgress.setVisibility(View.INVISIBLE);
+                            }
+                            ToastHelper.showShortTip(R.string.get_detial_fail);
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<Chapter> res) {
+                            mProgress.setVisibility(View.INVISIBLE);
+                            if (res.getData() != null) {
+                                mData = res.getData();
+                                updateData();
+                            } else {
+                                ToastHelper.showShortTip(R.string.get_detial_fail);
+
+                            }
+                        }
+                    });
+        } else {
+            updateData();
+        }
     }
 
     private void updateData() {

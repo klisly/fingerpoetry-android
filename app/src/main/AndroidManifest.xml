@@ -117,6 +117,26 @@
         <meta-data
             android:name="BUGLY_ENABLE_DEBUG"
             android:value="true" />
+
+        <!-- 使用完全自定义消息来开启应用的服务进程的示例服务配置 -->
+        <!-- 不是必需的服务，可以根据开发者的需求进行设置 -->
+        <!--<service android:name="com.umeng.message.example.NotificationService" />-->
+        <!--<service android:name="com.umeng.message.example.MyPushIntentService" />-->
+        <!--<service android:name="com.umeng.message.example.UmengNotificationService"/>-->
+        <!--<service android:name="com.umeng.message.example.MyNotificationService" />-->
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5837c14507fe65096a000b48" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="679ba7124b25929c3c8f12cd30abaad0" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="bookbox" >
+        </meta-data>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.klisly.bookbox.ui.fragment.novel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChapterViewHolder;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -27,6 +29,7 @@ import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.TopToastHelper;
+import com.klisly.common.StringUtils;
 import com.material.widget.CircularProgress;
 
 import java.util.List;
@@ -35,7 +38,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class UpdateFragment<T extends BaseModel> extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -59,7 +61,34 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
         ButterKnife.bind(this, view);
         initView(view);
+        checkNotify();
         return view;
+    }
+
+    private void checkNotify() {
+        Intent intent = getActivity().getIntent();
+        if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {
+            String targetId = intent.getStringExtra("novelid");
+            if (StringUtils.isNotEmpty(targetId)) {
+                novelApi.fetch(targetId, AccountLogic.getInstance().getUserId())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
+                            @Override
+                            protected void onError(ApiException ex) {
+                            }
+
+                            @Override
+                            protected void onPermissionError(ApiException ex) {
+                            }
+
+                            @Override
+                            public void onNext(ApiResult<Chapter> res) {
+                                queryData(res.getData());
+                            }
+                        });
+            }
+        }
     }
 
     @Override
@@ -109,7 +138,7 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
         NovelLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
-                if(getActivity() != null && !getActivity().isFinishing()){
+                if (getActivity() != null && !getActivity().isFinishing()) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -146,7 +175,6 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
 
                         @Override
                         public void onNext(ApiResult<List<Chapter>> res) {
-                            Timber.i("download data size:" + res.getData().size() + " datas:" + res.getData());
                             if (queryType == 1) {
                                 adapter.clear();
                                 adapter.addAll(res.getData());
