@@ -111,7 +111,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    private void updateItems() {
+    private synchronized void updateItems() {
         if (TopicLogic.getInstance().getOpenFocuses() != null) {
             mTabLayout.removeAllTabs();
             for (Topic topic : TopicLogic.getInstance().getOpenFocuses()) {

@@ -107,7 +107,7 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    private void updateItems() {
+    private synchronized void updateItems() {
         if(SiteLogic.getInstance().getOpenFocuses() != null){
             mTabLayout.removeAllTabs();
             for(Site site : SiteLogic.getInstance().getOpenFocuses()){
