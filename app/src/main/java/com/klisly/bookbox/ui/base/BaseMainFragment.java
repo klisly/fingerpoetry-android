@@ -36,10 +36,7 @@ public class BaseMainFragment extends BaseFragment {
 
     @Override
     protected FragmentAnimator onCreateFragmentAnimation() {
-        FragmentAnimator fragmentAnimator = _mActivity.getFragmentAnimator();
-        fragmentAnimator.setEnter(0);
-        fragmentAnimator.setExit(0);
-        return fragmentAnimator;
+        return new FragmentAnimator(R.anim.activity_open_enter, R.anim.activity_close_exit);
     }
 
     @Override

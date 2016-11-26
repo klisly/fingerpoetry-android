@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.klisly.bookbox.R;
 
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class BaseBackFragment extends BaseFragment {
@@ -29,7 +28,7 @@ public class BaseBackFragment extends BaseFragment {
 
     @Override
     protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultHorizontalAnimator();
+        return new FragmentAnimator(R.anim.activity_open_enter, R.anim.activity_close_exit);
     }
 
     protected void initToolbarNav(Toolbar toolbar, boolean isBack, boolean initMenu) {
