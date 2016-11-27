@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.antfortune.freeline'
+//apply plugin: 'com.antfortune.freeline'
 android {
     compileSdkVersion 24
     buildToolsVersion '24.0.0'
@@ -109,7 +109,7 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.6.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.6.jar')
     compile 'com.jude:easyrecyclerview:4.2.6'
-    //    compile 'org.jsoup:jsoup:1.10.1'
+    compile 'org.jsoup:jsoup:1.10.1'
     compile files('libs/GDTUnionSDK.4.9.540.min.jar')
     compile project(':PushSDK')
 }

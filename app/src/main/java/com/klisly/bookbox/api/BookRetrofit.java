@@ -33,17 +33,20 @@ public class BookRetrofit {
     private ArticleApi articleApi;
     private SysApi sysApi;
     private NovelApi novelApi;
+    private OkHttpClient okHttpClient;
     public BookRetrofit() {
         Context context = BookBoxApplication.getInstance().getApplicationContext();
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         //设置缓存目录
         File cacheDirectory = new File(context.getCacheDir()
                 .getAbsolutePath(), "HttpCache");
         Cache cache = new Cache(cacheDirectory, 20 * 1024 * 1024);
         httpClientBuilder.cache(cache);
+        okHttpClient = httpClientBuilder.build();
         Retrofit retrofit = new Retrofit.Builder()
-                .client(httpClientBuilder.build())
+                .client(okHttpClient)
                 .baseUrl(BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -95,5 +98,9 @@ public class BookRetrofit {
 
     public SysApi getSysApi() {
         return sysApi;
+    }
+
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
     }
 }

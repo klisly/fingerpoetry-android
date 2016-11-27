@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v7.app.NotificationCompat;
 
-import com.antfortune.freeline.FreelineCore;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.karumi.dexter.Dexter;
@@ -41,7 +40,7 @@ public class BookBoxApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appContext = this;
-        FreelineCore.init(this);
+//        FreelineCore.init(this);
         Timber.plant(new Timber.DebugTree());
         ToastHelper.init(this);
         Dexter.initialize(this);

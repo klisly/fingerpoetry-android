@@ -83,6 +83,9 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
                 JSONObject jsonObject = new JSONObject(str);
                 int status = jsonObject.getInt("status");
                 ex.setCode(status);
+                if(jsonObject.has("msg")){
+                    ex.setMessage(jsonObject.getString("msg"));
+                }
             } catch (Exception e1) {
                 e1.printStackTrace();
                 ex.setCode(SERVICE_UNAVAILABLE);

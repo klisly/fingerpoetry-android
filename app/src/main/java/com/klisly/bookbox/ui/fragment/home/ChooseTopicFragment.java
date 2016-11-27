@@ -129,7 +129,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
         mRecy.setAdapter(mAdapter, true);
         mRecy.setCanDragHorizontally(false);
         mRecy.setDisableReorderWhenDragging(false);
-        mRecy.setHoldPosition(1);
+        mRecy.setHoldPosition(0);
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
