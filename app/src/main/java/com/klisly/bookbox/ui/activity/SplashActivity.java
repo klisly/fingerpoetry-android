@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.klisly.bookbox.BookBoxApplication;
+import com.klisly.bookbox.BuildConfig;
 import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
@@ -35,7 +36,7 @@ public class SplashActivity extends Activity implements SplashADListener {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         container = (ViewGroup) this.findViewById(R.id.splash_container);
-        splashAD = new SplashAD(this, container, Constants.QQ_APP_ID, Constants.SplashPosID, this, 3000);
+
         /**
          * 开屏广告现已增加新的接口，可以由开发者在代码中设置开屏的超时时长
          * SplashAD(Activity activity, ViewGroup container, String appId, String posId, SplashADListener adListener, int fetchDelay)
@@ -50,6 +51,12 @@ public class SplashActivity extends Activity implements SplashADListener {
         CommonHelper.getUserNovels(getApplicationContext());
         CommonHelper.updateDeviceToken(getApplicationContext());
         initAlarm();
+
+        if (!BuildConfig.DEBUG) {
+            splashAD = new SplashAD(this, container, Constants.QQ_APP_ID, Constants.SplashPosID, this, 3000);
+        } else {
+            gotoMain();
+        }
     }
 
     private void initAlarm() {

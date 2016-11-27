@@ -21,7 +21,7 @@ public class Constants {
     public static final long MAX_REQUEST_TIME = 30000;
     public static final String INVALID_ARTICLE_ID = "INVALID_ARTICLE_ID";
 
-    public static final String NOTIFI_TYPE_MOMENT = "moment"; // 七点一刻
+    public static final String NOTIFI_TYPE_MOMENT = "moment"; // 朝花夕拾
     public static final String NOTIFI_TYPE_NOVEL_UPDATE = "novelupate"; // 小说更新
     public static final int NOTIFI_ACTION_MOMENT = 1;
     public static final int NOTIFI_ACTION_NOVEL_UPDATE = 2;

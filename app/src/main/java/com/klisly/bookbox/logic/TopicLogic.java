@@ -13,12 +13,10 @@ import com.klisly.common.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import timber.log.Timber;
 
@@ -29,10 +27,10 @@ public class TopicLogic extends BaseLogic {
      */
     private static TopicLogic instance;
 
-    private List<Topic> defaultTopics = new ArrayList<>();
-    private List<Topic> focusedTopics = new ArrayList<>();
+    private CopyOnWriteArrayList<Topic> defaultTopics = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<Topic> focusedTopics = new CopyOnWriteArrayList<>();
 
-    private Map<String, User2Topic> subscribes = new HashMap<>();
+    private ConcurrentHashMap<String, User2Topic> subscribes = new ConcurrentHashMap<>();
     private static final String PRE_FOCUS_TOPICS = "PRE_FOCUS_TOPICS";
     public static int DATA_FOCUSED = 1;
     public static int DATA_DEFAULT = 2;
@@ -99,13 +97,13 @@ public class TopicLogic extends BaseLogic {
     private void initFocusTopics() {
         String data = preferenceUtils.getValue(PRE_FOCUS_TOPICS, "");
         if (StringUtils.isNotEmpty(data)) {
-            subscribes = gson.fromJson(data, new TypeToken<Map<String, User2Topic>>() { }.getType());
+            subscribes = gson.fromJson(data, new TypeToken<ConcurrentHashMap<String, User2Topic>>() { }.getType());
         }
     }
 
     private void initDefaultTopics() {
         // 1.Sysconfig default topics
-        List<Topic> tmp = SystemLogic.getInstance().getDefaultTopics();
+        CopyOnWriteArrayList<Topic> tmp = SystemLogic.getInstance().getDefaultTopics();
         if (tmp.size() > 0) {
             this.defaultTopics = tmp;
         } else {
@@ -121,7 +119,7 @@ public class TopicLogic extends BaseLogic {
                 }
             }
             if (StringUtils.isNotEmpty(data)) {
-                List<Topic> defaults = gson.fromJson(data, new TypeToken<List<Topic>>() {
+                CopyOnWriteArrayList<Topic> defaults = gson.fromJson(data, new TypeToken<CopyOnWriteArrayList<Topic>>() {
                 }.getType());
                 Timber.i("get topics from raw.");
                 this.defaultTopics = defaults;
@@ -141,12 +139,12 @@ public class TopicLogic extends BaseLogic {
     }
 
     public void reorderDefaultTopics() {
-        Collections.sort(defaultTopics, new Comparator<Topic>() {
-            @Override
-            public int compare(Topic t0, Topic t1) {
-                return t0.compareTo(t1);
-            }
-        });
+//        Collections.sort(defaultTopics, new Comparator<Topic>() {
+//            @Override
+//            public int compare(Topic t0, Topic t1) {
+//                return t0.compareTo(t1);
+//            }
+//        });
     }
 
     public void updateDefaultTopics(List<Topic> defaults) {

@@ -89,7 +89,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
 
             @Override
             public void onPageSelected(int position) {
-                if(getChildFragmentManager().getFragments().size() <= position){
+                if (getChildFragmentManager().getFragments().size() <= position) {
                     return;
                 }
                 PagerChildFragment<Topic> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
@@ -111,11 +111,12 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    private synchronized void updateItems() {
+    private void updateItems() {
         if (TopicLogic.getInstance().getOpenFocuses() != null) {
             mTabLayout.removeAllTabs();
             for (Topic topic : TopicLogic.getInstance().getOpenFocuses()) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
+
             }
         }
     }
@@ -123,7 +124,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Override
     public void onResume() {
         super.onResume();
-        Timber.i(HomeFragment.class.getSimpleName()+"  onResume");
+        Timber.i(HomeFragment.class.getSimpleName() + "  onResume");
     }
 
     /**

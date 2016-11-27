@@ -13,12 +13,10 @@ import com.klisly.common.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import timber.log.Timber;
 
@@ -29,10 +27,10 @@ public class SiteLogic extends BaseLogic {
      */
     private static SiteLogic instance;
 
-    private List<Site> defaults = new ArrayList<>();
-    private List<Site> focuseds = new ArrayList<>();
+    private CopyOnWriteArrayList<Site> defaults = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<Site> focuseds = new CopyOnWriteArrayList<>();
 
-    private Map<String, User2Site> subscribes = new HashMap<>();
+    private ConcurrentHashMap<String, User2Site> subscribes = new ConcurrentHashMap<>();
     private static final String PRE_FOCUS = "PRE_FOCUS_SITE";
     public static int DATA_FOCUSED = 1;
     public static int DATA_DEFAULT = 2;
@@ -100,13 +98,13 @@ public class SiteLogic extends BaseLogic {
     private void initFocuses() {
         String data = preferenceUtils.getValue(PRE_FOCUS, "");
         if (StringUtils.isNotEmpty(data)) {
-            subscribes = gson.fromJson(data, new TypeToken<Map<String, User2Site>>() { }.getType());
+            subscribes = gson.fromJson(data, new TypeToken<ConcurrentHashMap<String, User2Site>>() { }.getType());
         }
     }
 
     private void initDefaults() {
         // 1.Sysconfig default topics
-        List<Site> tmp = SystemLogic.getInstance().getDefaultSites();
+        CopyOnWriteArrayList<Site> tmp = SystemLogic.getInstance().getDefaultSites();
         if (tmp.size() > 0) {
             this.defaults = tmp;
         } else {
@@ -122,7 +120,7 @@ public class SiteLogic extends BaseLogic {
                 }
             }
             if (StringUtils.isNotEmpty(data)) {
-                List<Site> defaults = gson.fromJson(data, new TypeToken<List<Site>>() { }.getType());
+                CopyOnWriteArrayList<Site> defaults = gson.fromJson(data, new TypeToken<CopyOnWriteArrayList<Site>>() { }.getType());
                 Timber.i("get topics from raw.");
                 this.defaults = defaults;
             }
@@ -141,12 +139,12 @@ public class SiteLogic extends BaseLogic {
     }
 
     public void reorderDefaultTopics() {
-        Collections.sort(defaults, new Comparator<Site>() {
-            @Override
-            public int compare(Site t0, Site t1) {
-                return t0.compareTo(t1);
-            }
-        });
+//        Collections.sort(defaults, new Comparator<Site>() {
+//            @Override
+//            public int compare(Site t0, Site t1) {
+//                return t0.compareTo(t1);
+//            }
+//        });
     }
 
     public void updateDefaultTopics(List<Site> defaults) {

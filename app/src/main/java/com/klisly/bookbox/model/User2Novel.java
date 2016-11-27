@@ -3,22 +3,6 @@ package com.klisly.bookbox.model;
 import com.google.gson.annotations.SerializedName;
 
 public class User2Novel extends BaseModel {
-
-    /**
-     * _id : 58368261dffdde8d6950f40d
-     * uid : 57908ed58b802e8b81d5ba4f
-     * nid : 58368261dffdde8d6950f40c
-     * title : 鹰墓
-     * author : 希爷
-     * href : http://www.biquge.cc/html/67/67279/
-     * type : 玄幻奇幻
-     * latest : 第十一章 王后的后花园
-     * image : http://www.biquge.cc/images/nopic.gif
-     * lastUpdate : 0
-     * lastRead : 0
-     * __v : 0
-     */
-
     @SerializedName("_id")
     private String id;
     private String uid;
@@ -29,7 +13,7 @@ public class User2Novel extends BaseModel {
     private String type;
     private String latest;
     private String image;
-    private int lastUpdate;
+    private int lastno;
     private int lastRead;
 
     public String getId() {
@@ -104,12 +88,12 @@ public class User2Novel extends BaseModel {
         this.image = image;
     }
 
-    public int getLastUpdate() {
-        return lastUpdate;
+    public int getLastno() {
+        return lastno;
     }
 
-    public void setLastUpdate(int lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setLastno(int lastno) {
+        this.lastno = lastno;
     }
 
     public int getLastRead() {

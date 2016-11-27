@@ -6,8 +6,7 @@ import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.model.User;
 import com.klisly.common.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SystemLogic extends  BaseLogic{
 
@@ -77,11 +76,11 @@ public class SystemLogic extends  BaseLogic{
         preferenceUtils.setValue(PRE_ACCOUNT, "");
     }
 
-    public List<Topic> getDefaultTopics() {
-        return new ArrayList<>();
+    public CopyOnWriteArrayList<Topic> getDefaultTopics() {
+        return new CopyOnWriteArrayList<>();
     }
 
-    public List<Site> getDefaultSites() {
-        return new ArrayList<>();
+    public CopyOnWriteArrayList<Site> getDefaultSites() {
+        return new CopyOnWriteArrayList<>();
     }
 }
