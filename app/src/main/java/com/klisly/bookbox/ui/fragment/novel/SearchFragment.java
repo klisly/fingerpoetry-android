@@ -228,17 +228,26 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                 .subscribe(new AbsSubscriber<ApiResult<List<Novel>>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
                         hideProgress();
 
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
                         hideProgress();
                     }
 
                     @Override
                     public void onNext(ApiResult<List<Novel>> res) {
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
                         hideProgress();
                         datas.clear();
                         datas.addAll(res.getData());

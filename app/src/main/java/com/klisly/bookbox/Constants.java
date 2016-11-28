@@ -43,6 +43,7 @@ public class Constants {
 
     public static String QQ_APP_ID = "1105643926";
     public static final String SplashPosID = "8000011512009668";
+    public static final String BannerPosId = "3070210722867769";
 
     public static int ITEM_TYPE_NORMAL = 1;
     public static int ITEM_TYPE_JOKE = 2;

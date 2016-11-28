@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -30,6 +32,9 @@ import com.klisly.common.StringUtils;
 import com.klisly.common.dateutil.DateStyle;
 import com.klisly.common.dateutil.DateUtil;
 import com.material.widget.CircularProgress;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner.BannerView;
 
 import java.util.Date;
 
@@ -61,6 +66,9 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     FloatingActionButton fab;
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
+    @Bind(R.id.bannerContainer)
+    ViewGroup bannerContainer;
+    BannerView bv;
     private Article mData;
     private ArticleData mArticleData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
@@ -124,12 +132,30 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                             updateData();
                         } else {
                             ToastHelper.showShortTip(R.string.get_detial_fail);
-
                         }
                     }
                 });
         return view;
     }
+
+    private void initBanner() {
+        this.bv = new BannerView(getActivity(), ADSize.BANNER, Constants.QQ_APP_ID, Constants.BannerPosId);
+        bv.setRefresh(30);
+        bv.setADListener(new AbstractBannerADListener() {
+
+            @Override
+            public void onNoAD(int arg0) {
+                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+            }
+
+            @Override
+            public void onADReceiv() {
+                Log.i("AD_DEMO", "ONBannerReceive");
+            }
+        });
+        bannerContainer.addView(bv);
+    }
+
 
     private void updateData() {
         String info = mArticleData.getArticle().getSite();
@@ -189,6 +215,8 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 return true;
             }
         });
+        initBanner();
+        bv.loadAD();
     }
 
     /**

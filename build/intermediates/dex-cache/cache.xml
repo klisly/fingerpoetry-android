@@ -295,7 +295,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="09f1ce5ebd1e5c3f992afd97b57c0c767063fb18">
+        sha1="dd506c74378dcd615b912f3a21b2ddba8b439fe4">
         <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_656fc0f5052dac4e0c56b7038b62318b9b3d80af/classes.dex" />
     </item>
     <item
@@ -529,7 +529,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="eb2b87194bb1be9d06481199d4d533cca4d5ffa5">
+        sha1="aa4110f0abf52dbe556359584f6e6f2311be812d">
         <dex dex="/Users/wizardholy/project/finger/fingerpoetry/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_da360da7179ef7385d3cb9e0c193043537e73d84/classes.dex" />
     </item>
     <item

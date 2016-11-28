@@ -16,7 +16,7 @@ public class MagzineAlarmReceiver extends BroadcastReceiver {
             AlarmManagerUtil.setAlarmTime(context, System.currentTimeMillis() + intervalMillis,
                     intent);
         }
-        BookBoxApplication.getInstance().showMomentNotifi("七点一刻", msg);
+        BookBoxApplication.getInstance().showMomentNotifi("朝花夕拾", msg);
     }
 
 

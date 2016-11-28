@@ -147,16 +147,32 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
                 .subscribe(new AbsSubscriber<ApiResult<List<User2Novel>>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
-                        adapter.clear();
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
+                        if (mRecy != null) {
+                            mRecy.showError();
+                        }
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
-                        adapter.clear();
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
+                        if (mRecy != null) {
+                            mRecy.showError();
+                        }
                     }
 
                     @Override
                     public void onNext(ApiResult<List<User2Novel>> res) {
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
+                        if (mRecy == null) {
+                            return;
+                        }
                         NovelLogic.getInstance().updateSubscribes(res.getData());
                         adapter.clear();
                         adapter.addAll(NovelLogic.getInstance().getSubscribes());

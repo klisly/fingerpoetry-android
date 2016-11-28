@@ -30,6 +30,12 @@
                 android:layout_height="wrap_content"
                 android:text="" />
         </LinearLayout>
+        <FrameLayout
+            android:id="@+id/bannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" >
+        </FrameLayout>
         <WebView
             android:layout_width="match_parent"
             android:layout_height="0dp"

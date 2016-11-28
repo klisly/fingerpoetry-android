@@ -60,8 +60,8 @@ public class SplashActivity extends Activity implements SplashADListener {
     }
 
     private void initAlarm() {
-        AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 7, 15, 0, 0, "亲，现在可以阅读早一刻的文章了咯", 0);
-        AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 19, 15, 1, 0, "亲，来读读晚一刻文章吧", 0);
+        AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 7, 15, 0, 0, "亲，现在可以阅读小编早上为您准备的的文章吧", 0);
+        AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 19, 15, 1, 0, "亲，来欣赏下这几篇文章哟", 0);
     }
 
     @Override

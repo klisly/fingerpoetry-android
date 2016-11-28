@@ -23,9 +23,11 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:descendantFocusability="blocksDescendants">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
             <LinearLayout
                 android:id="@+id/head"
                 android:layout_width="match_parent"
@@ -71,11 +73,17 @@
                         android:text="" />
                 </LinearLayout>
             </LinearLayout>
+            <FrameLayout
+                android:id="@+id/bannerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
             <WebView
                 android:id="@+id/webView"
-                android:layout_below="@id/head"
+
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="28dp"
                 android:layout_marginLeft="5dp"
@@ -92,7 +100,7 @@
             android:src="@drawable/ic_arrow_forward_white_24dp"
             app:fabSize="mini"
             app:layout_anchorGravity="bottom|end" />
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <com.material.widget.CircularProgress

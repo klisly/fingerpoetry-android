@@ -165,21 +165,36 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
                     .subscribe(new AbsSubscriber<ApiResult<List<Chapter>>>(getActivity(), false) {
                         @Override
                         protected void onError(ApiException ex) {
-                            mRecy.showError();
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
+                            if (mRecy != null) {
+                                mRecy.showError();
+                            }
                         }
 
                         @Override
                         protected void onPermissionError(ApiException ex) {
-                            mRecy.showError();
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
+                            if (mRecy != null) {
+                                mRecy.showError();
+                            }
                         }
 
                         @Override
                         public void onNext(ApiResult<List<Chapter>> res) {
-                            if (queryType == 1) {
-                                adapter.clear();
-                                adapter.addAll(res.getData());
-                            } else {
-                                adapter.addAll(res.getData());
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
+                            if (mRecy != null) {
+                                if (queryType == 1) {
+                                    adapter.clear();
+                                    adapter.addAll(res.getData());
+                                } else {
+                                    adapter.addAll(res.getData());
+                                }
                             }
                         }
                     });

@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.NovelApi;
@@ -25,11 +27,15 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.OuterFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.utils.ChapterParser;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
 import com.klisly.common.dateutil.DateStyle;
 import com.klisly.common.dateutil.DateUtil;
 import com.material.widget.CircularProgress;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner.BannerView;
 
 import java.util.Date;
 
@@ -56,6 +62,9 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     FloatingActionButton fab;
     @Bind(R.id.cprogress)
     CircularProgress mProgress;
+    @Bind(R.id.bannerContainer)
+    ViewGroup bannerContainer;
+    BannerView bv;
     private Chapter mData;
     private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
 
@@ -87,52 +96,78 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     }
 
     private void loadContent() {
-        if(StringUtils.isEmpty(mData.getContent())){
-            mProgress.setVisibility(View.VISIBLE);
-            novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
+
+        if (!StringUtils.isEmpty(mData.getContent())) {
+            updateData();
+            return;
+        }
+        mProgress.setVisibility(View.VISIBLE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String content = ChapterParser.getContet(mData.getSrcUrl());
+                if (!StringUtils.isEmpty(content)) {
+                    mData.setContent(content);
+                    if(getActivity() == null ){
+                        return;
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
-                        protected void onError(ApiException ex) {
-                            try {
-                                if (getActivity() != null && mProgress != null) {
-                                    mProgress.setVisibility(View.INVISIBLE);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                        public void run() {
+                            if(getActivity() == null || getActivity().isFinishing()){
+                                return;
                             }
-                            ToastHelper.showShortTip(R.string.get_detial_fail);
 
-                        }
-
-                        @Override
-                        protected void onPermissionError(ApiException ex) {
-                            if (getActivity() != null && mProgress != null) {
-                                mProgress.setVisibility(View.INVISIBLE);
-                            }
-                            ToastHelper.showShortTip(R.string.get_detial_fail);
-                        }
-
-                        @Override
-                        public void onNext(ApiResult<Chapter> res) {
                             mProgress.setVisibility(View.INVISIBLE);
-                            if (res.getData() != null) {
-                                mData = res.getData();
-                                updateData();
-                            } else {
+                            updateData();
+                        }
+                    });
+                    return;
+                }
+
+                novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
+                            @Override
+                            protected void onError(ApiException ex) {
+                                try {
+                                    if (getActivity() != null && mProgress != null) {
+                                        mProgress.setVisibility(View.INVISIBLE);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 ToastHelper.showShortTip(R.string.get_detial_fail);
 
                             }
-                        }
-                    });
-        } else {
-            updateData();
-        }
+
+                            @Override
+                            protected void onPermissionError(ApiException ex) {
+                                if (getActivity() != null && mProgress != null) {
+                                    mProgress.setVisibility(View.INVISIBLE);
+                                }
+                                ToastHelper.showShortTip(R.string.get_detial_fail);
+                            }
+
+                            @Override
+                            public void onNext(ApiResult<Chapter> res) {
+                                mProgress.setVisibility(View.INVISIBLE);
+                                if (res.getData() != null) {
+                                    mData = res.getData();
+                                    updateData();
+                                } else {
+                                    ToastHelper.showShortTip(R.string.get_detial_fail);
+
+                                }
+                            }
+                        });
+            }
+        }).start();
     }
 
     private void updateData() {
-        String info = mData.getNname()+"   "+mData.getAuthor();
+        String info = mData.getNname() + "   " + mData.getAuthor();
         tvSource.setText(info);
         Date date = new Date();
         date.setTime(mData.getCreateAt());
@@ -186,6 +221,26 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                 return true;
             }
         });
+        initBanner();
+        bv.loadAD();
+    }
+
+    private void initBanner() {
+        this.bv = new BannerView(getActivity(), ADSize.BANNER, Constants.QQ_APP_ID, Constants.BannerPosId);
+        bv.setRefresh(30);
+        bv.setADListener(new AbstractBannerADListener() {
+
+            @Override
+            public void onNoAD(int arg0) {
+                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+            }
+
+            @Override
+            public void onADReceiv() {
+                Log.i("AD_DEMO", "ONBannerReceive");
+            }
+        });
+        bannerContainer.addView(bv);
     }
 
     /**
@@ -265,7 +320,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         if (mData == null) {
             return;
         }
-        String shareUrl ="http://second.imdao.cn/chapters/"+ mData.getId();
+        String shareUrl = "http://second.imdao.cn/chapters/" + mData.getId();
         ShareSDK.initSDK(getActivity());
         OnekeyShare oks = new OnekeyShare();
         oks.setImageUrl("http://second.imdao.cn/images/logo.png");
@@ -278,7 +333,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         oks.setTitle("小说更新自动推送");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(shareUrl);
-        // text是分享文本，所有平台都需要这个字段
+        // text是分享文本，所有平台都需 要这个字段
         oks.setText("指尖书香小说更新自动提醒，这是我在看的" + "\"" + mData.getTitle() + "\"" + "." + shareUrl);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
