@@ -35,7 +35,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     ViewPager mViewPager;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-
+    PagerFragmentAdapter adapter;
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -65,8 +65,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mToolbar.setTitle(R.string.homepage);
         initToolbarNav(mToolbar);
         mToolbar.setOnMenuItemClickListener(this);
-        updateItems();
-        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager(),
+        adapter = new PagerFragmentAdapter(getChildFragmentManager(),
                 TopicLogic.getInstance().getOpenFocuses());
         mViewPager.setAdapter(adapter);
         TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
@@ -76,7 +75,6 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                     @Override
                     public void run() {
                         updateItems();
-                        adapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -109,6 +107,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
             }
         });
         mTabLayout.setupWithViewPager(mViewPager);
+        updateItems();
     }
 
     private void updateItems() {
@@ -116,8 +115,8 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
             mTabLayout.removeAllTabs();
             for (Topic topic : TopicLogic.getInstance().getOpenFocuses()) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
-
             }
+            adapter.notifyDataSetChanged();
         }
     }
 
