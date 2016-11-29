@@ -30,7 +30,8 @@ public class ChapterParser {
             Elements eles = doc.select("#content");
             Timber.i("load content from source");
             if (eles.size() > 0) {
-                return eles.get(0).html();
+                String data = eles.get(0).html();
+                return data;
             }
         } catch (Exception e) {
             e.printStackTrace();

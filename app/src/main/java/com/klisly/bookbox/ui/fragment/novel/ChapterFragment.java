@@ -153,12 +153,11 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                             @Override
                             public void onNext(ApiResult<Chapter> res) {
                                 mProgress.setVisibility(View.INVISIBLE);
-                                if (res.getData() != null) {
+                                if (res.getData() != null && StringUtils.isNotEmpty(res.getData().getContent())) {
                                     mData = res.getData();
                                     updateData();
                                 } else {
                                     ToastHelper.showShortTip(R.string.get_detial_fail);
-
                                 }
                             }
                         });

@@ -48,13 +48,6 @@
             widget:layout_progress="@layout/view_progress"
             widget:scrollbarStyle="insideOverlay" />
 
-        <com.material.widget.CircularProgress
-            android:id="@+id/cprogress"
-            android:layout_width="@dimen/progree_size"
-            android:layout_height="@dimen/progree_size"
-            android:layout_gravity="center"
-            android:visibility="invisible"
-            widget:circular_progress_size="Normal" />
     </FrameLayout>
 
 </LinearLayout>

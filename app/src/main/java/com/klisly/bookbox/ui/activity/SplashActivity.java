@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 
 public class SplashActivity extends Activity implements SplashADListener {
 
-    @SuppressWarnings("unused")
     private SplashAD splashAD;
     private ViewGroup container;
     public boolean canJump = false;
@@ -104,9 +103,8 @@ public class SplashActivity extends Activity implements SplashADListener {
     }
 
     private void gotoMain() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.putExtra("target", getIntent().getIntExtra("target", 0));
-        intent.putExtra("novelid", getIntent().getStringExtra("novelid"));
+        Intent intent = getIntent();
+        intent.setClass(this, HomeActivity.class);
         this.startActivity(intent);
         this.finish();
     }

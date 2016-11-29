@@ -68,7 +68,9 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
     private void checkNotify() {
         Intent intent = getActivity().getIntent();
         if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {
-            String targetId = intent.getStringExtra("novelid");
+            String targetId = intent.getStringExtra("cid");
+            intent.putExtra("target", 0);
+            intent.putExtra("cid", "");
             if (StringUtils.isNotEmpty(targetId) && AccountLogic.getInstance().isLogin()) {
                 novelApi.fetch(targetId, AccountLogic.getInstance().getUserId())
                         .subscribeOn(Schedulers.io())
@@ -199,6 +201,12 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
                         }
                     });
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkNotify();
     }
 
     int queryType = -1;

@@ -61,6 +61,7 @@
             android:allowBackup="true"
             android:hardwareAccelerated="true"
             android:largeHeap="true"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait">
         </activity>
 

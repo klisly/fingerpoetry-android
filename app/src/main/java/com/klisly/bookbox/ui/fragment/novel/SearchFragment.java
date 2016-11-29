@@ -25,7 +25,6 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
-import com.material.widget.CircularProgress;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +42,6 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
 
     @Bind(recyclerView)
     RecyclerView mRecy;
-    @Bind(R.id.cprogress)
-    CircularProgress mProgress;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.searchview)
@@ -124,7 +121,7 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                     novelApi.unsubscribe(id, AccountLogic.getInstance().getToken())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new AbsSubscriber<ApiResult<User2Novel>>(getActivity(), false) {
+                            .subscribe(new AbsSubscriber<ApiResult<User2Novel>>(getActivity(), true) {
                                 @Override
                                 public void onNext(ApiResult<User2Novel> apiResult) {
                                     if (apiResult.getStatus() == 200 || apiResult.getStatus() == 404) {
@@ -166,7 +163,7 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
     }
 
     private Observer<? super ApiResult<User2Novel>> getSubscriber(int position) {
-        return new AbsSubscriber<ApiResult<User2Novel>>(getActivity(), false) {
+        return new AbsSubscriber<ApiResult<User2Novel>>(getActivity(), true) {
             @Override
             public void onNext(ApiResult<User2Novel> apiResult) {
                 if (apiResult.getStatus() == 200 ) {
@@ -192,26 +189,22 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
     }
 
     private void loadSearch(String name) {
-        showProgress();
         datas.clear();
         adapter.notifyDataSetChanged();
         novelApi.search(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<List<Novel>>>(getActivity(), false) {
+                .subscribe(new AbsSubscriber<ApiResult<List<Novel>>>(getActivity(), true) {
                     @Override
                     protected void onError(ApiException ex) {
-                        hideProgress();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
-                        hideProgress();
                     }
 
                     @Override
                     public void onNext(ApiResult<List<Novel>> res) {
-                        hideProgress();
                         Timber.i("load recommdn res:" + res.getData().size());
                         datas.clear();
                         datas.addAll(res.getData());
@@ -231,7 +224,6 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
-                        hideProgress();
 
                     }
 
@@ -240,7 +232,6 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
-                        hideProgress();
                     }
 
                     @Override
@@ -248,24 +239,11 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
-                        hideProgress();
                         datas.clear();
                         datas.addAll(res.getData());
                         adapter.notifyDataSetChanged();
                     }
                 });
-    }
-
-    private void hideProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void showProgress() {
-        if (mProgress != null) {
-            mProgress.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override

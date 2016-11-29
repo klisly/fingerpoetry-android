@@ -75,7 +75,7 @@ public class BookBoxApplication extends Application {
                     if(Constants.NOTIFI_TYPE_MOMENT.equals(notification.getType())){
                         showMomentNotifi(notification.getTitle(), notification.getDesc());
                     } else if(Constants.NOTIFI_TYPE_NOVEL_UPDATE.equals(notification.getType())){
-                        showNovelUpdate(notification.getTitle(), notification.getDesc(), notification.getTarget());
+                        showNovelUpdate(notification.getTitle(), notification.getDesc(), notification.getCid());
                     }
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
@@ -116,9 +116,9 @@ public class BookBoxApplication extends Application {
      *
      * @param title
      * @param msg
-     * @param target 文章id
+     * @param cid 章节id
      */
-    public void showNovelUpdate(String title, String msg, String target) {
+    public void showNovelUpdate(String title, String msg, String cid) {
         NotificationManager manager = (NotificationManager)this.getSystemService(NOTIFICATION_SERVICE);
         //为了版本兼容  选择V7包下的NotificationCompat进行构造
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -135,9 +135,10 @@ public class BookBoxApplication extends Application {
         //下拉显示的大图标
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher));
         Intent intent = new Intent(this,SplashActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("target", Constants.NOTIFI_ACTION_NOVEL_UPDATE);
-        intent.putExtra("novelid", target);
-        PendingIntent pIntent = PendingIntent.getActivity(this,1,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        intent.putExtra("cid", cid);
+        PendingIntent pIntent = PendingIntent.getActivity(this,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         //点击跳转的intent
         builder.setContentIntent(pIntent);
         //通知默认的声音 震动 呼吸灯

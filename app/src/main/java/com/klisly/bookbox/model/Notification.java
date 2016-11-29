@@ -4,7 +4,7 @@ public class Notification {
     private String type;
     private String title;
     private String desc;
-    private String target;
+    private String cid; // 章节id
 
     public String getType() {
         return type;
@@ -30,11 +30,11 @@ public class Notification {
         this.desc = desc;
     }
 
-    public String getTarget() {
-        return target;
+    public String getCid() {
+        return cid;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 }

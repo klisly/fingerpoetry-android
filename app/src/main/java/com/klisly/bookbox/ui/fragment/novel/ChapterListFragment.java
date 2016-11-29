@@ -58,7 +58,7 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     private int page = 0;
-    private int pageSize = 10;
+    private int pageSize = 20;
     //    private PagerContentAdapter mAdapter;
     private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
     private String id;
