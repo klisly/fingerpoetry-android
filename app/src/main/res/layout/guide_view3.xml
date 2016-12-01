@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/guide_img3" />
+
+
+    <Button
+        android:id="@+id/btn_enter_novel"
+        android:layout_width="126dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_shape"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="78dp"
+        android:text="@string/entrnovel"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btn_enter_chapter"
+        android:layout_width="126dp"
+        android:layout_height="35dp"
+        android:layout_above="@id/btn_enter_novel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/entrchapter"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="visible" />
+</RelativeLayout>

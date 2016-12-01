@@ -1,10 +1,13 @@
 package com.klisly.bookbox.ui.fragment.magzine;
 
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,6 +17,8 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.easyrecyclerview.decoration.StickyHeaderDecoration;
+import com.klisly.bookbox.BookBoxApplication;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ArticleViewHolder;
 import com.klisly.bookbox.adapter.StickyHeaderAdapter;
@@ -28,6 +33,7 @@ import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
 
@@ -44,7 +50,7 @@ import timber.log.Timber;
 
 import static com.klisly.bookbox.R.id.recyclerView;
 
-public class MagFragment<T extends BaseModel> extends BaseMainFragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class MagFragment<T extends BaseModel> extends BaseMainFragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
     @Bind(recyclerView)
     EasyRecyclerView mRecy;
@@ -89,7 +95,8 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
 
     private void initView(View view) {
         mToolbar.setTitle(R.string.magzine);
-        initToolbarNav(mToolbar, false);
+        initToolbarNav(mToolbar, true);
+        mToolbar.setOnMenuItemClickListener(this);
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
         DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
@@ -144,6 +151,33 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
 
         mRecy.setRefreshListener(this);
         onRefresh();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_more:
+                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
+                popupMenu.inflate(R.menu.menu_novel_pop);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_as_home:
+                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_MAGZINE);
+                                ToastHelper.showShortTip(R.string.success_as_home);
+                                break;
+                        }
+                        popupMenu.dismiss();
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     private void queryData(Article article) {

@@ -12,6 +12,11 @@
             android:title="@string/manage_site"
             app:showAsAction="never"/>
     <item
+        android:id="@+id/action_as_home"
+        android:title="@string/as_home"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
             android:id="@+id/action_sort_method"
             android:title="@string/sort_method"
             android:visible="false"

@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerFragmentAdapter;
 import com.klisly.bookbox.listener.OnDataChangeListener;
@@ -149,9 +151,14 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                                     start(ChooseSiteFragment.newInstance(ChooseSiteFragment.ACTION_MANAGE));
                                 }
                                 break;
+                            case R.id.action_as_home:
+                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_SITE);
+                                ToastHelper.showShortTip(R.string.success_as_home);
+                                break;
                             case R.id.action_sort_method:
                                 ToastHelper.showShortTip(R.string.sort_method);
                                 break;
+
                             case R.id.action_notify_setting:
                                 ToastHelper.showShortTip(R.string.notify_setting);
                                 break;

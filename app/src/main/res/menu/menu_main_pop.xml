@@ -12,6 +12,11 @@
         android:title="@string/manage_topic"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_as_home"
+        android:title="@string/as_home"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_recom_setting"
         android:title="@string/recom_setting"
         android:visible="false"

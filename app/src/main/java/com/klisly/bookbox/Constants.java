@@ -27,6 +27,13 @@ public class Constants {
     public static final int NOTIFI_ACTION_NOVEL_UPDATE = 2;
     public static final int NOTIFI_ID_MOMENT = 1;
     public static final int NOTIFI_ID_NOVEL_UPDATE = 2;
+    public static final String FIRST_OPEN = "first_open";
+    public static final String HOME_FRAG = "HOME_FRAG";
+    public static final String FRAG_TOPIC = "topic";
+    public static final String FRAG_SITE = "site";
+    public static final String FRAG_MAGZINE = "magzine";
+    public static final String FRAG_NOVEL = "novel";
+
 
     private static SharedPreferenceUtils preferenceUtils = BookBoxApplication.getInstance().getPreferenceUtils();
 
@@ -49,4 +56,11 @@ public class Constants {
     public static int ITEM_TYPE_JOKE = 2;
     public static String LAST_CHECK = "LAST_CHECK";
     public static long UPDATE_CHECK_DURATION = 86400000;
+
+    public static String getCharset(String url) {
+        if(url.indexOf("biqugezw.com")!= -1){
+            return "gbk";
+        }
+        return "utf-8";
+    }
 }

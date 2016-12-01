@@ -109,9 +109,12 @@
     <string name="android_auto_update_dialog_checking">正在检查版本</string>
     <string name="update">小说更新</string>
     <string name="manage_novel">订阅管理</string>
-    <string name="set_home">设为首屏</string>
     <string name="search_novel">搜索小说</string>
     <string name="search_hint">搜索小说</string>
     <string name="canclefocus">取消关注</string>
+    <string name="entrnovel">看小说</string>
+    <string name="entrchapter">看美文</string>
+    <string name="as_home">设为主页</string>
+    <string name="success_as_home">成功设为首页</string>
 
 </resources>

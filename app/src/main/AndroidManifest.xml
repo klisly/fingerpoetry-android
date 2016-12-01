@@ -64,7 +64,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
-
+        <activity android:name=".ui.activity.WelcomeGuideActivity"/>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

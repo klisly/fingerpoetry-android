@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerFragmentAdapter;
 import com.klisly.bookbox.listener.OnDataChangeListener;
@@ -150,6 +152,10 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                         switch (item.getItemId()) {
                             case R.id.action_recom_setting:
                                 ToastHelper.showShortTip(R.string.recom_setting);
+                                break;
+                            case R.id.action_as_home:
+                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_TOPIC);
+                                ToastHelper.showShortTip(R.string.success_as_home);
                                 break;
                             case R.id.action_manage_topic:
                                 if (!AccountLogic.getInstance().isLogin()) {

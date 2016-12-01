@@ -164,7 +164,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         Date date = new Date();
         date.setTime(mData.getCreateAt());
         tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
-        String html = "<!DOCTYPE html><html><head><title>指尖书香</title><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
+        String html = "<!DOCTYPE html><html><head><title>指尖书香</title><meta http-equiv=\"content-type\" content=\"text/html; charset="+Constants.getCharset(mData.getSrcUrl())+"\">"
                 + "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1.0,  maximum-scale=1.0, user-scalable=no\">"
                 + " <style type=\"text/css\">"
                 + " body {"

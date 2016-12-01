@@ -86,8 +86,20 @@ public class HomeActivity extends SupportActivity
         initView();
         checkUpdate();
         checkPermission();
+        mNavigationView.setCheckedItem(R.id.menu_home);
+        start(HomeFragment.newInstance());
         if (savedInstanceState == null) {
-            start(HomeFragment.newInstance());
+            String home = BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.HOME_FRAG, Constants.FRAG_TOPIC);
+            if(home.equals(Constants.FRAG_NOVEL)){
+                mNavigationView.setCheckedItem(R.id.menu_novel);
+                start(NovelFragment.newInstance());
+            } else if(home.equals(Constants.FRAG_SITE)){
+                mNavigationView.setCheckedItem(R.id.menu_site);
+                start(SiteFragment.newInstance());
+            } else if(home.equals(Constants.FRAG_MAGZINE)){
+                mNavigationView.setCheckedItem(R.id.menu_magzine);
+                start(MagFragment.newInstance());
+            }
         }
         new Handler().postDelayed(new Runnable() {
             @Override
