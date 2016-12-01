@@ -144,12 +144,13 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
-                        mProgress.setVisibility(View.INVISIBLE);
+                        if(mProgress != null){
+                            mProgress.setVisibility(View.INVISIBLE);
+                        }
                         if (!StringUtils.isEmpty(content)) {
                             mData.setContent(content);
                             updateData();
                         } else {
-
                             ToastHelper.showShortTip(R.string.get_detial_fail);
                         }
                     }
@@ -187,6 +188,14 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                 + mData.getContent()
                 + "</body> "
                 + " </html>";
+        html = html.replace("&nbsp;&nbsp;&nbsp;&nbsp;一秒记住【笔趣阁中文网\n" +
+                "<a href=\"http://www.biqugezw.com\" target=\"_blank\">www.biqugezw.com</a>】，为您提供精彩小说阅读。\n" +
+                "<br> \n" +
+                "<br> ", "");
+        html = html.replace("&#xA0;&#xA0;&#xA0;&#xA0;&#x4E00;&#x79D2;&#x8BB0;&#x4F4F;&#x3010;&#x7B14;&#x8DA3;&#x9601;&#x4E2D;&#x6587;&#x7F51;<a href=\"http://www.biqugezw.com\" target=\"_blank\">www.biqugezw.com</a>&#x3011;&#xFF0C;&#x4E3A;&#x60A8;&#x63D0;&#x4F9B;&#x7CBE;&#x5F69;&#x5C0F;&#x8BF4;&#x9605;&#x8BFB;&#x3002;<br>\n" +
+                "<br>","");
+        html = html.replace("手机用户请浏览m.biqugezw.com阅读，更优质的阅读体验。","");
+        html = html.replace("&#x624B;&#x673A;&#x7528;&#x6237;&#x8BF7;&#x6D4F;&#x89C8;m.biqugezw.com&#x9605;&#x8BFB;&#xFF0C;&#x66F4;&#x4F18;&#x8D28;&#x7684;&#x9605;&#x8BFB;&#x4F53;&#x9A8C;&#x3002;", "");
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 //        tvContent.loadData(html, "text/html", "utf-8");
         int w = View.MeasureSpec.makeMeasureSpec(0,
