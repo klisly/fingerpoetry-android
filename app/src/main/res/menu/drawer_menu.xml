@@ -32,7 +32,9 @@
             android:icon="@drawable/left_user"
             android:title="@string/mine" />
     </group>
-    <group android:id="@+id/menu_group_2">
+    <group android:id="@+id/menu_group_2"
+        android:visible="false"
+        >
         <item
             android:id="@+id/menu_settings"
             android:title="@string/setting"

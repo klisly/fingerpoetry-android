@@ -50,9 +50,9 @@ public class SplashActivity extends Activity implements SplashADListener {
         CommonHelper.getUserNovels(getApplicationContext());
         CommonHelper.updateDeviceToken(getApplicationContext());
         initAlarm();
-        if(BuildConfig.DEBUG){
-            BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.FIRST_OPEN, true);
-        }
+//        if(BuildConfig.DEBUG){
+        BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.FIRST_OPEN, true);
+//        }
         if(BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.FIRST_OPEN, true)){
             Intent intent = new Intent(this, WelcomeGuideActivity.class);
             startActivity(intent);

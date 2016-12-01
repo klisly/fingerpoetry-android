@@ -25,12 +25,14 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.bookbox.utils.ToastHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -90,17 +92,27 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
         initListener();
     }
 
+    @OnClick(R.id.btn_search)
+    void onSearch(){
+        hideSoftInput();
+        searchView.clearFocus();
+        loadSearch(input);
+    }
+    private String input;
     private void initListener() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Timber.i("search test:" + query);
+                input = query;
                 loadSearch(query);
+                searchView.clearFocus();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                input = newText;
                 return false;
             }
         });
@@ -125,6 +137,7 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                                 @Override
                                 public void onNext(ApiResult<User2Novel> apiResult) {
                                     if (apiResult.getStatus() == 200 || apiResult.getStatus() == 404) {
+                                        ToastHelper.showShortTip("成功取消关注");
                                         if(datas.get(position).getId() != null){
                                             NovelLogic.getInstance().unSubscribe(datas.get(position).getId());
                                         } else {
@@ -167,6 +180,7 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
             @Override
             public void onNext(ApiResult<User2Novel> apiResult) {
                 if (apiResult.getStatus() == 200 ) {
+                    ToastHelper.showShortTip("成功关注");
                     User2Novel user2Novel = apiResult.getData();
                     if (user2Novel != null) {
                         NovelLogic.getInstance().subscribe(user2Novel);
@@ -189,6 +203,7 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
     }
 
     private void loadSearch(String name) {
+        hideSoftInput();
         datas.clear();
         adapter.notifyDataSetChanged();
         novelApi.search(name)

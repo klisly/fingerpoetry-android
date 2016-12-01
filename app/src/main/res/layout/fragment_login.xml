@@ -77,7 +77,7 @@
                 widget:paper_shadow_color="@color/white"
                 widget:paper_text="@string/login_forgetpass_link"
                 widget:paper_text_color="@color/accent"
-                widget:paper_text_size="@dimen/text_size_10" />
+                widget:paper_text_size="@dimen/text_size_14" />
 
 
             <RelativeLayout
