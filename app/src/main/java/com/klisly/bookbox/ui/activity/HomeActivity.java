@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -82,13 +83,18 @@ public class HomeActivity extends SupportActivity
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        if (savedInstanceState == null) {
-            start(HomeFragment.newInstance());
-        }
-        checkNotify(getIntent());
         initView();
         checkUpdate();
         checkPermission();
+        if (savedInstanceState == null) {
+            start(HomeFragment.newInstance());
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkNotify(getIntent());
+            }
+        }, 200);
     }
 
     private void checkNotify(Intent intent) {

@@ -71,6 +71,9 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
+                if (getActivity() == null || getActivity().isFinishing()) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

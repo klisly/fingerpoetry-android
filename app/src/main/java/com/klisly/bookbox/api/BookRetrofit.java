@@ -21,7 +21,7 @@ public class BookRetrofit {
 //    public final static String BASE_URL = "http://192.168.10.103:3000/v1/";
     public final static String BASE_API_URL = BASE_URL;
 
-    private final static long DEFAULT_TIMEOUT = 60; // 60s超时
+    private final static long DEFAULT_TIMEOUT = 15; // 15s超时
     private final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .serializeNulls()

@@ -173,6 +173,9 @@ public class LoginFragment extends BaseBackFragment {
         qqplatform.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                if (getActivity() == null || getActivity().isFinishing()) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -156,6 +156,9 @@ public class RegisterFragment extends BaseBackFragment {
                         //返回支持发送验证码的国家列表
                     }
                     if (showTip != Constants.INVALID) {
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
                         getActivity().runOnUiThread(() -> ToastHelper.showShortTip(showTip));
                     }
                 }
@@ -166,6 +169,9 @@ public class RegisterFragment extends BaseBackFragment {
 
     // 注册用户到服务器
     private void registerToServer() {
+        if (getActivity() == null || getActivity().isFinishing()) {
+            return;
+        }
         getActivity().runOnUiThread(() -> {
                     String strAccount = mEtAccount.getText().toString().trim();
                     String strNickname = mEtNickName.getText().toString().trim();

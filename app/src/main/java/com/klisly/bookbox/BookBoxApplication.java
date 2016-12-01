@@ -17,18 +17,23 @@ import com.klisly.bookbox.ui.activity.SplashActivity;
 import com.klisly.bookbox.utils.CrashHandler;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;
+import com.klisly.common.StringUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
 
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import timber.log.Timber;
 
 public class BookBoxApplication extends Application {
     private static BookBoxApplication appContext = null;
     private SharedPreferenceUtils preferenceUtils;
-
+    private ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 15, 30, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
     public static BookBoxApplication getInstance() {
         return appContext;
     }
@@ -144,7 +149,11 @@ public class BookBoxApplication extends Application {
         //通知默认的声音 震动 呼吸灯
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         android.app.Notification notification = builder.build();
-        manager.notify(Constants.NOTIFI_ID_NOVEL_UPDATE,notification);
+        if(StringUtils.isEmpty(cid)){
+            manager.notify(Constants.NOTIFI_ID_NOVEL_UPDATE,notification);
+        } else {
+            manager.notify(cid.hashCode(),notification);
+        }
     }
 
 
@@ -162,5 +171,9 @@ public class BookBoxApplication extends Application {
 
     public PushAgent getPushAgent() {
         return mPushAgent;
+    }
+
+    public ThreadPoolExecutor getExecutor() {
+        return executor;
     }
 }

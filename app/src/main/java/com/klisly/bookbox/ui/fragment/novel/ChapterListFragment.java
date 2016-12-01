@@ -263,7 +263,7 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
     }
 
     private void onFinish() {
-        if (getActivity() == null) {
+        if (getActivity() == null || getActivity().isFinishing()) {
             return;
         }
         getActivity().runOnUiThread(new Runnable() {

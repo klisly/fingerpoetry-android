@@ -176,6 +176,9 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
                     public void onNext(ApiResult<List<Magazine>> res) {
                         onFinish();
                         if (needToast) {
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -213,7 +216,7 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
     }
 
     private void onFinish() {
-        if (getActivity() == null) {
+        if (getActivity() == null || getActivity().isFinishing()) {
             return;
         }
         getActivity().runOnUiThread(new Runnable() {

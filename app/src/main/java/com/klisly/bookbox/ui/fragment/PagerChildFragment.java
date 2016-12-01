@@ -198,6 +198,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     public void onNext(ApiResult<List<Article>> res) {
                         if (needToast) {
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

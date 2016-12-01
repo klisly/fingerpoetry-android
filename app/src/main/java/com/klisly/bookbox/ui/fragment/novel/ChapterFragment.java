@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -102,67 +102,60 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
             return;
         }
         mProgress.setVisibility(View.VISIBLE);
-        new Thread(new Runnable() {
+        novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        getDataFromWeb();
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        getDataFromWeb();
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<Chapter> res) {
+                        if (res.getData() != null && StringUtils.isNotEmpty(res.getData().getContent())) {
+                            mProgress.setVisibility(View.INVISIBLE);
+                            mData = res.getData();
+                            updateData();
+                        } else {
+                            getDataFromWeb();
+                        }
+                    }
+                });
+
+    }
+
+    private void getDataFromWeb() {
+        BookBoxApplication.getInstance().getExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 String content = ChapterParser.getContet(mData.getSrcUrl());
-                if (!StringUtils.isEmpty(content)) {
-                    mData.setContent(content);
-                    if(getActivity() == null ){
-                        return;
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(getActivity() == null || getActivity().isFinishing()){
-                                return;
-                            }
-
-                            mProgress.setVisibility(View.INVISIBLE);
-                            updateData();
-                        }
-                    });
+                if (getActivity() == null || getActivity().isFinishing()) {
                     return;
                 }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (getActivity() == null || getActivity().isFinishing()) {
+                            return;
+                        }
+                        mProgress.setVisibility(View.INVISIBLE);
+                        if (!StringUtils.isEmpty(content)) {
+                            mData.setContent(content);
+                            updateData();
+                        } else {
 
-                novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new AbsSubscriber<ApiResult<Chapter>>(getActivity(), false) {
-                            @Override
-                            protected void onError(ApiException ex) {
-                                try {
-                                    if (getActivity() != null && mProgress != null) {
-                                        mProgress.setVisibility(View.INVISIBLE);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                ToastHelper.showShortTip(R.string.get_detial_fail);
-
-                            }
-
-                            @Override
-                            protected void onPermissionError(ApiException ex) {
-                                if (getActivity() != null && mProgress != null) {
-                                    mProgress.setVisibility(View.INVISIBLE);
-                                }
-                                ToastHelper.showShortTip(R.string.get_detial_fail);
-                            }
-
-                            @Override
-                            public void onNext(ApiResult<Chapter> res) {
-                                mProgress.setVisibility(View.INVISIBLE);
-                                if (res.getData() != null && StringUtils.isNotEmpty(res.getData().getContent())) {
-                                    mData = res.getData();
-                                    updateData();
-                                } else {
-                                    ToastHelper.showShortTip(R.string.get_detial_fail);
-                                }
-                            }
-                        });
+                            ToastHelper.showShortTip(R.string.get_detial_fail);
+                        }
+                    }
+                });
             }
-        }).start();
+        });
     }
 
     private void updateData() {
@@ -196,6 +189,12 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                 + " </html>";
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 //        tvContent.loadData(html, "text/html", "utf-8");
+        int w = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        //重新测量
+        tvContent.measure(w, h);
     }
 
     @Override
@@ -231,12 +230,26 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
 
             @Override
             public void onNoAD(int arg0) {
-                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+                bannerContainer.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onADReceiv() {
-                Log.i("AD_DEMO", "ONBannerReceive");
+//                // 初始化需要加载的动画资源
+//                Animation animation = AnimationUtils
+//                        .loadAnimation(getActivity().getApplicationContext(), R.anim.slide_in_from_top);
+//                // “淡入淡出”动画。
+//                // 0.0f，完全透明，
+//                // 1.0f，完全不透明。
+//                AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+//                alphaAnimation.setDuration(1000);
+//                // 动画集。
+//                AnimationSet animationSet = new AnimationSet(false);
+//                animationSet.addAnimation(alphaAnimation);
+//                animationSet.addAnimation(animation);
+//
+//                // 开始播放动画。
+//                bannerContainer.startAnimation(animationSet);
             }
         });
         bannerContainer.addView(bv);

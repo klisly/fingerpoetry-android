@@ -70,7 +70,7 @@
     <string name="start_load">开始加载</string>
     <string name="load_success">加载完成</string>
     <string name="load_empty">没有更新,去看其他的频道吧</string>
-    <string name="get_detial_fail">获取文章失败</string>
+    <string name="get_detial_fail">抱歉，还没收集到这篇文章内容</string>
     <string name="collect">添加收藏</string>
     <string name="nocollect">取消收藏</string>
     <string name="share">分享</string>

@@ -26,8 +26,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES"/>-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!--<uses-feature android:name="android.hardware.camera" />-->
@@ -61,7 +61,7 @@
             android:allowBackup="true"
             android:hardwareAccelerated="true"
             android:largeHeap="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
 

@@ -158,3 +158,10 @@
 -keep public class android.webkit.**
 -keep public class java.nio.**
 -dontwarn com.androidquery.auth.**
+
+-keep class com.qq.e.** {
+public protected *;
+}
+-keep class android.support.v4.app.NotificationCompat**{
+public *;
+}
