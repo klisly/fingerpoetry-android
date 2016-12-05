@@ -15,13 +15,19 @@
         app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">
 
     </android.support.v7.widget.Toolbar>
-
+    <FrameLayout
+        android:id="@+id/bannerContainer"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
+        android:layout_above="@id/bannerContainer"
         android:descendantFocusability="blocksDescendants">
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,14 +79,9 @@
                         android:text="" />
                 </LinearLayout>
             </LinearLayout>
-            <FrameLayout
-                android:id="@+id/bannerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </FrameLayout>
+
             <WebView
                 android:id="@+id/webView"
-
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

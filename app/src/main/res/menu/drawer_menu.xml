@@ -38,10 +38,10 @@
         <item
             android:id="@+id/menu_settings"
             android:title="@string/setting"
-            android:visible="true" />
+            android:visible="false" />
         <item
             android:id="@+id/menu_about"
             android:title="@string/about"
-            android:visible="true" />
+            android:visible="false" />
     </group>
 </menu>
