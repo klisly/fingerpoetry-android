@@ -148,11 +148,11 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
 
         @Override
         public Fragment getItem(int position) {
-           if(position == 0){
-               return new UpdateFragment<Chapter>();
-           } else {
-               return new SubscribFragment<User2Novel>();
-           }
+            if(position == 0){
+                return new UpdateFragment<Chapter>();
+            } else {
+                return new SubscribFragment<User2Novel>();
+            }
         }
 
         @Override

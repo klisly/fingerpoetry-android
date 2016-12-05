@@ -121,6 +121,9 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if(position < 0  || adapter.getItem(position) == null){
+                    return;
+                }
                 queryData((Chapter) adapter.getItem(position));
             }
         });

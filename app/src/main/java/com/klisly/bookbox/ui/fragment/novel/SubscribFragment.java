@@ -97,6 +97,9 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if(position < 0  || adapter.getItem(position) == null){
+                    return;
+                }
                 queryData((User2Novel) adapter.getItem(position));
             }
         });

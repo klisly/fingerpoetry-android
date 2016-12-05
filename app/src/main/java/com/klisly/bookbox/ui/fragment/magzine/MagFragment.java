@@ -130,6 +130,9 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if(position < 0  || adapter.getItem(position) == null){
+                    return;
+                }
                 queryData((Article) adapter.getItem(position));
             }
         });
