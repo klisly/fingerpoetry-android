@@ -50,9 +50,6 @@ public class SplashActivity extends Activity implements SplashADListener {
         CommonHelper.getUserNovels(getApplicationContext());
         CommonHelper.updateDeviceToken(getApplicationContext());
         initAlarm();
-//        if(BuildConfig.DEBUG){
-//        BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.FIRST_OPEN, true);
-//        }
         if(BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.FIRST_OPEN, true)){
             Intent intent = new Intent(this, WelcomeGuideActivity.class);
             startActivity(intent);
@@ -68,7 +65,7 @@ public class SplashActivity extends Activity implements SplashADListener {
     }
 
     private void initAlarm() {
-        AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 7, 15, 0, 0, "亲，现在可以阅读小编早上为您准备的的文章吧", 0);
+        AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 7, 15, 0, 0, "亲，阅读小编早上为您准备的的文章吧", 0);
         AlarmManagerUtil.setAlarm(getApplicationContext(), 1, 19, 15, 1, 0, "亲，来欣赏下这几篇文章哟", 0);
     }
 

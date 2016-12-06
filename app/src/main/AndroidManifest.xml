@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 在sdcard中创建/删除文件的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--&lt;!&ndash; 请求访问使用照相设备 &ndash;&gt;-->
     <!--<uses-permission android:name="android.permission.CAMERA" />-->
     <!--&lt;!&ndash; 开启闪光灯权限 &ndash;&gt;-->
@@ -106,6 +107,13 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".alarm.BootCompleteReceiver">
+            <intent-filter>
+                <action android:name="com.klisly.bookbox.alarm.heart"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <!-- 配置APP ID -->
         <meta-data
             android:name="BUGLY_APPID"
@@ -118,13 +126,6 @@
         <meta-data
             android:name="BUGLY_ENABLE_DEBUG"
             android:value="true" />
-
-        <!-- 使用完全自定义消息来开启应用的服务进程的示例服务配置 -->
-        <!-- 不是必需的服务，可以根据开发者的需求进行设置 -->
-        <!--<service android:name="com.umeng.message.example.NotificationService" />-->
-        <!--<service android:name="com.umeng.message.example.MyPushIntentService" />-->
-        <!--<service android:name="com.umeng.message.example.UmengNotificationService"/>-->
-        <!--<service android:name="com.umeng.message.example.MyNotificationService" />-->
 
         <meta-data
             android:name="UMENG_APPKEY"

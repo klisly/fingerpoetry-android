@@ -10,8 +10,8 @@ android {
         applicationId "com.klisly.bookbox"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 5
-        versionName "1.4"
+        versionCode 6
+        versionName "1.5"
 //        jackOptions { // 支持lambda式
 //            enabled true
 //        }

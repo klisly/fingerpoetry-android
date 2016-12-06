@@ -22,10 +22,15 @@
 
 package com.klisly.bookbox.utils;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
+
+import com.klisly.bookbox.BuildConfig;
+import com.klisly.bookbox.ui.activity.SplashActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -92,13 +97,16 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 		if (!res && defalutHandler != null) {
 			// 如果用户没有处理则让系统默认的异常处理器来处理
 			defalutHandler.uncaughtException(thread, ex);
-
+			Intent intent = new Intent(context, SplashActivity.class);
+			PendingIntent restartIntent = PendingIntent.getActivity(
+					context, 0, intent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			//退出程序
+			AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+			mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+					restartIntent); // 1秒钟后重启应用
+			System.exit(1);
 		} else {
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				Log.e(TAG, "error : ", e);
-			}
 			// 退出程序
 			android.os.Process.killProcess(android.os.Process.myPid());
 			System.exit(1);
@@ -124,9 +132,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
 				ex.printStackTrace();
 				String err = "[" + ex.getMessage() + "]";
-				Toast.makeText(context, "程序出现异常." + err, Toast.LENGTH_LONG)
-						.show();
-
+				if(BuildConfig.DEBUG) {
+					Toast.makeText(context, "程序出现异常." + err, Toast.LENGTH_LONG)
+							.show();
+				} else {
+					Toast.makeText(context, "程序出现异常，重新启动", Toast.LENGTH_LONG)
+							.show();
+				}
 				Looper.loop();
 			}
 
