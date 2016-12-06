@@ -33,12 +33,12 @@
             android:title="@string/mine" />
     </group>
     <group android:id="@+id/menu_group_2"
-        android:visible="false"
+        android:visible="true"
         >
         <item
             android:id="@+id/menu_settings"
             android:title="@string/setting"
-            android:visible="false" />
+            android:visible="true" />
         <item
             android:id="@+id/menu_about"
             android:title="@string/about"

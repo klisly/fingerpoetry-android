@@ -90,6 +90,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:text="指尖小筑"
+                android:maxLength ="15"
                 android:textColor="@color/text_gray"
                 android:textSize="18sp" />
 

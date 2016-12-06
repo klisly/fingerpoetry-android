@@ -65,6 +65,7 @@
                     android:layout_alignLeft="@+id/tv_desc"
                     android:layout_marginBottom="10dp"
                     android:text="昵称"
+                    android:maxLength="15"
                     android:textSize="18sp" />
 
                 <TextView

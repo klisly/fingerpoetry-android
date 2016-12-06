@@ -106,7 +106,7 @@ public class LoginFragment extends BaseBackFragment {
                 CommonHelper.getUserNovels(getActivity().getApplicationContext());
                 CommonHelper.updateDeviceToken(getActivity().getApplicationContext());
                 BusProvider.getInstance().post(new LoginEvent());
-                pop();
+                getActivity().onBackPressed();
             }
         };
 

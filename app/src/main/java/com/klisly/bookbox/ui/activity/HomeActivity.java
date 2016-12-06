@@ -36,6 +36,8 @@ import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
+import com.klisly.bookbox.ui.fragment.AboutFragment;
+import com.klisly.bookbox.ui.fragment.SettingFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
 import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
 import com.klisly.bookbox.ui.fragment.home.HomeFragment;
@@ -367,6 +369,34 @@ public class HomeActivity extends SupportActivity
                         goToLogin();
                     }
 
+                } else if (id == R.id.menu_settings) {
+                    SettingFragment fragment = findFragment(SettingFragment.class);
+                    if (fragment == null) {
+                        popTo(HomeFragment.class, false, new Runnable() {
+                            @Override
+                            public void run() {
+                                start(new SettingFragment());
+                            }
+                        });
+                    } else {
+                        // 如果已经在栈内,则以SingleTask模式start
+                        //                        start(fragment, SupportFragment.SINGLETASK);
+                        start(fragment, SupportFragment.SINGLETASK);
+                    }
+                } else if (id == R.id.menu_about) {
+                    AboutFragment fragment = findFragment(AboutFragment.class);
+                    if (fragment == null) {
+                        popTo(HomeFragment.class, false, new Runnable() {
+                            @Override
+                            public void run() {
+                                start(new AboutFragment());
+                            }
+                        });
+                    } else {
+                        // 如果已经在栈内,则以SingleTask模式start
+                        //                        start(fragment, SupportFragment.SINGLETASK);
+                        start(fragment, SupportFragment.SINGLETASK);
+                    }
                 }
             }
         }, 250);

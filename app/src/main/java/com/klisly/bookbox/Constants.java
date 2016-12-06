@@ -63,4 +63,8 @@ public class Constants {
         }
         return "utf-8";
     }
+
+    public static String NOTIFICATION_MORNING = "NOTIFICATION_MORNING";
+    public static String NOTIFICATION_AFTERNOON = "NOTIFICATION_AFTERNOON";
+    public static String NOTIFICATION_NOVEL = "NOTIFICATION_NOVEL";
 }

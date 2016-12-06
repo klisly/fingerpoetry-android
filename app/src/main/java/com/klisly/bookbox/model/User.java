@@ -2,6 +2,7 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.common.StringUtils;
 
 public class User extends BaseModel{
 
@@ -95,6 +96,12 @@ public class User extends BaseModel{
      * The name
      */
     public String getName() {
+        if(StringUtils.isEmpty(name)){
+            name = "";
+        }
+        if(name.length()> 15){
+            name = name.substring(0, 15);
+        }
         return name;
     }
 
