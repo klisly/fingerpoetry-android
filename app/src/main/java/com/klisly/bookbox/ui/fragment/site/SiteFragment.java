@@ -93,13 +93,21 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
 
             @Override
             public void onPageSelected(int position) {
-                PagerChildFragment<Site> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
-                Site site = fragment.getmData();
-                if (!site.getId().equals(SiteLogic.getInstance().getOpenFocuses().get(position).getId())) {
-                    Timber.i("new topic in position:" + position + " new:"
-                            + SiteLogic.getInstance().getOpenFocuses().get(position).getName()
-                            + " old:" + site.getName());
-                    fragment.setmData(SiteLogic.getInstance().getOpenFocuses().get(position));
+                // Position 回调，Fragment的Size可能能会发生变化
+                try {
+                    if(getChildFragmentManager().getFragments().size() <= position ){
+                        return;
+                    }
+                    PagerChildFragment<Site> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
+                    Site site = fragment.getmData();
+                    if (!site.getId().equals(SiteLogic.getInstance().getOpenFocuses().get(position).getId())) {
+                        Timber.i("new topic in position:" + position + " new:"
+                                + SiteLogic.getInstance().getOpenFocuses().get(position).getName()
+                                + " old:" + site.getName());
+                        fragment.setmData(SiteLogic.getInstance().getOpenFocuses().get(position));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }

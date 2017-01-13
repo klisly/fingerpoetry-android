@@ -165,39 +165,13 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         Date date = new Date();
         date.setTime(mData.getCreateAt());
         tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
-        String html = "<!DOCTYPE html><html><head><title>指尖书香</title><meta http-equiv=\"content-type\" content=\"text/html; charset="+Constants.getCharset(mData.getSrcUrl())+"\">"
-                + "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1.0,  maximum-scale=1.0, user-scalable=no\">"
-                + " <style type=\"text/css\">"
-                + " body {"
-                + "margin: 0;"
-                + "padding-left: 10px;padding-right:10px; "
-                + " font: 16px"
-                + "background: #F5FCFF;"
-                + "} "
-                + " a{"
-                + " text-decoration:none;"
-                + "  outline:0 none;pointer-events:none; color:inherit; cursor:default; "
-                + " }"
-                + " p { "
-                + "marginTop: 5; "
-                + "}  img{display: block;\n" +
-                "    width: 100%;} "
-                + "</style> "
-                + "</head> "
-                + "<body> "
-                + mData.getContent()
-                + "</body> "
-                + " </html>";
-        html = html.replace("&nbsp;&nbsp;&nbsp;&nbsp;一秒记住【笔趣阁中文网\n" +
-                "<a href=\"http://www.biqugezw.com\" target=\"_blank\">www.biqugezw.com</a>】，为您提供精彩小说阅读。\n" +
-                "<br> \n" +
-                "<br> ", "");
-        html = html.replace("&#xA0;&#xA0;&#xA0;&#xA0;&#x4E00;&#x79D2;&#x8BB0;&#x4F4F;&#x3010;&#x7B14;&#x8DA3;&#x9601;&#x4E2D;&#x6587;&#x7F51;<a href=\"http://www.biqugezw.com\" target=\"_blank\">www.biqugezw.com</a>&#x3011;&#xFF0C;&#x4E3A;&#x60A8;&#x63D0;&#x4F9B;&#x7CBE;&#x5F69;&#x5C0F;&#x8BF4;&#x9605;&#x8BFB;&#x3002;<br>\n" +
-                "<br>","");
-        html = html.replace("手机用户请浏览m.biqugezw.com阅读，更优质的阅读体验。","");
-        html = html.replace("&#x624B;&#x673A;&#x7528;&#x6237;&#x8BF7;&#x6D4F;&#x89C8;m.biqugezw.com&#x9605;&#x8BFB;&#xFF0C;&#x66F4;&#x4F18;&#x8D28;&#x7684;&#x9605;&#x8BFB;&#x4F53;&#x9A8C;&#x3002;", "");
+        String html = Constants.ARTICLE_PREFIX + mData.getContent()+Constants.ARTICLE_SUFFIX;
+        html = html.replace(Constants.NOVEL_END_0, "");
+        html = html.replace(Constants.NOVEL_END_1,"");
+        html = html.replace(Constants.NOVEL_END_2,"");
+        html = html.replace(Constants.NOVEL_END_3, "");
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
-//        tvContent.loadData(html, "text/html", "utf-8");
+
         int w = View.MeasureSpec.makeMeasureSpec(0,
                 View.MeasureSpec.UNSPECIFIED);
         int h = View.MeasureSpec.makeMeasureSpec(0,
@@ -351,17 +325,18 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
 //        oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle("小说更新自动推送");
+        oks.setTitle("小说更新-"+mData.getTitle());
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(shareUrl);
         // text是分享文本，所有平台都需 要这个字段
-        oks.setText("指尖书香小说更新自动提醒，这是我在看的" + "\"" + mData.getTitle() + "\"" + "." + shareUrl);
+        oks.setText("小说更新-" + "\"" + mData.getTitle() + "\"" + "." + shareUrl);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl(shareUrl);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("很棒啊，自从有了指尖属相，再也不浪费时间刷小说更新了");
+        String content = mData.getContent().substring(0, Math.min(50, mData.getContent().length()));
+        oks.setComment("更新内容："+content);
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用

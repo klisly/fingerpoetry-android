@@ -20,7 +20,6 @@ import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.logic.AccountLogic;
-import com.klisly.bookbox.logic.SiteLogic;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.Chapter;
 import com.klisly.bookbox.model.User2Novel;
@@ -60,7 +59,6 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        SiteLogic.getInstance().unRegisterListener(this);
         ButterKnife.unbind(this);
     }
 

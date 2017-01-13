@@ -1,6 +1,5 @@
 package com.klisly.bookbox;
 
-import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,10 +7,15 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.karumi.dexter.Dexter;
+import com.klisly.bookbox.daemon.Receiver1;
+import com.klisly.bookbox.daemon.Receiver2;
+import com.klisly.bookbox.daemon.Service1;
+import com.klisly.bookbox.daemon.Service2;
 import com.klisly.bookbox.model.Notification;
 import com.klisly.bookbox.ui.activity.SplashActivity;
 import com.klisly.bookbox.utils.CrashHandler;
@@ -19,6 +23,8 @@ import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;
 import com.klisly.common.StringUtils;
 import com.klisly.common.dateutil.DateUtil;
+import com.marswin89.marsdaemon.DaemonApplication;
+import com.marswin89.marsdaemon.DaemonConfigurations;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -32,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
-public class BookBoxApplication extends Application {
+public class BookBoxApplication extends DaemonApplication {
     private static BookBoxApplication appContext = null;
     private SharedPreferenceUtils preferenceUtils;
     private ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 15, 30, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
@@ -191,5 +197,31 @@ public class BookBoxApplication extends Application {
 
     public ThreadPoolExecutor getExecutor() {
         return executor;
+    }
+
+    @Override
+    protected DaemonConfigurations getDaemonConfigurations() {
+        DaemonConfigurations.DaemonConfiguration configuration1 = new DaemonConfigurations.DaemonConfiguration("com.klisly.bookbox:channel", Service1.class.getCanonicalName(), Receiver1.class.getCanonicalName());
+        DaemonConfigurations.DaemonConfiguration configuration2 = new DaemonConfigurations.DaemonConfiguration("com.klisly.bookbox:process2", Service2.class.getCanonicalName(), Receiver2.class.getCanonicalName());
+        DaemonConfigurations.DaemonListener listener = new MyDaemonListener();
+        //return new DaemonConfigurations(configuration1, configuration2);//listener can be null
+        return new DaemonConfigurations(configuration1, configuration2, listener);
+    }
+
+    class MyDaemonListener implements DaemonConfigurations.DaemonListener{
+        @Override
+        public void onPersistentStart(Context context) {
+            Log.i("MyDaemonListener", "onPersistentStart");
+        }
+
+        @Override
+        public void onDaemonAssistantStart(Context context) {
+            Log.i("MyDaemonListener", "onDaemonAssistantStart");
+        }
+
+        @Override
+        public void onWatchDaemonDaed() {
+            Log.i("MyDaemonListener", "onWatchDaemonDaed");
+        }
     }
 }

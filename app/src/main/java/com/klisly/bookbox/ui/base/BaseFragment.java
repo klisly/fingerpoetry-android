@@ -13,6 +13,9 @@ import android.view.animation.Animation;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
+import com.klisly.bookbox.logic.NovelLogic;
+import com.klisly.bookbox.logic.SiteLogic;
+import com.klisly.bookbox.logic.TopicLogic;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -62,6 +65,9 @@ public class BaseFragment extends SupportFragment {
     public void onDestroy() {
         Timber.i("onDestroy");
         super.onDestroy();
+        SiteLogic.getInstance().unRegisterListener(this);
+        TopicLogic.getInstance().unRegisterListener(this);
+        NovelLogic.getInstance().unRegisterListener(this);
     }
 
     @Override

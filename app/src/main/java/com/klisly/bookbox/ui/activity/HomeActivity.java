@@ -114,35 +114,39 @@ public class HomeActivity extends SupportActivity
     private void checkNotify(Intent intent) {
         getIntent().putExtra("target", intent.getIntExtra("target", 0));
         getIntent().putExtra("cid", intent.getStringExtra("cid"));
-        if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_MOMENT) {
-            mNavigationView.setCheckedItem(R.id.menu_magzine);
-            MagFragment fragment = findFragment(MagFragment.class);
-            if (fragment == null) {
-                popTo(HomeFragment.class, false, new Runnable() {
-                    @Override
-                    public void run() {
-                        start(new MagFragment());
-                    }
-                });
-            } else {
-                fragment.onResume();
-                start(fragment, SupportFragment.SINGLETASK);
-            }
-        } else if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {
-            mNavigationView.setCheckedItem(R.id.menu_novel);
+        try {
+            if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_MOMENT) {
+                mNavigationView.setCheckedItem(R.id.menu_magzine);
+                MagFragment fragment = findFragment(MagFragment.class);
+                if (fragment == null) {
+                    popTo(HomeFragment.class, false, new Runnable() {
+                        @Override
+                        public void run() {
+                            start(new MagFragment());
+                        }
+                    });
+                } else {
+                    fragment.onResume();
+                    start(fragment, SupportFragment.SINGLETASK);
+                }
+            } else if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {
+                mNavigationView.setCheckedItem(R.id.menu_novel);
 
-            NovelFragment fragment = findFragment(NovelFragment.class);
-            if (fragment == null) {
-                popTo(HomeFragment.class, false, new Runnable() {
-                    @Override
-                    public void run() {
-                        start(new NovelFragment());
-                    }
-                });
-            } else {
-                start(fragment, SupportFragment.SINGLETASK);
-                fragment.onResume();
+                NovelFragment fragment = findFragment(NovelFragment.class);
+                if (fragment == null) {
+                    popTo(HomeFragment.class, false, new Runnable() {
+                        @Override
+                        public void run() {
+                            start(new NovelFragment());
+                        }
+                    });
+                } else {
+                    start(fragment, SupportFragment.SINGLETASK);
+                    fragment.onResume();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

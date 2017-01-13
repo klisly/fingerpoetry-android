@@ -166,29 +166,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         Date date = new Date();
         date.setTime(mArticleData.getArticle().getCreateAt());
         tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
-        String html = "<!DOCTYPE html><html><head><title>指尖书香</title><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
-                + "<meta name=\"viewport\" content=\"width=device-width, maximum-scale=1.0,  maximum-scale=1.0, user-scalable=no\">"
-                + " <style type=\"text/css\">"
-                + " body {"
-                + "margin: 0;"
-                + "padding-left: 10px;padding-right:10px; "
-                + " font: 16px"
-                + "background: #F5FCFF;"
-                + "} "
-                + " a{"
-                + " text-decoration:none;"
-                + "  outline:0 none;pointer-events:none; color:inherit; cursor:default; "
-                + " }"
-                + " p { "
-                + "marginTop: 5; "
-                + "}  img{display: block;\n" +
-                "    width: 100%;} "
-                + "</style> "
-                + "</head> "
-                + "<body> "
-                + mArticleData.getArticle().getContent()
-                + "</body> "
-                + " </html>";
+        String html = Constants.ARTICLE_PREFIX + mArticleData.getArticle().getContent()+Constants.ARTICLE_SUFFIX;
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 //        tvContent.loadData(html, "text/html", "utf-8");
     }
@@ -284,6 +262,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                     case R.id.action_to_read:
                         toggleToRead();
                         break;
+
                     case R.id.action_collect:
                         toggleCollect();
                         break;
@@ -293,12 +272,15 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         break;
 
                     case R.id.action_original:
-                        start(OuterFragment.newInstance(mArticleData.getArticle()));
+                        if(mArticleData != null){
+                            start(OuterFragment.newInstance(mArticleData.getArticle()));
+                        }
                         break;
 
                     case R.id.action_notify_setting:
                         ToastHelper.showShortTip(R.string.report);
                         break;
+
                     default:
                         break;
                 }
@@ -323,11 +305,11 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
 //        oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle("好文大家读");
+        oks.setTitle(mArticleData.getArticle().getTitle());
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(shareUrl);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("我发现的一篇好文章," + "\"" + mArticleData.getArticle().getTitle() + "\"" + "." + shareUrl);
+        oks.setText("美文发现," + "\"" + mArticleData.getArticle().getTitle() + "\"" + "." + shareUrl);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用

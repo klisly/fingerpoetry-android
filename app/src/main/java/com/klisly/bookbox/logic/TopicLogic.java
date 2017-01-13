@@ -2,6 +2,9 @@ package com.klisly.bookbox.logic;
 
 import android.content.res.Resources;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.Constants;
@@ -13,6 +16,7 @@ import com.klisly.common.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -119,22 +123,34 @@ public class TopicLogic extends BaseLogic {
                 }
             }
             if (StringUtils.isNotEmpty(data)) {
-                CopyOnWriteArrayList<Topic> defaults = gson.fromJson(data, new TypeToken<CopyOnWriteArrayList<Topic>>() {
-                }.getType());
+                ArrayList<Topic> defaults = fromJsonList(data, Topic.class);
                 Timber.i("get topics from raw.");
-                this.defaultTopics = defaults;
+                this.defaultTopics = new CopyOnWriteArrayList<>(defaults);
             }
         }
         updateDefaultTopicStatus();
     }
 
+    public <T> ArrayList<T> fromJsonList(String json, Class<T> cls) {
+        ArrayList<T> mList = new ArrayList<T>();
+        JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+        for(final JsonElement elem : array){
+            mList.add(gson.fromJson(elem, cls));
+        }
+        return mList;
+    }
+
     private void updateDefaultTopicStatus() {
-        for (int i = 0; i < defaultTopics.size(); i++) {
-            User2Topic user2Topic = subscribes.get(defaultTopics.get(i).getId());
-            if (user2Topic != null) {
-                defaultTopics.get(i).setFocused(!user2Topic.getIsBlock());
-                defaultTopics.get(i).setSeq(user2Topic.getSeq());
+        try {
+            for (int i = 0; i < defaultTopics.size(); i++) {
+                User2Topic user2Topic = subscribes.get(defaultTopics.get(i).getId());
+                if (user2Topic != null) {
+                    defaultTopics.get(i).setFocused(!user2Topic.getIsBlock());
+                    defaultTopics.get(i).setSeq(user2Topic.getSeq());
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

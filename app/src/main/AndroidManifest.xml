@@ -96,7 +96,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-
+        <service android:name=".daemon.Service1" android:process=":channel"/>
+        <receiver android:name=".daemon.Receiver1" android:process=":channel"/>
+        <service android:name=".daemon.Service2" android:process=":process2"/>
+        <receiver android:name=".daemon.Receiver2" android:process=":process2"/>
         <service
             android:name=".widget.update.DownloadService"
             android:exported="true" />

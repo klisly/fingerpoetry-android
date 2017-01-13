@@ -96,6 +96,7 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        NovelLogic.getInstance().unRegisterListener(this);
         ButterKnife.unbind(this);
     }
 
