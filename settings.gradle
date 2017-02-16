@@ -1,1 +1,1 @@
-include ':app', ':PushSDK', ':LibMarsdaemon'
+include ':app', ':PushSDK'

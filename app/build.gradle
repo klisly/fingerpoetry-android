@@ -111,5 +111,4 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.1'
     compile files('libs/GDTUnionSDK.4.9.540.min.jar')
     compile project(':PushSDK')
-    compile project(':LibMarsdaemon')
 }
