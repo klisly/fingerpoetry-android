@@ -11,8 +11,6 @@ import com.klisly.bookbox.utils.RxUnitTestTools;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -24,7 +22,6 @@ import rx.Observer;
  * Created by devinshine on 15/9/4.
  */
 
-@RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class SiteTest {
     BookRetrofit bookRetrofit = null;

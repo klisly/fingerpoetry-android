@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="objenesis-1.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/1.0/9b473564e792c2bdf1449da1f0b1b5bff9805704/objenesis-1.0.jar!/" />
+      <root url="jar://$USER_HOME$/soft/gradle-3.4.1/caches/modules-2/files-2.1/org.objenesis/objenesis/1.0/9b473564e792c2bdf1449da1f0b1b5bff9805704/objenesis-1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

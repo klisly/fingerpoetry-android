@@ -1,5 +1,6 @@
 package com.klisly.bookbox.ui;
 
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -46,8 +47,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener {
     private static final String ARG_CONTENT = "arg_article";
+    NotificationManager manager;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 //    @Bind(R.id.toolbar_layout)
@@ -88,6 +92,8 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         if (args != null) {
             mData = (Article) args.getSerializable(ARG_CONTENT);
         }
+        manager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+
     }
 
     @Nullable
@@ -97,7 +103,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         ButterKnife.bind(this, view);
         initView(view);
         mProgress.setVisibility(View.VISIBLE);
-
+        manager.cancel(mData.getId().hashCode());
         articleApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

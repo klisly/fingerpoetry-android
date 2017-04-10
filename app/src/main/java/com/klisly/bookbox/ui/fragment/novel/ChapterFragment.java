@@ -1,5 +1,6 @@
 package com.klisly.bookbox.ui.fragment.novel;
 
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -46,6 +47,8 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener {
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
@@ -67,6 +70,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     BannerView bv;
     private Chapter mData;
     private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
+    NotificationManager manager;
 
     public static ChapterFragment newInstance(Article article) {
         ChapterFragment fragment = new ChapterFragment();
@@ -83,6 +87,8 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         if (args != null) {
             mData = (Chapter) args.getSerializable(ARG_CONTENT);
         }
+        manager = (NotificationManager) BookBoxApplication.getInstance().getSystemService(NOTIFICATION_SERVICE);
+
     }
 
     @Nullable
@@ -92,6 +98,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         ButterKnife.bind(this, view);
         initView(view);
         loadContent();
+        manager.cancel(mData.getId().hashCode());
         return view;
     }
 

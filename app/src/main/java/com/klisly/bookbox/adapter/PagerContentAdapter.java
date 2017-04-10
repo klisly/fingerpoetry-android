@@ -35,6 +35,7 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
     public void setDatas(List<Article> items) {
         mItems.clear();
         mItems.addAll(items);
+        this.notifyDataSetChanged();
     }
 
     @Override

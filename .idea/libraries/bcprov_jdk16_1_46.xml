@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="bcprov-jdk16-1.46">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk16/1.46/ce091790943599535cbb4de8ede84535b0c1260c/bcprov-jdk16-1.46.jar!/" />
+      <root url="jar://$USER_HOME$/soft/gradle-3.4.1/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk16/1.46/ce091790943599535cbb4de8ede84535b0c1260c/bcprov-jdk16-1.46.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

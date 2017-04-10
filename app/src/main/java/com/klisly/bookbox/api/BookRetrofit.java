@@ -1,6 +1,7 @@
 package com.klisly.bookbox.api;
 
 import android.content.Context;
+import android.test.mock.MockContext;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,7 +36,12 @@ public class BookRetrofit {
     private NovelApi novelApi;
     private OkHttpClient okHttpClient;
     public BookRetrofit() {
-        Context context = BookBoxApplication.getInstance().getApplicationContext();
+        Context context;
+        if(BookBoxApplication.getInstance()!=null){
+            context = BookBoxApplication.getInstance().getApplicationContext();
+        } else {
+            context = new MockContext();
+        }
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);

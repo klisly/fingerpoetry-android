@@ -1,11 +1,8 @@
 <component name="libraryTable">
   <library name="library-1.1.5">
-    <ANNOTATIONS>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/annotations.zip!/" />
-    </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.zhanghai.android.materialprogressbar/library/1.1.5/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/a67bc052249a67993c39900de1236c5b60fe047d/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/a67bc052249a67993c39900de1236c5b60fe047d/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

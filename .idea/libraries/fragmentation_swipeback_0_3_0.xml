@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="fragmentation-swipeback-0.3.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.yokeyword/fragmentation-swipeback/0.3.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.yokeyword/fragmentation-swipeback/0.3.0/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/f322a30d69d8d046c79f3a318a8a33a6a00854f7/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/f322a30d69d8d046c79f3a318a8a33a6a00854f7/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

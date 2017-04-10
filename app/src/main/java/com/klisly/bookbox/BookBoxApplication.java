@@ -67,18 +67,17 @@ public class BookBoxApplication extends Application {
 
             @Override
             public void onSuccess(String deviceToken) {
-                Timber.i("device token:" + deviceToken);
+//                Timber.i("device token:" + deviceToken);
             }
 
             @Override
             public void onFailure(String s, String s1) {
-                Timber.i("err device token:" + s + " " + s1);
+//                Timber.i("err device token:" + s + " " + s1);
             }
         });
         UmengMessageHandler messageHandler = new UmengMessageHandler() {
             @Override
             public void dealWithCustomMessage(final Context context, final UMessage msg) {
-                Timber.i("dealWithCustomMessage:" + msg.custom);
                 try {
                     Notification notification = gson.fromJson(msg.custom, Notification.class);
                     if (Constants.NOTIFI_TYPE_MOMENT.equals(notification.getType())) {

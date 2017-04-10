@@ -3,27 +3,28 @@
  */
 package com.shadev.test;
 
-import java.io.IOException;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.annotation.Config;
+import android.content.Context;
+import android.test.mock.MockContext;
 
 import com.klisly.bookbox.BuildConfig;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.LoginData;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
+
+import java.io.IOException;
+
+import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
-/**
- * Created by devinshine on 15/9/4.
- */
-
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class ApiTest {
     BookRetrofit bookRetrofit = null;
@@ -36,7 +37,7 @@ public class ApiTest {
 
         @Override
         public void onError(Throwable e) {
-            System.out.println("onError");
+            System.out.println("onError："+e.getMessage());
 
         }
 
@@ -53,30 +54,11 @@ public class ApiTest {
 
     @Test
     public void login() throws IOException {
-//        ApiResult<LoginData> call = bookRetrofit.getAccountApi().login("183014", "232");
-//        call.enqueue(new Callback<ApiResult<LoginData>>() {
-//            @Override
-//            public void onResponse(Call<ApiResult<LoginData>> call, Response<ApiResult<LoginData>> response) {
-//                Log.i("ApiTest",response.body().toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ApiResult<LoginData>> call, Throwable t) {
-//                Log.e("apiTest", "login error", t);
-//            }
-//        });
-        //        Response<ApiResult<LoginData>> data = call.execute();
-        //                TestSubscriber<ApiResult<LoginData>> subscriber = new TestSubscriber<>();
-        //                bookRetrofit.getAccountApi()
-        //                        .login("18301441595", "123456")
-        //                        .subscribeOn(Schedulers.io())
-        //                        .observeOn(AndroidSchedulers.mainThread())
-        //                        .subscribe(subscriber);
-        //                List<ApiResult<LoginData>> data = subscriber.getOnNextEvents();
-//        System.out.println("data:" + data.body());
-        //        res.subscribe(subscriber);
-
-        //        String result = EntityUtils.toString(httpResponse.getEntity());
+        Context context = new MockContext();
+        Observable<ApiResult<LoginData>> observable= bookRetrofit.getAccountApi().login("18301441595", "123456");
+        observable.observeOn(Schedulers.immediate())
+                .subscribeOn(Schedulers.immediate())
+                .subscribe(observer);
     }
 
     @Test

@@ -158,8 +158,12 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
     }
 
     private void queryData(Article article) {
-        if (mData != null) {
-            ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(article));
+        try {
+            if (mData != null) {
+                ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(article));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
