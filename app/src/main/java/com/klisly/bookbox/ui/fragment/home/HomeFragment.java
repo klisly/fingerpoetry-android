@@ -16,13 +16,11 @@ import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerFragmentAdapter;
-import com.klisly.bookbox.listener.OnDataChangeListener;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
-import com.klisly.bookbox.ui.fragment.PagerChildFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 
 import butterknife.Bind;
@@ -41,7 +39,8 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
+    private int selectIndex = 0;
+    private Topic selectTopic = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,20 +68,26 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         mToolbar.setOnMenuItemClickListener(this);
         adapter = new PagerFragmentAdapter(getChildFragmentManager(),
                 TopicLogic.getInstance().getOpenFocuses());
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(adapter);
-        TopicLogic.getInstance().registerListener(this, new OnDataChangeListener() {
-            @Override
-            public void onDataChange() {
-                if (getActivity() == null || getActivity().isFinishing()) {
-                    return;
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateItems();
-                    }
-                });
+        TopicLogic.getInstance().registerListener(this, () -> {
+            if (getActivity() == null || getActivity().isFinishing()) {
+                return;
             }
+            getActivity().runOnUiThread(() -> {
+                adapter.notifyDataSetChanged();
+                int newIndex = adapter.getList().indexOf(selectTopic);
+                Timber.i("on topic change selectIndex:"+selectIndex+" newIndex:"+newIndex);
+                if(newIndex == -1){
+                    if(adapter.getList().size() > selectIndex){
+                        mViewPager.setCurrentItem(selectIndex);
+                    } else {
+                        mViewPager.setCurrentItem(adapter.getList().size()-1);
+                    }
+                } else if(newIndex != selectIndex){
+                    mViewPager.setCurrentItem(newIndex);
+                }
+            });
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -92,18 +97,8 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
 
             @Override
             public void onPageSelected(int position) {
-                if (getChildFragmentManager().getFragments().size() <= position) {
-                    return;
-                }
-                PagerChildFragment<Topic> fragment = (PagerChildFragment) getChildFragmentManager().getFragments().get(position);
-                Topic topic = fragment.getmData();
-                if (!topic.getId().equals(TopicLogic.getInstance().getOpenFocuses().get(position).getId())) {
-                    Timber.i("new topic in position:" + position + " new:"
-                            + TopicLogic.getInstance().getOpenFocuses().get(position).getName()
-                            + " old:" + topic.getName());
-                    fragment.setmData(TopicLogic.getInstance().getOpenFocuses().get(position));
-                }
-
+                selectTopic = (Topic) adapter.getList().get(position);
+                selectIndex = position;
             }
 
             @Override
@@ -112,23 +107,11 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
             }
         });
         mTabLayout.setupWithViewPager(mViewPager);
-        updateItems();
+        selectTopic = (Topic) adapter.getList().get(0);
     }
-
-    private void updateItems() {
-        if (TopicLogic.getInstance().getOpenFocuses() != null) {
-            mTabLayout.removeAllTabs();
-            for (Topic topic : TopicLogic.getInstance().getOpenFocuses()) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(topic.getName()));
-            }
-            adapter.notifyDataSetChanged();
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        Timber.i(HomeFragment.class.getSimpleName() + "  onResume");
     }
 
     /**

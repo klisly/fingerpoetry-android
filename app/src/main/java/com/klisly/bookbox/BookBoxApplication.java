@@ -14,7 +14,6 @@ import com.google.gson.JsonSyntaxException;
 import com.karumi.dexter.Dexter;
 import com.klisly.bookbox.model.Notification;
 import com.klisly.bookbox.ui.activity.SplashActivity;
-import com.klisly.bookbox.utils.CrashHandler;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.SharedPreferenceUtils;
 import com.klisly.common.StringUtils;
@@ -55,43 +54,47 @@ public class BookBoxApplication extends Application {
         Dexter.initialize(this);
         preferenceUtils = new SharedPreferenceUtils(this);
         handler = new Handler();
-        CrashHandler.getInstance().init(this.getApplicationContext());
-        CrashReport.initCrashReport(getApplicationContext(), "900028744", false);
+//        CrashHandler.getInstance().init(this.getApplicationContext());
+        CrashReport.initCrashReport(getApplicationContext(), "900028744", BuildConfig.DEBUG);
         initPush();
     }
 
     private void initPush() {
-        mPushAgent = PushAgent.getInstance(this);
-        //注册推送服务，每次调用register方法都会回调该接口
-        mPushAgent.register(new IUmengRegisterCallback() {
+        try {
+            mPushAgent = PushAgent.getInstance(this);
+            //注册推送服务，每次调用register方法都会回调该接口
+            mPushAgent.register(new IUmengRegisterCallback() {
 
-            @Override
-            public void onSuccess(String deviceToken) {
-//                Timber.i("device token:" + deviceToken);
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-//                Timber.i("err device token:" + s + " " + s1);
-            }
-        });
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-            @Override
-            public void dealWithCustomMessage(final Context context, final UMessage msg) {
-                try {
-                    Notification notification = gson.fromJson(msg.custom, Notification.class);
-                    if (Constants.NOTIFI_TYPE_MOMENT.equals(notification.getType())) {
-                        showMomentNotifi(notification.getTitle(), notification.getDesc());
-                    } else if (Constants.NOTIFI_TYPE_NOVEL_UPDATE.equals(notification.getType())) {
-                        showNovelUpdate(notification.getTitle(), notification.getDesc(), notification.getCid());
-                    }
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
+                @Override
+                public void onSuccess(String deviceToken) {
+    //                Timber.i("device token:" + deviceToken);
                 }
-            }
-        };
-        mPushAgent.setMessageHandler(messageHandler);
-        mPushAgent.setDebugMode(BuildConfig.DEBUG);
+
+                @Override
+                public void onFailure(String s, String s1) {
+    //                Timber.i("err device token:" + s + " " + s1);
+                }
+            });
+            UmengMessageHandler messageHandler = new UmengMessageHandler() {
+                @Override
+                public void dealWithCustomMessage(final Context context, final UMessage msg) {
+                    try {
+                        Notification notification = gson.fromJson(msg.custom, Notification.class);
+                        if (Constants.NOTIFI_TYPE_MOMENT.equals(notification.getType())) {
+                            showMomentNotifi(notification.getTitle(), notification.getDesc());
+                        } else if (Constants.NOTIFI_TYPE_NOVEL_UPDATE.equals(notification.getType())) {
+                            showNovelUpdate(notification.getTitle(), notification.getDesc(), notification.getCid());
+                        }
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            mPushAgent.setMessageHandler(messageHandler);
+            mPushAgent.setDebugMode(BuildConfig.DEBUG);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void showMomentNotifi(String title, String msg) {

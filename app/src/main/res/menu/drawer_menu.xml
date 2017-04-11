@@ -3,6 +3,26 @@
         android:id="@+id/menu_group_1"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/menu_weixin"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/left_wechat"
+            android:title="@string/wechat" />
+        <item
+            android:id="@+id/menu_zhihu"
+            android:checkable="true"
+            android:checked="true"
+            android:visible="false"
+            android:icon="@drawable/left_zhihu"
+            android:title="@string/zhihu" />
+        <item
+            android:id="@+id/menu_qqbuluo"
+            android:checkable="true"
+            android:checked="true"
+            android:visible="false"
+            android:icon="@drawable/left_buluo"
+            android:title="@string/qqbuluo" />
+        <item
             android:id="@+id/menu_home"
             android:checkable="true"
             android:checked="true"
@@ -11,6 +31,7 @@
         <item
             android:id="@+id/menu_site"
             android:checkable="true"
+            android:visible="false"
             android:icon="@drawable/left_site"
             android:title="@string/site" />
 

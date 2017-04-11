@@ -133,7 +133,7 @@ public class ChooseTopicFragment extends BaseBackFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                if (position < TopicLogic.getInstance().getOpenChooseTopics().size()) {
+                if (position >= 0 && position < TopicLogic.getInstance().getOpenChooseTopics().size()) {
                     Topic topic = TopicLogic.getInstance().getOpenChooseTopics().get(position);
                     Timber.i("click position:" + position
                             + " data:" + topic);

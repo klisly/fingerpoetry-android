@@ -1,5 +1,6 @@
 package com.klisly.bookbox.ui.fragment.magzine;
 
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -48,6 +49,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.klisly.bookbox.R.id.recyclerView;
 
 public class MagFragment<T extends BaseModel> extends BaseMainFragment implements RecyclerArrayAdapter.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
@@ -67,6 +69,8 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
     private boolean needToast = false;
     private RecyclerArrayAdapter adapter;
     private StickyHeaderAdapter headerAdapter;
+    NotificationManager manager;
+
     public static MagFragment newInstance() {
         return new MagFragment();
     }
@@ -75,7 +79,7 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
+        manager = (NotificationManager) BookBoxApplication.getInstance().getSystemService(NOTIFICATION_SERVICE);
     }
 
     @Override
@@ -84,6 +88,7 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
         final View view = inflater.inflate(R.layout.fragment_magzine, container, false);
         ButterKnife.bind(this, view);
         initView(view);
+        manager.cancel(Constants.NOTIFI_ID_MOMENT);
         return view;
     }
 

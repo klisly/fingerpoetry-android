@@ -1,6 +1,5 @@
 package com.klisly.bookbox.api;
 
-import android.content.Context;
 import android.test.mock.MockContext;
 
 import com.google.gson.Gson;
@@ -17,9 +16,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static anetwork.channel.http.NetworkSdkSetting.context;
+
 public class BookRetrofit {
-    public final static String BASE_URL = "https://second.imdao.cn/v1/";
-//    public final static String BASE_URL = "http://192.168.10.103:3000/v1/";
+    public final static String BASE_URL = "http://192.168.0.101:3000/v1/";
+    //    public final static String BASE_URL = "https://second.imdao.cn/v1/";
     public final static String BASE_API_URL = BASE_URL;
 
     private final static long DEFAULT_TIMEOUT = 15; // 15s超时
@@ -32,11 +33,12 @@ public class BookRetrofit {
     private SiteApi siteApi;
     private TopicApi topicApi;
     private ArticleApi articleApi;
+    private WxArticleApi wxArticleApi;
     private SysApi sysApi;
     private NovelApi novelApi;
     private OkHttpClient okHttpClient;
+
     public BookRetrofit() {
-        Context context;
         if(BookBoxApplication.getInstance()!=null){
             context = BookBoxApplication.getInstance().getApplicationContext();
         } else {
@@ -46,10 +48,17 @@ public class BookRetrofit {
 
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         //设置缓存目录
-        File cacheDirectory = new File(context.getCacheDir()
-                .getAbsolutePath(), "HttpCache");
-        Cache cache = new Cache(cacheDirectory, 20 * 1024 * 1024);
-        httpClientBuilder.cache(cache);
+        try {
+            if(context.getCacheDir() != null){
+                File cacheDirectory = new File(context.getCacheDir()
+                        .getAbsolutePath(), "HttpCache");
+                Cache cache = new Cache(cacheDirectory, 20 * 1024 * 1024);
+                httpClientBuilder.cache(cache);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         okHttpClient = httpClientBuilder.build();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
@@ -64,6 +73,7 @@ public class BookRetrofit {
         articleApi = retrofit.create(ArticleApi.class);
         sysApi = retrofit.create(SysApi.class);
         novelApi = retrofit.create(NovelApi.class);
+        wxArticleApi = retrofit.create(WxArticleApi.class);
     }
 
     /**
@@ -108,5 +118,9 @@ public class BookRetrofit {
 
     public OkHttpClient getOkHttpClient() {
         return okHttpClient;
+    }
+
+    public WxArticleApi getWxArticleApi() {
+        return wxArticleApi;
     }
 }

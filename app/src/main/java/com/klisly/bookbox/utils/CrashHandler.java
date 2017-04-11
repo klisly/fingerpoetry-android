@@ -91,6 +91,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         //if (mListener != null) {
        //     mListener.onBeforeHandleException();
        // }
+		ex.printStackTrace();
 
 		// 自定义错误处理
 		boolean res = handleException(ex);

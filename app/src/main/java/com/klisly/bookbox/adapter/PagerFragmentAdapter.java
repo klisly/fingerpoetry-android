@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.Site;
@@ -12,11 +13,33 @@ import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ui.fragment.PagerChildFragment;
 
 import java.util.List;
-public class PagerFragmentAdapter<T extends BaseModel> extends FragmentPagerAdapter {
+
+import timber.log.Timber;
+
+public class PagerFragmentAdapter<T extends BaseModel> extends FragmentStatePagerAdapter {
     private List<T> list;
     public PagerFragmentAdapter(@NonNull FragmentManager fm, @NonNull List<T> list) {
         super(fm);
         this.list = list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
+    }
+
+    public List<T> getList() {
+        return list;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Timber.i("instantiateItem "+position);
+        return super.instantiateItem(container, position);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     @Override

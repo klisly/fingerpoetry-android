@@ -26,9 +26,6 @@ import timber.log.Timber;
 
 public class TopicLogic extends BaseLogic {
 
-    /**
-     * TopicLogic instance.
-     */
     private static TopicLogic instance;
 
     private CopyOnWriteArrayList<Topic> defaultTopics = new CopyOnWriteArrayList<>();
