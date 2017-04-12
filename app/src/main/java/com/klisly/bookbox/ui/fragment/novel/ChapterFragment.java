@@ -97,7 +97,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
         initView(view);
-        loadContent();
+        // 取消该篇小说的更新
         manager.cancel(mData.getId().hashCode());
         return view;
     }
@@ -254,6 +254,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
      */
     @Override
     protected void onEnterAnimationEnd() {
+        loadContent();
         initLazyView();
     }
 

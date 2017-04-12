@@ -6,9 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -64,7 +62,8 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
 
     private void initView() {
         mToolbar.setTitle(R.string.update);
-        initToolbarNav(mToolbar, true);
+        initToolbarNav(mToolbar, false);
+        mToolbar.inflateMenu(R.menu.menu_novel_pop);
         mToolbar.setOnMenuItemClickListener(this);
         mToolbar.findViewById(R.id.search).setVisibility(View.VISIBLE);
         mToolbar.findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
@@ -107,32 +106,16 @@ public class NovelFragment extends BaseMainFragment implements Toolbar.OnMenuIte
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_more:
-                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
-                popupMenu.inflate(R.menu.menu_novel_pop);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_manage_site:
-                                if(!AccountLogic.getInstance().isLogin()){
-                                    BusProvider.getInstance().post(new ToLoginEvent());
-                                } else {
-                                    start(ChooseNovelFragment.newInstance(ChooseNovelFragment.ACTION_MANAGE));
-                                }
-                                break;
-                            case R.id.action_as_home:
-                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_NOVEL);
-                                ToastHelper.showShortTip(R.string.success_as_home);
-                                break;
-                        }
-                        popupMenu.dismiss();
-                        return true;
-                    }
-                });
-                popupMenu.show();
+            case R.id.action_manage_site:
+                if(!AccountLogic.getInstance().isLogin()){
+                    BusProvider.getInstance().post(new ToLoginEvent());
+                } else {
+                    start(ChooseNovelFragment.newInstance(ChooseNovelFragment.ACTION_MANAGE));
+                }
                 break;
-            default:
+            case R.id.action_as_home:
+                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_NOVEL);
+                ToastHelper.showShortTip(R.string.success_as_home);
                 break;
         }
         return true;

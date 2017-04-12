@@ -1,7 +1,29 @@
 [
   {
+    "_id": "57a8b51ea955bc6d20d28e5d",
+    "name": "热门",
+    "__v": 0,
+    "updateAt": 1470674073409,
+    "createAt": 1470674073409,
+    "image": "/images/channelbrand.jpg",
+    "isBlock": false,
+    "articleNum": 0,
+    "followerCount": 0
+  },
+  {
     "_id": "57a8b5e9b6a37f4721200c45",
     "name": "美文",
+    "__v": 0,
+    "updateAt": 1470674207147,
+    "createAt": 1470674207147,
+    "image": "/images/channelbrand.jpg",
+    "isBlock": false,
+    "articleNum": 0,
+    "followerCount": 0
+  },
+  {
+    "_id": "57a8b605b6a37f4721200c4a",
+    "name": "趣闻",
     "__v": 0,
     "updateAt": 1470674207147,
     "createAt": 1470674207147,
@@ -55,33 +77,11 @@
     "followerCount": 0
   },
   {
-    "_id": "57a8b605b6a37f4721200c4a",
-    "name": "趣闻",
-    "__v": 0,
-    "updateAt": 1470674207147,
-    "createAt": 1470674207147,
-    "image": "/images/channelbrand.jpg",
-    "isBlock": false,
-    "articleNum": 0,
-    "followerCount": 0
-  },
-  {
     "_id": "57a8b609b6a37f4721200c4b",
     "name": "历史",
     "__v": 0,
     "updateAt": 1470674207147,
     "createAt": 1470674207147,
-    "image": "/images/channelbrand.jpg",
-    "isBlock": false,
-    "articleNum": 0,
-    "followerCount": 0
-  },
-  {
-    "_id": "57a8b51ea955bc6d20d28e5d",
-    "name": "热门",
-    "__v": 0,
-    "updateAt": 1470674073409,
-    "createAt": 1470674073409,
     "image": "/images/channelbrand.jpg",
     "isBlock": false,
     "articleNum": 0,

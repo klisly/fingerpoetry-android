@@ -88,8 +88,13 @@ public class ChooseTopicFragment extends BaseBackFragment {
         View view = inflater.inflate(R.layout.fragment_choose, container, false);
         ButterKnife.bind(this, view);
         initView();
-        updateData();
         return view;
+    }
+
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
+        updateData();
     }
 
     private void updateData() {

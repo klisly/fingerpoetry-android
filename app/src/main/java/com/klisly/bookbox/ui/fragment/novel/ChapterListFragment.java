@@ -152,6 +152,11 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
             }
         });
         mRecy.setRefreshListener(this);
+    }
+
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
         onRefresh();
     }
 

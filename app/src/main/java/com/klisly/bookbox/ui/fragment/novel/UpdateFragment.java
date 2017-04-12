@@ -61,8 +61,13 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
         final View view = inflater.inflate(R.layout.fragment_pager, container, false);
         ButterKnife.bind(this, view);
         initView(view);
-        checkNotify();
+
         return view;
+    }
+
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
     }
 
     private void checkNotify() {
@@ -140,7 +145,6 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
             }
         });
         mRecy.setRefreshListener(this);
-        onRefresh();
         NovelLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
             public void onDataChange() {
@@ -154,6 +158,13 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
                 }
             }
         });
+
+        mRecy.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onRefresh();
+            }
+        }, 500);
     }
 
     private void queryData(Chapter article) {

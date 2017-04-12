@@ -70,6 +70,11 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         ButterKnife.unbind(this);
     }
 
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
+    }
+
     private void initView(View view) {
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -115,7 +120,6 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
             }
         });
         mRecy.setRefreshListener(this);
-        onRefresh();
 
         NovelLogic.getInstance().registerListener(this, new OnDataChangeListener() {
             @Override
@@ -133,6 +137,13 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
                 });
             }
         });
+
+        mRecy.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onRefresh();
+            }
+        }, 500);
     }
 
 

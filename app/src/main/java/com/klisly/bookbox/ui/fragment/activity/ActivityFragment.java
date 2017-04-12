@@ -2,9 +2,7 @@ package com.klisly.bookbox.ui.fragment.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -57,7 +55,8 @@ public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenu
 
     private void initView() {
         mToolbar.setTitle(R.string.novel);
-        initToolbarNav(mToolbar);
+        initToolbarNav(mToolbar, false);
+        mToolbar.inflateMenu(R.menu.menu_site_pop);
         mToolbar.setOnMenuItemClickListener(this);
         if(topics != null){
             for(Topic topic : topics){
@@ -79,33 +78,17 @@ public class ActivityFragment extends BaseMainFragment implements Toolbar.OnMenu
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_more:
-                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
-                popupMenu.inflate(R.menu.menu_site_pop);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_find_topic:
-                                ToastHelper.showShortTip(R.string.find_topic);
-                                break;
-                            case R.id.action_manage_topic:
-                                ToastHelper.showShortTip(R.string.manage_topic);
-                                break;
-                            case R.id.action_sort_method:
-                                ToastHelper.showShortTip(R.string.sort_method);
-                                break;
-                            case R.id.action_notify_setting:
-                                ToastHelper.showShortTip(R.string.notify_setting);
-                                break;
-                            default:
-                                break;
-                        }
-                        popupMenu.dismiss();
-                        return true;
-                    }
-                });
-                popupMenu.show();
+            case R.id.action_find_topic:
+                ToastHelper.showShortTip(R.string.find_topic);
+                break;
+            case R.id.action_manage_topic:
+                ToastHelper.showShortTip(R.string.manage_topic);
+                break;
+            case R.id.action_sort_method:
+                ToastHelper.showShortTip(R.string.sort_method);
+                break;
+            case R.id.action_notify_setting:
+                ToastHelper.showShortTip(R.string.notify_setting);
                 break;
             default:
                 break;

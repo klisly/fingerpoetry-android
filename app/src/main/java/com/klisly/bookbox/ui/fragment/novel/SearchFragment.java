@@ -88,8 +88,13 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
         mRecy.addItemDecoration(itemDecoration);
         adapter = new NovelAdapter(getActivity().getApplicationContext(), datas);
         mRecy.setAdapter(adapter);
-        loadRecommend();
         initListener();
+    }
+
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
+        loadRecommend();
     }
 
     @OnClick(R.id.btn_search)
@@ -220,10 +225,11 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
 
                     @Override
                     public void onNext(ApiResult<List<Novel>> res) {
-                        Timber.i("load recommdn res:" + res.getData().size());
-                        datas.clear();
-                        datas.addAll(res.getData());
-                        adapter.notifyDataSetChanged();
+                        if(res.getData() != null){
+                            datas.clear();
+                            datas.addAll(res.getData());
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 });
     }

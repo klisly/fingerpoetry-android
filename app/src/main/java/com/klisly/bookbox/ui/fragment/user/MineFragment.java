@@ -82,8 +82,13 @@ public class MineFragment extends BaseMainFragment {
         } else {
             updateData();
         }
-        updateUserData();
         return view;
+    }
+
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
+        updateUserData();
     }
 
     private void updateUserData() {

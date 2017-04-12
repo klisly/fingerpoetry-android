@@ -2,10 +2,8 @@ package com.klisly.bookbox.ui.fragment.magzine;
 
 import android.app.NotificationManager;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -98,9 +96,21 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_as_home:
+                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_MAGZINE);
+                ToastHelper.showShortTip(R.string.success_as_home);
+                break;
+        }
+        return true;
+    }
+
     private void initView(View view) {
         mToolbar.setTitle(R.string.magzine);
-        initToolbarNav(mToolbar, true);
+        initToolbarNav(mToolbar, false);
+        mToolbar.inflateMenu(R.menu.menu_magzine_pop);
         mToolbar.setOnMenuItemClickListener(this);
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -158,34 +168,12 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
         mRecy.addItemDecoration(decoration);
 
         mRecy.setRefreshListener(this);
-        onRefresh();
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_more:
-                final PopupMenu popupMenu = new PopupMenu(_mActivity, mToolbar, GravityCompat.END);
-                popupMenu.inflate(R.menu.menu_novel_pop);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_as_home:
-                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_MAGZINE);
-                                ToastHelper.showShortTip(R.string.success_as_home);
-                                break;
-                        }
-                        popupMenu.dismiss();
-                        return true;
-                    }
-                });
-                popupMenu.show();
-                break;
-            default:
-                break;
-        }
-        return true;
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
+        onRefresh();
     }
 
     private void queryData(Article article) {
