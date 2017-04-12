@@ -4,11 +4,10 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +75,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     private Article mData;
     private ArticleData mArticleData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
-
+    private Menu menu;
     public static DetailFragment newInstance(Article article) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
@@ -104,45 +103,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         initView(view);
         mProgress.setVisibility(View.VISIBLE);
         manager.cancel(mData.getId().hashCode());
-        articleApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
-                    @Override
-                    protected void onError(ApiException ex) {
-                        try {
-                            if (getActivity() != null && mProgress != null) {
-                                mProgress.setVisibility(View.INVISIBLE);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        ToastHelper.showShortTip(R.string.get_detial_fail);
 
-                    }
-
-                    @Override
-                    protected void onPermissionError(ApiException ex) {
-                        if (getActivity() != null && mProgress != null) {
-                            mProgress.setVisibility(View.INVISIBLE);
-                        }
-                        ToastHelper.showShortTip(R.string.get_detial_fail);
-                    }
-
-                    @Override
-                    public void onNext(ApiResult<ArticleData> res) {
-                        mProgress.setVisibility(View.INVISIBLE);
-                        Timber.i("reache article:" + res);
-                        if (res.getData() != null) {
-                            mArticleData = res.getData();
-                            updateData();
-                        } else {
-                            ToastHelper.showShortTip(R.string.get_detial_fail);
-                        }
-                    }
-                });
         return view;
     }
+
 
     private void initBanner() {
         this.bv = new BannerView(getActivity(), ADSize.BANNER, Constants.QQ_APP_ID, Constants.BannerPosId);
@@ -203,6 +167,27 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         bv.loadAD();
     }
 
+    @Override
+    protected void initToolbarMenu(Toolbar toolbar) {
+        toolbar.inflateMenu(R.menu.menu_article_pop);
+        menu = toolbar.getMenu();
+    }
+
+    private void updateMenu(){
+        if (mArticleData != null && mArticleData.getUser2article() != null) {
+            if (mArticleData.getUser2article().getToread()) {
+                menu.getItem(0).setTitle(getString(R.string.notoread));
+            } else {
+                menu.getItem(0).setTitle(getString(R.string.toread));
+            }
+            if (mArticleData.getUser2article().getCollect()) {
+                menu.getItem(1).setTitle(getString(R.string.nocollect));
+            } else {
+                menu.getItem(1).setTitle(getString(R.string.collect));
+            }
+        }
+    }
+
     /**
      * 这里演示:
      * 比较复杂的Fragment页面会在第一次start时,导致动画卡顿
@@ -212,6 +197,43 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
      */
     @Override
     protected void onEnterAnimationEnd() {
+        articleApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        try {
+                            if (getActivity() != null && mProgress != null) {
+                                mProgress.setVisibility(View.INVISIBLE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        ToastHelper.showShortTip(R.string.get_detial_fail);
+
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        if (getActivity() != null && mProgress != null) {
+                            mProgress.setVisibility(View.INVISIBLE);
+                        }
+                        ToastHelper.showShortTip(R.string.get_detial_fail);
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<ArticleData> res) {
+                        mProgress.setVisibility(View.INVISIBLE);
+                        Timber.i("reache article:" + res);
+                        if (res.getData() != null) {
+                            mArticleData = res.getData();
+                            updateData();
+                        } else {
+                            ToastHelper.showShortTip(R.string.get_detial_fail);
+                        }
+                    }
+                });
         initLazyView();
     }
 
@@ -236,66 +258,34 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_more:
-                openPopMenu();
+            case R.id.action_to_read:
+                toggleToRead();
                 break;
+
+            case R.id.action_collect:
+                toggleCollect();
+                break;
+
+            case R.id.action_share:
+                shareArticle();
+                break;
+
+            case R.id.action_original:
+                if(mArticleData != null){
+                    start(OuterFragment.newInstance(mArticleData.getArticle()));
+                }
+                break;
+
+            case R.id.action_notify_setting:
+                ToastHelper.showShortTip(R.string.report);
+                break;
+
             default:
-                openPopMenu();
                 break;
         }
         return true;
     }
 
-    private void openPopMenu() {
-        final PopupMenu popupMenu = new PopupMenu(_mActivity, toolbar, GravityCompat.END);
-        popupMenu.inflate(R.menu.menu_article_pop);
-        if (mArticleData != null && mArticleData.getUser2article() != null) {
-            if (mArticleData.getUser2article().getToread()) {
-                popupMenu.getMenu().getItem(0).setTitle(getString(R.string.notoread));
-            } else {
-                popupMenu.getMenu().getItem(0).setTitle(getString(R.string.toread));
-            }
-            if (mArticleData.getUser2article().getCollect()) {
-                popupMenu.getMenu().getItem(1).setTitle(getString(R.string.nocollect));
-            } else {
-                popupMenu.getMenu().getItem(1).setTitle(getString(R.string.collect));
-            }
-        }
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_to_read:
-                        toggleToRead();
-                        break;
-
-                    case R.id.action_collect:
-                        toggleCollect();
-                        break;
-
-                    case R.id.action_share:
-                        shareArticle();
-                        break;
-
-                    case R.id.action_original:
-                        if(mArticleData != null){
-                            start(OuterFragment.newInstance(mArticleData.getArticle()));
-                        }
-                        break;
-
-                    case R.id.action_notify_setting:
-                        ToastHelper.showShortTip(R.string.report);
-                        break;
-
-                    default:
-                        break;
-                }
-                popupMenu.dismiss();
-                return true;
-            }
-        });
-        popupMenu.show();
-    }
 
     private void shareArticle() {
         if (mArticleData == null) {
@@ -351,6 +341,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
                             mArticleData.setUser2article(res.getData());
+                            updateMenu();
                         }
                     });
         } else {
@@ -372,6 +363,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
                             mArticleData.setUser2article(res.getData());
+                            updateMenu();
                         }
                     });
         }
@@ -397,6 +389,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
                             mArticleData.setUser2article(res.getData());
+                            updateMenu();
                         }
                     });
         } else {
@@ -418,6 +411,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
                             mArticleData.setUser2article(res.getData());
+                            updateMenu();
                         }
                     });
         }

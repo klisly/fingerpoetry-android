@@ -31,6 +31,11 @@ public class BaseBackFragment extends BaseFragment {
         return new FragmentAnimator(R.anim.activity_open_enter, R.anim.activity_close_exit);
     }
 
+    @Override
+    protected void onEnterAnimationEnd() {
+        super.onEnterAnimationEnd();
+    }
+
     protected void initToolbarNav(Toolbar toolbar, boolean isBack, boolean initMenu) {
         if (isBack) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);

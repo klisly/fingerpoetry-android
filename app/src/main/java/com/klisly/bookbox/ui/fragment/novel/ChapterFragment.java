@@ -4,10 +4,9 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     private Chapter mData;
     private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
     NotificationManager manager;
-
+    private Menu menu;
     public static ChapterFragment newInstance(Article article) {
         ChapterFragment fragment = new ChapterFragment();
         Bundle args = new Bundle();
@@ -213,6 +212,14 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         bv.loadAD();
     }
 
+    @Override
+    protected void initToolbarMenu(Toolbar toolbar) {
+        toolbar.inflateMenu(R.menu.menu_article_pop);
+        menu = toolbar.getMenu();
+        menu.getItem(0).setVisible(false);
+        menu.getItem(1).setVisible(false);
+    }
+
     private void initBanner() {
         this.bv = new BannerView(getActivity(), ADSize.BANNER, Constants.QQ_APP_ID, Constants.BannerPosId);
         bv.setRefresh(30);
@@ -279,44 +286,21 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_more:
-                openPopMenu();
+            case R.id.action_share:
+                shareArticle();
+                break;
+
+            case R.id.action_original:
+                start(OuterFragment.newInstance(mData));
+                break;
+
+            case R.id.action_notify_setting:
+                ToastHelper.showShortTip(R.string.report);
                 break;
             default:
-                openPopMenu();
                 break;
         }
         return true;
-    }
-
-    private void openPopMenu() {
-        final PopupMenu popupMenu = new PopupMenu(_mActivity, toolbar, GravityCompat.END);
-        popupMenu.inflate(R.menu.menu_article_pop);
-        popupMenu.getMenu().getItem(0).setVisible(false);
-        popupMenu.getMenu().getItem(1).setVisible(false);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_share:
-                        shareArticle();
-                        break;
-
-                    case R.id.action_original:
-                        start(OuterFragment.newInstance(mData));
-                        break;
-
-                    case R.id.action_notify_setting:
-                        ToastHelper.showShortTip(R.string.report);
-                        break;
-                    default:
-                        break;
-                }
-                popupMenu.dismiss();
-                return true;
-            }
-        });
-        popupMenu.show();
     }
 
     private void shareArticle() {

@@ -4,9 +4,7 @@ import android.content.Context;
 
 import com.google.gson.JsonParseException;
 import com.klisly.bookbox.BookBoxApplication;
-import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.utils.RxUtils;
 import com.klisly.bookbox.widget.progress.ProgressCancelListener;
 import com.klisly.bookbox.widget.progress.ProgressDialogHandler;
@@ -92,9 +90,6 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
             }
             switch(httpException.code()){
                 case UNAUTHORIZED:
-                    if(inMainThread) {
-                        BusProvider.getInstance().post(new ToLoginEvent());
-                    }
                     onPermissionError(ex);          //权限错误，需要实现
                     break;
                 case FORBIDDEN:
