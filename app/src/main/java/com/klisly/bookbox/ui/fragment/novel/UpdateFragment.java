@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChapterViewHolder;
@@ -27,7 +26,6 @@ import com.klisly.bookbox.model.Chapter;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseFragment;
-import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.klisly.common.StringUtils;
 import com.material.widget.CircularProgress;
@@ -108,10 +106,6 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
     private void initView(View view) {
         mProgress.setVisibility(View.GONE);
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        mRecy.addItemDecoration(itemDecoration);
-
         mRecy.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(getActivity()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {

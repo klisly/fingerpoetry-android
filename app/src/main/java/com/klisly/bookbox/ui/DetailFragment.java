@@ -27,10 +27,9 @@ import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.utils.DateUtil;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
-import com.klisly.common.dateutil.DateStyle;
-import com.klisly.common.dateutil.DateUtil;
 import com.material.widget.CircularProgress;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
@@ -133,12 +132,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
             info = info + "  " + mArticleData.getArticle().getAuthor();
         }
         tvSource.setText(info);
-        Date date = new Date();
-        date.setTime(mArticleData.getArticle().getCreateAt());
-        tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
+
+        tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(new Date(mArticleData.getArticle().getCreateAt())));
         String html = Constants.ARTICLE_PREFIX + mArticleData.getArticle().getContent()+Constants.ARTICLE_SUFFIX;
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
-//        tvContent.loadData(html, "text/html", "utf-8");
     }
 
     @Override

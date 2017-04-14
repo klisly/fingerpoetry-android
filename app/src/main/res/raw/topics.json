@@ -55,17 +55,6 @@
     "followerCount": 0
   },
   {
-    "_id": "57a8b5fab6a37f4721200c48",
-    "name": "段子",
-    "__v": 0,
-    "updateAt": 1470674207147,
-    "createAt": 1470674207147,
-    "image": "/images/channelbrand.jpg",
-    "isBlock": false,
-    "articleNum": 0,
-    "followerCount": 0
-  },
-  {
     "_id": "57a8b5feb6a37f4721200c49",
     "name": "小说",
     "__v": 0,
