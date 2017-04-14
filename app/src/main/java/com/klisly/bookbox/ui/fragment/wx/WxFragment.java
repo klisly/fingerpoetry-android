@@ -2,9 +2,7 @@ package com.klisly.bookbox.ui.fragment.wx;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -57,7 +55,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        channels = WxChannleEntity.loadDefault();
+        channels = WxChannleEntity.loadWxDefault();
         initView();
         return view;
     }
@@ -106,6 +104,39 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
 
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
+    @Override
+    protected void initToolbarMenu(Toolbar toolbar) {
+        mToolbar.inflateMenu(R.menu.menu_main_pop);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_recom_setting:
+                ToastHelper.showShortTip(R.string.recom_setting);
+                break;
+            case R.id.action_as_home:
+                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_WX);
+                ToastHelper.showShortTip(R.string.success_as_home);
+                break;
+            case R.id.action_manage_topic:
+                if (!AccountLogic.getInstance().isLogin()) {
+                    BusProvider.getInstance().post(new ToLoginEvent());
+                } else {
+                    startWithPop(ChooseChannelFragment.newInstance());
+                }
+
+                break;
+            case R.id.action_reget:
+                ToastHelper.showShortTip(R.string.reget);
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -122,47 +153,5 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
     @Override
     protected void onNewBundle(Bundle args) {
         super.onNewBundle(args);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_more:
-                final PopupMenu popupMenu = new PopupMenu(_mActivity,
-                        mToolbar, GravityCompat.END);
-                popupMenu.inflate(R.menu.menu_main_pop);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_recom_setting:
-                                ToastHelper.showShortTip(R.string.recom_setting);
-                                break;
-                            case R.id.action_as_home:
-                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_WX);
-                                ToastHelper.showShortTip(R.string.success_as_home);
-                                break;
-                            case R.id.action_manage_topic:
-                                if (!AccountLogic.getInstance().isLogin()) {
-                                    BusProvider.getInstance().post(new ToLoginEvent());
-                                } else {
-                                    start(ChooseChannelFragment.newInstance());
-                                }
-
-                                break;
-                            case R.id.action_reget:
-                                ToastHelper.showShortTip(R.string.reget);
-                                break;
-                            default:
-                                break;
-                        }
-                        popupMenu.dismiss();
-                        return true;
-                    }
-                });
-                popupMenu.show();
-                break;
-        }
-        return true;
     }
 }

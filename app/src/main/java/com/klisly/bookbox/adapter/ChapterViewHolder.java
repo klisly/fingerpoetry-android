@@ -27,8 +27,7 @@ public class ChapterViewHolder extends BaseViewHolder<Chapter> {
     TextView tvSource;
     @Bind(R.id.tv_time)
     TextView tvDate;
-    @Bind(R.id.rl_item)
-    RelativeLayout relativeLayout;
+
     @Bind(R.id.article_item)
     RelativeLayout articlrLayout;
     @Bind(R.id.clickload)

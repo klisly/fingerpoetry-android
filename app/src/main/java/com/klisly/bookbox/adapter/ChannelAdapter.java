@@ -492,7 +492,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return translateAnimation;
     }
 
-    interface OnMyChannelItemClickListener {
+    public interface OnMyChannelItemClickListener {
         void onItemClick(View v, int position);
     }
 

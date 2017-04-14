@@ -256,8 +256,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                                 }
                             });
                         }
-                        if (queryType == 1) {
-                            adapter.clear();
+                        if (queryType == 1 && res.getData().size() > 0) {
                             adapter.addAll(res.getData());
                         } else {
                             adapter.addAll(res.getData());
@@ -301,7 +300,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                                 }
                             });
                         }
-                        if (queryType == 1) {
+                        if (queryType == 1 && res.getData().size() > 0) {
                             adapter.clear();
                             adapter.addAll(res.getData());
                         } else {

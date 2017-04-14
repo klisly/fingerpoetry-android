@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.klisly.common.StringUtils;
 
+import java.util.List;
+
 public class User extends BaseModel{
 
     @SerializedName("_id")
@@ -72,6 +74,8 @@ public class User extends BaseModel{
     @SerializedName("deviceToken")
     @Expose
     private String deviceToken;
+
+    private List<WxChannleEntity> wxChannles;
     /**
      *
      * @return
@@ -480,6 +484,14 @@ public class User extends BaseModel{
         this.avatar = avatar;
     }
 
+    public List<WxChannleEntity> getWxChannles() {
+        return wxChannles;
+    }
+
+    public void setWxChannles(List<WxChannleEntity> wxChannles) {
+        this.wxChannles = wxChannles;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("User{");
@@ -505,6 +517,7 @@ public class User extends BaseModel{
         sb.append(", role=").append(role);
         sb.append(", deviceToken=").append(deviceToken);
         sb.append(", avatar='").append(avatar).append('\'');
+        sb.append(", wxChannles=").append(wxChannles);
         sb.append('}');
         return sb.toString();
     }

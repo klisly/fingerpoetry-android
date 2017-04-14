@@ -33,7 +33,26 @@ public class WxChannleEntity extends BaseModel{
         this.name = name;
     }
 
-    public static List loadDefault() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WxChannleEntity)) return false;
+
+        WxChannleEntity that = (WxChannleEntity) o;
+
+        if (getId() != that.getId()) return false;
+        return getName() != null ? getName().equals(that.getName()) : that.getName() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        return result;
+    }
+
+    public static List loadWxDefault() {
         List list = new ArrayList();
         list.add(new WxChannleEntity(1, "热门"));
         list.add(new WxChannleEntity(2, "推荐"));
@@ -53,6 +72,12 @@ public class WxChannleEntity extends BaseModel{
         list.add(new WxChannleEntity(16, "学霸族"));
         list.add(new WxChannleEntity(17, "星座控"));
         list.add(new WxChannleEntity(18, "体育迷"));
+        return list;
+    }
+
+    public static List loadWxMy() {
+        List list = new ArrayList();
+        list.add(new WxChannleEntity(1, "热门"));
         return list;
     }
 }
