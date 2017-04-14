@@ -57,26 +57,19 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
     @Override
     public void onBindViewHolder(PagerItemViewHolder holder, int position) {
         Article article = mItems.get(position);
-        if (!Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
-            holder.articlrLayout.setVisibility(View.VISIBLE);
-            holder.mTvLoad.setVisibility(View.GONE);
-            holder.tvTitle.setText(article.getTitle());
-            holder.tvSource.setText(article.getSite());
-            Date date = new Date();
-            date.setTime(article.getCreateAt());
+        holder.tvTitle.setText(article.getTitle());
+        holder.tvSource.setText(article.getSite());
+        Date date = new Date();
+        date.setTime(article.getCreateAt());
 
-            holder.tvDate.setText(article.getReadCount() + "阅・"
-                    + article.getCollectCount() + "收藏・"
-                    + article.getShareCount() + "分享");
-            if(contentType == Constants.ITEM_TYPE_JOKE && StringUtils.isNotEmpty(article.getContent())){
-                holder.tvContent.setVisibility(View.VISIBLE);
-                holder.tvContent.setText(article.getContent());
-            } else {
-                holder.tvContent.setVisibility(View.GONE);
-            }
+        holder.tvDate.setText(article.getReadCount() + "阅・"
+                + article.getCollectCount() + "收藏・"
+                + article.getShareCount() + "分享");
+        if (contentType == Constants.ITEM_TYPE_JOKE && StringUtils.isNotEmpty(article.getContent())) {
+            holder.tvContent.setVisibility(View.VISIBLE);
+            holder.tvContent.setText(article.getContent());
         } else {
-            holder.articlrLayout.setVisibility(View.GONE);
-            holder.mTvLoad.setVisibility(View.VISIBLE);
+            holder.tvContent.setVisibility(View.GONE);
         }
     }
 
@@ -96,10 +89,6 @@ public class PagerContentAdapter extends RecyclerView.Adapter<PagerContentAdapte
         TextView tvDate;
         @Bind(R.id.rl_item)
         RelativeLayout relativeLayout;
-        @Bind(R.id.article_item)
-        RelativeLayout articlrLayout;
-        @Bind(R.id.clickload)
-        TextView mTvLoad;
 
         public PagerItemViewHolder(View itemView) {
             super(itemView);

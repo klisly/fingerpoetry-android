@@ -21,6 +21,7 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.model.WxChannleEntity;
 import com.klisly.bookbox.utils.OnDragVHListener;
 import com.klisly.bookbox.utils.OnItemMoveListener;
+import com.klisly.bookbox.utils.VibratorUtil;
 
 import java.util.List;
 
@@ -67,6 +68,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mItemTouchHelper = helper;
         this.mMyChannelItems = mMyChannelItems;
         this.mOtherChannelItems = mOtherChannelItems;
+    }
+
+    public List<WxChannleEntity> getmMyChannelItems() {
+        return mMyChannelItems;
     }
 
     @Override
@@ -168,7 +173,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 myHolder.textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        if (isEditMode) {
+                        if (isEditMode && myHolder.imgEdit.getVisibility() == View.VISIBLE) {
                             switch (MotionEventCompat.getActionMasked(event)) {
                                 case MotionEvent.ACTION_DOWN:
                                     startTime = System.currentTimeMillis();
@@ -281,7 +286,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             MyViewHolder myHolder = (MyViewHolder) holder;
             myHolder.textView.setText(mMyChannelItems.get(position - COUNT_PRE_MY_HEADER).getName());
-            if (isEditMode) {
+            if (isEditMode && position!= 1 && position != 2) {
+                if(position == COUNT_PRE_MY_HEADER + 1){
+                    myHolder.onItemSelected();
+                }
                 myHolder.imgEdit.setVisibility(View.VISIBLE);
             } else {
                 myHolder.imgEdit.setVisibility(View.INVISIBLE);
@@ -450,10 +458,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         isEditMode = true;
 
         int visibleChildCount = parent.getChildCount();
-        for (int i = 0; i < visibleChildCount; i++) {
+        for (int i = 3; i < visibleChildCount; i++) {
             View view = parent.getChildAt(i);
             ImageView imgEdit = (ImageView) view.findViewById(R.id.img_edit);
-            if (imgEdit != null) {
+            if (imgEdit != null ) {
                 imgEdit.setVisibility(View.VISIBLE);
             }
         }
@@ -518,6 +526,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
          */
         @Override
         public void onItemSelected() {
+            VibratorUtil.vibrate(itemView.getContext(), 70);   //震动70ms
             textView.setBackgroundResource(R.drawable.bg_channel_p);
         }
 

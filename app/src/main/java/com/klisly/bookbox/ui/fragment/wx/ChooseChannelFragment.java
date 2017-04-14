@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChannelAdapter;
+import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.WxChannleEntity;
+import com.klisly.bookbox.ottoevent.UpdateWxChannelEvent;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ItemDragHelperCallback;
 
@@ -66,7 +69,8 @@ public class ChooseChannelFragment extends BaseBackFragment {
 //        initToolbarNav(mToolbar, false, false);
 
         other = WxChannleEntity.loadWxDefault();
-        my = WxChannleEntity.loadWxMy();
+        my = AccountLogic.getInstance().getNowUser().getWxChannles();
+        other.removeAll(my);
         mRecy.setVerticalScrollBarEnabled(true);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         mRecy.setLayoutManager(manager);
@@ -84,5 +88,11 @@ public class ChooseChannelFragment extends BaseBackFragment {
         });
         mRecy.setAdapter(mAdapter);
         mAdapter.setOnMyChannelItemClickListener((v, position) -> Toast.makeText(getContext(), my.get(position).getName(), Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        BusProvider.getInstance().post(new UpdateWxChannelEvent());
+        return super.onBackPressedSupport();
     }
 }

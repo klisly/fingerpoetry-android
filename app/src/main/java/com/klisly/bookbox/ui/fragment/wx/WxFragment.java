@@ -19,8 +19,10 @@ import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
 import com.klisly.bookbox.model.WxChannleEntity;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
+import com.klisly.bookbox.ottoevent.UpdateWxChannelEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.utils.ToastHelper;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -55,7 +57,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        channels = WxChannleEntity.loadWxDefault();
+        channels = AccountLogic.getInstance().getNowUser().getWxChannles();
         initView();
         return view;
     }
@@ -77,14 +79,6 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
         adapter = new PagerFragmentAdapter(getChildFragmentManager(), channels);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(adapter);
-//        TopicLogic.getInstance().registerListener(this, () -> {
-//            if (getActivity() == null || getActivity().isFinishing()) {
-//                return;
-//            }
-//            getActivity().runOnUiThread(() -> {
-//                adapter.notifyDataSetChanged();
-//            });
-//        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -103,6 +97,11 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
         });
 
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Subscribe
+    public void onUpdateChannel(UpdateWxChannelEvent event) {
+        adapter.notifyDataSetChanged();
     }
 
     @Override

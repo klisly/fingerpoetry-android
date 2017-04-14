@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:gravity="center_vertical"
+        android:background="@color/accentLight"
         android:orientation="horizontal"
         >
         <android.support.design.widget.TabLayout

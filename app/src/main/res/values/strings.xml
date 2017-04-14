@@ -57,8 +57,8 @@
     <string name="mine_center">个人中心</string>
     <string name="find_topic">发现频道</string>
     <string name="manage_topic">管理频道</string>
-    <string name="choose_topic" >关注你感兴趣的频道</string>
-    <string name="choose_site" >关注你感兴趣的站点</string>
+    <string name="choose_topic" >选择感兴趣的频道</string>
+    <string name="choose_site" >选择感兴趣的站点</string>
     <string name="enter_direct">跳过</string>
     <string name="next">下一步</string>
     <string name="finish">完成</string>

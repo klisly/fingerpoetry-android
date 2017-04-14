@@ -5,4 +5,7 @@
 
     <solid android:color="@color/bg_focus" />
 
+    <stroke android:width="0.2dp" android:color="#cccccc"/>
+
+
 </shape>

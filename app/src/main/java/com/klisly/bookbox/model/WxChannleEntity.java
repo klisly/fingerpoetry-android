@@ -74,10 +74,4 @@ public class WxChannleEntity extends BaseModel{
         list.add(new WxChannleEntity(18, "体育迷"));
         return list;
     }
-
-    public static List loadWxMy() {
-        List list = new ArrayList();
-        list.add(new WxChannleEntity(1, "热门"));
-        return list;
-    }
 }

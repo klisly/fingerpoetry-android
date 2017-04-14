@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.klisly.common.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User extends BaseModel{
@@ -75,7 +76,7 @@ public class User extends BaseModel{
     @Expose
     private String deviceToken;
 
-    private List<WxChannleEntity> wxChannles;
+    private List<WxChannleEntity> wxChannles = new ArrayList<>();
     /**
      *
      * @return
@@ -485,6 +486,9 @@ public class User extends BaseModel{
     }
 
     public List<WxChannleEntity> getWxChannles() {
+        if(wxChannles.size() == 0){
+            wxChannles = WxChannleEntity.loadWxDefault();
+        }
         return wxChannles;
     }
 

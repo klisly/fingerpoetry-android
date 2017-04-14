@@ -6,7 +6,7 @@
             <solid android:color="@android:color/transparent" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/red_500" />
+                android:color="@color/accentLight" />
         </shape>
     </item>
 </selector>

@@ -31,8 +31,9 @@
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:textSize="13sp"
+
         android:background="@drawable/bg_btn"
-        android:textColor="@color/red_500"
+        android:textColor="@color/accentLight"
         android:text="@string/edit"/>
 
     <View

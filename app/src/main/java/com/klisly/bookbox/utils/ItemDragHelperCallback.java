@@ -22,6 +22,10 @@ public class ItemDragHelperCallback extends ItemTouchHelper.Callback {
         }
         // 如果想支持滑动(删除)操作, swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END
         int swipeFlags = 0;
+        // 热门和推荐不能移除
+        if(viewHolder.getAdapterPosition() == 1 || viewHolder.getAdapterPosition() == 2){
+            return 0;
+        }
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
@@ -31,7 +35,10 @@ public class ItemDragHelperCallback extends ItemTouchHelper.Callback {
         if (viewHolder.getItemViewType() != target.getItemViewType()) {
             return false;
         }
-
+        // 热门和推荐不能替换
+        if(target.getAdapterPosition() == 1 || target.getAdapterPosition() == 2 ){
+            return false;
+        }
         if (recyclerView.getAdapter() instanceof OnItemMoveListener) {
             OnItemMoveListener listener = ((OnItemMoveListener) recyclerView.getAdapter());
             listener.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
