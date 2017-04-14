@@ -62,6 +62,7 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
         initToolbarNav(mToolbar, false);
         mToolbar.inflateMenu(R.menu.menu_main_pop);
         mToolbar.setOnMenuItemClickListener(this);
+
         adapter = new PagerFragmentAdapter(getChildFragmentManager(),
                 TopicLogic.getInstance().getOpenFocuses());
         mViewPager.setOffscreenPageLimit(3);
@@ -121,7 +122,6 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
                 } else {
                     start(ChooseTopicFragment.newInstance(ChooseTopicFragment.ACTION_MANAGE));
                 }
-
                 break;
             case R.id.action_reget:
                 ToastHelper.showShortTip(R.string.reget);

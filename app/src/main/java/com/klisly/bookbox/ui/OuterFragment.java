@@ -6,12 +6,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.model.BaseModel;
+import com.klisly.bookbox.model.WxArticle;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
+import com.klisly.bookbox.utils.ActivityUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,8 +26,9 @@ public class OuterFragment extends BaseBackFragment {
     Toolbar mToolbar;
     @Bind(R.id.webView)
     WebView tvContent;
-    private Article mData;
-    public static OuterFragment newInstance(Article article) {
+    private BaseModel mData;
+
+    public static OuterFragment newInstance(BaseModel article) {
         OuterFragment fragment = new OuterFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_CONTENT, article);
@@ -36,7 +41,7 @@ public class OuterFragment extends BaseBackFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            mData = (Article) args.getSerializable(ARG_CONTENT);
+            mData = (BaseModel) args.getSerializable(ARG_CONTENT);
         }
     }
 
@@ -58,14 +63,38 @@ public class OuterFragment extends BaseBackFragment {
 
     private void initView(View view) {
         initToolbarNav(mToolbar, true, false);
-        mToolbar.setTitle(mData.getTitle());
-        tvContent.setWebViewClient(new WebViewClient(){
+        String title = "";
+        if (mData instanceof Article) {
+            title = ((Article) mData).getTitle();
+        } else if (mData instanceof WxArticle) {
+            title = ((WxArticle) mData).getTitle();
+        }
+        mToolbar.setTitle(title);
+        tvContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
+        WebSettings settings = tvContent.getSettings();
+//        if (SharedPreferenceUtil.getNoImageState()) {
+//            settings.setBlockNetworkImage(true);
+//        }
+//        if (SharedPreferenceUtil.getAutoCacheState()) {
+            settings.setAppCacheEnabled(true);
+            settings.setDomStorageEnabled(true);
+            settings.setDatabaseEnabled(true);
+            if (ActivityUtil.isNetworkConnected()) {
+                settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            } else {
+                settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+            }
+//        }
+        settings.setJavaScriptEnabled(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        settings.setSupportZoom(true);
     }
 
     /**
@@ -77,7 +106,13 @@ public class OuterFragment extends BaseBackFragment {
      */
     @Override
     protected void onEnterAnimationEnd() {
-        tvContent.loadUrl(mData.getSrcUrl());
+        String url = "";
+        if (mData instanceof Article) {
+            url = ((Article) mData).getSrcUrl();
+        } else if (mData instanceof WxArticle) {
+            url = ((WxArticle) mData).getHref();
+        }
+        tvContent.loadUrl(url);
     }
 
 

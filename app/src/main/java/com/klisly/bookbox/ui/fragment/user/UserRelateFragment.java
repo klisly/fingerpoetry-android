@@ -18,6 +18,7 @@ import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.ArticleData;
 import com.klisly.bookbox.listener.OnItemClickListener;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.ottoevent.CollectsUpdateEvent;
 import com.klisly.bookbox.ottoevent.ReadsUpdateEvent;
@@ -189,7 +190,7 @@ public class UserRelateFragment extends BaseBackFragment {
         articleApi.fetch(article.getArticleId(), AccountLogic.getInstance().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
+                .subscribe(new AbsSubscriber<ApiResult<? extends BaseModel>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
                         getContentError();
@@ -201,13 +202,13 @@ public class UserRelateFragment extends BaseBackFragment {
                     }
 
                     @Override
-                    public void onNext(ApiResult<ArticleData> res) {
+                    public void onNext(ApiResult<? extends BaseModel> res) {
                         Timber.i("reache article:" + res);
                         if (res.getData() != null) {
                             if(action == TYPE_TOREAD){
                                 unToRead(article);
                             }
-                            start(DetailFragment.newInstance(res.getData().getArticle()));
+                            start(DetailFragment.newInstance(((ArticleData)res.getData()).getArticle()));
                         } else {
                             getContentError();
                         }
@@ -220,7 +221,7 @@ public class UserRelateFragment extends BaseBackFragment {
         articleApi.untoread(article.getArticleId(), AccountLogic.getInstance().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<User2Article>>(getActivity(), false) {
+                .subscribe(new AbsSubscriber<ApiResult<? extends BaseModel>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
                     }
@@ -230,7 +231,7 @@ public class UserRelateFragment extends BaseBackFragment {
                     }
 
                     @Override
-                    public void onNext(ApiResult<User2Article> res) {
+                    public void onNext(ApiResult<? extends BaseModel> res) {
                     }
                 });
     }

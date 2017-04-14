@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
@@ -18,14 +19,16 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerFragmentAdapter;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
-import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.WxChannleEntity;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
-import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
 import com.klisly.bookbox.utils.ToastHelper;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
@@ -37,11 +40,13 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     PagerFragmentAdapter adapter;
+    @Bind(R.id.ivEdit)
+    ImageView ivEdit;
+    private List<WxChannleEntity> channels;
     public static WxFragment newInstance() {
         return new WxFragment();
     }
-    private int selectIndex = 0;
-    private Topic selectTopic = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
+        channels = WxChannleEntity.loadDefault();
         initView();
         return view;
     }
@@ -67,29 +73,20 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
         mToolbar.setTitle(R.string.wechat);
         initToolbarNav(mToolbar);
         mToolbar.setOnMenuItemClickListener(this);
-        adapter = new PagerFragmentAdapter(getChildFragmentManager(),
-                TopicLogic.getInstance().getOpenFocuses());
+
+        ivEdit.setVisibility(View.VISIBLE);
+
+        adapter = new PagerFragmentAdapter(getChildFragmentManager(), channels);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(adapter);
-        TopicLogic.getInstance().registerListener(this, () -> {
-            if (getActivity() == null || getActivity().isFinishing()) {
-                return;
-            }
-            getActivity().runOnUiThread(() -> {
-                adapter.notifyDataSetChanged();
-                int newIndex = adapter.getList().indexOf(selectTopic);
-                Timber.i("on topic change selectIndex:"+selectIndex+" newIndex:"+newIndex);
-                if(newIndex == -1){
-                    if(adapter.getList().size() > selectIndex){
-                        mViewPager.setCurrentItem(selectIndex);
-                    } else {
-                        mViewPager.setCurrentItem(adapter.getList().size()-1);
-                    }
-                } else if(newIndex != selectIndex){
-                    mViewPager.setCurrentItem(newIndex);
-                }
-            });
-        });
+//        TopicLogic.getInstance().registerListener(this, () -> {
+//            if (getActivity() == null || getActivity().isFinishing()) {
+//                return;
+//            }
+//            getActivity().runOnUiThread(() -> {
+//                adapter.notifyDataSetChanged();
+//            });
+//        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -98,8 +95,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
 
             @Override
             public void onPageSelected(int position) {
-                selectTopic = (Topic) adapter.getList().get(position);
-                selectIndex = position;
+
             }
 
             @Override
@@ -107,14 +103,19 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
 
             }
         });
+
         mTabLayout.setupWithViewPager(mViewPager);
-        selectTopic = (Topic) adapter.getList().get(0);
     }
     @Override
     public void onResume() {
         super.onResume();
     }
 
+    @OnClick(R.id.ivEdit)
+    void editChannel(){
+        Timber.i("edit channel");
+        start(ChooseChannelFragment.newInstance());
+    }
     /**
      * 类似于 Activity的 onNewIntent()
      */
@@ -138,14 +139,14 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                                 ToastHelper.showShortTip(R.string.recom_setting);
                                 break;
                             case R.id.action_as_home:
-                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_TOPIC);
+                                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_WX);
                                 ToastHelper.showShortTip(R.string.success_as_home);
                                 break;
                             case R.id.action_manage_topic:
                                 if (!AccountLogic.getInstance().isLogin()) {
                                     BusProvider.getInstance().post(new ToLoginEvent());
                                 } else {
-                                    start(ChooseTopicFragment.newInstance(ChooseTopicFragment.ACTION_MANAGE));
+                                    start(ChooseChannelFragment.newInstance());
                                 }
 
                                 break;

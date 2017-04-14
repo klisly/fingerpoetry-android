@@ -2,7 +2,7 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class WxArticle {
+public class WxArticle extends BaseModel{
 
     @SerializedName("_id")
     @Expose

@@ -9,6 +9,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.model.Article;
+import com.klisly.bookbox.model.BaseModel;
 import com.klisly.common.StringUtils;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class ArticleViewHolder extends BaseViewHolder<Article> {
+public class ArticleViewHolder extends BaseViewHolder<BaseModel> {
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.tv_content)
@@ -26,8 +27,6 @@ public class ArticleViewHolder extends BaseViewHolder<Article> {
     TextView tvSource;
     @Bind(R.id.tv_time)
     TextView tvDate;
-    @Bind(R.id.rl_item)
-    RelativeLayout relativeLayout;
     @Bind(R.id.article_item)
     RelativeLayout articlrLayout;
     @Bind(R.id.clickload)
@@ -40,7 +39,8 @@ public class ArticleViewHolder extends BaseViewHolder<Article> {
 
 
     @Override
-    public void setData(final Article article){
+    public void setData(final BaseModel entity) {
+        Article article = (Article) entity;
         if (article != null && !Constants.INVALID_ARTICLE_ID.equals(article.getId())) {
             articlrLayout.setVisibility(View.VISIBLE);
             mTvLoad.setVisibility(View.GONE);
@@ -52,7 +52,7 @@ public class ArticleViewHolder extends BaseViewHolder<Article> {
             tvDate.setText(article.getReadCount() + "阅・"
                     + article.getCollectCount() + "收藏・"
                     + article.getShareCount() + "分享");
-            if(StringUtils.isNotEmpty(article.getContent())){
+            if (StringUtils.isNotEmpty(article.getContent())) {
                 tvContent.setVisibility(View.VISIBLE);
                 tvContent.setText(article.getContent());
             } else {
@@ -62,5 +62,6 @@ public class ArticleViewHolder extends BaseViewHolder<Article> {
             articlrLayout.setVisibility(View.GONE);
             mTvLoad.setVisibility(View.VISIBLE);
         }
+
     }
 }

@@ -53,6 +53,7 @@ public class Constants {
     public static final String FRAG_TOPIC = "topic";
     public static final String FRAG_SITE = "site";
     public static final String FRAG_MAGZINE = "magzine";
+    public static final String FRAG_WX = "wx";
     public static final String FRAG_NOVEL = "novel";
     public static final String NOVEL_END_0 = "&nbsp;&nbsp;&nbsp;&nbsp;一秒记住【笔趣阁中文网\n" +
             "<a href=\"http://www.biqugezw.com\" target=\"_blank\">www.biqugezw.com</a>】，为您提供精彩小说阅读。\n" +

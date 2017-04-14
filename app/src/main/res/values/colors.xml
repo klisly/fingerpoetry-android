@@ -8,6 +8,13 @@
     <color name="primaryLight">#7DD4B7</color>
     <color name="accent">#00796b</color>
     <color name="accentLight">#009688</color>
+    <color name="tip">#9c9c9c</color>
+    <color name="bg_focus">#DDDDDD</color>
+    <color name="red_500">#ef4836</color>
+    <color name="colorBackground">#EEEEEE</color>
+    <color name="colorCard">#FFFFFF</color>
+    <color name="colorText">#2C2C2C</color>
+    <color name="comment_reply">#9ba4a3</color>
 
     <!-- 常用 -->
     <color name="transparent">#00000000</color>

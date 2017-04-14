@@ -25,14 +25,31 @@
             android:src="@drawable/ic_search"
             android:visibility="gone" />
     </android.support.v7.widget.Toolbar>
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        style="@style/SubTabLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
-        android:background="@color/accentLight"
-        app:tabMode="scrollable" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/SubTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tabMode="scrollable" />
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:visibility="gone"
+            android:background="#cc009688"
+            android:src="@drawable/ic_plus"/>
+    </RelativeLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

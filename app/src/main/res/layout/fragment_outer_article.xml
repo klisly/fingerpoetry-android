@@ -20,6 +20,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:scrollbars="none"
             android:id="@+id/webView"
             />
         <!--<com.material.widget.CircularProgress-->
