@@ -164,6 +164,10 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
                             });
 
                 } else {
+                    if(!AccountLogic.getInstance().isLogin()){
+                        ToastHelper.showShortTip("登录后为你获取订阅的小说");
+                        return;
+                    }
                     if (datas.get(position).getId() != null) {
                         novelApi.subscribeById(datas.get(position).getId(), AccountLogic.getInstance().getToken())
                                 .subscribeOn(Schedulers.io())

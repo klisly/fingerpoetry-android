@@ -17,8 +17,6 @@ import com.material.widget.PaperButton;
 
 import java.util.List;
 
-import static com.klisly.bookbox.R.id.item_layout;
-
 public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.NovelViewHolder> {
     private LayoutInflater mInflater;
     private List<Novel> mItems;
@@ -48,7 +46,6 @@ public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.NovelViewHol
     @Override
     public void onBindViewHolder(NovelViewHolder holder, int position) {
         Novel novel = mItems.get(position);
-        holder.articlrLayout.setVisibility(View.VISIBLE);
         holder.tvTitle.setText(novel.getTitle());
         holder.tvBrief.setText("简介： "+novel.getDesc()==null?"暂无说明":novel.getDesc());
         holder.tvAuthor.setText("作者： "+novel.getAuthor() == null?"未知":"");
@@ -72,7 +69,6 @@ public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.NovelViewHol
         TextView tvAuthor;
         TextView tvLatest;
         SimpleDraweeView simpleDraweeView;
-        View articlrLayout;
         PaperButton paperButton;
 
         public NovelViewHolder(View itemView) {
@@ -83,7 +79,6 @@ public class NovelAdapter extends RecyclerView.Adapter<NovelAdapter.NovelViewHol
             tvLatest = (TextView) itemView.findViewById(R.id.tv_latest);
             paperButton = (PaperButton) itemView.findViewById(R.id.btn_action);
             simpleDraweeView = (SimpleDraweeView) itemView.findViewById(R.id.iv_image);
-            articlrLayout = itemView.findViewById(item_layout);
         }
     }
 
