@@ -14,7 +14,7 @@ import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChannelAdapter;
 import com.klisly.bookbox.logic.AccountLogic;
-import com.klisly.bookbox.model.WxChannleEntity;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.ottoevent.UpdateWxChannelEvent;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ItemDragHelperCallback;
@@ -29,8 +29,8 @@ public class ChooseChannelFragment extends BaseBackFragment {
 //    Toolbar mToolbar;
     @Bind(R.id.recy)
     RecyclerView mRecy;
-    private List<WxChannleEntity> my;
-    private List<WxChannleEntity> other;
+    private List<ChannleEntity> my;
+    private List<ChannleEntity> other;
     private ChannelAdapter mAdapter;
     public static ChooseChannelFragment newInstance() {
         ChooseChannelFragment fragment = new ChooseChannelFragment();
@@ -68,7 +68,7 @@ public class ChooseChannelFragment extends BaseBackFragment {
 //        mToolbar.setTitle(title);
 //        initToolbarNav(mToolbar, false, false);
 
-        other = WxChannleEntity.loadWxDefault();
+        other = ChannleEntity.loadWxDefault();
         my = AccountLogic.getInstance().getNowUser().getWxChannles();
         other.removeAll(my);
         mRecy.setVerticalScrollBarEnabled(true);

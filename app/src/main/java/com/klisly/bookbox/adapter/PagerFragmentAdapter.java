@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.klisly.bookbox.model.BaseModel;
-import com.klisly.bookbox.model.WxChannleEntity;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.ui.fragment.PagerChildFragment;
@@ -53,8 +53,8 @@ public class PagerFragmentAdapter<T extends BaseModel> extends FragmentStatePage
             name = ((Topic)list.get(position)).getName();
         } else if(list.get(position) instanceof Site){
             name = ((Site)list.get(position)).getName();
-        } else if(list.get(position) instanceof WxChannleEntity){
-            name = ((WxChannleEntity)list.get(position)).getName();
+        } else if(list.get(position) instanceof ChannleEntity){
+            name = ((ChannleEntity)list.get(position)).getName();
         }
         Timber.i("get item:"+name);
         args.putString(PagerChildFragment.ARG_NAME, name);
@@ -75,8 +75,8 @@ public class PagerFragmentAdapter<T extends BaseModel> extends FragmentStatePage
             name = ((Site) list.get(position)).getName();
         } else  if(list.get(position) instanceof Topic){
             name = ((Topic) list.get(position)).getName();
-        } else  if(list.get(position) instanceof WxChannleEntity){
-            name = ((WxChannleEntity) list.get(position)).getName();
+        } else  if(list.get(position) instanceof ChannleEntity){
+            name = ((ChannleEntity) list.get(position)).getName();
         }
         return name;
     }

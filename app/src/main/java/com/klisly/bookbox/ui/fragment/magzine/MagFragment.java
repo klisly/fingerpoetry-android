@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.jude.easyrecyclerview.decoration.StickyHeaderDecoration;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.Constants;
@@ -31,7 +30,6 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
-import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
@@ -114,9 +112,9 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
         mToolbar.setOnMenuItemClickListener(this);
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        mRecy.addItemDecoration(itemDecoration);
+//        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
+//        itemDecoration.setDrawLastItem(false);
+//        mRecy.addItemDecoration(itemDecoration);
 
         mRecy.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(getActivity()) {
             @Override

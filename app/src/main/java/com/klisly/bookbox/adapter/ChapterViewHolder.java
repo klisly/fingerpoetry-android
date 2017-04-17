@@ -7,8 +7,7 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.model.Chapter;
-import com.klisly.common.dateutil.DateStyle;
-import com.klisly.common.dateutil.DateUtil;
+import com.klisly.bookbox.utils.DateUtil;
 
 import java.util.Date;
 
@@ -36,10 +35,7 @@ public class ChapterViewHolder extends BaseViewHolder<Chapter> {
     public void setData(final Chapter article) {
         tvTitle.setText(article.getTitle());
         tvSource.setText(article.getNname());
-        Date date = new Date();
-        date.setTime(article.getCreateAt());
-
-        tvDate.setText(DateUtil.DateToString(date, DateStyle.HH_MM_SS));
+        tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(article.getCreateAt()));
         tvContent.setVisibility(View.GONE);
 
     }

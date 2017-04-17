@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.model.WxChannleEntity;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.utils.OnDragVHListener;
 import com.klisly.bookbox.utils.OnItemMoveListener;
 import com.klisly.bookbox.utils.VibratorUtil;
@@ -58,19 +58,19 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // 是否为 编辑 模式
     private boolean isEditMode;
 
-    private List<WxChannleEntity> mMyChannelItems, mOtherChannelItems;
+    private List<ChannleEntity> mMyChannelItems, mOtherChannelItems;
 
     // 我的频道点击事件
     private OnMyChannelItemClickListener mChannelItemClickListener;
 
-    public ChannelAdapter(Context context, ItemTouchHelper helper, List<WxChannleEntity> mMyChannelItems, List<WxChannleEntity> mOtherChannelItems) {
+    public ChannelAdapter(Context context, ItemTouchHelper helper, List<ChannleEntity> mMyChannelItems, List<ChannleEntity> mOtherChannelItems) {
         this.mInflater = LayoutInflater.from(context);
         this.mItemTouchHelper = helper;
         this.mMyChannelItems = mMyChannelItems;
         this.mOtherChannelItems = mOtherChannelItems;
     }
 
-    public List<WxChannleEntity> getmMyChannelItems() {
+    public List<ChannleEntity> getmMyChannelItems() {
         return mMyChannelItems;
     }
 
@@ -360,7 +360,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (startPosition > mMyChannelItems.size() - 1) {
             return;
         }
-        WxChannleEntity item = mMyChannelItems.get(startPosition);
+        ChannleEntity item = mMyChannelItems.get(startPosition);
         mMyChannelItems.remove(startPosition);
         mOtherChannelItems.add(0, item);
 
@@ -407,7 +407,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (startPosition > mOtherChannelItems.size() - 1) {
             return -1;
         }
-        WxChannleEntity item = mOtherChannelItems.get(startPosition);
+        ChannleEntity item = mOtherChannelItems.get(startPosition);
         mOtherChannelItems.remove(startPosition);
         mMyChannelItems.add(item);
         return position;
@@ -443,7 +443,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        WxChannleEntity item = mMyChannelItems.get(fromPosition - COUNT_PRE_MY_HEADER);
+        ChannleEntity item = mMyChannelItems.get(fromPosition - COUNT_PRE_MY_HEADER);
         mMyChannelItems.remove(fromPosition - COUNT_PRE_MY_HEADER);
         mMyChannelItems.add(toPosition - COUNT_PRE_MY_HEADER, item);
         notifyItemMoved(fromPosition, toPosition);

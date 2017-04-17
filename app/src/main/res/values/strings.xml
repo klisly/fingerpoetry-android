@@ -83,7 +83,7 @@
     <string name="notoread">取消待读</string>
     <string name="readed">已读</string>
     <string name="toreaded">我的待读</string>
-    <string name="collected">我的收藏</string>
+    <string name="collected">收藏</string>
     <string name="recentread">最近浏览</string>
     <string name="change_avatar">更换头像</string>
     <string name="change_name">修改昵称</string>

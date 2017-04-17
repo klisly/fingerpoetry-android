@@ -22,14 +22,14 @@ import com.klisly.bookbox.api.WxArticleApi;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.model.WxArticle;
-import com.klisly.bookbox.model.WxChannleEntity;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.DetailFragment;
-import com.klisly.bookbox.ui.OuterFragment;
+import com.klisly.bookbox.ui.OFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
@@ -122,7 +122,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
             public int getViewType(int position) {
                 if(mData instanceof Topic || mData instanceof Site){
                     return TYPE_ARTICLE;
-                } else if(mData instanceof WxChannleEntity){
+                } else if(mData instanceof ChannleEntity){
                     return TYPE_WX_ARTICLE;
                 }
                 return TYPE_ARTICLE;
@@ -180,8 +180,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
     private void queryData(BaseModel article) {
         try {
             if (mData != null) {
-                if (mData instanceof WxChannleEntity) {
-                    ((BaseFragment) getParentFragment()).start(OuterFragment.newInstance(article));
+                if (mData instanceof ChannleEntity) {
+                    ((BaseFragment) getParentFragment()).start(OFragment.newInstance(article));
                 } else {
                     ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance((Article) article));
                 }
@@ -203,8 +203,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                 params.put("siteId", ((Site) mData).getId());
             } else if (mData instanceof Topic) {
                 params.put("topics", ((Topic) mData).getName());
-            } else if (mData instanceof WxChannleEntity) {
-                params.put("topics", ((WxChannleEntity) mData).getName());
+            } else if (mData instanceof ChannleEntity) {
+                params.put("topics", ((ChannleEntity) mData).getName());
             }
         }
         page++;
@@ -214,7 +214,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
 
         if (mData instanceof Site || mData instanceof Topic) {
             loadLiterature(params);
-        } else if (mData instanceof WxChannleEntity) {
+        } else if (mData instanceof ChannleEntity) {
             loadWxArticle(params);
         }
 

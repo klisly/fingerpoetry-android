@@ -275,6 +275,8 @@ public class HomeActivity extends SupportActivity
         super.onDestroy();
         ButterKnife.unbind(this);
         ShareSDK.stopSDK(this);
+        Fresco.shutDown();
+
     }
 
     long firstTime = 0;

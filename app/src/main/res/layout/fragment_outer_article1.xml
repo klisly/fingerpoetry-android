@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/behavior_demo_coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:background="?attr/colorPrimary" />
+    </android.support.design.widget.AppBarLayout>
+
+    <com.klisly.bookbox.widget.NestedWebView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        android:gravity="center"
+        app:layout_behavior="com.klisly.bookbox.behavior.BottomBarBehavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right|center_vertical"
+            >
+            <com.andexert.library.RippleView
+                android:id="@+id/action_collect"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="64dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                app:rv_color="@color/background_black_alpha_20"
+                app:rv_centered="true"
+                >
+                <ImageView
+                    android:id="@+id/ivcollect"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/uncollected"
+                    android:layout_margin="4dp"
+                    />
+                <TextView
+                    android:layout_below="@id/ivcollect"
+                    android:id="@+id/txtcollection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收藏"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_gray"
+                    />
+            </com.andexert.library.RippleView>
+            <com.andexert.library.RippleView
+                android:id="@+id/action_share"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="64dp"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:gravity="center"
+                app:rv_color="@color/background_black_alpha_20"
+                app:rv_centered="true"
+                >
+                <ImageView
+                    android:id="@+id/ivshare"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/share_gray"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:id="@+id/txtshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivshare"
+                    android:text="分享"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_gray"
+                    />
+            </com.andexert.library.RippleView>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/slider_color"
+            />
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+

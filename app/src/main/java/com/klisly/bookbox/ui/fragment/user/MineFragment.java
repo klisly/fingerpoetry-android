@@ -4,23 +4,31 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.imagepipeline.request.Postprocessor;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
+import com.klisly.bookbox.adapter.PagerFragmentAdapter;
 import com.klisly.bookbox.api.AccountApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.model.User;
 import com.klisly.bookbox.ottoevent.LogoutEvent;
 import com.klisly.bookbox.ottoevent.ProfileUpdateEvent;
@@ -28,12 +36,15 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.utils.DateUtil;
 import com.klisly.common.LogUtils;
 import com.squareup.otto.Subscribe;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import jp.wasabeef.fresco.processors.BlurPostprocessor;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -41,21 +52,28 @@ import timber.log.Timber;
 public class MineFragment extends BaseMainFragment {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.name)
+    TextView tvName;
     @Bind(R.id.iv_avatar)
     SimpleDraweeView ivAvatar;
-    @Bind(R.id.tv_name)
-    TextView tvName;
-    @Bind(R.id.tv_desc)
-    TextView tvDesc;
-    @Bind(R.id.rl_toread)
-    RelativeLayout rlToread;
-    @Bind(R.id.rl_collect)
-    RelativeLayout rlCollect;
-    @Bind(R.id.rl_recent_read)
-    RelativeLayout rlRecentRead;
+    @Bind(R.id.registerat)
+    TextView registerAt;
+    @Bind(R.id.bg)
+    SimpleDraweeView ivBg;
+    @Bind(R.id.desc)
+    TextView tvSig;
+    @Bind(R.id.vp)
+    ViewPager viewPager;
+    @Bind(R.id.tab)
+    TabLayout tab;
+
+    PagerFragmentAdapter adapter;
+    private List<ChannleEntity> channels;
+
     private User user;
     private MaterialDialog exitDialog;
     private AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
+    Postprocessor postprocessor;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -77,6 +95,7 @@ public class MineFragment extends BaseMainFragment {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         initView();
+        postprocessor = new BlurPostprocessor(getContext(), 25);
         if (!AccountLogic.getInstance().isLogin()) {
             start(LoginFragment.newInstance());
         } else {
@@ -122,40 +141,79 @@ public class MineFragment extends BaseMainFragment {
 
     private void updateData() {
         user = AccountLogic.getInstance().getNowUser();
+        if(user == null){
+            return;
+        }
         tvName.setText(user.getName());
+        ImageRequest request = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.bg_user_info)
+                .setPostprocessor(postprocessor)
+                .build();
+
+        PipelineDraweeController controller =
+                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                        .setImageRequest(request)
+                        .setOldController(ivBg.getController())
+                        .build();
+        ivBg.setController(controller);
         ivAvatar.setImageURI(Uri.parse(BookRetrofit.BASE_URL + user.getAvatar()));
-        StringBuffer desc = new StringBuffer();
-        desc.append(getString(R.string.readed)).append(" ").append(user.getReadCount())
-                .append("  ").append(getString(R.string.toreaded)).append(" ").append(user.getToReadCount())
-                .append("  ").append(getString(R.string.collected)).append(" ").append(user.getToReadCount());
-        tvDesc.setText(desc);
+        StringBuilder desc = new StringBuilder();
+        desc.append(getString(R.string.readed)).append(" ")
+                .append(user.getReadCount())
+                .append("  ").append(getString(R.string.collected))
+                .append(" ").append(user.getCollectCount())
+                .append("  ").append(getString(R.string.share))
+                .append(" ").append(user.getShareCount());
+        tvSig.setText(desc);
+        registerAt.setText(DateUtil.getFriendlyTimeSpanByNow(user.getCreateAt()));
     }
 
-    @OnClick(R.id.iv_next)
-    void onNext() {
-        Timber.i("modify user data");
-        start(ModifyFragment.newInstance());
-    }
-
-    @OnClick(R.id.rl_collect)
-    void onNextCollect() {
-        Timber.i("see user collect");
-        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_COLLECT));
-    }
-    @OnClick(R.id.rl_recent_read)
-    void onNextRead() {
-        Timber.i("see user recent_read");
-        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_READED));
-    }
-    @OnClick(R.id.rl_toread)
-    void onNextToRead() {
-        Timber.i("see user toread");
-        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_TOREAD));
-    }
+//    @OnClick(R.id.iv_next)
+//    void onNext() {
+//        Timber.i("modify user data");
+//        start(ModifyFragment.newInstance());
+//    }
+//
+//    @OnClick(R.id.rl_collect)
+//    void onNextCollect() {
+//        Timber.i("see user collect");
+//        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_COLLECT));
+//    }
+//    @OnClick(R.id.rl_recent_read)
+//    void onNextRead() {
+//        Timber.i("see user recent_read");
+//        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_READED));
+//    }
+//    @OnClick(R.id.rl_toread)
+//    void onNextToRead() {
+//        Timber.i("see user toread");
+//        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_TOREAD));
+//    }
 
     private void initView() {
         mToolbar.setTitle(getString(R.string.mine_center));
         initToolbarNav(mToolbar, true);
+        channels = ChannleEntity.loadMines();
+        adapter = new PagerFragmentAdapter(getChildFragmentManager(), channels);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tab.setupWithViewPager(viewPager);
     }
 
     @Override

@@ -76,7 +76,7 @@ public class User extends BaseModel{
     @Expose
     private String deviceToken;
 
-    private List<WxChannleEntity> wxChannles = new ArrayList<>();
+    private List<ChannleEntity> wxChannles = new ArrayList<>();
     /**
      *
      * @return
@@ -485,14 +485,14 @@ public class User extends BaseModel{
         this.avatar = avatar;
     }
 
-    public List<WxChannleEntity> getWxChannles() {
+    public List<ChannleEntity> getWxChannles() {
         if(wxChannles.size() == 0){
-            wxChannles = WxChannleEntity.loadWxDefault();
+            wxChannles = ChannleEntity.loadWxDefault();
         }
         return wxChannles;
     }
 
-    public void setWxChannles(List<WxChannleEntity> wxChannles) {
+    public void setWxChannles(List<ChannleEntity> wxChannles) {
         this.wxChannles = wxChannles;
     }
 

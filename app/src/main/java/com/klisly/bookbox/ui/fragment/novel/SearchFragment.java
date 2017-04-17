@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.NovelAdapter;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -24,7 +23,6 @@ import com.klisly.bookbox.model.User2Novel;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
-import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.ToastHelper;
 
 import java.util.ArrayList;
@@ -83,9 +81,9 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
         initToolbarNav(mToolbar, false);
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));
-        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
-        itemDecoration.setDrawLastItem(false);
-        mRecy.addItemDecoration(itemDecoration);
+//        DividerDecoration itemDecoration = new DividerDecoration(getResources().getColor(R.color.background_black_alpha_20), ActivityUtil.dip2px(getActivity(), 0.8f), 0, 0);
+//        itemDecoration.setDrawLastItem(false);
+//        mRecy.addItemDecoration(itemDecoration);
         adapter = new NovelAdapter(getActivity().getApplicationContext(), datas);
         mRecy.setAdapter(adapter);
         initListener();

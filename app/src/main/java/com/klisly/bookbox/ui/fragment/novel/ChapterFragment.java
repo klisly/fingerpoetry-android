@@ -28,16 +28,13 @@ import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.OuterFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ChapterParser;
+import com.klisly.bookbox.utils.DateUtil;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
-import com.klisly.common.dateutil.DateStyle;
-import com.klisly.common.dateutil.DateUtil;
 import com.material.widget.CircularProgress;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
-
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -168,9 +165,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     private void updateData() {
         String info = mData.getNname() + "   " + mData.getAuthor();
         tvSource.setText(info);
-        Date date = new Date();
-        date.setTime(mData.getCreateAt());
-        tvDate.setText(DateUtil.DateToString(date, DateStyle.YYYY_MM_DD_HH_MM_SS));
+        tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(mData.getCreateAt()));
         String html = Constants.ARTICLE_PREFIX + mData.getContent()+Constants.ARTICLE_SUFFIX;
         html = html.replace(Constants.NOVEL_END_0, "");
         html = html.replace(Constants.NOVEL_END_1,"");

@@ -17,7 +17,7 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerFragmentAdapter;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
-import com.klisly.bookbox.model.WxChannleEntity;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ottoevent.UpdateWxChannelEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
@@ -42,7 +42,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
     PagerFragmentAdapter adapter;
     @Bind(R.id.ivEdit)
     ImageView ivEdit;
-    private List<WxChannleEntity> channels;
+    private List<ChannleEntity> channels;
     public static WxFragment newInstance() {
         return new WxFragment();
     }
@@ -57,7 +57,11 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
-        channels = AccountLogic.getInstance().getNowUser().getWxChannles();
+        if(AccountLogic.getInstance().getNowUser() != null){
+            channels = AccountLogic.getInstance().getNowUser().getWxChannles();
+        } else {
+            channels = ChannleEntity.loadWxDefault();
+        }
         initView();
         return view;
     }
@@ -123,7 +127,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                 if (!AccountLogic.getInstance().isLogin()) {
                     BusProvider.getInstance().post(new ToLoginEvent());
                 } else {
-                    startWithPop(ChooseChannelFragment.newInstance());
+                    start(ChooseChannelFragment.newInstance());
                 }
 
                 break;
