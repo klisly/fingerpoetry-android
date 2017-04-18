@@ -120,9 +120,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
 
             @Override
             public int getViewType(int position) {
-                if(mData instanceof Topic || mData instanceof Site){
+                if (mData instanceof Topic || mData instanceof Site) {
                     return TYPE_ARTICLE;
-                } else if(mData instanceof ChannleEntity){
+                } else if (mData instanceof ChannleEntity) {
                     return TYPE_WX_ARTICLE;
                 }
                 return TYPE_ARTICLE;
@@ -130,9 +130,9 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
 
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                if(viewType == TYPE_ARTICLE){
+                if (viewType == TYPE_ARTICLE) {
                     return new ArticleViewHolder(parent);
-                } else if(viewType == TYPE_WX_ARTICLE){
+                } else if (viewType == TYPE_WX_ARTICLE) {
                     return new WxArticleViewHolder(parent);
                 }
                 return new ArticleViewHolder(parent);
@@ -229,11 +229,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -273,11 +277,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
                     }
 
                     @Override

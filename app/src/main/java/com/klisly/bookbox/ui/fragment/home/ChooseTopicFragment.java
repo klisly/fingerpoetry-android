@@ -106,27 +106,19 @@ public class ChooseTopicFragment extends BaseBackFragment {
         String title = getString(R.string.choose_topic);
         mToolbar.setTitle(title);
         initToolbarNav(mToolbar, false, false);
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mRecy.isChangePosition()) {
-                    TopicLogic.getInstance().updateFocusedOrder();
-                    updateFocusedOrder();
-                } else {
-                    if (action == ACTION_SET) {
-                        start(ChooseSiteFragment.newInstance(ChooseSiteFragment.ACTION_MANAGE));
-                    }
-                    pop();
+        mBtnNext.setOnClickListener(v -> {
+            if (mRecy.isChangePosition()) {
+                TopicLogic.getInstance().updateFocusedOrder();
+                updateFocusedOrder();
+            } else {
+                if (action == ACTION_SET) {
+                    start(ChooseSiteFragment.newInstance(ChooseSiteFragment.ACTION_MANAGE));
                 }
-            }
-        });
-
-        mBtnEnter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 pop();
             }
         });
+
+        mBtnEnter.setOnClickListener(view -> pop());
 
         mRecy.getRecyclerView().setVerticalScrollBarEnabled(true);
         mRecy.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -41,12 +41,13 @@
                 fresco:placeholderImageScaleType="centerCrop"
                 fresco:roundAsCircle="false">
             </com.facebook.drawee.view.SimpleDraweeView>
-            <LinearLayout
+            <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                >
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
@@ -88,7 +89,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"/>
                 </RelativeLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

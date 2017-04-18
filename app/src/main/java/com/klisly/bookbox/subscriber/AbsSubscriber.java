@@ -66,7 +66,6 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
         dismissProgressDialog();
         Throwable throwable = e;
         //获取最根源的异常
-        Timber.e(e, "get data from server error");
         while(throwable.getCause() != null){
             e = throwable;
             throwable = throwable.getCause();
@@ -74,7 +73,6 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
         ApiException ex;
         if (e instanceof HttpException){             //HTTP错误
             HttpException httpException = (HttpException) e;
-            Timber.i("url:"+httpException);
             ex = new ApiException(e, httpException.code());
             try {
                 String str = httpException.response().errorBody().string();
@@ -85,7 +83,6 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
                     ex.setMessage(jsonObject.getString("msg"));
                 }
             } catch (Exception e1) {
-                e1.printStackTrace();
                 ex.setCode(SERVICE_UNAVAILABLE);
             }
             switch(httpException.code()){

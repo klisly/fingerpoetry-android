@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.NotificationCompat;
 
 import com.google.gson.Gson;
@@ -41,21 +42,28 @@ public class BookBoxApplication extends Application {
     }
 
     private PushAgent mPushAgent;
-    private Gson gson = new Gson();
+    private Gson gson;
     private Handler handler;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = this;
-//        FreelineCore.init(this);
         Timber.plant(new Timber.DebugTree());
         ToastHelper.init(this);
         Dexter.initialize(this);
+        gson = new Gson();
         preferenceUtils = new SharedPreferenceUtils(this);
         handler = new Handler();
 //        CrashHandler.getInstance().init(this.getApplicationContext());
         CrashReport.initCrashReport(getApplicationContext(), "900028744", BuildConfig.DEBUG);
+
         initPush();
     }
 
@@ -91,8 +99,8 @@ public class BookBoxApplication extends Application {
                 }
             };
             mPushAgent.setMessageHandler(messageHandler);
-            mPushAgent.setDebugMode(BuildConfig.DEBUG);
-        } catch (Exception e) {
+//            mPushAgent.setDebugMode(BuildConfig.DEBUG);
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }

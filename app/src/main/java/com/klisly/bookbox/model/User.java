@@ -75,6 +75,13 @@ public class User extends BaseModel{
     @SerializedName("deviceToken")
     @Expose
     private String deviceToken;
+    @SerializedName("topics")
+    @Expose
+    private String[] topics;
+
+    @SerializedName("wxchannels")
+    @Expose
+    private String[] wxs;
 
     private List<ChannleEntity> wxChannles = new ArrayList<>();
     /**
@@ -496,6 +503,22 @@ public class User extends BaseModel{
         this.wxChannles = wxChannles;
     }
 
+    public String[] getTopics() {
+        return topics;
+    }
+
+    public void setTopics(String[] topics) {
+        this.topics = topics;
+    }
+
+    public String[] getWxs() {
+        return wxs;
+    }
+
+    public void setWxs(String[] wxs) {
+        this.wxs = wxs;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("User{");
@@ -522,6 +545,8 @@ public class User extends BaseModel{
         sb.append(", deviceToken=").append(deviceToken);
         sb.append(", avatar='").append(avatar).append('\'');
         sb.append(", wxChannles=").append(wxChannles);
+        sb.append(", topics=").append(topics);
+        sb.append(", wxs=").append(wxs);
         sb.append('}');
         return sb.toString();
     }

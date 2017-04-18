@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -177,7 +178,7 @@ public class CommonHelper {
 
     public static void updateDeviceToken(Context context) {
         User user = AccountLogic.getInstance().getNowUser();
-        if (user != null) {
+        if (user != null && BookBoxApplication.getInstance().getPushAgent() != null) {
             String deviceToken = BookBoxApplication.getInstance().getPushAgent().getRegistrationId();
             if (deviceToken.equals(user.getDeviceToken())) {
                 return;
@@ -199,7 +200,7 @@ public class CommonHelper {
 
                         @Override
                         public void onNext(ApiResult<User> data) {
-                            if(data.getStatus() == 200){
+                            if (data.getStatus() == 200) {
                                 Timber.i("udpate device token success");
                                 AccountLogic.getInstance().updateProfile(data.getData());
                             }

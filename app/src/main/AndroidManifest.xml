@@ -90,7 +90,7 @@
             </intent-filter>
         </activity>
         <service android:name="com.qq.e.comm.DownloadService" android:exported="false" />
-        <activity android:name="com.qq.e.ads.ADActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.qq.e.ads.ADActivity" />
 
         <!--微信分享回调 -->
         <activity

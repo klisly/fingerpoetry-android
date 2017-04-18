@@ -45,9 +45,9 @@ public class SplashActivity extends Activity implements SplashADListener {
          */
         CommonHelper.getTopics(getApplicationContext());
         CommonHelper.getUserTopics(getApplicationContext());
-        CommonHelper.getSites(getApplicationContext());
-        CommonHelper.getUserSites(getApplicationContext());
-        CommonHelper.getUserNovels(getApplicationContext());
+//        CommonHelper.getSites(getApplicationContext());
+//        CommonHelper.getUserSites(getApplicationContext());
+//        CommonHelper.getUserNovels(getApplicationContext());
         CommonHelper.updateDeviceToken(getApplicationContext());
         initAlarm();
         if(BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.FIRST_OPEN, true)){

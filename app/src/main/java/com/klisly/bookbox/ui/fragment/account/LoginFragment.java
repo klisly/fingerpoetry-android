@@ -98,6 +98,7 @@ public class LoginFragment extends BaseBackFragment {
             @Override
             public void onNext(ApiResult<LoginData> data) {
                 ToastHelper.showShortTip(R.string.login_success);
+                Timber.i("login success,"+data.getData().getUser());
                 AccountLogic.getInstance().setLoginData(data.getData());
                 CommonHelper.getTopics(getActivity().getApplicationContext());
                 CommonHelper.getUserTopics(getActivity().getApplicationContext());

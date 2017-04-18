@@ -445,10 +445,10 @@ public class HomeActivity extends SupportActivity
     public void onLoginSuccess(LoginEvent event) {
         Timber.i("receive onLoginSuccess");
         updateNavData();
-        CommonHelper.getTopics(this);
-        CommonHelper.getUserTopics(this);
-        CommonHelper.getSites(this);
-        CommonHelper.getUserSites(this);
+//        CommonHelper.getTopics(this);
+//        CommonHelper.getUserTopics(this);
+//        CommonHelper.getSites(this);
+//        CommonHelper.getUserSites(this);
         User user = AccountLogic.getInstance().getNowUser();
         if (!user.getIsBasicSet() && Constants.isFirstLaunch()) {
             Constants.setFirstLaunch(false);

@@ -124,12 +124,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                 ToastHelper.showShortTip(R.string.success_as_home);
                 break;
             case R.id.action_manage_topic:
-                if (!AccountLogic.getInstance().isLogin()) {
-                    BusProvider.getInstance().post(new ToLoginEvent());
-                } else {
-                    start(ChooseChannelFragment.newInstance());
-                }
-
+                manageChannel();
                 break;
             case R.id.action_reget:
                 ToastHelper.showShortTip(R.string.reget);
@@ -140,6 +135,15 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
         return true;
     }
 
+    private void manageChannel() {
+        if (!AccountLogic.getInstance().isLogin()) {
+            BusProvider.getInstance().post(new ToLoginEvent());
+        } else {
+            start(ChooseChannelFragment.newInstance());
+        }
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -147,8 +151,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
 
     @OnClick(R.id.ivEdit)
     void editChannel(){
-        Timber.i("edit channel");
-        start(ChooseChannelFragment.newInstance());
+        manageChannel();
     }
     /**
      * 类似于 Activity的 onNewIntent()
