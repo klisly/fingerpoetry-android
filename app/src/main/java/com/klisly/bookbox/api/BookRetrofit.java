@@ -19,8 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static anetwork.channel.http.NetworkSdkSetting.context;
 
 public class BookRetrofit {
-    public final static String BASE_URL = "http://192.168.1.100:3000/v1/";
-//        public final static String BASE_URL = "https://second.imdao.cn/v1/";
+//    public final static String BASE_URL = "http://192.168.1.100:3000/v1/";
+        public final static String BASE_URL = "https://second.imdao.cn/v1/";
     public final static String BASE_API_URL = BASE_URL;
 
     private final static long DEFAULT_TIMEOUT = 15; // 15s超时
