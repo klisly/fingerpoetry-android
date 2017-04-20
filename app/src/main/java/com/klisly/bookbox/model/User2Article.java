@@ -2,6 +2,8 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.common.StringUtils;
 
 /**
  * Created by wizardholy on 16/8/24.
@@ -49,6 +51,7 @@ public class User2Article extends BaseModel{
     @SerializedName("isBlock")
     @Expose
     private Boolean isBlock;
+    private String img;
 
     /**
      *
@@ -288,6 +291,17 @@ public class User2Article extends BaseModel{
 
     public void setBlock(Boolean block) {
         isBlock = block;
+    }
+
+    public String getImg() {
+        if(StringUtils.isEmpty(img)){
+            img = ActivityUtil.genRandomPic();
+        }
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     @Override

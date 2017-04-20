@@ -2,6 +2,8 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.common.StringUtils;
 
 public class User2WxArticle extends BaseModel{
 
@@ -103,6 +105,9 @@ public class User2WxArticle extends BaseModel{
     }
 
     public String getImg() {
+        if(StringUtils.isEmpty(img)){
+            img = ActivityUtil.genRandomPic();
+        }
         return img;
     }
 

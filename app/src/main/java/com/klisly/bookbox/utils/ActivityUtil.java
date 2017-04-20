@@ -16,9 +16,10 @@ import com.klisly.bookbox.BookBoxApplication;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 public class ActivityUtil {
-
+    private static Random random = new Random();
     public static Uri getAppResourceUri(int resId, String packageName) {
         return Uri.parse("android.resource://" + packageName + "/" + resId);
     }
@@ -173,5 +174,9 @@ public class ActivityUtil {
             }
         }
         return null;
+    }
+
+    public static String genRandomPic(){
+        return "http://och7s33jc.bkt.clouddn.com/cover_"+(300+random.nextInt(200))+".jpg";
     }
 }

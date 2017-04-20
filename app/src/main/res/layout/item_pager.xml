@@ -37,7 +37,6 @@
                 fresco:fadeDuration="600"
                 fresco:failureImage="@drawable/ic_launcher"
                 fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImage="@drawable/ic_launcher"
                 fresco:placeholderImageScaleType="centerCrop"
                 fresco:roundAsCircle="false">
             </com.facebook.drawee.view.SimpleDraweeView>

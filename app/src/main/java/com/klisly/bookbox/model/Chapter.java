@@ -2,6 +2,8 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.common.StringUtils;
 
 /**
  * Created by wizardholy on 2016/11/21.
@@ -22,6 +24,9 @@ public class Chapter extends Article {
     @SerializedName("href")
     @Expose
     private String srcUrl;
+    @SerializedName("uncheck")
+    @Expose
+    private String img;
 
     public String getNo() {
         return no;
@@ -55,5 +60,16 @@ public class Chapter extends Article {
     @Override
     public void setSrcUrl(String srcUrl) {
         this.srcUrl = srcUrl;
+    }
+
+    public String getImg() {
+        if(StringUtils.isEmpty(img)){
+            img = ActivityUtil.genRandomPic();
+        }
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

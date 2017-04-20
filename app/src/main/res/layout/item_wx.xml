@@ -33,9 +33,8 @@
                 fresco:actualImageScaleType="focusCrop"
                 fresco:backgroundImage="@color/accentLight"
                 fresco:fadeDuration="600"
-                fresco:failureImage="@drawable/ic_launcher"
+                fresco:failureImage="@drawable/default_cover"
                 fresco:failureImageScaleType="centerInside"
-                fresco:placeholderImage="@drawable/ic_launcher"
                 fresco:placeholderImageScaleType="centerCrop"
                 fresco:roundAsCircle="false">
             </com.facebook.drawee.view.SimpleDraweeView>

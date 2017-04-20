@@ -2,6 +2,8 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.bookbox.utils.ActivityUtil;
+import com.klisly.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,19 @@ public class Article extends BaseModel{
     @SerializedName("publishAt")
     @Expose
     private long publishAt;
+
+    private String img;
+
+    public String getImg() {
+        if(StringUtils.isEmpty(img)){
+            img = ActivityUtil.genRandomPic();
+        }
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     /**
      *

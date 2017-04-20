@@ -109,6 +109,9 @@ public class OFragment extends BaseBackFragment {
 
                     @Override
                     public void onNext(ApiResult<User2WxArticle> res) {
+                        if(res.getData() == null){
+                            return;
+                        }
                         mData.setHeart(res.getData().getHeart());
                         mData.setCollect(res.getData().getCollect());
                         mData.setToread(res.getData().getToread());
