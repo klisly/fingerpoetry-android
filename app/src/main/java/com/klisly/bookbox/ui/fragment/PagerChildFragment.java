@@ -16,21 +16,25 @@ import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ArticleViewHolder;
 import com.klisly.bookbox.adapter.WxArticleViewHolder;
+import com.klisly.bookbox.adapter.WxUser2ArticleViewHolder;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.WxArticleApi;
 import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2WxArticle;
 import com.klisly.bookbox.model.WxArticle;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.DetailFragment;
 import com.klisly.bookbox.ui.OFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
+import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.utils.TopToastHelper;
 import com.material.widget.CircularProgress;
 
@@ -117,13 +121,17 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
         mRecy.setAdapterWithProgress(adapter = new RecyclerArrayAdapter(getActivity()) {
             private final static int TYPE_ARTICLE = 1;
             private final static int TYPE_WX_ARTICLE = 2;
+            private final static int TYPE_WX_COLLECTED = 3;
 
             @Override
             public int getViewType(int position) {
-                if (mData instanceof Topic || mData instanceof Site) {
+
+                if (getAllData().get(position) instanceof Article) {
                     return TYPE_ARTICLE;
-                } else if (mData instanceof ChannleEntity) {
+                } else if (getAllData().get(position) instanceof WxArticle) {
                     return TYPE_WX_ARTICLE;
+                } else if (getAllData().get(position) instanceof User2WxArticle) {
+                    return TYPE_WX_COLLECTED;
                 }
                 return TYPE_ARTICLE;
             }
@@ -134,6 +142,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     return new ArticleViewHolder(parent);
                 } else if (viewType == TYPE_WX_ARTICLE) {
                     return new WxArticleViewHolder(parent);
+                } else if (viewType == TYPE_WX_COLLECTED) {
+                    return new WxUser2ArticleViewHolder(parent);
                 }
                 return new ArticleViewHolder(parent);
             }
@@ -180,10 +190,32 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
     private void queryData(BaseModel article) {
         try {
             if (mData != null) {
-                if (mData instanceof ChannleEntity) {
+                if (article instanceof WxArticle) {
                     ((BaseFragment) getParentFragment()).start(OFragment.newInstance(article));
-                } else {
+                } else if (article instanceof Article) {
                     ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance((Article) article));
+                }
+                if (article instanceof User2WxArticle) {
+                    wxArticleApi.fetch(((User2WxArticle) article).getArticleId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new AbsSubscriber<ApiResult<WxArticle>>(getActivity(), false) {
+                                @Override
+                                protected void onError(ApiException ex) {
+                                    ToastHelper.showShortTip("获取文章失败");
+                                }
+
+                                @Override
+                                protected void onPermissionError(ApiException ex) {
+                                    ToastHelper.showShortTip("获取文章失败");
+
+                                }
+
+                                @Override
+                                public void onNext(ApiResult<WxArticle> res) {
+                                    ((BaseFragment) getParentFragment()).start(OFragment.newInstance(res.getData()));
+                                }
+                            });
                 }
             }
         } catch (Exception e) {
@@ -203,8 +235,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                 params.put("siteId", ((Site) mData).getId());
             } else if (mData instanceof Topic) {
                 params.put("topics", ((Topic) mData).getName());
-            } else if (mData instanceof ChannleEntity) {
-                params.put("topics", ((ChannleEntity) mData).getName());
             }
         }
         page++;
@@ -215,9 +245,120 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
         if (mData instanceof Site || mData instanceof Topic) {
             loadLiterature(params);
         } else if (mData instanceof ChannleEntity) {
-            loadWxArticle(params);
+            ChannleEntity channleEntity = (ChannleEntity) mData;
+            if (channleEntity.getType() == 1) {
+                params.put("topics", ((ChannleEntity) mData).getName());
+                loadWxArticle(params);
+            } else {
+                if (channleEntity.getName().equals("微信精选")) {
+                    loadWxCollect(params);
+                } else if (channleEntity.getName().equals("小文学")) {
+//                    loadWxCollect(params);
+                }
+
+            }
+
         }
 
+    }
+
+
+    private void loadLiteralCollect(Map<String, String> params) {
+        params.put("uid", AccountLogic.getInstance().getUserId());
+        wxArticleApi.listCollected(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<User2WxArticle>>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<User2WxArticle>> res) {
+                        if (needToast) {
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mTvTip == null) {
+                                        return;
+                                    }
+                                    if (res.getData().size() > 0) {
+                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
+                                    } else {
+                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
+                                    }
+                                }
+                            });
+                        }
+                        if (queryType == 1 && res.getData().size() > 0) {
+                            adapter.addAll(res.getData());
+                        } else {
+                            adapter.addAll(res.getData());
+                        }
+                    }
+                });
+    }
+
+    private void loadWxCollect(Map<String, String> params) {
+        params.put("uid", AccountLogic.getInstance().getUserId());
+        wxArticleApi.listCollected(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<User2WxArticle>>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        page--;
+                        mRecy.setRefreshing(false);
+                        mProgress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<User2WxArticle>> res) {
+                        if (needToast) {
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mTvTip == null) {
+                                        return;
+                                    }
+                                    if (res.getData().size() > 0) {
+                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
+                                    } else {
+                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
+                                    }
+                                }
+                            });
+                        }
+                        if (queryType == 1 && res.getData().size() > 0) {
+                            adapter.addAll(res.getData());
+                        } else {
+                            adapter.addAll(res.getData());
+                        }
+                    }
+                });
     }
 
     private void loadWxArticle(Map<String, String> params) {

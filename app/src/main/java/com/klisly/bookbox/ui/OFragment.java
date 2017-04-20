@@ -77,7 +77,7 @@ public class OFragment extends BaseBackFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            mData = (WxArticle) args.getSerializable(ARG_CONTENT);
+            mData =  (WxArticle) args.getSerializable(ARG_CONTENT);
         }
     }
 
@@ -88,13 +88,43 @@ public class OFragment extends BaseBackFragment {
         ButterKnife.bind(this, view);
         initView(view);
         initListener();
+        fetchData();
         return view;
+    }
+
+    private void fetchData() {
+        articleApi.collectStatus(mData.getId(), AccountLogic.getInstance().getUserId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<User2WxArticle>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        ToastHelper.showShortTip("请登录后再收藏文章");
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<User2WxArticle> res) {
+                        mData.setHeart(res.getData().getHeart());
+                        mData.setCollect(res.getData().getCollect());
+                        mData.setToread(res.getData().getToread());
+                        mData.setShare(res.getData().getShare());
+                        updateInfo();
+                    }
+                });
     }
 
     private void initListener() {
         actionCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!AccountLogic.getInstance().isLogin()){
+                    return;
+                }
                 if(mData.isCollect()){
                     articleApi.uncollect(mData.getId(), AccountLogic.getInstance().getToken())
                             .subscribeOn(Schedulers.io())

@@ -11,10 +11,25 @@ public class ChannleEntity extends BaseModel{
 
     private long id;
     private String name;
+    private int type = 1;// 1 微信频道 2 收藏频道
 
     public ChannleEntity(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public ChannleEntity(long id, String name, int type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public long getId() {
@@ -77,8 +92,8 @@ public class ChannleEntity extends BaseModel{
 
     public static List loadMines() {
         List list = new ArrayList();
-        list.add(new ChannleEntity(1, "微信精选"));
-        list.add(new ChannleEntity(2, "小文学"));
+        list.add(new ChannleEntity(1, "微信精选", 2));
+        list.add(new ChannleEntity(2, "小文学", 2));
         return list;
     }
 }
