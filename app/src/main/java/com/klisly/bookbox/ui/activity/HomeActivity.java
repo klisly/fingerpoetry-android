@@ -20,7 +20,6 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
-import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.AccountApi;
@@ -39,8 +38,8 @@ import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.AboutFragment;
 import com.klisly.bookbox.ui.fragment.SettingFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
-import com.klisly.bookbox.ui.fragment.home.ChooseTopicFragment;
-import com.klisly.bookbox.ui.fragment.home.HomeFragment;
+import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
+import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
 import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
 import com.klisly.bookbox.ui.fragment.novel.NovelFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
@@ -89,10 +88,10 @@ public class HomeActivity extends SupportActivity
         initView();
         checkUpdate();
         checkPermission();
-        mNavigationView.setCheckedItem(R.id.menu_home);
-        start(HomeFragment.newInstance());
+        mNavigationView.setCheckedItem(R.id.menu_weixin);
+        start(WxFragment.newInstance());
         if (savedInstanceState == null) {
-           jumpChooseTopic();
+            jumpChooseTopic();
         }
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -103,22 +102,22 @@ public class HomeActivity extends SupportActivity
     }
 
     private void jumpChooseTopic() {
-        String home = BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.HOME_FRAG, Constants.FRAG_TOPIC);
+        String home = BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.HOME_FRAG, Constants.FRAG_WX);
         if (home.equals(Constants.FRAG_NOVEL)) {
             mNavigationView.setCheckedItem(R.id.menu_novel);
             start(NovelFragment.newInstance());
         } else if (home.equals(Constants.FRAG_SITE)) {
             mNavigationView.setCheckedItem(R.id.menu_site);
             start(SiteFragment.newInstance());
-        } else if (home.equals(Constants.FRAG_MAGZINE)) {
-            mNavigationView.setCheckedItem(R.id.menu_magzine);
-            start(MagFragment.newInstance());
+        } else if (home.equals(Constants.FRAG_TOPIC)) {
+            mNavigationView.setCheckedItem(R.id.menu_topic);
+            start(TopicFragment.newInstance());
         } else if (home.equals(Constants.FRAG_MAGZINE)) {
             mNavigationView.setCheckedItem(R.id.menu_magzine);
             start(MagFragment.newInstance());
         } else if (home.equals(Constants.FRAG_WX)) {
-            mNavigationView.setCheckedItem(R.id.menu_weixin);
-            start(WxFragment.newInstance());
+//            mNavigationView.setCheckedItem(R.id.menu_weixin);
+//            start(WxFragment.newInstance());
         }
     }
 
@@ -130,7 +129,7 @@ public class HomeActivity extends SupportActivity
                 mNavigationView.setCheckedItem(R.id.menu_magzine);
                 MagFragment fragment = findFragment(MagFragment.class);
                 if (fragment == null) {
-                    popTo(HomeFragment.class, false, () -> start(new MagFragment()));
+                    popTo(WxFragment.class, false, () -> start(new MagFragment()));
                 } else {
                     fragment.onResume();
                     start(fragment, SupportFragment.SINGLETASK);
@@ -140,7 +139,7 @@ public class HomeActivity extends SupportActivity
 
                 NovelFragment fragment = findFragment(NovelFragment.class);
                 if (fragment == null) {
-                    popTo(HomeFragment.class, false, () -> start(new NovelFragment()));
+                    popTo(WxFragment.class, false, () -> start(new NovelFragment()));
                 } else {
                     start(fragment, SupportFragment.SINGLETASK);
                     fragment.onResume();
@@ -224,7 +223,7 @@ public class HomeActivity extends SupportActivity
         toggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setCheckedItem(R.id.menu_home);
+        mNavigationView.setCheckedItem(R.id.menu_topic);
 
         FrameLayout llNavHeader = (FrameLayout) mNavigationView.getHeaderView(0);
         mTvName = (TextView) llNavHeader.findViewById(R.id.tvNick);
@@ -286,7 +285,7 @@ public class HomeActivity extends SupportActivity
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            if (getTopFragment() instanceof HomeFragment) {
+            if (getTopFragment() instanceof WxFragment) {
                 if (firstTime + 2000 > System.currentTimeMillis()) {
                     super.onBackPressed();
                     return;
@@ -295,7 +294,7 @@ public class HomeActivity extends SupportActivity
                 firstTime = System.currentTimeMillis();
             } else {
                 if (getTopFragment() instanceof BaseMainFragment) {
-                    mNavigationView.setCheckedItem(R.id.menu_home);
+                    mNavigationView.setCheckedItem(R.id.menu_weixin);
                 }
                 super.onBackPressed();
             }
@@ -322,26 +321,13 @@ public class HomeActivity extends SupportActivity
                 int id = item.getItemId();
                 SupportFragment fragment;
                 switch (id) {
-                    case R.id.menu_home:
-                        fragment = findFragment(HomeFragment.class);
-                        start(fragment, SupportFragment.SINGLETASK);
-                        break;
-                    case R.id.menu_weixin:
-                        fragment = findFragment(WxFragment.class);
+                    case R.id.menu_topic:
+                        fragment = findFragment(TopicFragment.class);
                         if (fragment == null) {
-                            start(WxFragment.newInstance());
-                        } else {
-                            // 如果已经在栈内,则以SingleTask模式start
-                            start(fragment, SupportFragment.SINGLETASK);
-                        }
-                        break;
-                    case R.id.menu_novel:
-                        fragment = findFragment(NovelFragment.class);
-                        if (fragment == null) {
-                            popTo(HomeFragment.class, false, new Runnable() {
+                            popTo(WxFragment.class, false, new Runnable() {
                                 @Override
                                 public void run() {
-                                    start(NovelFragment.newInstance());
+                                    start(TopicFragment.newInstance());
                                 }
                             });
                         } else {
@@ -349,10 +335,27 @@ public class HomeActivity extends SupportActivity
                             start(fragment, SupportFragment.SINGLETASK);
                         }
                         break;
+                    case R.id.menu_weixin:
+                        fragment = findFragment(WxFragment.class);
+                        start(fragment, SupportFragment.SINGLETASK);
+                        break;
+                    case R.id.menu_novel:
+                        fragment = findFragment(NovelFragment.class);
+                        if (fragment == null) {
+                            popTo(WxFragment.class, false, new Runnable() {
+                                @Override
+                                public void run() {
+                                    start(NovelFragment.newInstance());
+                                }
+                            });
+                        } else {
+                            start(fragment, SupportFragment.SINGLETASK);
+                        }
+                        break;
                     case R.id.menu_site:
                         fragment = findFragment(SiteFragment.class);
                         if (fragment == null) {
-                            popTo(HomeFragment.class, false, new Runnable() {
+                            popTo(WxFragment.class, false, new Runnable() {
                                 @Override
                                 public void run() {
                                     start(SiteFragment.newInstance());
@@ -366,15 +369,13 @@ public class HomeActivity extends SupportActivity
                     case R.id.menu_magzine:
                         fragment = findFragment(MagFragment.class);
                         if (fragment == null) {
-                            popTo(HomeFragment.class, false, new Runnable() {
+                            popTo(WxFragment.class, false, new Runnable() {
                                 @Override
                                 public void run() {
                                     start(new MagFragment());
                                 }
                             });
                         } else {
-                            // 如果已经在栈内,则以SingleTask模式start
-                            //                        start(fragment, SupportFragment.SINGLETASK);
                             start(fragment, SupportFragment.SINGLETASK);
                         }
                         break;
@@ -388,30 +389,26 @@ public class HomeActivity extends SupportActivity
                     case R.id.menu_settings:
                         fragment = findFragment(SettingFragment.class);
                         if (fragment == null) {
-                            popTo(HomeFragment.class, false, new Runnable() {
+                            popTo(WxFragment.class, false, new Runnable() {
                                 @Override
                                 public void run() {
                                     start(new SettingFragment());
                                 }
                             });
                         } else {
-                            // 如果已经在栈内,则以SingleTask模式start
-                            //                        start(fragment, SupportFragment.SINGLETASK);
                             start(fragment, SupportFragment.SINGLETASK);
                         }
                         break;
                     case R.id.menu_about:
                         fragment = findFragment(AboutFragment.class);
                         if (fragment == null) {
-                            popTo(HomeFragment.class, false, new Runnable() {
+                            popTo(WxFragment.class, false, new Runnable() {
                                 @Override
                                 public void run() {
                                     start(new AboutFragment());
                                 }
                             });
                         } else {
-                            // 如果已经在栈内,则以SingleTask模式start
-                            //                        start(fragment, SupportFragment.SINGLETASK);
                             start(fragment, SupportFragment.SINGLETASK);
                         }
                         break;
@@ -429,7 +426,7 @@ public class HomeActivity extends SupportActivity
     private void gotoMine() {
         MineFragment fragment = findFragment(MineFragment.class);
         if (fragment == null) {
-            popTo(HomeFragment.class, false, () -> start(MineFragment.newInstance()));
+            popTo(WxFragment.class, false, () -> start(MineFragment.newInstance()));
         } else {
             start(fragment, SupportFragment.SINGLETASK);
         }
@@ -490,7 +487,7 @@ public class HomeActivity extends SupportActivity
     @Subscribe
     public void onLogout(LogoutEvent event) {
         updateNavData();
-        mNavigationView.setCheckedItem(R.id.menu_home);
+        mNavigationView.setCheckedItem(R.id.menu_topic);
     }
 
     private void updateNavData() {

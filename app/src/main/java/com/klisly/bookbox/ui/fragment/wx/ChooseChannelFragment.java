@@ -10,19 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ChannelAdapter;
+import com.klisly.bookbox.api.AccountApi;
+import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.ottoevent.UpdateWxChannelEvent;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ItemDragHelperCallback;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ChooseChannelFragment extends BaseBackFragment {
 //    @Bind(R.id.toolbar)
@@ -32,6 +39,7 @@ public class ChooseChannelFragment extends BaseBackFragment {
     private List<ChannleEntity> my;
     private List<ChannleEntity> other;
     private ChannelAdapter mAdapter;
+    private AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
     public static ChooseChannelFragment newInstance() {
         ChooseChannelFragment fragment = new ChooseChannelFragment();
         return fragment;
@@ -92,6 +100,7 @@ public class ChooseChannelFragment extends BaseBackFragment {
 
     @Override
     public boolean onBackPressedSupport() {
+        AccountLogic.getInstance().saveData();
         BusProvider.getInstance().post(new UpdateWxChannelEvent());
         return super.onBackPressedSupport();
     }

@@ -22,6 +22,9 @@ import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.LoginData;
 import com.klisly.bookbox.logic.AccountLogic;
+import com.klisly.bookbox.logic.TopicLogic;
+import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2Topic;
 import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
@@ -31,6 +34,7 @@ import com.klisly.common.StringUtils;
 import com.material.widget.PaperButton;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -100,10 +104,53 @@ public class LoginFragment extends BaseBackFragment {
                 ToastHelper.showShortTip(R.string.login_success);
                 Timber.i("login success,"+data.getData().getUser());
                 AccountLogic.getInstance().setLoginData(data.getData());
-                CommonHelper.getTopics(getActivity().getApplicationContext());
-                CommonHelper.getUserTopics(getActivity().getApplicationContext());
-                CommonHelper.getSites(getActivity().getApplicationContext());
-                CommonHelper.getUserSites(getActivity().getApplicationContext());
+                BookRetrofit.getInstance().getTopicApi()
+                        .list()
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new AbsSubscriber<ApiResult<List<Topic>>>(getContext(), false) {
+                            @Override
+                            protected void onError(ApiException ex) {
+                                Timber.i("onError");
+
+                            }
+
+                            @Override
+                            protected void onPermissionError(ApiException ex) {
+                                Timber.i("onPermissionError");
+
+                            }
+
+                            @Override
+                            public void onNext(ApiResult<List<Topic>> entities) {
+                                Timber.i("onNext list topics size:" + entities.getData().size());
+                                TopicLogic.getInstance().updateDefaultTopics(entities.getData());
+                                if (AccountLogic.getInstance().getNowUser() != null) {
+                                    BookRetrofit.getInstance().getTopicApi()
+                                            .subscribes(AccountLogic.getInstance().getNowUser().getId(),
+                                                    AccountLogic.getInstance().getToken())
+                                            .subscribeOn(Schedulers.io())
+                                            .subscribe(new AbsSubscriber<ApiResult<List<User2Topic>>>(getContext(), false) {
+                                                @Override
+                                                protected void onError(ApiException ex) {
+                                                    Timber.i("onError");
+
+                                                }
+
+                                                @Override
+                                                protected void onPermissionError(ApiException ex) {
+                                                    Timber.i("onPermissionError");
+
+                                                }
+
+                                                @Override
+                                                public void onNext(ApiResult<List<User2Topic>> data) {
+                                                    Timber.i("onNext choose topics size:" + data.getData().size());
+                                                    TopicLogic.getInstance().updateSubscribes(data.getData());
+                                                }
+                                            });
+                                }
+                            }
+                        });
                 CommonHelper.getUserNovels(getActivity().getApplicationContext());
                 CommonHelper.updateDeviceToken(getActivity().getApplicationContext());
                 BusProvider.getInstance().post(new LoginEvent());

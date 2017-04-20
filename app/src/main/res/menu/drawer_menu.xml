@@ -23,7 +23,7 @@
             android:icon="@drawable/left_buluo"
             android:title="@string/qqbuluo" />
         <item
-            android:id="@+id/menu_home"
+            android:id="@+id/menu_topic"
             android:checkable="true"
             android:checked="true"
             android:icon="@drawable/ic_channel"

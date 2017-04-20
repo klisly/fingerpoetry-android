@@ -1,4 +1,4 @@
-package com.klisly.bookbox.ui.fragment.home;
+package com.klisly.bookbox.ui.fragment.topic;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

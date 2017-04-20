@@ -43,8 +43,8 @@ public class SplashActivity extends Activity implements SplashADListener {
          *
          * splashAD = new SplashAD(this, container, Constants.APPID, Constants.SplashPosID, this, 3000);可以设置超时时长为3000ms
          */
-        CommonHelper.getTopics(getApplicationContext());
-        CommonHelper.getUserTopics(getApplicationContext());
+//        CommonHelper.getTopics(getApplicationContext());
+//        CommonHelper.getUserTopics(getApplicationContext());
 //        CommonHelper.getSites(getApplicationContext());
 //        CommonHelper.getUserSites(getApplicationContext());
 //        CommonHelper.getUserNovels(getApplicationContext());

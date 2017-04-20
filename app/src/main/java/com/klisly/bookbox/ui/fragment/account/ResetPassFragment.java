@@ -27,7 +27,7 @@ import com.klisly.bookbox.ottoevent.LoginEvent;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
-import com.klisly.bookbox.ui.fragment.home.HomeFragment;
+import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
 import com.material.widget.PaperButton;
@@ -206,7 +206,7 @@ public class ResetPassFragment extends BaseBackFragment {
                 // 登录成功
                 AccountLogic.getInstance().setLoginData(data.getData());
                 BusProvider.getInstance().post(new LoginEvent());
-                popTo(HomeFragment.class, false);
+                popTo(TopicFragment.class, false);
             }
         };
 

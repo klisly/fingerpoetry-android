@@ -87,4 +87,5 @@ public interface ArticleApi {
             "Accept: application/json",
     })
     Observable<ApiResult<User2Article>> uncollect(@Path("id") String id, @Header("x-access-token") String token);
+
 }

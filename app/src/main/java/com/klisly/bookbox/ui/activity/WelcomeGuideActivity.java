@@ -139,7 +139,7 @@ public class WelcomeGuideActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getTag().equals("startChapterBtn")) {
-            preferenceUtils.setValue(Constants.HOME_FRAG, Constants.FRAG_TOPIC);
+            preferenceUtils.setValue(Constants.HOME_FRAG, Constants.FRAG_WX);
             enterMainActivity();
         } else if (v.getTag().equals("startNovelBtn")) {
             preferenceUtils.setValue(Constants.HOME_FRAG, Constants.FRAG_NOVEL);

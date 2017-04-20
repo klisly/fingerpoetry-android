@@ -77,9 +77,8 @@ public class ChannleEntity extends BaseModel{
 
     public static List loadMines() {
         List list = new ArrayList();
-        list.add(new ChannleEntity(1, "收藏"));
-        list.add(new ChannleEntity(2, "分享"));
-        list.add(new ChannleEntity(3, "消息"));
+        list.add(new ChannleEntity(1, "微信精选"));
+        list.add(new ChannleEntity(2, "小文学"));
         return list;
     }
 }

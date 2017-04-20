@@ -1,4 +1,4 @@
-package com.klisly.bookbox.ui.fragment.home;
+package com.klisly.bookbox.ui.fragment.topic;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -23,7 +23,7 @@ import com.klisly.bookbox.utils.ToastHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
+public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
 
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
@@ -32,8 +32,8 @@ public class HomeFragment extends BaseMainFragment implements Toolbar.OnMenuItem
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     PagerFragmentAdapter adapter;
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static TopicFragment newInstance() {
+        return new TopicFragment();
     }
 
     @Override

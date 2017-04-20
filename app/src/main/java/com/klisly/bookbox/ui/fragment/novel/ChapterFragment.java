@@ -29,6 +29,7 @@ import com.klisly.bookbox.ui.OuterFragment;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ChapterParser;
 import com.klisly.bookbox.utils.DateUtil;
+import com.klisly.bookbox.utils.ShareUtil;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.common.StringUtils;
 import com.material.widget.CircularProgress;
@@ -68,6 +69,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     private NovelApi novelApi = BookRetrofit.getInstance().getNovelApi();
     NotificationManager manager;
     private Menu menu;
+
     public static ChapterFragment newInstance(Article article) {
         ChapterFragment fragment = new ChapterFragment();
         Bundle args = new Bundle();
@@ -147,7 +149,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
-                        if(mProgress != null){
+                        if (mProgress != null) {
                             mProgress.setVisibility(View.INVISIBLE);
                         }
                         if (!StringUtils.isEmpty(content)) {
@@ -166,10 +168,10 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         String info = mData.getNname() + "   " + mData.getAuthor();
         tvSource.setText(info);
         tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(mData.getCreateAt()));
-        String html = Constants.ARTICLE_PREFIX + mData.getContent()+Constants.ARTICLE_SUFFIX;
+        String html = Constants.ARTICLE_PREFIX + mData.getContent() + Constants.ARTICLE_SUFFIX;
         html = html.replace(Constants.NOVEL_END_0, "");
-        html = html.replace(Constants.NOVEL_END_1,"");
-        html = html.replace(Constants.NOVEL_END_2,"");
+        html = html.replace(Constants.NOVEL_END_1, "");
+        html = html.replace(Constants.NOVEL_END_2, "");
         html = html.replace(Constants.NOVEL_END_3, "");
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 
@@ -303,34 +305,12 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
             return;
         }
         String shareUrl = "http://second.imdao.cn/chapters/" + mData.getId();
-        ShareSDK.initSDK(getActivity());
-        OnekeyShare oks = new OnekeyShare();
-        oks.setImageUrl("http://second.imdao.cn/images/logo.png");
-        //关闭sso授权
-//        oks.disableSSOWhenAuthorize();
-
-        // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-//        oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle("小说更新-"+mData.getTitle());
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl(shareUrl);
-        // text是分享文本，所有平台都需 要这个字段
-        oks.setText("小说更新-" + "\"" + mData.getTitle() + "\"" + "." + shareUrl);
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl(shareUrl);
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        String content = mData.getContent().substring(0, Math.min(50, mData.getContent().length()));
-        oks.setComment("更新内容："+content);
-        // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl(shareUrl);
-
-        // 启动分享GUI
-        oks.show(getContext());
+        String img = "http://second.imdao.cn/images/logo.png";
+        String title = "小说更新-" + mData.getTitle();
+        String desc = "小说更新-" + "\"" + mData.getTitle() + "\"" + "." + shareUrl;
+        String from = getString(R.string.app_name);
+        String comment = "更新内容：" + mData.getContent().substring(0, Math.min(50, mData.getContent().length()));
+        ShareUtil.shareArticle(shareUrl, img, title, desc, from, comment);
     }
 
 }

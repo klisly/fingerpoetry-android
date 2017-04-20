@@ -12,7 +12,7 @@ public class WxArticle extends BaseModel{
     private String img;
     @SerializedName("update")
     @Expose
-    private Integer update;
+    private long update;
     @SerializedName("href")
     @Expose
     private String href;
@@ -31,24 +31,37 @@ public class WxArticle extends BaseModel{
     @SerializedName("desc")
     @Expose
     private String desc;
-    @SerializedName("__v")
-    @Expose
-    private Integer v;
     @SerializedName("commentCount")
     @Expose
-    private Integer commentCount;
+    private int commentCount;
     @SerializedName("shareCount")
     @Expose
-    private Integer shareCount;
+    private int shareCount;
     @SerializedName("collectCount")
     @Expose
-    private Integer collectCount;
+    private int collectCount;
     @SerializedName("readCount")
     @Expose
-    private Integer readCount;
+    private int readCount;
     @SerializedName("heartCount")
     @Expose
-    private Integer heartCount;
+    private int heartCount;
+
+    @SerializedName("toread")
+    @Expose
+    private boolean toread;
+    @SerializedName("read")
+    @Expose
+    private boolean read;
+    @SerializedName("heart")
+    @Expose
+    private Boolean heart;
+    @SerializedName("collect")
+    @Expose
+    private boolean collect;
+    @SerializedName("share")
+    @Expose
+    private boolean share;
 
     public String getId() {
         return id;
@@ -66,7 +79,7 @@ public class WxArticle extends BaseModel{
         this.img = img;
     }
 
-    public Integer getUpdate() {
+    public long getUpdate() {
         return update;
     }
 
@@ -122,14 +135,6 @@ public class WxArticle extends BaseModel{
         this.desc = desc;
     }
 
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
-    }
-
     public Integer getCommentCount() {
         return commentCount;
     }
@@ -170,6 +175,46 @@ public class WxArticle extends BaseModel{
         this.heartCount = heartCount;
     }
 
+    public boolean isToread() {
+        return toread;
+    }
+
+    public void setToread(boolean toread) {
+        this.toread = toread;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
+    public Boolean getHeart() {
+        return heart;
+    }
+
+    public void setHeart(Boolean heart) {
+        this.heart = heart;
+    }
+
+    public boolean isCollect() {
+        return collect;
+    }
+
+    public void setCollect(boolean collect) {
+        this.collect = collect;
+    }
+
+    public boolean isShare() {
+        return share;
+    }
+
+    public void setShare(boolean share) {
+        this.share = share;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("WxArticle{");
@@ -182,12 +227,16 @@ public class WxArticle extends BaseModel{
         sb.append(", title='").append(title).append('\'');
         sb.append(", account='").append(account).append('\'');
         sb.append(", desc='").append(desc).append('\'');
-        sb.append(", v=").append(v);
         sb.append(", commentCount=").append(commentCount);
         sb.append(", shareCount=").append(shareCount);
         sb.append(", collectCount=").append(collectCount);
         sb.append(", readCount=").append(readCount);
         sb.append(", heartCount=").append(heartCount);
+        sb.append(", toread=").append(toread);
+        sb.append(", read=").append(read);
+        sb.append(", heart=").append(heart);
+        sb.append(", collect=").append(collect);
+        sb.append(", share=").append(share);
         sb.append('}');
         return sb.toString();
     }

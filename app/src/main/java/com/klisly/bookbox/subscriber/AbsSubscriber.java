@@ -63,6 +63,7 @@ public abstract class AbsSubscriber<T> extends Subscriber<T> implements Progress
 
     @Override
     public void onError(Throwable e) {
+        e.printStackTrace();
         dismissProgressDialog();
         Throwable throwable = e;
         //获取最根源的异常
