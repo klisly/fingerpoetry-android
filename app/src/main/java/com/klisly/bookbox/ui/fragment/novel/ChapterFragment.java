@@ -50,18 +50,8 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.tv_title)
-    TextView tvTitle;
-    @Bind(R.id.tv_source)
-    TextView tvSource;
-    @Bind(R.id.tv_date)
-    TextView tvDate;
     @Bind(R.id.webView)
     WebView tvContent;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.cprogress)
-    CircularProgress mProgress;
     @Bind(R.id.bannerContainer)
     ViewGroup bannerContainer;
     BannerView bv;
@@ -106,7 +96,6 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
             updateData();
             return;
         }
-        mProgress.setVisibility(View.VISIBLE);
         novelApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -124,7 +113,6 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                     @Override
                     public void onNext(ApiResult<Chapter> res) {
                         if (res.getData() != null && StringUtils.isNotEmpty(res.getData().getContent())) {
-                            mProgress.setVisibility(View.INVISIBLE);
                             mData = res.getData();
                             updateData();
                         } else {
@@ -149,9 +137,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
                         if (getActivity() == null || getActivity().isFinishing()) {
                             return;
                         }
-                        if (mProgress != null) {
-                            mProgress.setVisibility(View.INVISIBLE);
-                        }
+
                         if (!StringUtils.isEmpty(content)) {
                             mData.setContent(content);
                             updateData();
@@ -165,10 +151,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     }
 
     private void updateData() {
-        String info = mData.getNname() + "   " + mData.getAuthor();
-        tvSource.setText(info);
-        tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(mData.getCreateAt()));
-        String html = Constants.ARTICLE_PREFIX + mData.getContent() + Constants.ARTICLE_SUFFIX;
+       String html = Constants.ARTICLE_PREFIX + mData.getContent() + Constants.ARTICLE_SUFFIX;
         html = html.replace(Constants.NOVEL_END_0, "");
         html = html.replace(Constants.NOVEL_END_1, "");
         html = html.replace(Constants.NOVEL_END_2, "");
@@ -193,12 +176,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         toolbar.setTitleTextAppearance(getContext(), R.style.TitleTextApperance);
         initToolbarNav(toolbar);
         toolbar.setOnMenuItemClickListener(this);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(OuterFragment.newInstance(mData));
-            }
-        });
+
         tvContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -263,8 +241,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     }
 
     private void initLazyView() {
-        toolbar.setTitle("文章内容");
-        tvTitle.setText(mData.getTitle());
+        toolbar.setTitle(mData.getTitle());
     }
 
     @Override

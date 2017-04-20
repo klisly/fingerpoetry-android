@@ -55,18 +55,18 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
 //    CollapsingToolbarLayout mToolbarLayout;
 //    @Bind(R.id.app_bar)
 //    AppBarLayout appBar;
-    @Bind(R.id.tv_title)
-    TextView tvTitle;
-    @Bind(R.id.tv_source)
-    TextView tvSource;
-    @Bind(R.id.tv_date)
-    TextView tvDate;
+//    @Bind(R.id.tv_title)
+//    TextView tvTitle;
+//    @Bind(R.id.tv_source)
+//    TextView tvSource;
+//    @Bind(R.id.tv_date)
+//    TextView tvDate;
     @Bind(R.id.webView)
     WebView tvContent;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.cprogress)
-    CircularProgress mProgress;
+//    @Bind(R.id.fab)
+//    FloatingActionButton fab;
+//    @Bind(R.id.cprogress)
+//    CircularProgress mProgress;
     @Bind(R.id.bannerContainer)
     ViewGroup bannerContainer;
     BannerView bv;
@@ -100,7 +100,6 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
         initView(view);
-        mProgress.setVisibility(View.VISIBLE);
         manager.cancel(mData.getId().hashCode());
 
         return view;
@@ -128,12 +127,12 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
 
     private void updateData() {
         String info = mArticleData.getArticle().getSite();
-        if (StringUtils.isNotEmpty(mArticleData.getArticle().getAuthor())) {
-            info = info + "  " + mArticleData.getArticle().getAuthor();
-        }
-        tvSource.setText(info);
-
-        tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(new Date(mArticleData.getArticle().getCreateAt())));
+//        if (StringUtils.isNotEmpty(mArticleData.getArticle().getAuthor())) {
+//            info = info + "  " + mArticleData.getArticle().getAuthor();
+//        }
+//        tvSource.setText(info);
+//
+//        tvDate.setText(DateUtil.getFriendlyTimeSpanByNow(new Date(mArticleData.getArticle().getCreateAt())));
         String html = Constants.ARTICLE_PREFIX + mArticleData.getArticle().getContent() + Constants.ARTICLE_SUFFIX;
         tvContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
@@ -145,15 +144,9 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void initView(View view) {
-        toolbar.setTitleTextAppearance(getContext(), R.style.TitleTextApperance);
+//        toolbar.setTitleTextAppearance(getContext(), R.style.TitleTextApperance);
         initToolbarNav(toolbar);
         toolbar.setOnMenuItemClickListener(this);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(OuterFragment.newInstance(mData));
-            }
-        });
         tvContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -200,28 +193,16 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 .subscribe(new AbsSubscriber<ApiResult<ArticleData>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
-                        try {
-                            if (getActivity() != null && mProgress != null) {
-                                mProgress.setVisibility(View.INVISIBLE);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                         ToastHelper.showShortTip(R.string.get_detial_fail);
-
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
-                        if (getActivity() != null && mProgress != null) {
-                            mProgress.setVisibility(View.INVISIBLE);
-                        }
                         ToastHelper.showShortTip(R.string.get_detial_fail);
                     }
 
                     @Override
                     public void onNext(ApiResult<ArticleData> res) {
-                        mProgress.setVisibility(View.INVISIBLE);
                         Timber.i("reache article:" + res);
                         if (res.getData() != null) {
                             mArticleData = res.getData();
@@ -235,8 +216,8 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void initLazyView() {
-        toolbar.setTitle("文章内容");
-        tvTitle.setText(mData.getTitle());
+        toolbar.setTitle(mData.getTitle());
+//        tvTitle.setText();
     }
 
     @Override

@@ -1,118 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coord"
+    android:id="@+id/behavior_demo_coordinatorLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        app:layout_collapseMode="pin"
-        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"/>
+    </android.support.design.widget.AppBarLayout>
 
-    </android.support.v7.widget.Toolbar>
-    <FrameLayout
-        android:id="@+id/bannerContainer"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.klisly.bookbox.widget.NestedWebView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/scrollView"
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@id/bannerContainer"
-        android:descendantFocusability="blocksDescendants">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        android:gravity="center"
+        app:layout_behavior="com.klisly.bookbox.behavior.BottomBarBehavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:id="@+id/head"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
+
+            <com.andexert.library.RippleView
+                android:id="@+id/action_collect"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:padding="4dp">
+                app:rv_centered="true"
+                app:rv_color="@color/background_black_alpha_20">
+
+                <ImageView
+                    android:id="@+id/ivcollect"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/uncollected" />
 
                 <TextView
-                    android:id="@+id/tv_title"
+                    android:id="@+id/txtcollection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="16dp"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20" />
+                    android:layout_below="@id/ivcollect"
+                    android:text="收藏"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_12" />
+            </com.andexert.library.RippleView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-
-                    <TextView
-                        android:id="@+id/tv_source"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="16dp"
-                        android:textColor="@color/white"
-                        android:text="" />
-
-                    <TextView
-                        android:id="@+id/tv_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <com.andexert.library.RippleView
+                android:id="@+id/action_share"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
                 android:layout_weight="1"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="28dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"/>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_below="@id/head"
-            android:visibility="gone"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_arrow_forward_white_24dp"
-            app:fabSize="mini"
-            app:layout_anchorGravity="bottom|end" />
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:rv_centered="true"
+                app:rv_color="@color/background_black_alpha_20">
+
+                <ImageView
+                    android:id="@+id/ivshare"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/share_gray" />
+
+                <TextView
+                    android:id="@+id/txtshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivshare"
+                    android:text="分享"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_12" />
+            </com.andexert.library.RippleView>
+
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
 
-    <com.material.widget.CircularProgress
-        android:id="@+id/cprogress"
-        android:layout_width="@dimen/progree_size"
-        android:layout_height="@dimen/progree_size"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        app:circular_progress_size="Normal" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/slider_color" />
+
+        <FrameLayout
+            android:id="@+id/bannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"></FrameLayout>
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout><!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/coord"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:fitsSystemWindows="true">-->
+
+    <!--<android.support.v7.widget.Toolbar--><!--android:id="@+id/toolbar"--><!--android:layout_width="match_parent"--><!--android:layout_height="?attr/actionBarSize"--><!--android:background="@color/primary"--><!--app:layout_collapseMode="pin"--><!--app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">-->
+
+    <!--</android.support.v7.widget.Toolbar>-->
+
+    <!--<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/scrollView"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:layout_below="@id/toolbar"--><!--android:layout_above="@id/bannerContainer"--><!--android:descendantFocusability="blocksDescendants">--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:orientation="vertical"--><!--&gt;--><!--<LinearLayout--><!--android:id="@+id/head"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@color/primary"--><!--android:gravity="center_vertical"--><!--android:orientation="vertical"--><!--android:padding="4dp">-->
+
+    <!--<TextView--><!--android:id="@+id/tv_title"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_marginLeft="6dp"--><!--android:layout_marginRight="16dp"--><!--android:paddingBottom="6dp"--><!--android:paddingTop="6dp"--><!--android:text=""--><!--android:textColor="@color/white"--><!--android:textSize="@dimen/text_size_20" />-->
+
+    <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:gravity="left|center_vertical"--><!--android:orientation="horizontal"--><!--android:padding="4dp">-->
+
+    <!--<TextView--><!--android:id="@+id/tv_source"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_marginLeft="6dp"--><!--android:layout_marginRight="16dp"--><!--android:textColor="@color/white"--><!--android:text="" />-->
+
+    <!--<TextView--><!--android:id="@+id/tv_date"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:textColor="@color/white"--><!--android:text="" />--><!--</LinearLayout>--><!--</LinearLayout>-->
+
+    <!--<WebView--><!--android:id="@+id/webView"--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="1"--><!--android:layout_marginTop="8dp"--><!--android:layout_marginBottom="28dp"--><!--android:layout_marginLeft="5dp"--><!--android:layout_marginRight="5dp"/>--><!--<android.support.design.widget.FloatingActionButton--><!--android:id="@+id/fab"--><!--android:layout_width="28dp"--><!--android:layout_height="28dp"--><!--android:layout_alignParentRight="true"--><!--android:layout_alignParentTop="true"--><!--android:layout_below="@id/head"--><!--android:visibility="gone"--><!--android:layout_margin="@dimen/fab_margin"--><!--android:src="@drawable/ic_arrow_forward_white_24dp"--><!--app:fabSize="mini"--><!--app:layout_anchorGravity="bottom|end" />--><!--</LinearLayout>--><!--</android.support.v4.widget.NestedScrollView>-->
+
+    <!--<com.material.widget.CircularProgress--><!--android:id="@+id/cprogress"--><!--android:layout_width="@dimen/progree_size"--><!--android:layout_height="@dimen/progree_size"--><!--android:layout_centerInParent="true"--><!--android:layout_gravity="center"--><!--android:visibility="invisible"--><!--app:circular_progress_size="Normal" />-->
 
 
-
-</RelativeLayout>
+    <!--</RelativeLayout>-->

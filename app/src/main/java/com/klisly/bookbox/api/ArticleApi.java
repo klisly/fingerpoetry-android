@@ -45,12 +45,17 @@ public interface ArticleApi {
     })
     Observable<ApiResult<List<Article>>> mags(@QueryMap Map<String, String> conditions);
 
+    @GET("users/{id}/collects")
+    @Headers({
+            "Accept: application/json",
+    })
+    Observable<ApiResult<List<User2Article>>> collects(@Path("id") String id, @QueryMap Map<String, String> conditions);
+
     @GET("users/{id}/reads")
     @Headers({
             "Accept: application/json",
     })
     Observable<ApiResult<User2Article>> reads(@Path("id") String id, @Query("uid") String uid);
-
 
     @POST("articles/{id}/heart")
     @Headers({

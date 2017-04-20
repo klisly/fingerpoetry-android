@@ -15,18 +15,21 @@ import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ArticleViewHolder;
+import com.klisly.bookbox.adapter.User2ArticleViewHolder;
 import com.klisly.bookbox.adapter.WxArticleViewHolder;
 import com.klisly.bookbox.adapter.WxUser2ArticleViewHolder;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.WxArticleApi;
 import com.klisly.bookbox.domain.ApiResult;
+import com.klisly.bookbox.domain.ArticleData;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
+import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.model.User2WxArticle;
 import com.klisly.bookbox.model.WxArticle;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
@@ -67,7 +70,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private WxArticleApi wxArticleApi = BookRetrofit.getInstance().getWxArticleApi();
 
-    private String name;
     private boolean needToast = false;
     private RecyclerArrayAdapter adapter;
 
@@ -78,7 +80,6 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
         if (args != null) {
             mFrom = args.getInt(ARG_FROM);
             mData = (T) args.getSerializable(ARG_CHANNEL);
-            name = args.getString(ARG_NAME, this.getClass().getName());
         }
     }
 
@@ -122,6 +123,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
             private final static int TYPE_ARTICLE = 1;
             private final static int TYPE_WX_ARTICLE = 2;
             private final static int TYPE_WX_COLLECTED = 3;
+            private final static int TYPE_ARTICLE_COLLECTED = 4;
 
             @Override
             public int getViewType(int position) {
@@ -132,6 +134,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     return TYPE_WX_ARTICLE;
                 } else if (getAllData().get(position) instanceof User2WxArticle) {
                     return TYPE_WX_COLLECTED;
+                } else if (getAllData().get(position) instanceof User2Article) {
+                    return TYPE_ARTICLE_COLLECTED;
                 }
                 return TYPE_ARTICLE;
             }
@@ -144,6 +148,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     return new WxArticleViewHolder(parent);
                 } else if (viewType == TYPE_WX_COLLECTED) {
                     return new WxUser2ArticleViewHolder(parent);
+                } else if (viewType == TYPE_ARTICLE_COLLECTED) {
+                    return new User2ArticleViewHolder(parent);
                 }
                 return new ArticleViewHolder(parent);
             }
@@ -194,8 +200,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     ((BaseFragment) getParentFragment()).start(OFragment.newInstance(article));
                 } else if (article instanceof Article) {
                     ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance((Article) article));
-                }
-                if (article instanceof User2WxArticle) {
+                } else if (article instanceof User2WxArticle) {
                     wxArticleApi.fetch(((User2WxArticle) article).getArticleId())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -216,6 +221,28 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                                     ((BaseFragment) getParentFragment()).start(OFragment.newInstance(res.getData()));
                                 }
                             });
+                } else if (article instanceof User2Article) {
+                    User2Article entity = (User2Article) article;
+                    articleApi.fetch(entity.getArticleId(), AccountLogic.getInstance().getUserId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new AbsSubscriber<ApiResult<? extends BaseModel>>(getActivity(), false) {
+                                @Override
+                                protected void onError(ApiException ex) {
+                                    ToastHelper.showShortTip("获取文章失败");
+                                }
+
+                                @Override
+                                protected void onPermissionError(ApiException ex) {
+                                    ToastHelper.showShortTip("获取文章失败");
+                                }
+
+                                @Override
+                                public void onNext(ApiResult<? extends BaseModel> res) {
+                                    ((BaseFragment) getParentFragment()).start(DetailFragment.newInstance(((ArticleData) res.getData()).getArticle()));
+                                }
+                            });
+
                 }
             }
         } catch (Exception e) {
@@ -253,7 +280,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                 if (channleEntity.getName().equals("微信精选")) {
                     loadWxCollect(params);
                 } else if (channleEntity.getName().equals("小文学")) {
-//                    loadWxCollect(params);
+                    loadLiteralCollect(params);
                 }
 
             }
@@ -264,11 +291,10 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
 
 
     private void loadLiteralCollect(Map<String, String> params) {
-        params.put("uid", AccountLogic.getInstance().getUserId());
-        wxArticleApi.listCollected(params)
+        articleApi.collects(AccountLogic.getInstance().getUserId(), params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<List<User2WxArticle>>>(getActivity(), false) {
+                .subscribe(new AbsSubscriber<ApiResult<List<User2Article>>>(getActivity(), false) {
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
@@ -284,7 +310,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     }
 
                     @Override
-                    public void onNext(ApiResult<List<User2WxArticle>> res) {
+                    public void onNext(ApiResult<List<User2Article>> res) {
                         if (needToast) {
                             if (getActivity() == null || getActivity().isFinishing()) {
                                 return;
