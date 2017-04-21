@@ -298,15 +298,13 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
@@ -338,6 +336,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                 });
     }
 
+    private void hide() {
+        if(mRecy!=null){
+            mRecy.setRefreshing(false);
+        }
+        if(mProgress != null){
+            mProgress.setVisibility(View.GONE);
+        }
+    }
+
     private void loadWxCollect(Map<String, String> params) {
         params.put("uid", AccountLogic.getInstance().getUserId());
         wxArticleApi.listCollected(params)
@@ -347,15 +354,13 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
@@ -396,15 +401,13 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
@@ -444,15 +447,13 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     @Override
                     protected void onError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override
                     protected void onPermissionError(ApiException ex) {
                         page--;
-                        mRecy.setRefreshing(false);
-                        mProgress.setVisibility(View.GONE);
+                        hide();
                     }
 
                     @Override

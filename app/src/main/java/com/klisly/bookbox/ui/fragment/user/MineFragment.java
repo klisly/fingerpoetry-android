@@ -97,18 +97,19 @@ public class MineFragment extends BaseMainFragment {
         ButterKnife.bind(this, view);
         initView();
         postprocessor = new BlurPostprocessor(getContext(), 25);
-        if (!AccountLogic.getInstance().isLogin()) {
-            start(LoginFragment.newInstance());
-        } else {
-            updateData();
-        }
         return view;
     }
 
     @Override
     protected void onEnterAnimationEnd() {
         super.onEnterAnimationEnd();
-        updateUserData();
+
+        if (!AccountLogic.getInstance().isLogin()) {
+            start(LoginFragment.newInstance());
+        } else {
+            updateUserData();
+            updateData();
+        }
     }
 
     private void updateUserData() {
@@ -140,7 +141,7 @@ public class MineFragment extends BaseMainFragment {
         updateData();
     }
 
-    private void updateData() {
+    private void   updateData() {
         user = AccountLogic.getInstance().getNowUser();
         if(user == null){
             return;
