@@ -155,7 +155,6 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         bannerContainer.postDelayed(new Runnable() {
             @Override
             public void run() {
-                bannerContainer.setVisibility(View.VISIBLE);
                 bv.loadAD();
             }
         }, 1200);

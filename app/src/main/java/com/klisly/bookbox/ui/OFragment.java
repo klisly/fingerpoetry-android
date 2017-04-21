@@ -270,7 +270,6 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
         bannerContainer.postDelayed(new Runnable() {
             @Override
             public void run() {
-                bannerContainer.setVisibility(View.VISIBLE);
                 bv.loadAD();
             }
         }, 1200);

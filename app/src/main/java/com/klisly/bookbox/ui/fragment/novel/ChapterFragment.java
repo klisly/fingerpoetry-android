@@ -189,7 +189,6 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         bannerContainer.postDelayed(new Runnable() {
             @Override
             public void run() {
-                bannerContainer.setVisibility(View.VISIBLE);
                 bv.loadAD();
             }
         }, 1200);
