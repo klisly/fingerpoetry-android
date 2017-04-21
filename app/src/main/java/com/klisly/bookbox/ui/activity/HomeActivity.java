@@ -495,7 +495,7 @@ public class HomeActivity extends SupportActivity
         if (user != null) {
             Timber.d("cur login user:" + user);
             mTvName.setText(user.getName());
-            mImgNav.setImageURI(Uri.parse(BookRetrofit.BASE_URL + user.getAvatar()));
+            mImgNav.setImageURI(Uri.parse("https://second.imdao.cn" + user.getAvatar()));
         } else {
             mTvName.setText(R.string.register_login);
             mImgNav.setImageURI(ActivityUtil.getAppResourceUri(R.drawable.menu_user, getPackageName()));

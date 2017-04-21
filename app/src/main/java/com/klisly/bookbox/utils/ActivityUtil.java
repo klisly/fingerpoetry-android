@@ -20,13 +20,13 @@ import java.util.Random;
 
 public class ActivityUtil {
     private static Random random = new Random();
+
     public static Uri getAppResourceUri(int resId, String packageName) {
         return Uri.parse("android.resource://" + packageName + "/" + resId);
     }
 
     /**
      * dpתpx
-     *
      */
     public static int dip2px(Context ctx, float dpValue) {
         final float scale = ctx.getResources().getDisplayMetrics().density;
@@ -35,9 +35,9 @@ public class ActivityUtil {
 
 
     /**
-     *	pxתdp
+     * pxתdp
      */
-    public static int px2dip(Context ctx,float pxValue) {
+    public static int px2dip(Context ctx, float pxValue) {
         final float scale = ctx.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
@@ -52,6 +52,7 @@ public class ActivityUtil {
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return wifiInfo != null;
     }
+
     /**
      * 检查手机网络(4G/3G/2G)是否连接
      */
@@ -61,6 +62,7 @@ public class ActivityUtil {
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         return mobileNetworkInfo != null;
     }
+
     /**
      * 检查是否有可用网络
      */
@@ -71,6 +73,7 @@ public class ActivityUtil {
 
     /**
      * 保存文字到剪贴板
+     *
      * @param context
      * @param text
      */
@@ -176,7 +179,11 @@ public class ActivityUtil {
         return null;
     }
 
-    public static String genRandomPic(){
-        return "http://och7s33jc.bkt.clouddn.com/cover_"+(300+random.nextInt(200))+".jpg";
+    public static String genRandomPic() {
+        return "http://och7s33jc.bkt.clouddn.com/cover_" + (300 + random.nextInt(200)) + ".jpg";
+    }
+
+    public static String genPic(int code) {
+        return "http://och7s33jc.bkt.clouddn.com/cover_" + (300 + (Math.abs(code) % 200)) + ".jpg";
     }
 }

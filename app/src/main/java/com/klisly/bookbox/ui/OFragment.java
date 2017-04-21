@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andexert.library.RippleView;
+import com.klisly.bookbox.BookBoxApplication;
+import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
@@ -43,7 +46,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class OFragment extends BaseBackFragment {
+public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener {
     private static final String ARG_CONTENT = "arg_article";
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -125,71 +128,78 @@ public class OFragment extends BaseBackFragment {
         actionCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!AccountLogic.getInstance().isLogin()){
-                    return;
-                }
-                if(mData.isCollect()){
-                    articleApi.uncollect(mData.getId(), AccountLogic.getInstance().getToken())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new AbsSubscriber<ApiResult<User2WxArticle>>(getActivity(), false) {
-                                @Override
-                                protected void onError(ApiException ex) {
-
-                                }
-
-                                @Override
-                                protected void onPermissionError(ApiException ex) {
-                                    ToastHelper.showShortTip("请登录后再收藏文章");
-                                }
-
-                                @Override
-                                public void onNext(ApiResult<User2WxArticle> res) {
-                                    mData.setHeart(res.getData().getHeart());
-                                    mData.setCollect(res.getData().getCollect());
-                                    mData.setToread(res.getData().getToread());
-                                    mData.setShare(res.getData().getShare());
-                                    updateInfo();
-                                }
-                            });
-                } else {
-                    articleApi.collect(mData.getId(), AccountLogic.getInstance().getToken())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new AbsSubscriber<ApiResult<User2WxArticle>>(getActivity(), false) {
-                                @Override
-                                protected void onError(ApiException ex) {
-
-                                }
-
-                                @Override
-                                protected void onPermissionError(ApiException ex) {
-                                    ToastHelper.showShortTip("请登录后再收藏文章");
-                                }
-
-                                @Override
-                                public void onNext(ApiResult<User2WxArticle> res) {
-                                    mData.setHeart(res.getData().getHeart());
-                                    mData.setCollect(res.getData().getCollect());
-                                    mData.setToread(res.getData().getToread());
-                                    mData.setShare(res.getData().getShare());
-                                    updateInfo();
-                                }
-                            });
-                }
-
+                switchCollect();
             }
         });
         actionShare.setOnClickListener(v -> {
-            final WxArticle article = mData;
-            String shareUrl = "http://second.imdao.cn/wx?ahre=" + article.getAhref();
-            String img = "http://second.imdao.cn/images/logo.png";
-            String title = article.getTitle();
-            String desc = "微信美文," + "\"" + article.getTitle() + "\"" + "." + shareUrl;
-            String from = getString(R.string.app_name);
-            String comment = "我发现了这篇很走心的文章,分享给各位!";
-            ShareUtil.shareArticle(shareUrl, img, title, desc, from, comment);
+            share();
         });
+    }
+
+    private void share() {
+        final WxArticle article = mData;
+        String shareUrl = "http://second.imdao.cn/wx?ahre=" + article.getAhref();
+        String img = "http://second.imdao.cn/images/logo.png";
+        String title = article.getTitle();
+        String desc = "微信美文," + "\"" + article.getTitle() + "\"" + "." + shareUrl;
+        String from = getString(R.string.app_name);
+        String comment = "我发现了这篇很走心的文章,分享给各位!";
+        ShareUtil.shareArticle(shareUrl, img, title, desc, from, comment);
+    }
+
+    private void switchCollect() {
+        if(!AccountLogic.getInstance().isLogin()){
+            return;
+        }
+        if(mData.isCollect()){
+            articleApi.uncollect(mData.getId(), AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<User2WxArticle>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            ToastHelper.showShortTip("请登录后再收藏文章");
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<User2WxArticle> res) {
+                            mData.setHeart(res.getData().getHeart());
+                            mData.setCollect(res.getData().getCollect());
+                            mData.setToread(res.getData().getToread());
+                            mData.setShare(res.getData().getShare());
+                            updateInfo();
+                        }
+                    });
+        } else {
+            articleApi.collect(mData.getId(), AccountLogic.getInstance().getToken())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new AbsSubscriber<ApiResult<User2WxArticle>>(getActivity(), false) {
+                        @Override
+                        protected void onError(ApiException ex) {
+
+                        }
+
+                        @Override
+                        protected void onPermissionError(ApiException ex) {
+                            ToastHelper.showShortTip("请登录后再收藏文章");
+                        }
+
+                        @Override
+                        public void onNext(ApiResult<User2WxArticle> res) {
+                            mData.setHeart(res.getData().getHeart());
+                            mData.setCollect(res.getData().getCollect());
+                            mData.setToread(res.getData().getToread());
+                            mData.setShare(res.getData().getShare());
+                            updateInfo();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -199,7 +209,8 @@ public class OFragment extends BaseBackFragment {
     }
 
     private void initView(View view) {
-        initToolbarNav(mToolbar, true, false);
+        initToolbarNav(mToolbar, true);
+        mToolbar.setOnMenuItemClickListener(this);
         String title = mData.getTitle();
         mToolbar.setTitle(title);
         updateInfo();
@@ -226,6 +237,13 @@ public class OFragment extends BaseBackFragment {
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
     }
+
+    @Override
+    protected void initToolbarMenu(Toolbar toolbar) {
+        toolbar.inflateMenu(R.menu.menu_wxarticle_pop);
+    }
+
+
 
     private void updateInfo() {
         if(mData == null){
@@ -256,5 +274,20 @@ public class OFragment extends BaseBackFragment {
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_collect:
+                switchCollect();
+                break;
+            case R.id.action_share:
+                share();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }

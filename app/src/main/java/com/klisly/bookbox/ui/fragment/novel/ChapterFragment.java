@@ -177,6 +177,8 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         initToolbarNav(toolbar);
         toolbar.setOnMenuItemClickListener(this);
 
+
+        view.findViewById(R.id.rl_action).setVisibility(View.GONE);
         tvContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

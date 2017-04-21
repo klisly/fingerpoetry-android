@@ -36,6 +36,7 @@ import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
+import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.DateUtil;
 import com.klisly.common.LogUtils;
 import com.squareup.otto.Subscribe;
@@ -145,7 +146,8 @@ public class MineFragment extends BaseMainFragment {
             return;
         }
         tvName.setText(user.getName());
-        ImageRequest request = ImageRequestBuilder.newBuilderWithResourceId(R.drawable.bg_user_info)
+        String url = ActivityUtil.genPic(user.getId().hashCode());
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
                 .setPostprocessor(postprocessor)
                 .build();
 
@@ -155,7 +157,9 @@ public class MineFragment extends BaseMainFragment {
                         .setOldController(ivBg.getController())
                         .build();
         ivBg.setController(controller);
-        ivAvatar.setImageURI(Uri.parse(BookRetrofit.BASE_URL + user.getAvatar()));
+        String avartar = "https://second.imdao.cn"+user.getAvatar();
+        Timber.i("avatar:"+avartar);
+        ivAvatar.setImageURI(Uri.parse(avartar));
         StringBuilder desc = new StringBuilder();
         desc.append(getString(R.string.readed)).append(" ")
                 .append(user.getReadCount())
@@ -166,28 +170,6 @@ public class MineFragment extends BaseMainFragment {
         tvSig.setText(desc);
         registerAt.setText(DateUtil.getFriendlyTimeSpanByNow(user.getCreateAt()));
     }
-
-//    @OnClick(R.id.iv_next)
-//    void onNext() {
-//        Timber.i("modify user data");
-//        start(ModifyFragment.newInstance());
-//    }
-//
-//    @OnClick(R.id.rl_collect)
-//    void onNextCollect() {
-//        Timber.i("see user collect");
-//        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_COLLECT));
-//    }
-//    @OnClick(R.id.rl_recent_read)
-//    void onNextRead() {
-//        Timber.i("see user recent_read");
-//        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_READED));
-//    }
-//    @OnClick(R.id.rl_toread)
-//    void onNextToRead() {
-//        Timber.i("see user toread");
-//        start(UserRelateFragment.newInstance(UserRelateFragment.TYPE_TOREAD));
-//    }
 
     private void initView() {
         mToolbar.setTitle(getString(R.string.mine_center));
@@ -274,9 +256,6 @@ public class MineFragment extends BaseMainFragment {
         super.onDetach();
     }
 
-    /**
-     * 类似于 Activity的 onNewIntent()
-     */
     @Override
     protected void onNewBundle(Bundle args) {
         super.onNewBundle(args);

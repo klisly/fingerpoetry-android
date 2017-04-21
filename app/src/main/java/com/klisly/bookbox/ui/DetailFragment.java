@@ -3,7 +3,7 @@ package com.klisly.bookbox.ui;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.andexert.library.RippleView;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.api.ArticleApi;
@@ -27,16 +29,11 @@ import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
 import com.klisly.bookbox.subscriber.ApiException;
 import com.klisly.bookbox.ui.base.BaseBackFragment;
-import com.klisly.bookbox.utils.DateUtil;
 import com.klisly.bookbox.utils.ShareUtil;
 import com.klisly.bookbox.utils.ToastHelper;
-import com.klisly.common.StringUtils;
-import com.material.widget.CircularProgress;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
-
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,25 +48,26 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     NotificationManager manager;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    //    @Bind(R.id.toolbar_layout)
-//    CollapsingToolbarLayout mToolbarLayout;
-//    @Bind(R.id.app_bar)
-//    AppBarLayout appBar;
-//    @Bind(R.id.tv_title)
-//    TextView tvTitle;
-//    @Bind(R.id.tv_source)
-//    TextView tvSource;
-//    @Bind(R.id.tv_date)
-//    TextView tvDate;
     @Bind(R.id.webView)
     WebView tvContent;
-//    @Bind(R.id.fab)
-//    FloatingActionButton fab;
-//    @Bind(R.id.cprogress)
-//    CircularProgress mProgress;
     @Bind(R.id.bannerContainer)
     ViewGroup bannerContainer;
+
     BannerView bv;
+    @Bind(R.id.ivcollect)
+    ImageView ivcollect;
+    @Bind(R.id.txtcollection)
+    TextView txtcollection;
+    @Bind(R.id.action_collect)
+    RippleView actionCollect;
+    @Bind(R.id.ivshare)
+    ImageView ivshare;
+    @Bind(R.id.txtshare)
+    TextView txtshare;
+    @Bind(R.id.action_share)
+    RippleView actionShare;
+    @Bind(R.id.behavior_demo_coordinatorLayout)
+    CoordinatorLayout behaviorDemoCoordinatorLayout;
     private Article mData;
     private ArticleData mArticleData;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
@@ -153,8 +151,23 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 return true;
             }
         });
+        bannerContainer.setVisibility(View.GONE);
         initBanner();
         bv.loadAD();
+        initListener();
+    }
+
+
+    private void initListener() {
+        actionCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleCollect();
+            }
+        });
+        actionShare.setOnClickListener(v -> {
+            shareArticle();
+        });
     }
 
     @Override
@@ -171,9 +184,11 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 menu.getItem(0).setTitle(getString(R.string.toread));
             }
             if (mArticleData.getUser2article().getCollect()) {
+                ivcollect.setImageResource(R.drawable.collected);
                 menu.getItem(1).setTitle(getString(R.string.nocollect));
             } else {
                 menu.getItem(1).setTitle(getString(R.string.collect));
+                ivcollect.setImageResource(R.drawable.uncollected);
             }
         }
     }
