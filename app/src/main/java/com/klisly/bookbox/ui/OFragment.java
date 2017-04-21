@@ -177,6 +177,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
     private void switchCollect() {
         if(!AccountLogic.getInstance().isLogin()){
+            ToastHelper.showShortTip("登录后才能收藏文章哦");
             return;
         }
         if(mData.isCollect()){

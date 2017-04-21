@@ -298,6 +298,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
     }
 
     private void toggleCollect() {
+        if(!AccountLogic.getInstance().isLogin()){
+            ToastHelper.showShortTip("登录后才能收藏文章哦");
+            return;
+        }
         if (mArticleData.getUser2article() == null || !mArticleData.getUser2article().getCollect()) {
             articleApi.collect(mArticleData.getArticle().getId(), AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())

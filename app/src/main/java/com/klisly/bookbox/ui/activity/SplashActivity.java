@@ -3,6 +3,7 @@ package com.klisly.bookbox.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -60,7 +61,13 @@ public class SplashActivity extends Activity implements SplashADListener {
         if (!BuildConfig.DEBUG) {
             splashAD = new SplashAD(this, container, Constants.QQ_APP_ID, Constants.SplashPosID, this, 3000);
         } else {
-            gotoMain();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    gotoMain();
+                }
+            }, 1200);
+
         }
     }
 

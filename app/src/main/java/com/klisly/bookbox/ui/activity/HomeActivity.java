@@ -171,39 +171,39 @@ public class HomeActivity extends SupportActivity
     }
 
     private void checkUpdate() {
-        long lastCheck = BookBoxApplication.getInstance()
-                .getPreferenceUtils().getValue(Constants.LAST_CHECK, 0l);
-        if (lastCheck + Constants.UPDATE_CHECK_DURATION < System.currentTimeMillis()) {
-            Timber.i("start check update");
-            BookRetrofit.getInstance().getSysApi().fetch("android").subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new AbsSubscriber<ApiResult<Version>>(HomeActivity.this, false) {
-                        @Override
-                        protected void onError(ApiException ex) {
+//        long lastCheck = BookBoxApplication.getInstance()
+//                .getPreferenceUtils().getValue(Constants.LAST_CHECK, 0l);
+//        if (lastCheck + Constants.UPDATE_CHECK_DURATION < System.currentTimeMillis()) {
+//            Timber.i("start check update");
+        BookRetrofit.getInstance().getSysApi().fetch("android").subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<Version>>(HomeActivity.this, false) {
+                    @Override
+                    protected void onError(ApiException ex) {
 
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<Version> data) {
+                        Timber.i("get version info " + data + " cur version code:" + AppUtils.getVersionCode(BookBoxApplication.getInstance()));
+                        if (data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":", "\n").replace(":", "\n"), data.getData().getUrl());
+                                }
+                            });
                         }
-
-                        @Override
-                        protected void onPermissionError(ApiException ex) {
-
-                        }
-
-                        @Override
-                        public void onNext(ApiResult<Version> data) {
-                            Timber.i("get version info " + data + " cur version code:" + AppUtils.getVersionCode(BookBoxApplication.getInstance()));
-                            if (data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":", "\n").replace(":", "\n"), data.getData().getUrl());
-                                    }
-                                });
-                            }
-                        }
-                    });
-            BookBoxApplication.getInstance()
-                    .getPreferenceUtils().setValue(Constants.LAST_CHECK, System.currentTimeMillis());
-        }
+                    }
+                });
+        BookBoxApplication.getInstance()
+                .getPreferenceUtils().setValue(Constants.LAST_CHECK, System.currentTimeMillis());
+//        }
     }
 
     @Override
