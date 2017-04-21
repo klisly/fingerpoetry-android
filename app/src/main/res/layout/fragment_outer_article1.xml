@@ -14,8 +14,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            android:background="?attr/colorPrimary" />
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
     <com.klisly.bookbox.widget.NestedWebView
@@ -102,6 +104,17 @@
             android:layout_height="1dp"
             android:background="@color/slider_color"
             />
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/bannerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        android:gravity="center"
+        app:layout_collapseMode="pin"
+        app:layout_collapseParallaxMultiplier="0.9"
+        app:layout_behavior="com.klisly.bookbox.behavior.BottomBarBehavior">
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

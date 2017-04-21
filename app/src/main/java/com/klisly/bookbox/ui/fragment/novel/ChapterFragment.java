@@ -151,7 +151,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
     }
 
     private void updateData() {
-       String html = Constants.ARTICLE_PREFIX + mData.getContent() + Constants.ARTICLE_SUFFIX;
+        String html = Constants.ARTICLE_PREFIX + mData.getContent() + Constants.ARTICLE_SUFFIX;
         html = html.replace(Constants.NOVEL_END_0, "");
         html = html.replace(Constants.NOVEL_END_1, "");
         html = html.replace(Constants.NOVEL_END_2, "");
@@ -186,7 +186,13 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
             }
         });
         initBanner();
-        bv.loadAD();
+        bannerContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bannerContainer.setVisibility(View.VISIBLE);
+                bv.loadAD();
+            }
+        }, 1200);
     }
 
     @Override

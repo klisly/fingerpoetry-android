@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,9 @@ import com.klisly.bookbox.ui.base.BaseBackFragment;
 import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.bookbox.utils.ShareUtil;
 import com.klisly.bookbox.utils.ToastHelper;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner.BannerView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +68,10 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
     TextView txtshare;
     @Bind(R.id.action_share)
     RippleView actionShare;
+    @Bind(R.id.bannerContainer)
+    ViewGroup bannerContainer;
+    BannerView bv;
+
     private WxArticle mData;
     private WxArticleApi articleApi = BookRetrofit.getInstance().getWxArticleApi();
 
@@ -92,6 +100,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
         initView(view);
         initListener();
         fetchData();
+
         return view;
     }
 
@@ -134,6 +143,25 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
         actionShare.setOnClickListener(v -> {
             share();
         });
+    }
+
+    private void initBanner() {
+        this.bv = new BannerView(getActivity(), ADSize.BANNER, Constants.QQ_APP_ID, Constants.BannerPosId);
+        bv.setRefresh(30);
+        bv.setADListener(new AbstractBannerADListener() {
+
+            @Override
+            public void onNoAD(int arg0) {
+                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+            }
+
+            @Override
+            public void onADReceiv() {
+                Log.i("AD_DEMO", "ONBannerReceive");
+            }
+        });
+        bannerContainer.addView(bv);
+
     }
 
     private void share() {
@@ -236,6 +264,16 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
         settings.setLoadWithOverviewMode(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
+
+        initBanner();
+
+        bannerContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bannerContainer.setVisibility(View.VISIBLE);
+                bv.loadAD();
+            }
+        }, 1200);
     }
 
     @Override

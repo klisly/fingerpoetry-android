@@ -151,9 +151,14 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                 return true;
             }
         });
-        bannerContainer.setVisibility(View.GONE);
         initBanner();
-        bv.loadAD();
+        bannerContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bannerContainer.setVisibility(View.VISIBLE);
+                bv.loadAD();
+            }
+        }, 1200);
         initListener();
     }
 
