@@ -180,10 +180,10 @@ public class ActivityUtil {
     }
 
     public static String genRandomPic() {
-        return "http://och7s33jc.bkt.clouddn.com/cover_" + (300 + random.nextInt(200)) + ".jpg";
+        return "http://och7s33jc.bkt.clouddn.com/cover_" + (300 + random.nextInt(30)) + ".jpg";
     }
 
     public static String genPic(int code) {
-        return "http://och7s33jc.bkt.clouddn.com/cover_" + (300 + (Math.abs(code) % 200)) + ".jpg";
+        return "http://och7s33jc.bkt.clouddn.com/cover_" + (300 + (Math.abs(code) % 30)) + ".jpg";
     }
 }

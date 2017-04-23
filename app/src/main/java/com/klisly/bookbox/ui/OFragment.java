@@ -166,11 +166,11 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
     private void share() {
         final WxArticle article = mData;
-        String shareUrl = "http://second.imdao.cn/wx?ahre=" + article.getAhref();
-        String img = "http://second.imdao.cn/images/logo.png";
+        String shareUrl = article.getHref();
+        String img = article.getImg();
         String title = article.getTitle();
         String desc = "微信美文," + "\"" + article.getTitle() + "\"" + "." + shareUrl;
-        String from = getString(R.string.app_name);
+        String from = article.getAccount();
         String comment = "我发现了这篇很走心的文章,分享给各位!";
         ShareUtil.shareArticle(shareUrl, img, title, desc, from, comment);
     }

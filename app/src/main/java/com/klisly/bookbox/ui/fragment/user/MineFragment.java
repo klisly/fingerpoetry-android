@@ -169,7 +169,7 @@ public class MineFragment extends BaseMainFragment {
                 .append("  ").append(getString(R.string.share))
                 .append(" ").append(user.getShareCount());
         tvSig.setText(desc);
-        registerAt.setText(DateUtil.getFriendlyTimeSpanByNow(user.getCreateAt()));
+        registerAt.setText("加入时间："+DateUtil.getFriendlyTimeSpanByNow(user.getCreateAt()));
     }
 
     private void initView() {

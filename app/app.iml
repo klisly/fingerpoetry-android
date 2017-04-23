@@ -227,8 +227,5 @@
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.7.6" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.0" level="project" />
     <orderEntry type="module" module-name="PushSDK" exported="" />
-    <orderEntry type="library" exported="" name="com.umeng.message_v3.0.4" level="project" />
-    <orderEntry type="library" exported="" name="utdid4all-1.1.5_proguard" level="project" />
-    <orderEntry type="library" exported="" name="alicloud-android-sdk-httpdns-1.0.7" level="project" />
   </component>
 </module>

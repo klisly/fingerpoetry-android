@@ -289,10 +289,10 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
             return;
         }
         String shareUrl = "http://second.imdao.cn/articles/" + mArticleData.getArticle().getId();
-        String img = "http://second.imdao.cn/images/logo.png";
+        String img = mArticleData.getArticle().getImg();
         String title = mArticleData.getArticle().getTitle();
         String desc = "美文发现," + "\"" + mArticleData.getArticle().getTitle() + "\"" + "." + shareUrl;
-        String from = getString(R.string.app_name);
+        String from = mArticleData.getArticle().getAuthor();
         String comment = "我发现了这篇很走心的文章,分享给各位!";
         ShareUtil.shareArticle(shareUrl, img, title, desc, from, comment);
     }
