@@ -9,8 +9,8 @@ android {
         applicationId "com.klisly.bookbox"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 7
-        versionName "1.7"
+        versionCode 8
+        versionName "1.8"
         multiDexEnabled true
 //        jackOptions { // 支持lambda式
 //            enabled true
