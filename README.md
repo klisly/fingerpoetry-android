@@ -1,9 +1,9 @@
-####简介
+#### 简介
 这个项目做了一段时间了，最近做了很大的改版，现在做个总结，将代码开源出来给大家，供各位朋友学习。
 代码地址
 https://github.com/klisly/fingerpoetry-android
 欢迎大家clone下来学习，求Star。。。。。
-####项目初衷
+#### 项目初衷
 碎片化的时间都用来在看八卦？
 指尖书香来读微信精选文章，赏诗歌，阅故事。
 受够了每天刷网页看小说更新的苦?
@@ -15,14 +15,14 @@ https://github.com/klisly/fingerpoetry-android
 用户可以通过手机号或者QQ登录，收藏喜欢的文章
 数据都采集自网络。
 
-####效果图
+#### 效果图
 ![指尖书香界面-微信精选](http://upload-images.jianshu.io/upload_images/2816392-bfe6423b2dac6883.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![指尖书香-小文学&小说订阅](http://upload-images.jianshu.io/upload_images/2816392-635e081e20daf46f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![指尖书香-注册登录](http://upload-images.jianshu.io/upload_images/2816392-351fba3d9302263d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-####通过该项目可以学习到什么？
+#### 通过该项目可以学习到什么？
 1. 单Activity多Fragment的使用（Fragmentation）
 2. RxJava+Retrofit+OkHttp的网络请求
 3. RxBus消息处理
@@ -38,14 +38,14 @@ https://github.com/klisly/fingerpoetry-android
 13. 应用内版本更新检查与升级
 等等
 
-####使用的第三方库
+#### 使用的第三方库
 包括但不限于
   [Fragmentation](https://github.com/YoKeyword/Fragmentation)
   [butterknife](https://github.com/JakeWharton/butterknife)
   [Retrofit](https://github.com/square/retrofit)
   [fresco](https://github.com/facebook/fresco)
   [Timber](https://github.com/JakeWharton/timber)
-####扫码体验
+#### 扫码体验
 
 ![1493106946.png](http://upload-images.jianshu.io/upload_images/2816392-cded6d7f602fc0ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
