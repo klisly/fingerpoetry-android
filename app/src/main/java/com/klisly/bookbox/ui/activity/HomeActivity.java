@@ -191,14 +191,10 @@ public class HomeActivity extends SupportActivity
                     @Override
                     public void onNext(ApiResult<Version> data) {
                         Timber.i("get version info " + data + " cur version code:" + AppUtils.getVersionCode(BookBoxApplication.getInstance()));
-                        if (data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":", "\n").replace(":", "\n"), data.getData().getUrl());
-                                }
-                            });
+                        if (data.getData() != null && data.getData().getVersion() > AppUtils.getVersionCode(BookBoxApplication.getInstance())) {
+                            runOnUiThread(() -> UpdateDialog.show(HomeActivity.this, data.getData().getContent().replace(":", "\n").replace(":", "\n"), data.getData().getUrl()));
                         }
+
                     }
                 });
         BookBoxApplication.getInstance()

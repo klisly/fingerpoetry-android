@@ -96,4 +96,7 @@ public class Constants {
     public static String NOTIFICATION_MORNING = "NOTIFICATION_MORNING";
     public static String NOTIFICATION_AFTERNOON = "NOTIFICATION_AFTERNOON";
     public static String NOTIFICATION_NOVEL = "NOTIFICATION_NOVEL";
+
+    public static final String DEFAULT_WX_CATES = "DEFAULT_WX_CATES";
+
 }

@@ -38,6 +38,7 @@ import com.klisly.bookbox.utils.ToastHelper;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.comm.util.AdError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -151,8 +152,8 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
         bv.setADListener(new AbstractBannerADListener() {
 
             @Override
-            public void onNoAD(int arg0) {
-                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+            public void onNoAD(AdError adError) {
+                Log.i("AD_DEMO", "BannerNoAD，eCode="+adError.getErrorMsg());
             }
 
             @Override

@@ -42,7 +42,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
     PagerFragmentAdapter adapter;
     @Bind(R.id.ivEdit)
     ImageView ivEdit;
-    private List<ChannleEntity> channels;
+    private List channels;
     public static WxFragment newInstance() {
         return new WxFragment();
     }

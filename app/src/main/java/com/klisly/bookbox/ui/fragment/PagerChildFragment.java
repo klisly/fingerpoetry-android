@@ -166,18 +166,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                 adapter.resumeMore();
             }
         });
-        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(int position) {
-                return true;
-            }
-        });
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                queryData((BaseModel) adapter.getItem(position));
-            }
-        });
+        adapter.setOnItemLongClickListener(position -> true);
+        adapter.setOnItemClickListener(position -> queryData((BaseModel) adapter.getItem(position)));
         adapter.setError(R.layout.view_error, new RecyclerArrayAdapter.OnErrorListener() {
             @Override
             public void onErrorShow() {

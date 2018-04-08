@@ -34,6 +34,7 @@ import com.klisly.bookbox.utils.ToastHelper;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.comm.util.AdError;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -108,10 +109,9 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
         this.bv = new BannerView(getActivity(), ADSize.BANNER, Constants.QQ_APP_ID, Constants.BannerPosId);
         bv.setRefresh(30);
         bv.setADListener(new AbstractBannerADListener() {
-
             @Override
-            public void onNoAD(int arg0) {
-                Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+            public void onNoAD(AdError adError) {
+
             }
 
             @Override

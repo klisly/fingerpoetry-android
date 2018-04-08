@@ -2,10 +2,12 @@ package com.klisly.bookbox.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.klisly.bookbox.Constants;
+import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.utils.ActivityUtil;
 import com.klisly.common.StringUtils;
 
-public class WxArticle extends BaseModel{
+public class WxArticle extends BaseModel {
 
     @SerializedName("_id")
     @Expose
@@ -19,9 +21,6 @@ public class WxArticle extends BaseModel{
     @SerializedName("href")
     @Expose
     private String href;
-    @SerializedName("ahref")
-    @Expose
-    private String ahref;
     @SerializedName("tag")
     @Expose
     private String tag;
@@ -75,7 +74,7 @@ public class WxArticle extends BaseModel{
     }
 
     public String getImg() {
-        if(StringUtils.isEmpty(img)){
+        if (StringUtils.isEmpty(img)) {
             img = ActivityUtil.genRandomPic();
         }
         return img;
@@ -94,19 +93,7 @@ public class WxArticle extends BaseModel{
     }
 
     public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public String getAhref() {
-        return ahref;
-    }
-
-    public void setAhref(String ahref) {
-        this.ahref = ahref;
+        return BookRetrofit.BASE_URL + "wx/" + href;
     }
 
     public String getTag() {
@@ -228,7 +215,6 @@ public class WxArticle extends BaseModel{
         sb.append(", img='").append(img).append('\'');
         sb.append(", update=").append(update);
         sb.append(", href='").append(href).append('\'');
-        sb.append(", ahref='").append(ahref).append('\'');
         sb.append(", tag='").append(tag).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", account='").append(account).append('\'');

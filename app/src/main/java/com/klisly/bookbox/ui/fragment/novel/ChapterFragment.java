@@ -36,6 +36,7 @@ import com.material.widget.CircularProgress;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.comm.util.AdError;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -208,7 +209,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
         bv.setADListener(new AbstractBannerADListener() {
 
             @Override
-            public void onNoAD(int arg0) {
+            public void onNoAD(AdError adError) {
                 bannerContainer.setVisibility(View.INVISIBLE);
             }
 

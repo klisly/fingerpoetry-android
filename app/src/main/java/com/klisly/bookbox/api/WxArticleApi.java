@@ -2,9 +2,11 @@ package com.klisly.bookbox.api;
 
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.ArticleData;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.model.User2WxArticle;
 import com.klisly.bookbox.model.WxArticle;
+import com.klisly.bookbox.model.WxCate;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,13 @@ public interface WxArticleApi {
             "Accept: application/json",
     })
     Observable<ApiResult<List<WxArticle>>> list(@QueryMap Map<String, String> conditions);
+
+    @GET("wxarticles/cate")
+    @Headers({
+            "Accept: application/json",
+    })
+    Observable<ApiResult<List<ChannleEntity>>> cates(@QueryMap Map<String, String> conditions);
+
 
     @GET("wxarticles/{id}")
     @Headers({

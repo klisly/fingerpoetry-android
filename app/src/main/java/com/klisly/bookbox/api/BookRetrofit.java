@@ -19,9 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static anetwork.channel.http.NetworkSdkSetting.context;
 
 public class BookRetrofit {
-//    public final static String BASE_URL = "http://192.168.1.100:3000/v1/";
-        public final static String BASE_URL = "https://second.imdao.cn/v1/";
-    public final static String BASE_API_URL = BASE_URL;
+    public final static String BASE_URL = "http://192.168.1.109:3000/";
+    //        public final static String BASE_URL = "https://second.imdao.cn/";
+    public final static String BASE_API_URL = BASE_URL + "v1/";
 
     private final static long DEFAULT_TIMEOUT = 15; // 15s超时
     private final static Gson gson = new GsonBuilder()
@@ -39,7 +39,7 @@ public class BookRetrofit {
     private OkHttpClient okHttpClient;
 
     public BookRetrofit() {
-        if(BookBoxApplication.getInstance()!=null){
+        if (BookBoxApplication.getInstance() != null) {
             context = BookBoxApplication.getInstance().getApplicationContext();
         } else {
             context = new MockContext();
@@ -49,7 +49,7 @@ public class BookRetrofit {
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         //设置缓存目录
         try {
-            if(context.getCacheDir() != null){
+            if (context.getCacheDir() != null) {
                 File cacheDirectory = new File(context.getCacheDir()
                         .getAbsolutePath(), "HttpCache");
                 Cache cache = new Cache(cacheDirectory, 20 * 1024 * 1024);
@@ -83,7 +83,7 @@ public class BookRetrofit {
      */
     public static BookRetrofit getInstance() {
         if (instance == null) {
-            synchronized(AccountLogic.class) {
+            synchronized (AccountLogic.class) {
                 if (instance == null) {
                     instance = new BookRetrofit();
                 }
