@@ -66,6 +66,9 @@ public class LoginData {
      * The user
      */
     public void setUser(User user) {
+        if(this.user != null){
+            user.setWxChannles(this.user.getWxChannles());
+        }
         this.user = user;
     }
 

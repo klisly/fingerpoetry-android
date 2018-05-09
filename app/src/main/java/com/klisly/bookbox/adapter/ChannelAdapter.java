@@ -160,7 +160,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             // header 按钮文字 改成 "完成"
                             View view = recyclerView.getChildAt(0);
                             if (view == recyclerView.getLayoutManager().findViewByPosition(0)) {
-                                TextView tvBtnEdit = (TextView) view.findViewById(R.id.tv_btn_edit);
+                                TextView tvBtnEdit = view.findViewById(R.id.tv_btn_edit);
                                 tvBtnEdit.setText(R.string.finish);
                             }
                         }
@@ -170,28 +170,25 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
 
-                myHolder.textView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (isEditMode && myHolder.imgEdit.getVisibility() == View.VISIBLE) {
-                            switch (MotionEventCompat.getActionMasked(event)) {
-                                case MotionEvent.ACTION_DOWN:
-                                    startTime = System.currentTimeMillis();
-                                    break;
-                                case MotionEvent.ACTION_MOVE:
-                                    if (System.currentTimeMillis() - startTime > SPACE_TIME) {
-                                        mItemTouchHelper.startDrag(myHolder);
-                                    }
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:
-                                case MotionEvent.ACTION_UP:
-                                    startTime = 0;
-                                    break;
-                            }
-
+                myHolder.textView.setOnTouchListener((v, event) -> {
+                    if (isEditMode && myHolder.imgEdit.getVisibility() == View.VISIBLE) {
+                        switch (MotionEventCompat.getActionMasked(event)) {
+                            case MotionEvent.ACTION_DOWN:
+                                startTime = System.currentTimeMillis();
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                if (System.currentTimeMillis() - startTime > SPACE_TIME) {
+                                    mItemTouchHelper.startDrag(myHolder);
+                                }
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                            case MotionEvent.ACTION_UP:
+                                startTime = 0;
+                                break;
                         }
-                        return false;
+
                     }
+                    return false;
                 });
                 return myHolder;
 
@@ -285,11 +282,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof MyViewHolder) {
 
             MyViewHolder myHolder = (MyViewHolder) holder;
-            myHolder.textView.setText(mMyChannelItems.get(position - COUNT_PRE_MY_HEADER).getName());
-            if (isEditMode && position!= 1 && position != 2) {
-                if(position == COUNT_PRE_MY_HEADER + 1){
-                    myHolder.onItemSelected();
-                }
+            String name = mMyChannelItems.get(position - COUNT_PRE_MY_HEADER).getName();
+            myHolder.textView.setText(name);
+            if (isEditMode && position!= 1) {
                 myHolder.imgEdit.setVisibility(View.VISIBLE);
             } else {
                 myHolder.imgEdit.setVisibility(View.INVISIBLE);
@@ -456,11 +451,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      */
     private void startEditMode(RecyclerView parent) {
         isEditMode = true;
-
         int visibleChildCount = parent.getChildCount();
-        for (int i = 3; i < visibleChildCount; i++) {
+        for (int i = 2; i < visibleChildCount; i++) {
             View view = parent.getChildAt(i);
-            ImageView imgEdit = (ImageView) view.findViewById(R.id.img_edit);
+            ImageView imgEdit = view.findViewById(R.id.img_edit);
             if (imgEdit != null ) {
                 imgEdit.setVisibility(View.VISIBLE);
             }
@@ -478,7 +472,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int visibleChildCount = parent.getChildCount();
         for (int i = 0; i < visibleChildCount; i++) {
             View view = parent.getChildAt(i);
-            ImageView imgEdit = (ImageView) view.findViewById(R.id.img_edit);
+            ImageView imgEdit = view.findViewById(R.id.img_edit);
             if (imgEdit != null) {
                 imgEdit.setVisibility(View.INVISIBLE);
             }
@@ -517,8 +511,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.tv);
-            imgEdit = (ImageView) itemView.findViewById(R.id.img_edit);
+            textView = itemView.findViewById(R.id.tv);
+            imgEdit = itemView.findViewById(R.id.img_edit);
         }
 
         /**
@@ -547,7 +541,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public OtherViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.tv);
+            textView = itemView.findViewById(R.id.tv);
         }
     }
 
@@ -559,7 +553,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public MyChannelHeaderViewHolder(View itemView) {
             super(itemView);
-            tvBtnEdit = (TextView) itemView.findViewById(R.id.tv_btn_edit);
+            tvBtnEdit = itemView.findViewById(R.id.tv_btn_edit);
         }
     }
 }

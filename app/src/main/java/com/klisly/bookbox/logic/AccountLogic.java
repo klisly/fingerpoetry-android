@@ -1,6 +1,10 @@
 package com.klisly.bookbox.logic;
 
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.BusProvider;
+import com.klisly.bookbox.api.AccountApi;
+import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.LoginData;
 import com.klisly.bookbox.model.User;
 import com.klisly.bookbox.model.User2Article;
@@ -8,10 +12,19 @@ import com.klisly.bookbox.ottoevent.CollectsUpdateEvent;
 import com.klisly.bookbox.ottoevent.ProfileUpdateEvent;
 import com.klisly.bookbox.ottoevent.ReadsUpdateEvent;
 import com.klisly.bookbox.ottoevent.ToReadsUpdateEvent;
+import com.klisly.bookbox.subscriber.AbsSubscriber;
+import com.klisly.bookbox.subscriber.ApiException;
+import com.klisly.bookbox.ui.activity.HomeActivity;
+import com.klisly.common.LogUtils;
 import com.klisly.common.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AccountLogic extends BaseLogic {
 
@@ -86,14 +99,39 @@ public class AccountLogic extends BaseLogic {
         preferenceUtils.setValue(PRE_ACCOUNT, data);
     }
 
-    public void saveData(){
+    public void saveData() {
         String data = gson.toJson(loginData);
         preferenceUtils.setValue(PRE_ACCOUNT, data);
+//        Map<String, Object> info = new HashMap<>();
+//        info.put("wxs", loginData.getUser().getWxChannles());
+//        BookRetrofit.getInstance().getAccountApi().update(info, AccountLogic.getInstance().getToken())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new AbsSubscriber<ApiResult<User>>(BookBoxApplication.getInstance(), false) {
+//                    @Override
+//                    protected void onError(ApiException ex) {
+//                        LogUtils.e("AccountLogic Updte wx channel", ex);
+//                    }
+//
+//                    @Override
+//                    protected void onPermissionError(ApiException ex) {
+//                        LogUtils.e("AccountLogic Updte wx channel", ex);
+//                    }
+//
+//                    @Override
+//                    public void onNext(ApiResult<User> userApiResult) {
+//
+//                    }
+//                });
     }
 
     public void logout() {
         this.loginData = null;
         preferenceUtils.setValue(PRE_ACCOUNT, "");
+    }
+
+    public void exit() {
+        AccountLogic.instance = null;
     }
 
     public void updateProfile(User data) {

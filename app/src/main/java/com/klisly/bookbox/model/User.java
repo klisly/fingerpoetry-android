@@ -7,7 +7,7 @@ import com.klisly.common.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User extends BaseModel{
+public class User extends BaseModel {
 
     @SerializedName("_id")
     @Expose
@@ -79,381 +79,298 @@ public class User extends BaseModel{
     @Expose
     private String[] topics;
 
-    @SerializedName("wxchannels")
+    @SerializedName("wxChannles")
     @Expose
-    private String[] wxs;
+    private List<ChannleEntity> wxChannles;
 
-    private List<ChannleEntity> wxChannles = new ArrayList<>();
     /**
-     *
-     * @return
-     * The id
+     * @return The id
      */
     public String getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
-     * The _id
+     * @param id The _id
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
-     * The name
+     * @return The name
      */
     public String getName() {
-        if(StringUtils.isEmpty(name)){
+        if (StringUtils.isEmpty(name)) {
             name = "";
         }
-        if(name.length()> 15){
+        if (name.length() > 15) {
             name = name.substring(0, 15);
         }
         return name;
     }
 
     /**
-     *
-     * @param name
-     * The name
+     * @param name The name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
-     * The brief
+     * @return The brief
      */
     public String getBrief() {
         return brief;
     }
 
     /**
-     *
-     * @param brief
-     * The brief
+     * @param brief The brief
      */
     public void setBrief(String brief) {
         this.brief = brief;
     }
 
     /**
-     *
-     * @return
-     * The platform
+     * @return The platform
      */
     public String getPlatform() {
         return platform;
     }
 
     /**
-     *
-     * @param platform
-     * The platform
+     * @param platform The platform
      */
     public void setPlatform(String platform) {
         this.platform = platform;
     }
 
     /**
-     *
-     * @return
-     * The updateAt
+     * @return The updateAt
      */
     public long getUpdateAt() {
         return updateAt;
     }
 
     /**
-     *
-     * @param updateAt
-     * The updateAt
+     * @param updateAt The updateAt
      */
     public void setUpdateAt(long updateAt) {
         this.updateAt = updateAt;
     }
 
     /**
-     *
-     * @return
-     * The createAt
+     * @return The createAt
      */
     public long getCreateAt() {
         return createAt;
     }
 
     /**
-     *
-     * @param createAt
-     * The createAt
+     * @param createAt The createAt
      */
     public void setCreateAt(long createAt) {
         this.createAt = createAt;
     }
 
     /**
-     *
-     * @return
-     * The followingPeople
+     * @return The followingPeople
      */
     public long getFollowingPeople() {
         return followingPeople;
     }
 
     /**
-     *
-     * @param followingPeople
-     * The followingPeople
+     * @param followingPeople The followingPeople
      */
     public void setFollowingPeople(long followingPeople) {
         this.followingPeople = followingPeople;
     }
 
     /**
-     *
-     * @return
-     * The followingTopic
+     * @return The followingTopic
      */
     public long getFollowingTopic() {
         return followingTopic;
     }
 
     /**
-     *
-     * @param followingTopic
-     * The followingTopic
+     * @param followingTopic The followingTopic
      */
     public void setFollowingTopic(long followingTopic) {
         this.followingTopic = followingTopic;
     }
 
     /**
-     *
-     * @return
-     * The followingSite
+     * @return The followingSite
      */
     public long getFollowingSite() {
         return followingSite;
     }
 
     /**
-     *
-     * @param followingSite
-     * The followingSite
+     * @param followingSite The followingSite
      */
     public void setFollowingSite(long followingSite) {
         this.followingSite = followingSite;
     }
 
     /**
-     *
-     * @return
-     * The followerCount
+     * @return The followerCount
      */
     public long getFollowerCount() {
         return followerCount;
     }
 
     /**
-     *
-     * @param followerCount
-     * The followerCount
+     * @param followerCount The followerCount
      */
     public void setFollowerCount(long followerCount) {
         this.followerCount = followerCount;
     }
 
     /**
-     *
-     * @return
-     * The replyCount
+     * @return The replyCount
      */
     public long getReplyCount() {
         return replyCount;
     }
 
     /**
-     *
-     * @param replyCount
-     * The replyCount
+     * @param replyCount The replyCount
      */
     public void setReplyCount(long replyCount) {
         this.replyCount = replyCount;
     }
 
     /**
-     *
-     * @return
-     * The likeCount
+     * @return The likeCount
      */
     public long getLikeCount() {
         return likeCount;
     }
 
     /**
-     *
-     * @param likeCount
-     * The likeCount
+     * @param likeCount The likeCount
      */
     public void setLikeCount(long likeCount) {
         this.likeCount = likeCount;
     }
 
     /**
-     *
-     * @return
-     * The toReadCount
+     * @return The toReadCount
      */
     public long getToReadCount() {
         return toReadCount;
     }
 
     /**
-     *
-     * @param toReadCount
-     * The toReadCount
+     * @param toReadCount The toReadCount
      */
     public void setToReadCount(long toReadCount) {
         this.toReadCount = toReadCount;
     }
 
     /**
-     *
-     * @return
-     * The shareCount
+     * @return The shareCount
      */
     public long getShareCount() {
         return shareCount;
     }
 
     /**
-     *
-     * @param shareCount
-     * The shareCount
+     * @param shareCount The shareCount
      */
     public void setShareCount(long shareCount) {
         this.shareCount = shareCount;
     }
 
     /**
-     *
-     * @return
-     * The collectCount
+     * @return The collectCount
      */
     public long getCollectCount() {
         return collectCount;
     }
 
     /**
-     *
-     * @param collectCount
-     * The collectCount
+     * @param collectCount The collectCount
      */
     public void setCollectCount(long collectCount) {
         this.collectCount = collectCount;
     }
 
     /**
-     *
-     * @return
-     * The readCount
+     * @return The readCount
      */
     public long getReadCount() {
         return readCount;
     }
 
     /**
-     *
-     * @param readCount
-     * The readCount
+     * @param readCount The readCount
      */
     public void setReadCount(long readCount) {
         this.readCount = readCount;
     }
 
     /**
-     *
-     * @return
-     * The heartCount
+     * @return The heartCount
      */
     public long getHeartCount() {
         return heartCount;
     }
 
     /**
-     *
-     * @param heartCount
-     * The heartCount
+     * @param heartCount The heartCount
      */
     public void setHeartCount(long heartCount) {
         this.heartCount = heartCount;
     }
 
     /**
-     *
-     * @return
-     * The isBasicSet
+     * @return The isBasicSet
      */
     public Boolean getIsBasicSet() {
         return isBasicSet;
     }
 
     /**
-     *
-     * @param isBasicSet
-     * The isBasicSet
+     * @param isBasicSet The isBasicSet
      */
     public void setIsBasicSet(Boolean isBasicSet) {
         this.isBasicSet = isBasicSet;
     }
 
     /**
-     *
-     * @return
-     * The isBlock
+     * @return The isBlock
      */
     public Boolean getIsBlock() {
         return isBlock;
     }
 
     /**
-     *
-     * @param isBlock
-     * The isBlock
+     * @param isBlock The isBlock
      */
     public void setIsBlock(Boolean isBlock) {
         this.isBlock = isBlock;
     }
 
     /**
-     *
-     * @return
-     * The role
+     * @return The role
      */
     public long getRole() {
         return role;
     }
 
     /**
-     *
-     * @param role
-     * The role
+     * @param role The role
      */
     public void setRole(long role) {
         this.role = role;
     }
 
     /**
-     *
-     * @return
-     * The avatar
+     * @return The avatar
      */
     public String getAvatar() {
         return avatar;
@@ -484,16 +401,17 @@ public class User extends BaseModel{
     }
 
     /**
-     *
-     * @param avatar
-     * The avatar
+     * @param avatar The avatar
      */
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
     public List<ChannleEntity> getWxChannles() {
-        if(wxChannles.size() == 0){
+        if (wxChannles == null) {
+            wxChannles = new ArrayList<>();
+        }
+        if (wxChannles.size() == 0) {
             wxChannles = ChannleEntity.loadWxDefault();
         }
         return wxChannles;
@@ -509,14 +427,6 @@ public class User extends BaseModel{
 
     public void setTopics(String[] topics) {
         this.topics = topics;
-    }
-
-    public String[] getWxs() {
-        return wxs;
-    }
-
-    public void setWxs(String[] wxs) {
-        this.wxs = wxs;
     }
 
     @Override
@@ -546,7 +456,6 @@ public class User extends BaseModel{
         sb.append(", avatar='").append(avatar).append('\'');
         sb.append(", wxChannles=").append(wxChannles);
         sb.append(", topics=").append(topics);
-        sb.append(", wxs=").append(wxs);
         sb.append('}');
         return sb.toString();
     }

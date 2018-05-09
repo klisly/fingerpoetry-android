@@ -169,10 +169,6 @@ public class HomeActivity extends SupportActivity
     }
 
     private void checkUpdate() {
-//        long lastCheck = BookBoxApplication.getInstance()
-//                .getPreferenceUtils().getValue(Constants.LAST_CHECK, 0l);
-//        if (lastCheck + Constants.UPDATE_CHECK_DURATION < System.currentTimeMillis()) {
-//            Timber.i("start check update");
         BookRetrofit.getInstance().getSysApi().fetch("android").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new AbsSubscriber<ApiResult<Version>>(HomeActivity.this, false) {
@@ -202,7 +198,6 @@ public class HomeActivity extends SupportActivity
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
-        // 设置默认Fragment动画  默认竖向(和安卓5.0以上的动画相同)
         return super.onCreateFragmentAnimator();
         // 设置横向(和安卓4.x动画相同)
         //        return new DefaultHorizontalAnimator();
@@ -220,8 +215,8 @@ public class HomeActivity extends SupportActivity
         mNavigationView.setCheckedItem(R.id.menu_topic);
 
         FrameLayout llNavHeader = (FrameLayout) mNavigationView.getHeaderView(0);
-        mTvName = (TextView) llNavHeader.findViewById(R.id.tvNick);
-        mImgNav = (SimpleDraweeView) llNavHeader.findViewById(R.id.ivMenuUserAvatar);
+        mTvName = llNavHeader.findViewById(R.id.tvNick);
+        mImgNav = llNavHeader.findViewById(R.id.ivMenuUserAvatar);
         updateNavData();
         llNavHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,7 +258,7 @@ public class HomeActivity extends SupportActivity
         ButterKnife.unbind(this);
         ShareSDK.stopSDK(this);
         Fresco.shutDown();
-
+        AccountLogic.getInstance().exit();
     }
 
     long firstTime = 0;

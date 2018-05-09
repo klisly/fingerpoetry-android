@@ -320,6 +320,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         @Override
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
+                            ToastHelper.showLongTip(R.string.collected_success);
                             mArticleData.setUser2article(res.getData());
                             updateMenu();
                         }
@@ -342,6 +343,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
                         @Override
                         public void onNext(ApiResult<User2Article> res) {
                             Timber.i("reache article:" + res);
+                            ToastHelper.showLongTip(R.string.uncollected_success);
                             mArticleData.setUser2article(res.getData());
                             updateMenu();
                         }

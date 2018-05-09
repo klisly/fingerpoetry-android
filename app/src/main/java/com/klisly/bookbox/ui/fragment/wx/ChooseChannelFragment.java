@@ -39,7 +39,6 @@ public class ChooseChannelFragment extends BaseBackFragment {
     private List<ChannleEntity> my;
     private List<ChannleEntity> other;
     private ChannelAdapter mAdapter;
-    private AccountApi accountApi = BookRetrofit.getInstance().getAccountApi();
     public static ChooseChannelFragment newInstance() {
         ChooseChannelFragment fragment = new ChooseChannelFragment();
         return fragment;

@@ -1,11 +1,11 @@
 package com.klisly.bookbox.ui;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andexert.library.RippleView;
-import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
-import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
 import com.klisly.bookbox.api.WxArticleApi;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.logic.AccountLogic;
-import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
-import com.klisly.bookbox.model.User2Article;
 import com.klisly.bookbox.model.User2WxArticle;
 import com.klisly.bookbox.model.WxArticle;
 import com.klisly.bookbox.subscriber.AbsSubscriber;
@@ -40,16 +36,10 @@ import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.comm.util.AdError;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemClickListener {
     private static final String ARG_CONTENT = "arg_article";
@@ -75,6 +65,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
     private WxArticle mData;
     private WxArticleApi articleApi = BookRetrofit.getInstance().getWxArticleApi();
+    private Menu menu;
 
     public static OFragment newInstance(BaseModel article) {
         OFragment fragment = new OFragment();
@@ -89,7 +80,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            mData =  (WxArticle) args.getSerializable(ARG_CONTENT);
+            mData = (WxArticle) args.getSerializable(ARG_CONTENT);
         }
     }
 
@@ -122,7 +113,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
                     @Override
                     public void onNext(ApiResult<User2WxArticle> res) {
-                        if(res.getData() == null){
+                        if (res.getData() == null) {
                             return;
                         }
                         mData.setHeart(res.getData().getHeart());
@@ -153,7 +144,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
             @Override
             public void onNoAD(AdError adError) {
-                Log.i("AD_DEMO", "BannerNoAD，eCode="+adError.getErrorMsg());
+                Log.i("AD_DEMO", "BannerNoAD，eCode=" + adError.getErrorMsg());
             }
 
             @Override
@@ -177,11 +168,11 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
     }
 
     private void switchCollect() {
-        if(!AccountLogic.getInstance().isLogin()){
+        if (!AccountLogic.getInstance().isLogin()) {
             ToastHelper.showShortTip("登录后才能收藏文章哦");
             return;
         }
-        if(mData.isCollect()){
+        if (mData.isCollect()) {
             articleApi.uncollect(mData.getId(), AccountLogic.getInstance().getToken())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -198,6 +189,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
                         @Override
                         public void onNext(ApiResult<User2WxArticle> res) {
+                            ToastHelper.showLongTip(R.string.uncollected_success);
                             mData.setHeart(res.getData().getHeart());
                             mData.setCollect(res.getData().getCollect());
                             mData.setToread(res.getData().getToread());
@@ -222,6 +214,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
                         @Override
                         public void onNext(ApiResult<User2WxArticle> res) {
+                            ToastHelper.showLongTip(R.string.collected_success);
                             mData.setHeart(res.getData().getHeart());
                             mData.setCollect(res.getData().getCollect());
                             mData.setToread(res.getData().getToread());
@@ -240,6 +233,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
 
     private void initView(View view) {
         initToolbarNav(mToolbar, true);
+        menu = mToolbar.getMenu();
         mToolbar.setOnMenuItemClickListener(this);
         String title = mData.getTitle();
         mToolbar.setTitle(title);
@@ -283,14 +277,15 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
     }
 
 
-
     private void updateInfo() {
-        if(mData == null){
+        if (mData == null) {
             return;
         }
-        if(mData.isCollect()){
+        if (mData.isCollect()) {
             ivcollect.setImageResource(R.drawable.collected);
+            menu.getItem(1).setTitle(getString(R.string.nocollect));
         } else {
+            ivcollect.setImageResource(R.drawable.uncollected);
             ivcollect.setImageResource(R.drawable.uncollected);
         }
     }

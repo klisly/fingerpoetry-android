@@ -57,13 +57,17 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
+        initChannels();
+        initView();
+        return view;
+    }
+
+    private void initChannels() {
         if(AccountLogic.getInstance().getNowUser() != null){
             channels = AccountLogic.getInstance().getNowUser().getWxChannles();
         } else {
             channels = ChannleEntity.loadWxDefault();
         }
-        initView();
-        return view;
     }
 
     @Override
@@ -105,7 +109,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
 
     @Subscribe
     public void onUpdateChannel(UpdateWxChannelEvent event) {
-        adapter.notifyDataSetChanged();
+        getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
     }
 
     @Override

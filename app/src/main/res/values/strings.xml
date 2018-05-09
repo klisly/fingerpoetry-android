@@ -84,6 +84,8 @@
     <string name="readed">已读</string>
     <string name="toreaded">我的待读</string>
     <string name="collected">收藏</string>
+    <string name="collected_success">收藏成功，可在个人中心浏览</string>
+    <string name="uncollected_success">已经取消收藏</string>
     <string name="recentread">最近浏览</string>
     <string name="change_avatar">更换头像</string>
     <string name="change_name">修改昵称</string>
