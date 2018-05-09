@@ -105,7 +105,8 @@ public class OuterFragment extends BaseBackFragment {
      * 然后在onEnterAnimationEnd()方法里进行 复杂的耗时的初始化 (比如FragmentPagerAdapter的初始化 加载数据等)
      */
     @Override
-    protected void onEnterAnimationEnd() {
+    public void onEnterAnimationEnd(Bundle onSavedInstance) {
+        super.onEnterAnimationEnd(onSavedInstance);
         String url = "";
         if (mData instanceof Article) {
             url = ((Article) mData).getSrcUrl();

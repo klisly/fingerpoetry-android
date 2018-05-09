@@ -66,11 +66,6 @@ public class ChooseChannelFragment extends BaseBackFragment {
         return view;
     }
 
-    @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
-    }
-
     private void initView() {
         String title = getString(R.string.choose_topic);
 //        mToolbar.setTitle(title);

@@ -303,7 +303,7 @@ public class OFragment extends BaseBackFragment implements Toolbar.OnMenuItemCli
      * 然后在onEnterAnimationEnd()方法里进行 复杂的耗时的初始化 (比如FragmentPagerAdapter的初始化 加载数据等)
      */
     @Override
-    protected void onEnterAnimationEnd() {
+    public void onEnterAnimationEnd(Bundle onSavedInstance) {
         String url = "";
         url = mData.getHref();
         tvContent.loadUrl(url);

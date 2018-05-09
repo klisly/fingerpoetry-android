@@ -153,8 +153,8 @@ public class ChapterListFragment<T extends BaseModel> extends BaseBackFragment i
     }
 
     @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
+    public void onEnterAnimationEnd(Bundle onSavedInstance) {
+        super.onEnterAnimationEnd(onSavedInstance);
         onRefresh();
     }
 

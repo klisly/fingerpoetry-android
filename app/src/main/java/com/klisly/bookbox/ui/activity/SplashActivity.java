@@ -67,35 +67,7 @@ public class SplashActivity extends Activity implements SplashADListener {
         CommonHelper.updateDeviceToken(getApplicationContext());
 
         initAlarm();
-
-        if (BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.FIRST_OPEN, true)) {
-            Intent intent = new Intent(this, WelcomeGuideActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-
-        BookRetrofit.getInstance().getWxArticleApi().cates(new HashMap<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AbsSubscriber<ApiResult<List<ChannleEntity>>>(SplashActivity.this, false) {
-                    @Override
-                    protected void onError(ApiException ex) {
-                        jumpNext();
-                    }
-
-                    @Override
-                    protected void onPermissionError(ApiException ex) {
-                        jumpNext();
-                    }
-
-                    @Override
-                    public void onNext(ApiResult<List<ChannleEntity>> res) {
-                        jumpNext();
-                        LogUtils.i(TAG, "fetch cates:" + res.getData());
-                        ChannleEntity.updateDefaultWxCates(res.getData());
-                    }
-                });
+        jumpNext();
     }
 
     /**
@@ -179,11 +151,9 @@ public class SplashActivity extends Activity implements SplashADListener {
         // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
         if (Build.VERSION.SDK_INT >= 23) {
             checkAndRequestPermission();
-        } else if (!BuildConfig.DEBUG) {
+        } else {
             // 如果是Android6.0以下的机器，默认在安装时获得了所有权限，可以直接调用SDK
             fetchSplashAD(this, container, Constants.QQ_APP_ID, Constants.SplashPosID, this, 0);
-        } else {
-            gotoMain();
         }
     }
 
@@ -227,15 +197,38 @@ public class SplashActivity extends Activity implements SplashADListener {
                     }
                 });
             }
-        }, 800);
+        }, 400);
 
     }
 
     private void gotoMain() {
+        BookRetrofit.getInstance().getWxArticleApi().cates(new HashMap<>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<ChannleEntity>>>(SplashActivity.this, false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+                        goHome();
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+                        goHome();
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<ChannleEntity>> res) {
+                        ChannleEntity.updateDefaultWxCates(res.getData());
+                        goHome();
+                    }
+                });
+    }
+
+    private void goHome() {
         Intent intent = getIntent();
-        intent.setClass(this, HomeActivity.class);
-        this.startActivity(intent);
-        this.finish();
+        intent.setClass(SplashActivity.this, HomeActivity.class);
+        SplashActivity.this.startActivity(intent);
+        SplashActivity.this.finish();
     }
 
     /**

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.multidex.MultiDex;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

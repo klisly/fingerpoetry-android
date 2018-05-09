@@ -135,7 +135,7 @@ public class SiteFragment extends BaseMainFragment implements Toolbar.OnMenuItem
      * 类似于 Activity的 onNewIntent()
      */
     @Override
-    protected void onNewBundle(Bundle args) {
+    public void onNewBundle(Bundle args) {
         super.onNewBundle(args);
     }
 

@@ -1,7 +1,4 @@
 package com.klisly.bookbox.api;
-
-import android.test.mock.MockContext;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klisly.bookbox.BookBoxApplication;
@@ -19,11 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static anetwork.channel.http.NetworkSdkSetting.context;
 
 public class BookRetrofit {
-    public final static String BASE_URL = "http://192.168.1.109:3000/";
-    //        public final static String BASE_URL = "https://second.imdao.cn/";
+//        public final static String BASE_URL = "http://10.0.0.25:3000/";
+//    public final static String BASE_URL = "http://192.168.1.4:3000/";
+            public final static String BASE_URL = "https://second.imdao.cn/";
     public final static String BASE_API_URL = BASE_URL + "v1/";
 
-    private final static long DEFAULT_TIMEOUT = 15; // 15s超时
+    private final static long DEFAULT_TIMEOUT = 5; // 15s超时
     private final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .serializeNulls()
@@ -39,11 +37,8 @@ public class BookRetrofit {
     private OkHttpClient okHttpClient;
 
     public BookRetrofit() {
-        if (BookBoxApplication.getInstance() != null) {
-            context = BookBoxApplication.getInstance().getApplicationContext();
-        } else {
-            context = new MockContext();
-        }
+        context = BookBoxApplication.getInstance().getApplicationContext();
+
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);

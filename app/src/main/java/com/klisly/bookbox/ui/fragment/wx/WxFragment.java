@@ -157,7 +157,7 @@ public class WxFragment extends BaseMainFragment implements Toolbar.OnMenuItemCl
      * 类似于 Activity的 onNewIntent()
      */
     @Override
-    protected void onNewBundle(Bundle args) {
+    public void onNewBundle(Bundle args) {
         super.onNewBundle(args);
     }
 }

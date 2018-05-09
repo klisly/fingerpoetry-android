@@ -24,11 +24,6 @@ public class ContentFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultNoAnimator();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -90,8 +90,8 @@ public class SearchFragment<T extends BaseModel> extends BaseBackFragment {
     }
 
     @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
+    public void onEnterAnimationEnd(Bundle savedInstance) {
+        super.onEnterAnimationEnd(savedInstance);
         loadRecommend();
     }
 

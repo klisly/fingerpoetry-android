@@ -91,6 +91,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
@@ -106,23 +107,28 @@
     <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: backport-util-concurrent:backport-util-concurrent:3.1@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-v4-27.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.facebook.fresco:drawee-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup:otto:1.3.8@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.objenesis:objenesis:2.6@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: me.yokeyword:fragmentation-swipeback-1.3.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: me.zhanghai.android.materialprogressbar:library-1.1.7" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-project:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven.wagon:wagon-file:1.0-beta-6@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven.wagon:wagon-provider-api:1.0-beta-6@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:animated-vector-drawable-25.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-compat-25.4.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-media-compat-27.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.mockito:mockito-core:2.13.0@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: xpp3:xpp3_min:1.1.4c@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:shadow-api:3.3.2@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-QQ-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:shadows-httpclient:3.0@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-fragment-27.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup.retrofit2:retrofit:2.3.0@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: commontool-release:@aar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: android.arch.core:runtime-1.1.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.google.guava:guava:20.0@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:design-27.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:appcompat-v7-27.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support:multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.afollestad.material-dialogs:core-0.9.0.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup.okhttp3:okhttp:3.8.0@jar" level="project" />
@@ -131,43 +137,42 @@
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.httpcomponents:httpclient:4.0.3@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-settings:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:runtime-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-ShortMessage-2.7.6.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:transition-27.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/MobCommons-2016.0816.1507.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jp.co.cyberagent.android.gpuimage:gpuimage-library-1.4.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.httpcomponents:httpcore:4.0.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.ow2.asm:asm:5.0.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-plugin-registry:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.jakewharton.timber:timber-4.7.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-media-compat-25.4.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:cardview-v7-27.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-compat-27.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy:1.7.9@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Email-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.ibm.icu:icu4j:53.1@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:viewmodel-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.facebook.fresco:fresco-1.1.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-vector-drawable-27.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.github.traex.rippleeffect:library-1.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.ant:ant-launcher:1.8.0@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-QZone-2.7.6.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-core-utils-27.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-profile:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Core-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: nekohtml:nekohtml:1.9.6.2@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: nekohtml:xercesMinimal:1.9.6.2@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:robolectric-utils:3.3.2@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.assertj:assertj-core:2.6.0@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-v4-25.4.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-core-ui-25.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-annotations:25.4.0@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:cardview-v7-25.4.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:robolectric-resources:3.3.2@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.google.android.apps.common.testing.accessibility.framework:accessibility-test-framework:2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.tencent.bugly:crashreport-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-vector-drawable-25.4.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-artifact:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: xmlpull:xmlpull:1.1.3.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/GDTUnionSDK.TBS.4.15.559.min.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-core-utils-25.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:appcompat-v7-25.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-fragment-25.4.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:common:1.1.0@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.jsoup:jsoup:1.10.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jp.wasabeef:fresco-processors-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.jakewharton.hugo:hugo-runtime-1.2.1" level="project" />
@@ -176,38 +181,39 @@
     <orderEntry type="library" exported="" name="Gradle: io.reactivex:rxjava:1.3.0@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Core-2.7.6.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:recyclerview-v7-27.1.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support:multidex-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.android.support:multidex-1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-core-ui-27.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.reactivex:rxandroid-1.2.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.ant:ant:1.8.0@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup.retrofit2:converter-gson:2.3.0@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.aspectj:aspectjrt:1.8.5@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/android-support-v7-recyclerview.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:transition-25.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: me.yokeyword:fragmentation-swipeback-0.3.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.bouncycastle:bcprov-jdk16:1.46@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:robolectric:3.3.2@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.jakewharton.hugo:hugo-annotations:1.2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/MobTools-2016.0816.1507.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: me.yokeyword:fragmentation-core-1.3.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Moments-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:shadows-core:3.3.2@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-artifact-manager:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-Wechat-Favorite-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.jude:easyrecyclerview-4.2.6" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: me.yokeyword:fragmentation-0.6.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: commons-logging:commons-logging:1.1.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.thoughtworks.xstream:xstream:1.4.8@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy-agent:1.7.9@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.facebook.fresco:fbcore-1.1.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.ow2.asm:asm-tree:5.0.1@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:support-annotations:27.1.1@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:animated-vector-drawable-27.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.parse.bolts:bolts-tasks:1.4.0@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-ant-tasks:2.1.3@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: me.yokeyword:fragmentation-1.3.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup.okio:okio:1.13.0@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.squareup.assertj:assertj-android:1.1.0@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: SMSSDK-2.0.2:@aar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.google.protobuf:protobuf-java:2.6.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:robolectric-junit:3.3.2@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/android-support-v4.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven.wagon:wagon-http-shared:1.0-beta-6@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.ow2.asm:asm-commons:5.0.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/android-query-full.0.26.7.jar:unspecified@jar" level="project" />
@@ -217,13 +223,13 @@
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.apache.maven:maven-repository-metadata:2.2.1@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.code.gson:gson:2.8.2@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: android.arch.lifecycle:livedata-core-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/wizardholy/project/finger/fingerpoetry/app/libs/ShareSDK-SinaWeibo-2.7.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.hamcrest:hamcrest-library:1.3@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:recyclerview-v7-25.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:design-25.4.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.codehaus.plexus:plexus-interpolation:1.11@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: commons-codec:commons-codec:1.3@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.codehaus.plexus:plexus-utils:1.5.15@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: android.arch.core:common:1.1.0@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.robolectric:robolectric-annotations:3.3.2@jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: classworlds:classworlds:1.1-alpha-2@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup.retrofit2:adapter-rxjava:2.0.2@jar" level="project" />

@@ -54,7 +54,7 @@ public class RateFragment extends BaseFragment {
             listMenus.add("其他");
 
             listFragment = MenuListFragment.newInstance(listMenus);
-            startChildFragment(R.id.fl_list_container, listFragment, false);
+//            startChildFragment(R.id.fl_list_container, listFragment, false);
         }
     }
 
@@ -66,12 +66,4 @@ public class RateFragment extends BaseFragment {
         return true;
     }
 
-    /**
-     * 替换加载 内容Fragment
-     *
-     * @param fragment
-     */
-    public void showContentFragment(ContentFragment fragment) {
-        replaceChildFragment(R.id.fl_content_container, fragment, false);
-    }
 }

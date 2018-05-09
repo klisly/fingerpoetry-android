@@ -89,35 +89,33 @@ public class HomeActivity extends SupportActivity
         checkUpdate();
         checkPermission();
         mNavigationView.setCheckedItem(R.id.menu_weixin);
-        start(WxFragment.newInstance());
+        WxFragment fragment = findFragment(WxFragment.class);
+        loadRootFragment(R.id.fl_container, WxFragment.newInstance());
         if (savedInstanceState == null) {
             jumpChooseTopic();
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkNotify(getIntent());
-            }
-        }, 200);
+        new Handler().postDelayed(() -> checkNotify(getIntent()), 200);
     }
 
     private void jumpChooseTopic() {
         String home = BookBoxApplication.getInstance().getPreferenceUtils().getValue(Constants.HOME_FRAG, Constants.FRAG_WX);
+        final SupportFragment topFragment = (SupportFragment) getTopFragment();
         if (home.equals(Constants.FRAG_NOVEL)) {
             mNavigationView.setCheckedItem(R.id.menu_novel);
-            start(NovelFragment.newInstance());
+            NovelFragment fragment = findFragment(NovelFragment.class);
+            topFragment.start(fragment, SupportFragment.SINGLETASK);
         } else if (home.equals(Constants.FRAG_SITE)) {
             mNavigationView.setCheckedItem(R.id.menu_site);
-            start(SiteFragment.newInstance());
+            SiteFragment fragment = findFragment(SiteFragment.class);
+            topFragment.start(fragment, SupportFragment.SINGLETASK);
         } else if (home.equals(Constants.FRAG_TOPIC)) {
             mNavigationView.setCheckedItem(R.id.menu_topic);
-            start(TopicFragment.newInstance());
+            TopicFragment fragment = findFragment(TopicFragment.class);
+            topFragment.start(fragment, SupportFragment.SINGLETASK);
         } else if (home.equals(Constants.FRAG_MAGZINE)) {
             mNavigationView.setCheckedItem(R.id.menu_magzine);
-            start(MagFragment.newInstance());
-        } else if (home.equals(Constants.FRAG_WX)) {
-//            mNavigationView.setCheckedItem(R.id.menu_weixin);
-//            start(WxFragment.newInstance());
+            MagFragment fragment = findFragment(MagFragment.class);
+            topFragment.start(fragment, SupportFragment.SINGLETASK);
         }
     }
 
@@ -203,7 +201,7 @@ public class HomeActivity extends SupportActivity
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimator() {
+    public FragmentAnimator onCreateFragmentAnimator() {
         // 设置默认Fragment动画  默认竖向(和安卓5.0以上的动画相同)
         return super.onCreateFragmentAnimator();
         // 设置横向(和安卓4.x动画相同)
@@ -247,12 +245,6 @@ public class HomeActivity extends SupportActivity
     }
 
     @Override
-    public int setContainerId() {
-        return R.id.fl_container;
-    }
-
-
-    @Override
     protected void onResume() {
         super.onResume();
         BusProvider.getInstance().register(this);
@@ -277,13 +269,13 @@ public class HomeActivity extends SupportActivity
     long firstTime = 0;
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressedSupport() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
             if (getTopFragment() instanceof WxFragment) {
                 if (firstTime + 2000 > System.currentTimeMillis()) {
-                    super.onBackPressed();
+                    finish();
                     return;
                 }
                 ToastHelper.showShortTip(R.string.exit_tip);
@@ -292,7 +284,7 @@ public class HomeActivity extends SupportActivity
                 if (getTopFragment() instanceof BaseMainFragment) {
                     mNavigationView.setCheckedItem(R.id.menu_weixin);
                 }
-                super.onBackPressed();
+                super.onBackPressedSupport();
             }
         }
     }
@@ -497,15 +489,6 @@ public class HomeActivity extends SupportActivity
             mImgNav.setImageURI(ActivityUtil.getAppResourceUri(R.drawable.menu_user, getPackageName()));
         }
     }
-
-    //    @Override
-    //    public void onLockDrawLayout(boolean lock) {
-    //        if (lock) {
-    //            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    //        } else {
-    //            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    //        }
-    //    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

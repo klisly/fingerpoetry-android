@@ -101,8 +101,8 @@ public class MineFragment extends BaseMainFragment {
     }
 
     @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
+    public void onEnterAnimationEnd(Bundle savedInstance) {
+        super.onEnterAnimationEnd(savedInstance);
 
         if (!AccountLogic.getInstance().isLogin()) {
             start(LoginFragment.newInstance());
@@ -258,7 +258,7 @@ public class MineFragment extends BaseMainFragment {
     }
 
     @Override
-    protected void onNewBundle(Bundle args) {
+    public void onNewBundle(Bundle args) {
         super.onNewBundle(args);
     }
 }

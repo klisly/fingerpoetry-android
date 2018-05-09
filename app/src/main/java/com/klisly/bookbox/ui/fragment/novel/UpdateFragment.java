@@ -63,11 +63,6 @@ public class UpdateFragment<T extends BaseModel> extends BaseFragment implements
         return view;
     }
 
-    @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
-    }
-
     private void checkNotify() {
         Intent intent = getActivity().getIntent();
         if (intent.getIntExtra("target", 0) == Constants.NOTIFI_ACTION_NOVEL_UPDATE) {

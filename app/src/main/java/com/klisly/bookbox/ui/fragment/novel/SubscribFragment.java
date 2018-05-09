@@ -68,11 +68,6 @@ public class SubscribFragment<T extends BaseModel> extends BaseFragment implemen
         ButterKnife.unbind(this);
     }
 
-    @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
-    }
-
     private void initView(View view) {
 
         mRecy.setLayoutManager(new LinearLayoutManager(getActivity()));

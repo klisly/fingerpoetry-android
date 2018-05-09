@@ -92,8 +92,8 @@ public class ChooseTopicFragment extends BaseBackFragment {
     }
 
     @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
         updateData();
     }
 

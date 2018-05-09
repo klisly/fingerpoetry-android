@@ -205,7 +205,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
      * 然后在onEnterAnimationEnd()方法里进行 复杂的耗时的初始化 (比如FragmentPagerAdapter的初始化 加载数据等)
      */
     @Override
-    protected void onEnterAnimationEnd() {
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
         articleApi.fetch(mData.getId(), AccountLogic.getInstance().getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -248,7 +248,7 @@ public class DetailFragment extends BaseBackFragment implements Toolbar.OnMenuIt
      * 类似于 Activity的 onNewIntent()
      */
     @Override
-    protected void onNewBundle(Bundle args) {
+    public void onNewBundle(Bundle args) {
         super.onNewBundle(args);
     }
 

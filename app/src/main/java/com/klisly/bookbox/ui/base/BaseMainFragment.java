@@ -1,6 +1,7 @@
 package com.klisly.bookbox.ui.base;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -19,24 +20,15 @@ public class BaseMainFragment extends BaseFragment {
 
     protected void initToolbarNav(Toolbar toolbar, boolean isInitMenu) {
         toolbar.setNavigationIcon(R.drawable.ic_menu_white);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOpenDraweListener != null) {
-                    mOpenDraweListener.onOpenDrawer();
-                }
+        toolbar.setNavigationOnClickListener(v -> {
+            if (mOpenDraweListener != null) {
+                mOpenDraweListener.onOpenDrawer();
             }
         });
 
         if(isInitMenu) {
             initToolbarMenu(toolbar);
         }
-    }
-
-
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new FragmentAnimator(R.anim.activity_open_enter, R.anim.activity_close_exit);
     }
 
     @Override

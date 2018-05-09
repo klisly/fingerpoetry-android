@@ -56,11 +56,6 @@ public class MenuListFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return new DefaultNoAnimator();
-    }
-
     private void initView(View view) {
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
     }
@@ -106,7 +101,7 @@ public class MenuListFragment extends BaseFragment {
 //        replaceBrotherFragment(R.id.fl_content_container, fragment, false);
 
         // 或者 让父Fragment控制 ContentFragment的填充
-        ((RateFragment) getParentFragment()).showContentFragment(fragment);
+        ((RateFragment) getParentFragment()).start(fragment);
     }
 
 

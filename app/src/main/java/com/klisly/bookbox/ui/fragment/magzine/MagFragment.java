@@ -169,8 +169,8 @@ public class MagFragment<T extends BaseModel> extends BaseMainFragment implement
     }
 
     @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
         onRefresh();
     }
 

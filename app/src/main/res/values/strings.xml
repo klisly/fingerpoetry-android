@@ -7,10 +7,10 @@
     <string name="navigation_drawer_close">关闭抽屉</string>
 
     <string name="register_login">注册/登陆</string>
-    <string name="wechat">微信精选</string>
+    <string name="wechat">微信文章</string>
     <string name="zhihu">知乎日报</string>
     <string name="qqbuluo">QQ部落</string>
-    <string name="homepage">小文学</string>
+    <string name="homepage">公众号精选</string>
     <string name="site">站点</string>
     <string name="novel">小说更新</string>
     <string name="magzine">朝花夕拾</string>

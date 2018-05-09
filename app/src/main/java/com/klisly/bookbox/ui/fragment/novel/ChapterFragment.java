@@ -243,7 +243,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
      * 然后在onEnterAnimationEnd()方法里进行 复杂的耗时的初始化 (比如FragmentPagerAdapter的初始化 加载数据等)
      */
     @Override
-    protected void onEnterAnimationEnd() {
+    public void onEnterAnimationEnd(Bundle savedInstance) {
         loadContent();
         initLazyView();
     }
@@ -261,7 +261,7 @@ public class ChapterFragment extends BaseBackFragment implements Toolbar.OnMenuI
      * 类似于 Activity的 onNewIntent()
      */
     @Override
-    protected void onNewBundle(Bundle args) {
+    public void onNewBundle(Bundle args) {
         super.onNewBundle(args);
     }
 

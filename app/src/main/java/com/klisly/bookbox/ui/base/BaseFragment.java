@@ -86,16 +86,6 @@ public class BaseFragment extends SupportFragment {
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimation() {
-        return super.onCreateFragmentAnimation();
-    }
-
-    @Override
-    protected void onEnterAnimationEnd() {
-        super.onEnterAnimationEnd();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
