@@ -39,7 +39,7 @@ import com.klisly.bookbox.ui.fragment.AboutFragment;
 import com.klisly.bookbox.ui.fragment.SettingFragment;
 import com.klisly.bookbox.ui.fragment.account.LoginFragment;
 import com.klisly.bookbox.ui.fragment.topic.ChooseTopicFragment;
-import com.klisly.bookbox.ui.fragment.topic.TopicFragment;
+import com.klisly.bookbox.ui.fragment.topic.JokeFragment;
 import com.klisly.bookbox.ui.fragment.magzine.MagFragment;
 import com.klisly.bookbox.ui.fragment.novel.NovelFragment;
 import com.klisly.bookbox.ui.fragment.site.SiteFragment;
@@ -89,7 +89,6 @@ public class HomeActivity extends SupportActivity
         checkUpdate();
         checkPermission();
         mNavigationView.setCheckedItem(R.id.menu_weixin);
-        WxFragment fragment = findFragment(WxFragment.class);
         loadRootFragment(R.id.fl_container, WxFragment.newInstance());
         if (savedInstanceState == null) {
             jumpChooseTopic();
@@ -108,9 +107,9 @@ public class HomeActivity extends SupportActivity
             mNavigationView.setCheckedItem(R.id.menu_site);
             SiteFragment fragment = findFragment(SiteFragment.class);
             topFragment.start(fragment, SupportFragment.SINGLETASK);
-        } else if (home.equals(Constants.FRAG_TOPIC)) {
-            mNavigationView.setCheckedItem(R.id.menu_topic);
-            TopicFragment fragment = findFragment(TopicFragment.class);
+        } else if (home.equals(Constants.FRAG_JOKE)) {
+            mNavigationView.setCheckedItem(R.id.menu_joke);
+            JokeFragment fragment = findFragment(JokeFragment.class);
             topFragment.start(fragment, SupportFragment.SINGLETASK);
         } else if (home.equals(Constants.FRAG_MAGZINE)) {
             mNavigationView.setCheckedItem(R.id.menu_magzine);
@@ -212,7 +211,7 @@ public class HomeActivity extends SupportActivity
         toggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setCheckedItem(R.id.menu_topic);
+        mNavigationView.setCheckedItem(R.id.menu_joke);
 
         FrameLayout llNavHeader = (FrameLayout) mNavigationView.getHeaderView(0);
         mTvName = llNavHeader.findViewById(R.id.tvNick);
@@ -304,13 +303,13 @@ public class HomeActivity extends SupportActivity
                 int id = item.getItemId();
                 SupportFragment fragment;
                 switch (id) {
-                    case R.id.menu_topic:
-                        fragment = findFragment(TopicFragment.class);
+                    case R.id.menu_joke:
+                        fragment = findFragment(JokeFragment.class);
                         if (fragment == null) {
                             popTo(WxFragment.class, false, new Runnable() {
                                 @Override
                                 public void run() {
-                                    start(TopicFragment.newInstance());
+                                    start(JokeFragment.newInstance());
                                 }
                             });
                         } else {
@@ -470,7 +469,7 @@ public class HomeActivity extends SupportActivity
     @Subscribe
     public void onLogout(LogoutEvent event) {
         updateNavData();
-        mNavigationView.setCheckedItem(R.id.menu_topic);
+        mNavigationView.setCheckedItem(R.id.menu_joke);
     }
 
     private void updateNavData() {

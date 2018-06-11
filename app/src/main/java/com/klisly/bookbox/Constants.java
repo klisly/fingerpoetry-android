@@ -50,7 +50,7 @@ public class Constants {
     public static final int NOTIFI_ID_NOVEL_UPDATE = 2;
     public static final String FIRST_OPEN = "first_open";
     public static final String HOME_FRAG = "HOME_FRAG";
-    public static final String FRAG_TOPIC = "topic";
+    public static final String FRAG_JOKE = "joke";
     public static final String FRAG_SITE = "site";
     public static final String FRAG_MAGZINE = "magzine";
     public static final String FRAG_WX = "wx";

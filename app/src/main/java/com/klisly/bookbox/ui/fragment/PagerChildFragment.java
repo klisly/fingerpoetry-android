@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
@@ -20,6 +21,7 @@ import com.klisly.bookbox.adapter.WxArticleViewHolder;
 import com.klisly.bookbox.adapter.WxUser2ArticleViewHolder;
 import com.klisly.bookbox.api.ArticleApi;
 import com.klisly.bookbox.api.BookRetrofit;
+import com.klisly.bookbox.api.JokeApi;
 import com.klisly.bookbox.api.WxArticleApi;
 import com.klisly.bookbox.domain.ApiResult;
 import com.klisly.bookbox.domain.ArticleData;
@@ -27,6 +29,7 @@ import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.model.Article;
 import com.klisly.bookbox.model.BaseModel;
 import com.klisly.bookbox.model.ChannleEntity;
+import com.klisly.bookbox.model.Joke;
 import com.klisly.bookbox.model.Site;
 import com.klisly.bookbox.model.Topic;
 import com.klisly.bookbox.model.User2Article;
@@ -39,6 +42,7 @@ import com.klisly.bookbox.ui.OFragment;
 import com.klisly.bookbox.ui.base.BaseFragment;
 import com.klisly.bookbox.utils.ToastHelper;
 import com.klisly.bookbox.utils.TopToastHelper;
+import com.klisly.common.LogUtils;
 import com.material.widget.CircularProgress;
 
 import java.util.HashMap;
@@ -69,7 +73,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
     //    private PagerContentAdapter mAdapter;
     private ArticleApi articleApi = BookRetrofit.getInstance().getArticleApi();
     private WxArticleApi wxArticleApi = BookRetrofit.getInstance().getWxArticleApi();
-
+    private JokeApi jokeApi = BookRetrofit.getInstance().getJokeApi();
     private boolean needToast = false;
     private RecyclerArrayAdapter adapter;
 
@@ -258,10 +262,10 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
         params.put("page", String.valueOf(page));
         params.put("pageSize", String.valueOf(pageSize));
         Timber.i("start load page,params:" + params.toString());
-
         if (mData instanceof Site || mData instanceof Topic) {
             loadLiterature(params);
         } else if (mData instanceof ChannleEntity) {
+            loadJoke(params);
             ChannleEntity channleEntity = (ChannleEntity) mData;
             if (channleEntity.getType() == 1) {
                 params.put("topics", ((ChannleEntity) mData).getName());
@@ -270,7 +274,7 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                 if (channleEntity.getName().equals("微信精选")) {
                     loadWxCollect(params);
                 } else if (channleEntity.getName().equals("小文学")) {
-                    loadLiteralCollect(params);
+                    loadJoke(params);
                 }
 
             }
@@ -327,12 +331,59 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
     }
 
     private void hide() {
-        if(mRecy!=null){
+        if (mRecy != null) {
             mRecy.setRefreshing(false);
         }
-        if(mProgress != null){
+        if (mProgress != null) {
             mProgress.setVisibility(View.GONE);
         }
+    }
+
+    private void loadJoke(Map<String, String> params) {
+        params.put("uid", AccountLogic.getInstance().getUserId());
+        jokeApi.list(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new AbsSubscriber<ApiResult<List<Joke>>>(getActivity(), false) {
+                    @Override
+                    protected void onError(ApiException ex) {
+
+                    }
+
+                    @Override
+                    protected void onPermissionError(ApiException ex) {
+
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<List<Joke>> res) {
+                        List<Joke> jokes = res.getData();
+                        LogUtils.i(TAG, "load jokes:" + jokes);
+//                        if (needToast) {
+//                            if (getActivity() == null || getActivity().isFinishing()) {
+//                                return;
+//                            }
+//                            getActivity().runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if (mTvTip == null) {
+//                                        return;
+//                                    }
+//                                    if (res.getData().size() > 0) {
+//                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
+//                                    } else {
+//                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
+//                                    }
+//                                }
+//                            });
+//                        }
+//                        if (queryType == 1 && res.getData().size() > 0) {
+//                            adapter.addAll(res.getData());
+//                        } else {
+//                            adapter.addAll(res.getData());
+//                        }
+                    }
+                });
     }
 
     private void loadWxCollect(Map<String, String> params) {

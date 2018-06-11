@@ -32,6 +32,7 @@ public class BookRetrofit {
     private TopicApi topicApi;
     private ArticleApi articleApi;
     private WxArticleApi wxArticleApi;
+    private JokeApi jokeApi;
     private SysApi sysApi;
     private NovelApi novelApi;
     private OkHttpClient okHttpClient;
@@ -69,6 +70,7 @@ public class BookRetrofit {
         sysApi = retrofit.create(SysApi.class);
         novelApi = retrofit.create(NovelApi.class);
         wxArticleApi = retrofit.create(WxArticleApi.class);
+        jokeApi = retrofit.create(JokeApi.class);
     }
 
     /**
@@ -117,5 +119,9 @@ public class BookRetrofit {
 
     public WxArticleApi getWxArticleApi() {
         return wxArticleApi;
+    }
+
+    public JokeApi getJokeApi() {
+        return jokeApi;
     }
 }

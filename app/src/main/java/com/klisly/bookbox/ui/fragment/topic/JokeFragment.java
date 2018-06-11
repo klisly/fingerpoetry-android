@@ -16,6 +16,7 @@ import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.PagerFragmentAdapter;
 import com.klisly.bookbox.logic.AccountLogic;
 import com.klisly.bookbox.logic.TopicLogic;
+import com.klisly.bookbox.model.ChannleEntity;
 import com.klisly.bookbox.ottoevent.ToLoginEvent;
 import com.klisly.bookbox.ui.base.BaseMainFragment;
 import com.klisly.bookbox.utils.ToastHelper;
@@ -23,7 +24,7 @@ import com.klisly.bookbox.utils.ToastHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
+public class JokeFragment extends BaseMainFragment implements Toolbar.OnMenuItemClickListener {
 
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
@@ -32,8 +33,9 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     PagerFragmentAdapter adapter;
-    public static TopicFragment newInstance() {
-        return new TopicFragment();
+
+    public static JokeFragment newInstance() {
+        return new JokeFragment();
     }
 
     @Override
@@ -58,13 +60,15 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
     }
 
     private void initView() {
-        mToolbar.setTitle(R.string.homepage);
+        mToolbar.setTitle(R.string.joke);
         initToolbarNav(mToolbar, false);
         mToolbar.inflateMenu(R.menu.menu_main_pop);
         mToolbar.setOnMenuItemClickListener(this);
 
-        adapter = new PagerFragmentAdapter(getChildFragmentManager(),
-                TopicLogic.getInstance().getOpenFocuses());
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+
+        adapter = new PagerFragmentAdapter(getChildFragmentManager(), ChannleEntity.loadJoke());
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(adapter);
         TopicLogic.getInstance().registerListener(this, () -> {
@@ -93,6 +97,7 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
         });
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -113,7 +118,7 @@ public class TopicFragment extends BaseMainFragment implements Toolbar.OnMenuIte
                 ToastHelper.showShortTip(R.string.recom_setting);
                 break;
             case R.id.action_as_home:
-                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_TOPIC);
+                BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.HOME_FRAG, Constants.FRAG_JOKE);
                 ToastHelper.showShortTip(R.string.success_as_home);
                 break;
             case R.id.action_manage_topic:

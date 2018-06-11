@@ -44,7 +44,7 @@ public class ChannleEntity extends BaseModel {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("WxCate{");
+        final StringBuilder sb = new StringBuilder("ChannleEntity{");
         sb.append("type='").append(type).append('\'');
         sb.append(", id=").append(id);
         sb.append(", name='").append(name).append('\'');
@@ -97,6 +97,17 @@ public class ChannleEntity extends BaseModel {
         Gson gson = new Gson();
         String wcstr = gson.toJson(res);
         BookBoxApplication.getInstance().getPreferenceUtils().setValue(Constants.DEFAULT_WX_CATES, wcstr);
+    }
+
+    public static List loadJoke() {
+        List list = new ArrayList();
+        list.add(new ChannleEntity(1, "热门", 3));
+        list.add(new ChannleEntity(2, "纯文", 3));
+        list.add(new ChannleEntity(3, "纯图", 3));
+        list.add(new ChannleEntity(4, "GIF", 3));
+
+
+        return list;
     }
 
     public static List loadMines() {

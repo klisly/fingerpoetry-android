@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'me.tatarka.retrolambda'
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     buildToolsVersion '27.0.2'
 
     defaultConfig {
         applicationId "com.klisly.bookbox"
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 8
         versionName "1.8"
         multiDexEnabled true
