@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.Constants;
-import com.klisly.bookbox.domain.ApiResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,10 +100,10 @@ public class ChannleEntity extends BaseModel {
 
     public static List loadJoke() {
         List list = new ArrayList();
-        list.add(new ChannleEntity(1, "热门", 3));
+//        list.add(new ChannleEntity(1, "热门", 3));
+        list.add(new ChannleEntity(3, "图片", 3));
         list.add(new ChannleEntity(2, "纯文", 3));
-        list.add(new ChannleEntity(3, "纯图", 3));
-        list.add(new ChannleEntity(4, "GIF", 3));
+        list.add(new ChannleEntity(4, "动图", 3));
 
 
         return list;

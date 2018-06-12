@@ -11,11 +11,11 @@ import android.widget.TextView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.klisly.bookbox.BookBoxApplication;
 import com.klisly.bookbox.CommonHelper;
 import com.klisly.bookbox.Constants;
 import com.klisly.bookbox.R;
 import com.klisly.bookbox.adapter.ArticleViewHolder;
+import com.klisly.bookbox.adapter.JokeViewHolder;
 import com.klisly.bookbox.adapter.User2ArticleViewHolder;
 import com.klisly.bookbox.adapter.WxArticleViewHolder;
 import com.klisly.bookbox.adapter.WxUser2ArticleViewHolder;
@@ -128,12 +128,15 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
             private final static int TYPE_WX_ARTICLE = 2;
             private final static int TYPE_WX_COLLECTED = 3;
             private final static int TYPE_ARTICLE_COLLECTED = 4;
+            private final static int TYPE_JOKE = 5;
 
             @Override
             public int getViewType(int position) {
 
                 if (getAllData().get(position) instanceof Article) {
                     return TYPE_ARTICLE;
+                } else if (getAllData().get(position) instanceof Joke) {
+                    return TYPE_JOKE;
                 } else if (getAllData().get(position) instanceof WxArticle) {
                     return TYPE_WX_ARTICLE;
                 } else if (getAllData().get(position) instanceof User2WxArticle) {
@@ -154,6 +157,8 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     return new WxUser2ArticleViewHolder(parent);
                 } else if (viewType == TYPE_ARTICLE_COLLECTED) {
                     return new User2ArticleViewHolder(parent);
+                } else if (viewType == TYPE_JOKE) {
+                    return new JokeViewHolder(parent);
                 }
                 return new ArticleViewHolder(parent);
             }
@@ -265,16 +270,28 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
         if (mData instanceof Site || mData instanceof Topic) {
             loadLiterature(params);
         } else if (mData instanceof ChannleEntity) {
-            loadJoke(params);
             ChannleEntity channleEntity = (ChannleEntity) mData;
             if (channleEntity.getType() == 1) {
-                params.put("topics", ((ChannleEntity) mData).getName());
+                params.put("topics", channleEntity.getName());
                 loadWxArticle(params);
+            } else if (channleEntity.getType() == 3) {
+                String ftype = null;
+                if (channleEntity.getName().equals("纯文")) {
+                    ftype = "txt";
+                } else if (channleEntity.getName().equals("图片")) {
+                    ftype = "jpg";
+                } else if (channleEntity.getName().equals("动图")) {
+                    ftype = "gif";
+                }
+                if (ftype != null) {
+                    params.put("type", ftype);
+                }
+                loadJoke(params);
             } else {
                 if (channleEntity.getName().equals("微信精选")) {
                     loadWxCollect(params);
                 } else if (channleEntity.getName().equals("小文学")) {
-                    loadJoke(params);
+                    loadLiteralCollect(params);
                 }
 
             }
@@ -359,29 +376,26 @@ public class PagerChildFragment<T extends BaseModel> extends BaseFragment implem
                     public void onNext(ApiResult<List<Joke>> res) {
                         List<Joke> jokes = res.getData();
                         LogUtils.i(TAG, "load jokes:" + jokes);
-//                        if (needToast) {
-//                            if (getActivity() == null || getActivity().isFinishing()) {
-//                                return;
-//                            }
-//                            getActivity().runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if (mTvTip == null) {
-//                                        return;
-//                                    }
-//                                    if (res.getData().size() > 0) {
-//                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
-//                                    } else {
-//                                        TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
-//                                    }
-//                                }
-//                            });
-//                        }
-//                        if (queryType == 1 && res.getData().size() > 0) {
-//                            adapter.addAll(res.getData());
-//                        } else {
-//                            adapter.addAll(res.getData());
-//                        }
+                        if (needToast) {
+                            if (getActivity() == null || getActivity().isFinishing()) {
+                                return;
+                            }
+                            getActivity().runOnUiThread(() -> {
+                                if (mTvTip == null) {
+                                    return;
+                                }
+                                if (res.getData().size() > 0) {
+                                    TopToastHelper.showTip(mTvTip, getString(R.string.load_success), TopToastHelper.DURATION_SHORT);
+                                } else {
+                                    TopToastHelper.showTip(mTvTip, getString(R.string.load_empty), TopToastHelper.DURATION_SHORT);
+                                }
+                            });
+                        }
+                        if (queryType == 1 && res.getData().size() > 0) {
+                            adapter.addAll(res.getData());
+                        } else {
+                            adapter.addAll(res.getData());
+                        }
                     }
                 });
     }
